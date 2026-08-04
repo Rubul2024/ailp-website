@@ -1,0 +1,52 @@
+/* ===========================================
+   AILP GLOBAL DESIGN VARIABLES
+=========================================== */
+
+:root {
+
+  /* Primary Colors */
+  --primary-color: #0b5ed7;
+  --primary-dark: #084298;
+  --primary-light: #e7f1ff;
+
+  /* Secondary Colors */
+  --secondary-color: #ff6b00;
+  --secondary-dark: #d45500;
+  --secondary-light: #fff2e8;
+
+  /* Success */
+  --success-color: #16a34a;
+
+  /* Danger */
+  --danger-color: #dc2626;
+
+  /* Warning */
+  --warning-color: #f59e0b;
+
+  /* Background */
+  --background-color: #ffffff;
+  --section-bg: #f8fafc;
+
+  /* Text */
+  --text-dark: #1e293b;
+  --text-light: #64748b;
+  --white: #ffffff;
+  --black: #000000;
+
+  /* Border */
+  --border-color: #e2e8f0;
+
+  /* Shadow */
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-md: 0 10px 30px rgba(0,0,0,0.12);
+  --shadow-lg: 0 20px 50px rgba(0,0,0,0.18);
+
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 18px;
+  --radius-xl: 30px;
+
+  /* Transition */
+  --transition: all 0.3s ease;
+}
