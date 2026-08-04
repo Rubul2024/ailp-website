@@ -1,22 +1,25 @@
 "use client";
 
-/*
-====================================================
-Production Header Component
-====================================================
-Features:
-✔ Sticky Navigation
-✔ Scroll Effect
-✔ Responsive Layout
-✔ Next.js Link
-====================================================
-*/
+/* ===========================================================
+   Production Responsive Header
+   -----------------------------------------------------------
+   Features:
+   ✔ Sticky Header
+   ✔ Scroll Effect
+   ✔ Mobile Menu
+   ✔ Active Navigation
+   ✔ Body Scroll Lock
+   ✔ Accessible Buttons
+=========================================================== */
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { FaBars, FaTimes } from "react-icons/fa";
+
 import styles from "./Header.module.css";
 
-// Navigation Menu
+// Navigation Items
 const navItems = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
@@ -27,54 +30,92 @@ const navItems = [
 ];
 
 export default function Header() {
-  // Track scroll position
+
+  // Current URL
+  const pathname = usePathname();
+
+  // Track scrolling
   const [isScrolled, setIsScrolled] = useState(false);
 
+  // Mobile Menu
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  /* ===================================
+     Detect page scroll
+  ==================================== */
+
   useEffect(() => {
+
     function handleScroll() {
       setIsScrolled(window.scrollY > 20);
     }
 
     window.addEventListener("scroll", handleScroll);
 
-    return () =>
+    return () => {
       window.removeEventListener("scroll", handleScroll);
+    };
+
   }, []);
 
+  /* ===================================
+     Lock body scrolling
+  ==================================== */
+
+  useEffect(() => {
+
+    document.body.style.overflow = menuOpen
+      ? "hidden"
+      : "auto";
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+
+  }, [menuOpen]);
+
   return (
+
     <header
-      className={`${styles.header} ${
-        isScrolled ? styles.scrolled : ""
-      }`}
+      className={`${styles.header} ${isScrolled ? styles.scrolled : ""}`}
     >
+
       <div className="container">
 
         <div className={styles.wrapper}>
 
-          {/* =========================
-              Logo
-          ========================== */}
+          {/* ================= Logo ================= */}
 
           <Link href="/" className={styles.logo}>
+
             AILP
+
           </Link>
 
-          {/* =========================
-              Navigation
-          ========================== */}
+          {/* =============== Desktop Navigation =============== */}
 
-          <nav>
+          <nav
+            className={`${styles.navWrapper} ${
+              menuOpen ? styles.showMenu : ""
+            }`}
+          >
 
             <ul className={styles.nav}>
 
               {navItems.map((item) => (
 
-                <li key={item.label}>
+                <li key={item.href}>
 
-                  <Link href={item.href}>
-
+                  <Link
+                    href={item.href}
+                    className={
+                      pathname === item.href
+                        ? styles.active
+                        : ""
+                    }
+                    onClick={() => setMenuOpen(false)}
+                  >
                     {item.label}
-
                   </Link>
 
                 </li>
@@ -83,11 +124,19 @@ export default function Header() {
 
             </ul>
 
+            {/* Mobile Button */}
+
+            <Link
+              href="/join"
+              className={styles.mobileButton}
+              onClick={() => setMenuOpen(false)}
+            >
+              Join Now
+            </Link>
+
           </nav>
 
-          {/* =========================
-              CTA Button
-          ========================== */}
+          {/* Desktop Button */}
 
           <Link
             href="/join"
@@ -96,9 +145,25 @@ export default function Header() {
             Join Now
           </Link>
 
+          {/* Hamburger */}
+
+          <button
+            className={styles.menuButton}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle navigation"
+            aria-expanded={menuOpen}
+          >
+
+            {menuOpen ? <FaTimes /> : <FaBars />}
+
+          </button>
+
         </div>
 
       </div>
+
     </header>
+
   );
+
 }

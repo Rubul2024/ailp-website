@@ -1,145 +1,125 @@
 /* ==========================================
-   Header
+   Active Navigation Link
 ========================================== */
 
-.header {
+.active {
 
-    position: sticky;
+    color: var(--primary-color) !important;
 
-    top: 0;
+}
 
-    z-index: 999;
+.active::after {
 
-    transition: all .35s ease;
+    width: 100% !important;
+
+}
+
+/* ==========================================
+   Hamburger Button
+========================================== */
+
+.menuButton {
+
+    display: none;
+
+    border: none;
 
     background: transparent;
 
-}
+    cursor: pointer;
 
-/* Scroll Effect */
-
-.scrolled {
-
-    background: rgba(255,255,255,.92);
-
-    backdrop-filter: blur(12px);
-
-    box-shadow: 0 10px 30px rgba(0,0,0,.08);
-
-}
-
-/* Wrapper */
-
-.wrapper {
-
-    height: 82px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-}
-
-/* Logo */
-
-.logo {
-
-    font-size: 34px;
-
-    font-weight: 800;
-
-    color: var(--primary-color);
-
-}
-
-/* Navigation */
-
-.nav {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 34px;
-
-    list-style: none;
-
-}
-
-.nav a {
+    font-size: 28px;
 
     color: var(--text-dark);
 
-    font-weight: 600;
+}
 
-    position: relative;
+/* ==========================================
+   Mobile Join Button
+========================================== */
 
-    transition: .3s;
+.mobileButton {
+
+    display: none;
 
 }
 
-/* Hover Line */
+/* ==========================================
+   Tablet & Mobile
+========================================== */
 
-.nav a::after {
+@media (max-width: 992px){
 
-    content: "";
+    .menuButton{
 
-    position: absolute;
+        display:block;
 
-    left: 0;
+    }
 
-    bottom: -6px;
+    .joinButton{
 
-    width: 0;
+        display:none;
 
-    height: 2px;
+    }
 
-    background: var(--primary-color);
+    .navWrapper{
 
-    transition: .3s;
+        position:fixed;
 
-}
+        top:82px;
 
-.nav a:hover::after {
+        right:-100%;
 
-    width: 100%;
+        width:300px;
 
-}
+        height:calc(100vh - 82px);
 
-.nav a:hover {
+        background:#ffffff;
 
-    color: var(--primary-color);
+        box-shadow:-10px 0 30px rgba(0,0,0,.08);
 
-}
+        transition:.35s;
 
-/* Join Button */
+        padding:40px 30px;
 
-.joinButton {
+    }
 
-    padding: 14px 28px;
+    .showMenu{
 
-    border-radius: 40px;
+        right:0;
 
-    background: linear-gradient(
-        135deg,
-        var(--primary-color),
-        var(--primary-dark)
-    );
+    }
 
-    color: #fff;
+    .nav{
 
-    font-weight: 600;
+        flex-direction:column;
 
-    transition: .3s;
+        align-items:flex-start;
 
-}
+        gap:28px;
 
-.joinButton:hover {
+    }
 
-    transform: translateY(-3px);
+    .mobileButton{
 
-    box-shadow: 0 16px 30px rgba(0,0,0,.15);
+        display:inline-flex;
+
+        margin-top:40px;
+
+        padding:14px 28px;
+
+        border-radius:40px;
+
+        background:linear-gradient(
+            135deg,
+            var(--primary-color),
+            var(--primary-dark)
+        );
+
+        color:#ffffff;
+
+        font-weight:600;
+
+    }
 
 }

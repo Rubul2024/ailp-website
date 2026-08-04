@@ -1,0 +1,25 @@
+/* =============================================
+   Section
+============================================= */
+
+.section{
+
+    position:relative;
+
+    padding:120px 0;
+
+    overflow:hidden;
+
+    background:white;
+}
+
+.light{
+
+    position:relative;
+
+    padding:120px 0;
+
+    overflow:hidden;
+
+    background:#f8fafc;
+}

@@ -1,0 +1,47 @@
+/* ===============================================
+   Decorative Background Shapes
+=============================================== */
+
+.glowOne{
+
+    position:absolute;
+
+    width:260px;
+
+    height:260px;
+
+    top:-80px;
+
+    left:-80px;
+
+    border-radius:50%;
+
+    background:rgba(0,102,255,.08);
+
+    filter:blur(60px);
+
+    pointer-events:none;
+
+}
+
+.glowTwo{
+
+    position:absolute;
+
+    width:300px;
+
+    height:300px;
+
+    bottom:-120px;
+
+    right:-120px;
+
+    border-radius:50%;
+
+    background:rgba(255,153,0,.08);
+
+    filter:blur(80px);
+
+    pointer-events:none;
+
+}

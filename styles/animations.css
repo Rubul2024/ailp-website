@@ -1,41 +1,51 @@
-/* ===========================================
-   GLOBAL ANIMATIONS
-=========================================== */
+/* ===============================================
+   Global Animations
+=============================================== */
 
-@keyframes fadeIn {
+.fadeUp{
+
+    animation:fadeUp .8s ease both;
+}
+
+@keyframes fadeUp{
 
     from{
+
         opacity:0;
-        transform:translateY(20px);
+
+        transform:translateY(35px);
+
     }
 
     to{
+
         opacity:1;
+
         transform:translateY(0);
+
     }
 
 }
 
-@keyframes zoomIn{
+/* Smooth Hover */
 
-    from{
-        opacity:0;
-        transform:scale(.9);
-    }
+.hoverLift{
 
-    to{
-        opacity:1;
-        transform:scale(1);
-    }
+    transition:.35s;
+}
+
+.hoverLift:hover{
+
+    transform:translateY(-8px);
 
 }
 
-.fade-in{
+/* Glass Effect */
 
-    animation:fadeIn .8s ease;
-}
+.glass{
 
-.zoom-in{
+    background:rgba(255,255,255,.75);
 
-    animation:zoomIn .8s ease;
+    backdrop-filter:blur(12px);
+
 }

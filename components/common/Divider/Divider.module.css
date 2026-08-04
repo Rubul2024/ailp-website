@@ -1,0 +1,20 @@
+.divider{
+
+    width:120px;
+
+    height:5px;
+
+    margin:30px auto 0;
+
+    border-radius:100px;
+
+    background:linear-gradient(
+    90deg,
+
+    var(--primary-color),
+
+    var(--secondary-color)
+
+    );
+
+}
