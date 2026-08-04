@@ -1,23 +1,29 @@
+import Header from "../components/Header/Header";
+
 export default function Home() {
   return (
-    <main>
+    <>
+      <Header />
 
-      <section className="section">
+      <main>
 
-        <div className="container">
+        <section className="section">
 
-          <h1 className="section-title fade-in">
-            Welcome to All India Labour Party
-          </h1>
+          <div className="container">
 
-          <p className="section-subtitle zoom-in">
-            Workers • Employment • Social Justice
-          </p>
+            <h1 className="section-title fade-in">
+              Welcome to All India Labour Party
+            </h1>
 
-        </div>
+            <p className="section-subtitle zoom-in">
+              Workers • Employment • Social Justice
+            </p>
 
-      </section>
+          </div>
 
-    </main>
+        </section>
+
+      </main>
+    </>
   );
 }
