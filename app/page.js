@@ -1,4 +1,6 @@
 import Header from "../components/Header/Header";
+import Hero from "../components/Hero/Hero";
+import Features from "../components/Features/Features";
 
 export default function Home() {
   return (
@@ -7,21 +9,9 @@ export default function Home() {
 
       <main>
 
-        <section className="section">
+        <Hero />
 
-          <div className="container">
-
-            <h1 className="section-title fade-in">
-              Welcome to All India Labour Party
-            </h1>
-
-            <p className="section-subtitle zoom-in">
-              Workers • Employment • Social Justice
-            </p>
-
-          </div>
-
-        </section>
+        <Features />
 
       </main>
     </>
