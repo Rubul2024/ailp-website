@@ -1,41 +1,36 @@
-// Components
-
+// Layout
 import Header from "../components/Header/Header";
+
+// Home Sections
 import Hero from "../components/Hero/Hero";
 import Features from "../components/Features/Features";
 import About from "../components/About/About";
 import MissionVision from "../components/MissionVision/MissionVision";
+import Statistics from "../components/Statistics/Statistics";
 
 export default function Home() {
+  return (
+    <>
+      <Header />
 
-    return (
+      <main>
 
-        <>
+        {/* Hero Banner */}
+        <Hero />
 
-            <Header />
+        {/* Features */}
+        <Features />
 
-            <main>
+        {/* About */}
+        <About />
 
-                {/* Hero */}
+        {/* Mission & Vision */}
+        <MissionVision />
 
-                <Hero />
+        {/* Statistics */}
+        <Statistics />
 
-                {/* Features */}
-
-                <Features />
-
-                {/* About */}
-
-                <About />
-
-                {/* Mission Vision */}
-
-                <MissionVision />
-
-            </main>
-
-        </>
-
-    );
-
+      </main>
+    </>
+  );
 }

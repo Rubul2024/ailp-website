@@ -1,0 +1,92 @@
+/* ==============================================
+   Statistics Section
+============================================== */
+
+.statistics{
+
+    padding:120px 0;
+
+    background:
+    linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--primary-dark));
+
+    color:white;
+}
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+    gap:30px;
+
+    margin-top:70px;
+}
+
+.card{
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(8px);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    border-radius:24px;
+
+    padding:45px 25px;
+
+    text-align:center;
+
+    transition:.35s;
+}
+
+.card:hover{
+
+    transform:translateY(-10px);
+
+    background:rgba(255,255,255,.14);
+}
+
+.icon{
+
+    width:80px;
+
+    height:80px;
+
+    margin:auto;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:36px;
+
+    border-radius:50%;
+
+    background:white;
+
+    color:var(--primary-color);
+
+    margin-bottom:25px;
+}
+
+.card h3{
+
+    font-size:42px;
+
+    margin-bottom:15px;
+
+    font-weight:700;
+}
+
+.card p{
+
+    color:rgba(255,255,255,.9);
+
+    font-size:17px;
+}

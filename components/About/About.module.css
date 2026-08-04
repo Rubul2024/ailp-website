@@ -4,7 +4,6 @@
 
     background:white;
 }
-
 .container{
 
     display:grid;
@@ -21,15 +20,19 @@
     position:relative;
 }
 
-.imageSection img{
+.imageSection img {
 
     width:100%;
+
+    height:auto;
 
     border-radius:25px;
 
     box-shadow:var(--shadow-lg);
 
     transition:.4s;
+
+    display:block;
 }
 
 .imageSection:hover img{
