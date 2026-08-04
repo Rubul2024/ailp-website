@@ -11,6 +11,8 @@ import Leadership from "@/components/home/Leadership/Leadership";
 import News from "@/components/home/News/News";
 import Gallery from "@/components/home/Gallery/Gallery";
 import Campaigns from "@/components/home/Campaigns/Campaigns";
+import WhyJoin from "@/components/home/WhyJoin/WhyJoin";
+import Values from "@/components/home/Values/Values";
 
 export default function Home() {
   return (
@@ -26,6 +28,12 @@ export default function Home() {
 
         {/* About */}
         <About />
+
+        {/* Why Join */}
+        <WhyJoin />
+
+        {/* Values */}
+        <Values />
 
         {/* Mission & Vision */}
         <MissionVision />
