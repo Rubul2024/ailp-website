@@ -1,0 +1,145 @@
+/* ==========================================
+   Header
+========================================== */
+
+.header {
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 999;
+
+    transition: all .35s ease;
+
+    background: transparent;
+
+}
+
+/* Scroll Effect */
+
+.scrolled {
+
+    background: rgba(255,255,255,.92);
+
+    backdrop-filter: blur(12px);
+
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+
+}
+
+/* Wrapper */
+
+.wrapper {
+
+    height: 82px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+}
+
+/* Logo */
+
+.logo {
+
+    font-size: 34px;
+
+    font-weight: 800;
+
+    color: var(--primary-color);
+
+}
+
+/* Navigation */
+
+.nav {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 34px;
+
+    list-style: none;
+
+}
+
+.nav a {
+
+    color: var(--text-dark);
+
+    font-weight: 600;
+
+    position: relative;
+
+    transition: .3s;
+
+}
+
+/* Hover Line */
+
+.nav a::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+
+    bottom: -6px;
+
+    width: 0;
+
+    height: 2px;
+
+    background: var(--primary-color);
+
+    transition: .3s;
+
+}
+
+.nav a:hover::after {
+
+    width: 100%;
+
+}
+
+.nav a:hover {
+
+    color: var(--primary-color);
+
+}
+
+/* Join Button */
+
+.joinButton {
+
+    padding: 14px 28px;
+
+    border-radius: 40px;
+
+    background: linear-gradient(
+        135deg,
+        var(--primary-color),
+        var(--primary-dark)
+    );
+
+    color: #fff;
+
+    font-weight: 600;
+
+    transition: .3s;
+
+}
+
+.joinButton:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow: 0 16px 30px rgba(0,0,0,.15);
+
+}

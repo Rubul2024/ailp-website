@@ -1,5 +1,5 @@
 // Layout
-import Header from "../components/Header/Header";
+import Header from "../components/layout/Header/Header";
 
 // Home Sections
 import Hero from "../components/Hero/Hero";
