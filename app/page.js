@@ -9,6 +9,7 @@ import MissionVision from "../components/MissionVision/MissionVision";
 import Statistics from "../components/Statistics/Statistics";
 import Leadership from "@/components/home/Leadership/Leadership";
 import News from "@/components/home/News/News";
+import Gallery from "@/components/home/Gallery/Gallery";
 
 export default function Home() {
   return (
@@ -36,6 +37,9 @@ export default function Home() {
 
         {/* News */}
         <News />
+
+        {/* Gallery */}
+        <Gallery />
         
       </main>
     </>
