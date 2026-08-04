@@ -7,6 +7,7 @@ import Features from "../components/Features/Features";
 import About from "../components/About/About";
 import MissionVision from "../components/MissionVision/MissionVision";
 import Statistics from "../components/Statistics/Statistics";
+import Leadership from "@/components/home/Leadership/Leadership";
 
 export default function Home() {
   return (
@@ -14,7 +15,6 @@ export default function Home() {
       <Header />
 
       <main>
-
         {/* Hero Banner */}
         <Hero />
 
@@ -30,6 +30,8 @@ export default function Home() {
         {/* Statistics */}
         <Statistics />
 
+        {/* Leadership */}
+        <Leadership />
       </main>
     </>
   );
