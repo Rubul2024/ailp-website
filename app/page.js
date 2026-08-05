@@ -2,17 +2,18 @@
 import Header from "../components/layout/Header/Header";
 
 // Home Sections
-import Hero from "../components/Hero/Hero";
-import Features from "../components/Features/Features";
-import About from "../components/About/About";
-import MissionVision from "../components/MissionVision/MissionVision";
-import Statistics from "../components/Statistics/Statistics";
-import Leadership from "@/components/home/Leadership/Leadership";
-import News from "@/components/home/News/News";
-import Gallery from "@/components/home/Gallery/Gallery";
-import Campaigns from "@/components/home/Campaigns/Campaigns";
+
+import Hero from "@/components/home/Hero/Hero";
+import About from "@/components/home/About/About";
+import Journey from "@/components/home/Journey/Journey";
 import WhyJoin from "@/components/home/WhyJoin/WhyJoin";
-import Values from "@/components/home/Values/Values";
+import CoreValues from "@/components/home/CoreValues/CoreValues";
+import Leadership from "@/components/home/Leadership/Leadership";
+import IndiaMap from "@/components/home/IndiaMap/IndiaMap";
+import LatestNews from "@/components/home/LatestNews/LatestNews";
+import JoinCTA from "@/components/home/JoinCTA/JoinCTA";
+import Subscribe from "@/components/home/Subscribe/Subscribe";
+import Footer from "@/components/layout/Footer/Footer";
 
 export default function Home() {
   return (
@@ -23,36 +24,35 @@ export default function Home() {
         {/* Hero Banner */}
         <Hero />
 
-        {/* Features */}
-        <Features />
-
         {/* About */}
         <About />
+
+        {/* Journey */}
+        <Journey />
 
         {/* Why Join */}
         <WhyJoin />
 
-        {/* Values */}
-        <Values />
-
-        {/* Mission & Vision */}
-        <MissionVision />
-
-        {/* Statistics */}
-        <Statistics />
+        {/* Core Values */}
+        <CoreValues />
 
         {/* Leadership */}
         <Leadership />
 
-        {/* News */}
-        <News />
+        {/* India Map */}
+        <IndiaMap />
 
-        {/* Campaigns */}
-        <Campaigns />
+        {/* Latest News */}
+        <LatestNews />
 
-        {/* Gallery */}
-        <Gallery />
-        
+        {/* Join CTA */}
+        <JoinCTA />
+
+        {/* Subscribe */}
+        <Subscribe />
+
+        {/* Footer */}
+        <Footer />
       </main>
     </>
   );

@@ -1,127 +1,91 @@
 "use client";
 
-
-/*
-======================================================
-Why Join AILP
-
-Production Ready
-
-Later:
-
-Benefits can come from MongoDB.
-
-======================================================
-*/
-
-import Link from "next/link";
-import Image from "next/image";
-
-import {
-  FaBriefcase,
-  FaScaleBalanced,
-  FaUsers,
-  FaPersonCircleCheck,
-  FaArrowRight,
-} from "react-icons/fa6";
-
-import Section from "@/components/common/Section/Section";
-import Container from "@/components/common/Container/Container";
-import SectionHeading from "@/components/common/SectionHeading/SectionHeading";
-
-import BenefitCard from "./BenefitCard";
-
 import styles from "./WhyJoin.module.css";
-
-/* ============================================= */
-
-const benefits = [
-  {
-    icon: <FaBriefcase />,
-
-    title: "Employment Opportunities",
-
-    description:
-      "Creating sustainable employment and supporting skill development across India.",
-  },
-
-  {
-    icon: <FaScaleBalanced />,
-
-    title: "Labour Rights",
-
-    description:
-      "Protecting workers through fair wages, safe workplaces and equal opportunities.",
-  },
-
-  {
-    icon: <FaUsers />,
-
-    title: "Social Justice",
-
-    description:
-      "Working for equality, dignity and inclusive growth for every citizen.",
-  },
-
-  {
-    icon: <FaPersonCircleCheck />,
-
-    title: "Women & Youth Empowerment",
-
-    description:
-      "Encouraging leadership, entrepreneurship and participation in nation building.",
-  },
-];
-
-/* ============================================= */
+import whyJoinData from "./whyJoinData";
 
 export default function WhyJoin() {
   return (
-    <Section light>
-      <Container>
-        <SectionHeading
-          badge="WHY JOIN AILP"
-          title="Together We Build A Better Future"
-          subtitle="Join a movement dedicated to employment, labour welfare, social justice and inclusive national development."
-        />
+    <section className={styles.whyJoin}>
+      {/* Background Effects */}
+      <div className={styles.blueGlow}></div>
+      <div className={styles.orangeGlow}></div>
+      <div className={styles.grid}></div>
 
-        <div className={styles.wrapper}>
-          {/* Left */}
+      <div className={styles.container}>
+        {/* Heading */}
 
-          <div className={styles.left}>
-            <div className={styles.circleOne}></div>
+        <div className={styles.heading}>
+          <span className={styles.badge}>WHY JOIN AILP</span>
 
-            <div className={styles.circleTwo}></div>
+          <h2>
+            Together We Can Build
+            <br />
+            A Better India
+          </h2>
 
-           <Image
-  src="/images/why-join.png"
-  alt="Why Join AILP"
-  width={520}
-  height={520}
-  className={styles.image}
-/>
-            
-          </div>
-
-          {/* Right */}
-
-          <div className={styles.right}>
-            {benefits.map((item, index) => (
-              <BenefitCard
-                key={index}
-                icon={item.icon}
-                title={item.title}
-                description={item.description}
-              />
-            ))}
-
-            <Link href="/join" className={styles.button}>
-              Become A Member
-              <FaArrowRight />
-            </Link>
-          </div>
+          <p>
+            Join a movement dedicated to workers' rights, employment,
+            social justice, and inclusive national development.
+          </p>
         </div>
-      </Container>
-    </Section>
+
+        {/* Cards */}
+
+        <div className={styles.gridCards}>
+          {whyJoinData.map((item) => (
+            <article key={item.id} className={styles.card}>
+              <div className={styles.icon}>{item.icon}</div>
+
+              <h3>{item.title}</h3>
+
+              <p>{item.description}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+
+<div className={styles.statsSection}>
+
+  <div className={styles.statCard}>
+    <h3>25,000+</h3>
+    <p>Citizens Connected</p>
+  </div>
+
+  <div className={styles.statCard}>
+    <h3>150+</h3>
+    <p>District Volunteers</p>
+  </div>
+
+  <div className={styles.statCard}>
+    <h3>50+</h3>
+    <p>Awareness Campaigns</p>
+  </div>
+
+</div>
+
+<div className={styles.ctaSection}>
+
+  <h3>Become Part of the Change</h3>
+
+  <p>
+    Every member strengthens our mission to build a more just,
+    inclusive, and progressive India.
+  </p>
+
+  <div className={styles.ctaButtons}>
+
+    <a href="/join" className={styles.joinButton}>
+      Join AILP
+    </a>
+
+    <a href="/about" className={styles.learnButton}>
+      Learn More
+    </a>
+
+  </div>
+
+</div>
+
+    </section>
   );
 }

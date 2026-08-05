@@ -1,0 +1,462 @@
+/* ==========================================================
+   AILP - Subscribe Section
+   Module 11 - Lesson 34B
+========================================================== */
+
+.subscribe{
+  position:relative;
+  overflow:hidden;
+  padding:100px 20px;
+  background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
+}
+
+/* ==========================================================
+   Background Decoration
+========================================================== */
+
+.subscribe::before{
+  content:"";
+
+  position:absolute;
+
+  width:350px;
+  height:350px;
+
+  left:-120px;
+  top:-120px;
+
+  border-radius:50%;
+
+  background:rgba(11,78,162,.06);
+
+  filter:blur(90px);
+}
+
+.subscribe::after{
+  content:"";
+
+  position:absolute;
+
+  width:320px;
+  height:320px;
+
+  right:-120px;
+  bottom:-120px;
+
+  border-radius:50%;
+
+  background:rgba(255,122,0,.08);
+
+  filter:blur(90px);
+}
+
+/* ==========================================================
+   Container
+========================================================== */
+
+.container{
+
+  position:relative;
+  z-index:2;
+
+  max-width:1200px;
+
+  margin:auto;
+
+  padding:70px;
+
+  border-radius:30px;
+
+  background:#ffffff;
+
+  display:grid;
+
+  grid-template-columns:1fr 1fr;
+
+  gap:60px;
+
+  align-items:center;
+
+  box-shadow:
+  0 20px 60px rgba(15,23,42,.08);
+
+  border:1px solid rgba(15,23,42,.06);
+
+}
+
+/* ==========================================================
+   Left
+========================================================== */
+
+.badge{
+
+  display:inline-block;
+
+  padding:10px 22px;
+
+  border-radius:40px;
+
+  background:rgba(11,78,162,.08);
+
+  color:#0B4EA2;
+
+  font-size:14px;
+
+  font-weight:700;
+
+  letter-spacing:1px;
+
+  margin-bottom:20px;
+
+}
+
+.left h2{
+
+  font-size:48px;
+
+  line-height:1.2;
+
+  color:#0f172a;
+
+  margin-bottom:24px;
+
+}
+
+.left p{
+
+  font-size:18px;
+
+  color:#64748b;
+
+  line-height:1.8;
+
+}
+
+/* ==========================================================
+   Right
+========================================================== */
+
+.form{
+
+  display:flex;
+
+  background:#f8fbff;
+
+  border:2px solid rgba(11,78,162,.08);
+
+  border-radius:60px;
+
+  overflow:hidden;
+
+}
+
+.form input{
+
+  flex:1;
+
+  border:none;
+
+  outline:none;
+
+  background:transparent;
+
+  padding:20px 24px;
+
+  font-size:16px;
+
+  color:#0f172a;
+
+}
+
+.form input::placeholder{
+
+  color:#94a3b8;
+
+}
+
+.form button{
+
+  border:none;
+
+  cursor:pointer;
+
+  padding:0 34px;
+
+  background:#0B4EA2;
+
+  color:#ffffff;
+
+  font-size:16px;
+
+  font-weight:700;
+
+  transition:.35s;
+
+}
+
+.form button:hover{
+
+  background:#FF7A00;
+
+}
+
+.right small{
+
+  display:block;
+
+  margin-top:18px;
+
+  color:#64748b;
+
+  font-size:14px;
+
+}
+
+/* ==========================================================
+   Responsive
+========================================================== */
+
+@media(max-width:992px){
+
+.container{
+
+grid-template-columns:1fr;
+
+padding:50px;
+
+gap:40px;
+
+text-align:center;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.subscribe{
+
+padding:80px 20px;
+
+}
+
+.container{
+
+padding:35px 25px;
+
+border-radius:22px;
+
+}
+
+.left h2{
+
+font-size:34px;
+
+}
+
+.left p{
+
+font-size:16px;
+
+}
+
+.form{
+
+flex-direction:column;
+
+border-radius:20px;
+
+}
+
+.form input{
+
+padding:18px;
+
+}
+
+.form button{
+
+padding:18px;
+
+width:100%;
+
+}
+
+}
+
+/* ==========================================================
+   Gradient Border
+========================================================== */
+
+.container{
+
+position:relative;
+
+}
+
+.container::before{
+
+content:"";
+
+position:absolute;
+
+inset:-2px;
+
+border-radius:32px;
+
+background:
+linear-gradient(
+135deg,
+rgba(11,78,162,.25),
+rgba(255,122,0,.25)
+);
+
+z-index:-1;
+
+}
+
+/* ==========================================================
+   Input
+========================================================== */
+
+.inputWrapper{
+
+display:flex;
+
+align-items:center;
+
+flex:1;
+
+padding-left:20px;
+
+}
+
+.icon{
+
+font-size:20px;
+
+margin-right:12px;
+
+}
+
+/* ==========================================================
+   Better Button
+========================================================== */
+
+.form button{
+
+min-width:170px;
+
+letter-spacing:.5px;
+
+font-weight:700;
+
+}
+
+.form button:hover{
+
+transform:scale(1.03);
+
+}
+
+/* ==========================================================
+   Trust Row
+========================================================== */
+
+.trust{
+
+display:flex;
+
+gap:22px;
+
+flex-wrap:wrap;
+
+margin-top:22px;
+
+font-size:15px;
+
+font-weight:600;
+
+color:#64748b;
+
+}
+
+.trust span{
+
+display:flex;
+
+align-items:center;
+
+gap:6px;
+
+}
+
+/* ==========================================================
+   Floating Decoration
+========================================================== */
+
+.right{
+
+position:relative;
+
+}
+
+.right::after{
+
+content:"";
+
+position:absolute;
+
+width:120px;
+
+height:120px;
+
+right:-30px;
+
+top:-30px;
+
+border-radius:50%;
+
+background:rgba(255,122,0,.08);
+
+filter:blur(40px);
+
+z-index:-1;
+
+}
+
+/* ==========================================================
+   Responsive
+========================================================== */
+
+@media(max-width:768px){
+
+.trust{
+
+justify-content:center;
+
+gap:12px;
+
+font-size:14px;
+
+}
+
+.inputWrapper{
+
+padding-left:16px;
+
+}
+
+.icon{
+
+font-size:18px;
+
+}
+
+.container::before{
+
+border-radius:24px;
+
+}
+
+}

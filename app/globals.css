@@ -26,6 +26,7 @@ body {
 body {
   min-height: 100%;
   display: flex;
+  padding-top:200px;
   flex-direction: column;
   color: var(--foreground);
   background: var(--background);
@@ -89,4 +90,9 @@ button:focus{
 
     outline-offset:3px;
 
+}
+
+/* Space for the fixed header */
+body{
+    padding-top:90px;
 }

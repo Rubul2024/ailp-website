@@ -1,0 +1,227 @@
+/* ==========================================================
+   Announcement Bar
+========================================================== */
+
+/* ==========================================================
+   Fixed Announcement Bar
+========================================================== */
+
+.bar {
+
+    position: fixed;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+
+    background: linear-gradient(
+        90deg,
+        #FF7A00,
+        #FF9933
+    );
+
+    color: #ffffff;
+
+    z-index: 2000;
+
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+
+}
+
+.container{
+
+    max-width:1400px;
+
+    margin:auto;
+
+    padding:10px 40px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+
+}
+
+.message{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    flex-wrap:wrap;
+
+}
+
+.message a{
+
+    color:#ffffff;
+
+    font-weight:700;
+
+    text-decoration:underline;
+
+}
+
+.message a:hover{
+
+    opacity:.85;
+
+}
+
+.close{
+
+    background:none;
+
+    border:none;
+
+    color:#ffffff;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.close:hover{
+
+    transform:rotate(90deg);
+
+}
+
+@media(max-width:768px){
+
+    .container{
+
+        padding:10px 20px;
+
+    }
+
+    .message{
+
+        font-size:13px;
+
+    }
+
+}
+
+/* ==========================================================
+   Ticker
+========================================================== */
+
+.icon{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:20px;
+
+}
+
+.ticker{
+
+    flex:1;
+
+    overflow:hidden;
+
+    white-space:nowrap;
+
+}
+
+.track{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:60px;
+
+    animation:ticker 28s linear infinite;
+
+}
+
+.item{
+
+    font-size:15px;
+
+    font-weight:600;
+
+}
+
+.join{
+
+    text-decoration:none;
+
+    background:#ffffff;
+
+    color:#FF7A00;
+
+    padding:8px 18px;
+
+    border-radius:30px;
+
+    font-weight:700;
+
+    transition:.3s;
+
+}
+
+.join:hover{
+
+    transform:translateY(-2px);
+
+}
+
+@keyframes ticker{
+
+    from{
+
+        transform:translateX(0);
+
+    }
+
+    to{
+
+        transform:translateX(-50%);
+
+    }
+
+}
+
+.track:hover{
+
+    animation-play-state:paused;
+
+}
+
+@media(max-width:768px){
+
+    .join{
+
+        display:none;
+
+    }
+
+}

@@ -1,125 +1,798 @@
-/* ==========================================
-   Active Navigation Link
-========================================== */
+/* ==========================================================
+   AILP WEBSITE
+   HEADER STYLESHEET
+   ----------------------------------------------------------
+   Production Ready CSS
+   Author : ChatGPT
+   Project : All India Labour Party
+========================================================== */
+
+/* ==========================================================
+   CSS VARIABLES
+========================================================== */
+
+:root {
+  --primary: #0b4ea2;
+
+  --secondary: #ff7a00;
+
+  --dark: #0f172a;
+
+  --text: #334155;
+
+  --light: #f8fafc;
+
+  --border: #e2e8f0;
+}
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+.header {
+  position: fixed;
+
+  top: 48px;
+
+  left: 0;
+
+  width: 100%;
+
+  z-index: 1900;
+
+  background: rgba(255, 255, 255, 0.85);
+
+  backdrop-filter: blur(18px);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+
+  transition: 0.35s;
+}
+
+/* ==========================================================
+   HEADER WHEN PAGE IS SCROLLED
+========================================================== */
+
+.scrolled {
+  background: rgba(255, 255, 255, 0.95);
+
+  box-shadow: 0 10px 35px rgba(15, 23, 42, 0.08);
+}
+
+/* ==========================================================
+   HEADER CONTAINER
+========================================================== */
+
+.container {
+  max-width: 1400px;
+
+  margin: auto;
+
+  padding: 16px 40px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 40px;
+}
+
+/* ==========================================================
+   LOGO
+========================================================== */
+
+.logo {
+  display: flex;
+
+  align-items: center;
+
+  text-decoration: none;
+
+  transition: 0.35s;
+}
+
+.logo:hover {
+  transform: scale(1.04);
+}
+
+.logo img {
+  display: block;
+
+  width: auto;
+
+  height: auto;
+
+  max-height: 62px;
+}
+
+/* ==========================================================
+   DESKTOP NAVIGATION
+========================================================== */
+
+.navigation {
+  display: flex;
+
+  align-items: center;
+
+  gap: 34px;
+}
+
+/* ==========================================================
+   NAVIGATION LINK
+========================================================== */
+
+.navLink {
+  position: relative;
+
+  color: var(--dark);
+
+  text-decoration: none;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  transition: 0.3s;
+}
+/* ==========================================================
+   NAVIGATION HOVER
+========================================================== */
+
+.navLink:hover {
+  color: var(--primary);
+}
+/* ==========================================================
+   NAVIGATION ANIMATION
+========================================================== */
+
+.navLink::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+
+  bottom: -8px;
+
+  width: 100%;
+
+  height: 2px;
+
+  background: var(--secondary);
+
+  transform: scaleX(0);
+
+  transform-origin: left;
+
+  transition: 0.35s;
+}
+
+.navLink:hover::after {
+  transform: scaleX(1);
+}
+/* ==========================================================
+   ACTIVE PAGE
+========================================================== */
 
 .active {
-
-    color: var(--primary-color) !important;
-
+  color: var(--primary);
 }
 
 .active::after {
-
-    width: 100% !important;
-
+  transform: scaleX(1);
 }
 
-/* ==========================================
-   Hamburger Button
-========================================== */
+/* ==========================================================
+   ACCESSIBILITY
+========================================================== */
 
-.menuButton {
+.navLink:focus-visible {
+  outline: 3px solid var(--primary);
 
-    display: none;
+  outline-offset: 4px;
 
-    border: none;
-
-    background: transparent;
-
-    cursor: pointer;
-
-    font-size: 28px;
-
-    color: var(--text-dark);
-
+  border-radius: 6px;
 }
 
-/* ==========================================
-   Mobile Join Button
-========================================== */
+/* ==========================================================
+   HEADER ACTIONS
+========================================================== */
+
+.actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+}
+
+/* ==========================================================
+   COMMON BUTTON STYLE
+========================================================== */
+
+.joinButton,
+.donateButton {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-decoration: none;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  padding: 14px 28px;
+
+  border-radius: 999px;
+
+  transition: all 0.35s ease;
+
+  cursor: pointer;
+}
+
+/* ==========================================================
+   JOIN BUTTON
+========================================================== */
+
+.joinButton {
+  background: linear-gradient(135deg, var(--primary), #2563eb);
+
+  color: #ffffff;
+
+  box-shadow: 0 10px 30px rgba(11, 78, 162, 0.18);
+}
+
+.joinButton:hover {
+  transform: translateY(-4px) scale(1.02);
+
+  box-shadow: 0 18px 40px rgba(11, 78, 162, 0.28);
+}
+
+/* ==========================================================
+   DONATE BUTTON
+========================================================== */
+
+.donateButton {
+  background: linear-gradient(135deg, var(--secondary), #ff9f1a);
+
+  color: #ffffff;
+
+  box-shadow: 0 10px 30px rgba(255, 122, 0, 0.18);
+}
+
+.donateButton:hover {
+  transform: translateY(-4px) scale(1.02);
+
+  box-shadow: 0 18px 40px rgba(255, 122, 0, 0.28);
+}
+/* ==========================================================
+   MOBILE MENU BUTTON
+========================================================== */
 
 .mobileButton {
+  display: none;
 
+  width: 52px;
+
+  height: 52px;
+
+  border: none;
+
+  border-radius: 16px;
+
+  background: #ffffff;
+
+  color: var(--dark);
+
+  cursor: pointer;
+
+  align-items: center;
+
+  justify-content: center;
+
+  transition: all 0.35s ease;
+
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+}
+/* ==========================================================
+   MOBILE BUTTON HOVER
+========================================================== */
+
+.mobileButton:hover {
+  background: var(--primary);
+
+  color: #ffffff;
+
+  transform: translateY(-2px);
+}
+
+/* ==========================================================
+   HAMBURGER ICON
+========================================================== */
+
+.mobileButton svg {
+  font-size: 26px;
+}
+
+/* ==========================================================
+   ACCESSIBILITY
+========================================================== */
+
+.joinButton:focus-visible,
+.donateButton:focus-visible,
+.mobileButton:focus-visible {
+  outline: 3px solid var(--primary);
+
+  outline-offset: 4px;
+}
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@media (max-width: 1100px) {
+  .navigation {
     display: none;
+  }
+
+  .actions {
+    display: none;
+  }
+
+  .mobileButton {
+    display: flex;
+  }
+}
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media (max-width: 768px) {
+  .container {
+    padding: 14px 20px;
+  }
+
+  .logo img {
+    max-height: 52px;
+  }
+
+  .mobileButton {
+    width: 48px;
+
+    height: 48px;
+  }
+}
+
+/* ==========================================================
+   MOBILE OVERLAY
+========================================================== */
+
+/* ==========================================================
+   Overlay
+========================================================== */
+
+.overlay {
+  position: fixed;
+
+  inset: 0;
+
+  background: rgba(15, 23, 42, 0.45);
+
+  backdrop-filter: blur(8px);
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  transition:
+    opacity 0.35s ease,
+    visibility 0.35s ease;
+}
+
+.showOverlay {
+  opacity: 1;
+
+  visibility: visible;
+}
+
+/* ==========================================================
+   PREMIUM MOBILE DRAWER
+========================================================== */
+
+.mobileMenu {
+  position: fixed;
+
+  top: 58px;
+
+  right: -100%;
+
+  width: 380px;
+
+  max-width: 92%;
+
+  height: calc(100vh - 70px);
+
+  display: flex;
+
+  flex-direction: column;
+
+  overflow-y: auto;
+
+  padding: 28px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.98),
+    rgba(246, 248, 252, 0.98)
+  );
+
+  backdrop-filter: blur(22px);
+
+  border-radius: 28px 0 0 28px;
+
+  box-shadow:
+    -18px 0 60px rgba(15, 23, 42, 0.18),
+    -5px 0 25px rgba(15, 23, 42, 0.08);
+
+  transition:
+    right 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow 0.35s;
+
+  z-index: 3000;
+}
+/* ==========================================================
+   DRAWER OPEN
+========================================================== */
+
+.showMenu {
+  right: 0;
+}
+/* ==========================================================
+   CLOSE BUTTON
+========================================================== */
+
+.closeButton {
+  position: absolute;
+
+  top: 18px;
+
+  right: 18px;
+
+  width: 48px;
+
+  height: 48px;
+
+  border: none;
+
+  border-radius: 50%;
+
+  background: #f8fafc;
+
+  color: var(--dark);
+
+  cursor: pointer;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 24px;
+
+  transition: all 0.35s ease;
+}
+
+.closeButton:hover {
+  background: var(--secondary);
+
+  color: #ffffff;
+
+  transform: rotate(90deg);
+}
+
+/* ==========================================================
+   MOBILE LOGO
+========================================================== */
+
+.mobileLogo {
+  text-align: center;
+
+  padding-bottom: 28px;
+
+  margin-bottom: 28px;
+
+  border-bottom: 1px solid var(--border);
+}
+
+.mobileLogo img {
+  width: 150px;
+
+  height: auto;
+
+  display: block;
+
+  margin: auto;
+}
+
+.mobileLogo h3 {
+  margin-top: 18px;
+
+  font-size: 22px;
+
+  font-weight: 700;
+
+  color: var(--dark);
+}
+
+.mobileLogo p {
+  margin-top: 10px;
+
+  font-size: 14px;
+
+  line-height: 1.7;
+
+  color: #64748b;
+}
+
+/* ==========================================================
+   SCROLLBAR
+========================================================== */
+
+.mobileMenu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.mobileMenu::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--primary), var(--secondary));
+
+  border-radius: 30px;
+}
+
+.mobileMenu::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ==========================================================
+   LOGO ANIMATION
+========================================================== */
+
+.mobileLogo {
+  animation: logoFade 0.6s ease;
+}
+
+@keyframes logoFade {
+  from {
+    opacity: 0;
+
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================
+   MOBILE NAVIGATION
+========================================================== */
+
+.mobileNavigation {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 12px;
+}
+/* ==========================================================
+   MOBILE MENU ITEM
+========================================================== */
+
+.mobileLink {
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+
+  padding: 16px 18px;
+
+  border-radius: 18px;
+
+  text-decoration: none;
+
+  color: var(--dark);
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  background: transparent;
+
+  transition: all 0.35s ease;
+}
+/* ==========================================================
+   MENU HOVER
+========================================================== */
+
+.mobileLink:hover {
+  background: #eef5ff;
+
+  color: var(--primary);
+
+  transform: translateX(8px) scale(1.02);
+}
+
+/* ==========================================================
+   MENU ICON
+========================================================== */
+
+.menuIcon {
+  width: 42px;
+
+  height: 42px;
+
+  border-radius: 14px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: #f8fafc;
+
+  color: var(--primary);
+
+  font-size: 18px;
+
+  transition: all 0.35s ease;
+}
+
+.mobileLink:hover .menuIcon {
+  background: var(--primary);
+
+  color: #ffffff;
+
+  transform: rotate(-8deg);
+}
+
+/* ==========================================================
+   ACTIVE MOBILE LINK
+========================================================== */
+
+.mobileActive {
+  background: linear-gradient(135deg, var(--primary), #2563eb);
+
+  color: #ffffff;
+}
+
+.mobileActive .menuIcon {
+  background: #ffffff;
+
+  color: var(--primary);
+}
+/* ==========================================================
+   MOBILE ACTION BUTTONS
+========================================================== */
+
+.mobileActions {
+  margin-top: 30px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 16px;
+}
+
+/* ==========================================================
+   MOBILE FOOTER
+========================================================== */
+
+.mobileFooter {
+  margin-top: 40px;
+
+  padding-top: 24px;
+
+  border-top: 1px solid var(--border);
+}
+
+/* ==========================================================
+   SOCIAL ICONS
+========================================================== */
+
+.socialIcons {
+  display: flex;
+
+  justify-content: center;
+
+  gap: 14px;
+}
+
+.socialIcons a {
+  width: 46px;
+
+  height: 46px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-decoration: none;
+
+  border-radius: 50%;
+
+  background: #f8fafc;
+
+  color: var(--primary);
+
+  transition: all 0.35s ease;
+}
+
+.socialIcons a:hover {
+  background: var(--primary);
+
+  color: #fff;
+
+  transform: translateY(-6px) rotate(-8deg);
+}
+
+.mobileFooter p {
+  margin-top: 20px;
+
+  text-align: center;
+
+  font-size: 13px;
+
+  color: #64748b;
+}
+
+/* ==========================================================
+   MENU ITEM ANIMATION
+========================================================== */
+
+.mobileLink {
+  opacity: 0;
+
+  transform: translateX(30px);
+
+  animation: menuFade 0.45s ease forwards;
+}
+
+@keyframes menuFade {
+  to {
+    opacity: 1;
+
+    transform: translateX(0);
+  }
+}
+
+/* ==========================================================
+   Focus Visible
+========================================================== */
+
+.mobileLink:focus-visible,
+
+.closeButton:focus-visible,
+
+.joinButton:focus-visible,
+
+.donateButton:focus-visible{
+
+    outline:3px solid var(--primary);
+
+    outline-offset:4px;
 
 }
 
-/* ==========================================
-   Tablet & Mobile
-========================================== */
-
-@media (max-width: 992px){
-
-    .menuButton{
-
-        display:block;
-
-    }
-
-    .joinButton{
-
-        display:none;
-
-    }
-
-    .navWrapper{
-
-        position:fixed;
-
-        top:82px;
-
-        right:-100%;
-
-        width:300px;
-
-        height:calc(100vh - 82px);
-
-        background:#ffffff;
-
-        box-shadow:-10px 0 30px rgba(0,0,0,.08);
-
-        transition:.35s;
-
-        padding:40px 30px;
-
-    }
-
-    .showMenu{
-
-        right:0;
-
-    }
-
-    .nav{
-
-        flex-direction:column;
-
-        align-items:flex-start;
-
-        gap:28px;
-
-    }
-
-    .mobileButton{
-
-        display:inline-flex;
-
-        margin-top:40px;
-
-        padding:14px 28px;
-
-        border-radius:40px;
-
-        background:linear-gradient(
-            135deg,
-            var(--primary-color),
-            var(--primary-dark)
-        );
-
-        color:#ffffff;
-
-        font-weight:600;
-
-    }
-
-}

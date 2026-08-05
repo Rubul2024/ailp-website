@@ -1,0 +1,260 @@
+/* ==========================================================
+   ABOUT SECTION
+   Module 3 - Lesson 25A
+========================================================== */
+
+/* Main Section */
+
+.about {
+
+  position: relative;
+
+  overflow: hidden;
+
+  padding: 140px 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #f8fbff 45%,
+      #f4f8ff 100%
+    );
+
+}
+
+/* ==========================================================
+   BACKGROUND DECORATION
+========================================================== */
+
+.blurBlue {
+
+  position: absolute;
+
+  top: -120px;
+
+  left: -180px;
+
+  width: 420px;
+
+  height: 420px;
+
+  background: #0B4EA2;
+
+  opacity: .08;
+
+  filter: blur(120px);
+
+  pointer-events: none;
+
+}
+
+.blurOrange {
+
+  position: absolute;
+
+  bottom: -120px;
+
+  right: -150px;
+
+  width: 350px;
+
+  height: 350px;
+
+  background: #FF7A00;
+
+  opacity: .10;
+
+  filter: blur(110px);
+
+  pointer-events: none;
+
+}
+
+/* Container */
+
+.container {
+
+  width: min(1400px, 92%);
+
+  margin: auto;
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 70px;
+
+  align-items: center;
+
+}
+
+/* Image */
+
+.imageWrapper {
+
+  position: relative;
+
+  width: 100%;
+
+  height: 620px;
+
+  overflow: hidden;
+
+  border-radius: 30px;
+
+  box-shadow: 0 25px 60px rgba(15,23,42,.12);
+
+}
+
+.image {
+
+  object-fit: cover;
+
+  transition: transform .5s ease;
+
+}
+
+.imageWrapper:hover .image {
+
+  transform: scale(1.05);
+
+}
+
+/* Content */
+
+.content {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 24px;
+
+}
+
+/* Badge */
+
+.badge {
+
+  width: fit-content;
+
+  padding: 10px 20px;
+
+  border-radius: 999px;
+
+  background: rgba(11,78,162,.08);
+
+  color: #0B4EA2;
+
+  font-weight: 700;
+
+  font-size: 14px;
+
+  letter-spacing: .5px;
+
+}
+
+/* Title */
+
+.title {
+
+  font-size: clamp(2.4rem,5vw,4rem);
+
+  line-height: 1.15;
+
+  font-weight: 800;
+
+  color: #0F172A;
+
+}
+
+/* Paragraph */
+
+.description {
+
+  color: #475569;
+
+  line-height: 1.9;
+
+  font-size: 17px;
+
+}
+
+/* Button */
+
+.button {
+
+  margin-top: 12px;
+
+  width: fit-content;
+
+  padding: 16px 34px;
+
+  border-radius: 999px;
+
+  background: linear-gradient(135deg,#0B4EA2,#2563EB);
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-weight: 700;
+
+  transition: all .35s ease;
+
+}
+
+.button:hover {
+
+  transform: translateY(-4px);
+
+  box-shadow: 0 18px 35px rgba(11,78,162,.25);
+
+}
+
+/* Tablet */
+
+@media (max-width:992px){
+
+  .container{
+
+    grid-template-columns:1fr;
+
+    gap:50px;
+
+  }
+
+  .content{
+
+    text-align:center;
+
+    align-items:center;
+
+  }
+
+}
+
+/* Mobile */
+
+@media (max-width:768px){
+
+  .about{
+
+    padding:90px 0;
+
+  }
+
+  .imageWrapper{
+
+    height:400px;
+
+  }
+
+  .description{
+
+    font-size:16px;
+
+  }
+
+}

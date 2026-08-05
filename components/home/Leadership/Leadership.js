@@ -1,90 +1,99 @@
-/*
-====================================================
-Leadership Section
+"use client";
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaLinkedinIn,
+  FaXTwitter,
+} from "react-icons/fa6";
 
-Static Data
+/* ==========================================================
+   AILP Leadership Section
+   Module 6 - Lesson 29A
+========================================================== */
 
-Later this array will come from MongoDB.
-
-No UI changes required.
-====================================================
-*/
-
-import Section from "@/components/common/Section/Section";
-import Container from "@/components/common/Container/Container";
-import SectionHeading from "@/components/common/SectionHeading/SectionHeading";
-
-import LeaderCard from "./LeaderCard";
-
+import Image from "next/image";
+import Link from "next/link";
 import styles from "./Leadership.module.css";
+import leadershipData from "./leadershipData";
 
-const leaders=[
+export default function Leadership() {
+  return (
+    <section id="leadership" className={styles.section}>
+      <div className={styles.container}>
+        {/* ==========================
+            Section Heading
+        ========================== */}
 
-{
-name:"Leader Name",
-designation:"National President",
-description:"Committed to empowering workers and building a stronger India.",
-image:"/images/leader1.jpg"
-},
+        <div className={styles.heading}>
+          <span className={styles.badge}>OUR LEADERSHIP</span>
 
-{
-name:"Leader Name",
-designation:"General Secretary",
-description:"Dedicated to labour welfare and employment generation.",
-image:"/images/leader2.jpg"
-},
+          <h2>
+            Meet The Leaders
+            <br />
+            Driving Positive Change
+          </h2>
 
-{
-name:"Leader Name",
-designation:"Vice President",
-description:"Working towards equality, development and social justice.",
-image:"/images/leader3.jpg"
-}
+          <p>
+            Our leadership team is committed to strengthening workers' rights,
+            promoting social justice, and building a stronger future for every
+            citizen of India.
+          </p>
+        </div>
 
-];
+        {/* ==========================
+            Leadership Cards
+        ========================== */}
 
-export default function Leadership(){
+        <div className={styles.grid}>
+          {leadershipData.map((leader) => (
+            <article key={leader.id} className={styles.card}>
+              {/* Leader Image */}
 
-return(
+              <div className={styles.imageWrapper}>
+                <Image
+                  src={leader.image}
+                  alt={leader.name}
+                  fill
+                  className={styles.image}
+                />
+              </div>
 
-<Section light>
+              {/* Leader Details */}
 
-<Container>
+              <div className={styles.content}>
+                <span className={styles.designation}>{leader.designation}</span>
 
-<SectionHeading
+                <h3>{leader.name}</h3>
 
-badge="OUR LEADERSHIP"
+                <p>{leader.description}</p>
 
-title="Meet Our Leadership"
+                <div className={styles.socials}>
+                  <a href={leader.social.facebook}>
+                    <FaFacebookF />
+                  </a>
 
-subtitle="Experienced leaders working together for employment, equality and national development."
+                  <a href={leader.social.twitter}>
+                    <FaXTwitter />
+                  </a>
 
-/>
+                  <a href={leader.social.instagram}>
+                    <FaInstagram />
+                  </a>
 
-<div className={styles.grid}>
+                  <a href={leader.social.linkedin}>
+                    <FaLinkedinIn />
+                  </a>
+                </div>
 
-{
-
-leaders.map((leader,index)=>(
-
-<LeaderCard
-
-key={index}
-
-leader={leader}
-
-/>
-
-))
-
-}
-
-</div>
-
-</Container>
-
-</Section>
-
-);
-
+                <Link href={leader.profile} className={styles.button}>
+                  View Profile →
+                </Link>
+                
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }
