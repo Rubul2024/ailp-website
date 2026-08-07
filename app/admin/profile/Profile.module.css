@@ -1,0 +1,221 @@
+/* ==========================================================
+   Profile Page
+========================================================== */
+
+.page{
+    display:flex;
+    flex-direction:column;
+    gap:30px;
+}
+
+/* Header */
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.title h1{
+    margin:0;
+    font-size:34px;
+    color:#111827;
+}
+
+.title p{
+    margin-top:8px;
+    color:#6b7280;
+}
+
+/* Card */
+
+.card{
+    background:#ffffff;
+    border-radius:24px;
+    padding:40px;
+    box-shadow:0 18px 40px rgba(0,0,0,.05);
+}
+
+/* Top */
+
+.profileTop{
+    display:flex;
+    align-items:center;
+    gap:30px;
+    margin-bottom:40px;
+}
+
+.avatar{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:white;
+
+    font-size:42px;
+    font-weight:bold;
+}
+
+.info h2{
+    margin:0;
+    font-size:30px;
+    color:#111827;
+}
+
+.info p{
+    margin-top:8px;
+    color:#6b7280;
+}
+
+/* Grid */
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:25px;
+
+}
+
+.group{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.group label{
+
+    margin-bottom:10px;
+
+    font-weight:600;
+
+    color:#374151;
+
+}
+
+.input{
+
+    width:100%;
+
+    height:52px;
+
+    border:1px solid #d1d5db;
+
+    border-radius:14px;
+
+    padding:0 16px;
+
+    background:#f9fafb;
+
+    font-size:15px;
+
+}
+
+.input:focus{
+
+    outline:none;
+
+    border-color:#2563eb;
+
+    box-shadow:0 0 0 4px rgba(37,99,235,.12);
+
+}
+
+/* Footer */
+
+.footer{
+
+    margin-top:35px;
+
+    display:flex;
+
+    justify-content:flex-end;
+
+}
+
+.button{
+
+    border:none;
+
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+
+    color:white;
+
+    padding:14px 28px;
+
+    border-radius:14px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.button:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 12px 24px rgba(37,99,235,.25);
+
+}
+
+/* Loading */
+
+.loading{
+
+    text-align:center;
+
+    padding:80px;
+
+}
+
+/* Error */
+
+.error{
+
+    background:#fee2e2;
+
+    color:#b91c1c;
+
+    padding:20px;
+
+    border-radius:14px;
+
+}
+
+/* Responsive */
+
+@media(max-width:900px){
+
+.grid{
+
+grid-template-columns:1fr;
+
+}
+
+.profileTop{
+
+flex-direction:column;
+
+text-align:center;
+
+}
+
+.card{
+
+padding:25px;
+
+}
+
+}

@@ -1,38 +1,91 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 import Link from "next/link";
+
+import { useRouter } from "next/navigation";
+
 import styles from "./Header.module.css";
 
 export default function HeaderActions() {
+  const router = useRouter();
 
-    return (
+  const [loggedIn, setLoggedIn] = useState(false);
 
-        <div className={styles.actions}>
+  useEffect(() => {
+    checkMember();
+  }, []);
 
-            <Link
+  async function checkMember() {
+    try {
+      const response = await fetch(
+        "/api/member/me",
 
-                href="/join"
+        {
+          credentials: "include",
+        },
+      );
 
-                className={styles.joinButton}
+      const data = await response.json();
 
-            >
+      setLoggedIn(data.success);
+    } catch {
+      setLoggedIn(false);
+    }
+  }
 
-                Join AILP
+  async function handleLogout() {
+    try {
+      await fetch(
+        "/api/auth/logout",
 
-            </Link>
+        {
+          method: "POST",
 
-            <Link
+          credentials: "include",
+        },
+      );
 
-                href="/donate"
+      router.push("/");
 
-                className={styles.donateButton}
+      router.refresh();
+    } catch {
+      alert("Logout failed.");
+    }
+  }
 
-            >
+  return (
+    <div className={styles.actions}>
+      {loggedIn ? (
+        <>
+          <Link href="/member/dashboard" className={styles.joinButton}>
+            Dashboard
+          </Link>
 
-                Donate
+          <Link href="/member/profile" className={styles.donateButton}>
+            My Profile
+          </Link>
 
-            </Link>
+          <button onClick={handleLogout} className={styles.logoutButton}>
+            Logout
+          </button>
+        </>
+      ) : (
+        <>
+          <Link href="/member/register" className={styles.joinButton}>
+            Join AILP
+          </Link>
 
-        </div>
+          <Link href="/member/login" className={styles.memberButton}>
+            Member Login
+          </Link>
 
-    );
-
+          <Link href="/donate" className={styles.donateButton}>
+            Donate
+          </Link>
+        </>
+      )}
+    </div>
+  );
 }

@@ -5,54 +5,34 @@ import { usePathname } from "next/navigation";
 
 import styles from "./Header.module.css";
 
-const menu=[
+const menu = [
+  { title: "Home", href: "/" },
 
-{title:"Home",href:"/"},
+  { title: "About", href: "/about" },
 
-{title:"About",href:"/about"},
+  { title: "Leadership", href: "/leadership" },
 
-{title:"Leadership",href:"/leadership"},
+  { title: "News", href: "/news" },
 
-{title:"News",href:"/news"},
+  { title: "Gallery", href: "/gallery" },
 
-{title:"Gallery",href:"/gallery"},
-
-{title:"Contact",href:"/contact"}
-
+  { title: "Contact", href: "/contact" },
 ];
 
-export default function Navigation(){
+export default function Navigation() {
+  const pathname = usePathname();
 
-const pathname=usePathname();
-
-return(
-
-<nav className={styles.navigation}>
-
-{
-
-menu.map((item)=>(
-
-<Link
-
-key={item.title}
-
-href={item.href}
-
-className={`${styles.navLink} ${pathname===item.href ? styles.active : ""}`}
-
->
-
-{item.title}
-
-</Link>
-
-))
-
-}
-
-</nav>
-
-);
-
+  return (
+    <nav className={styles.navigation}>
+      {menu.map((item) => (
+        <Link
+          key={item.title}
+          href={item.href}
+          className={`${styles.navLink} ${pathname === item.href ? styles.active : ""}`}
+        >
+          {item.title}
+        </Link>
+      ))}
+    </nav>
+  );
 }

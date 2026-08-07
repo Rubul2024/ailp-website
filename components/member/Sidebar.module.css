@@ -1,0 +1,216 @@
+/* ==========================================================
+   Sidebar
+========================================================== */
+
+.sidebar{
+    width:270px;
+    min-height:100vh;
+    background:linear-gradient(180deg,#0f172a,#1e3a8a);
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    color:#fff;
+    position:sticky;
+    top:0;
+    left:0;
+    overflow:hidden;
+}
+
+/* ==========================================================
+   Logo
+========================================================== */
+
+.logoSection{
+    padding:35px 25px;
+    text-align:center;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.logoSection img{
+    border-radius:18px;
+    background:#fff;
+}
+
+.logoSection h2{
+    margin-top:15px;
+    font-size:22px;
+    font-weight:700;
+    color:#fff;
+}
+
+/* ==========================================================
+   Navigation
+========================================================== */
+
+.navigation{
+    flex:1;
+    padding:30px 18px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+/* ==========================================================
+   Menu Item
+========================================================== */
+
+.menuItem{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:16px 18px;
+
+    text-decoration:none;
+
+    color:#dbeafe;
+
+    border-radius:16px;
+
+    transition:.35s;
+
+    font-weight:600;
+
+    background:transparent;
+
+}
+
+.menuLeft{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+}
+
+/* ==========================================================
+   Hover
+========================================================== */
+
+.menuItem:hover{
+
+    background:rgba(255,255,255,.08);
+
+    color:#fff;
+
+    transform:translateX(6px);
+
+}
+
+/* ==========================================================
+   Active Menu
+========================================================== */
+
+.active{
+
+    background:#ffffff;
+
+    color:#2563eb;
+
+    box-shadow:
+    0 15px 35px rgba(37,99,235,.25);
+
+}
+
+.active svg{
+
+    color:#2563eb;
+
+}
+
+/* ==========================================================
+   Bottom
+========================================================== */
+
+.bottomSection{
+
+    padding:22px;
+
+    border-top:1px solid rgba(255,255,255,.08);
+
+}
+
+/* ==========================================================
+   Logout Button
+========================================================== */
+
+.logoutButton{
+
+    width:100%;
+
+    height:56px;
+
+    border:none;
+
+    border-radius:18px;
+
+    background:#ef4444;
+
+    color:#fff;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    transition:.35s;
+
+}
+
+.logoutButton:hover{
+
+    background:#dc2626;
+
+    transform:translateY(-2px);
+
+}
+
+/* ==========================================================
+   Responsive
+========================================================== */
+
+@media(max-width:992px){
+
+.sidebar{
+
+    width:240px;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.sidebar{
+
+    position:fixed;
+
+    z-index:999;
+
+    left:-270px;
+
+    transition:.4s;
+
+}
+
+.sidebar.open{
+
+    left:0;
+
+}
+
+}

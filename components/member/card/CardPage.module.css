@@ -1,0 +1,114 @@
+/* ==========================================================
+   Card Page Layout
+========================================================== */
+
+.container{
+    display:flex;
+    min-height:100vh;
+    background:#f8fafc;
+}
+
+.sidebar{
+    width:280px;
+    flex-shrink:0;
+}
+
+.main{
+    flex:1;
+    padding:30px;
+    overflow-x:hidden;
+}
+
+.pageHeader{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    margin-bottom:30px;
+}
+
+.pageHeader h1{
+    margin:0;
+    font-size:34px;
+    color:#0f172a;
+}
+
+.pageHeader p{
+    margin-top:8px;
+    color:#64748b;
+}
+
+.actions{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.primaryButton,
+.secondaryButton{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    border:none;
+    cursor:pointer;
+    border-radius:14px;
+    padding:14px 22px;
+    font-size:15px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.primaryButton{
+    background:#2563eb;
+    color:#fff;
+}
+
+.primaryButton:hover{
+    background:#1d4ed8;
+}
+
+.secondaryButton{
+    background:#fff;
+    color:#0f172a;
+    border:1px solid #e2e8f0;
+}
+
+.secondaryButton:hover{
+    border-color:#2563eb;
+    color:#2563eb;
+}
+
+@media(max-width:992px){
+
+.pageHeader{
+    flex-direction:column;
+    align-items:flex-start;
+}
+
+}
+
+@media(max-width:768px){
+
+.container{
+    flex-direction:column;
+}
+
+.sidebar{
+    width:100%;
+}
+
+.main{
+    padding:20px;
+}
+
+.actions{
+    width:100%;
+}
+
+.primaryButton,
+.secondaryButton{
+    flex:1;
+    justify-content:center;
+}
+
+}

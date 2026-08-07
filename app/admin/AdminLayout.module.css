@@ -1,0 +1,42 @@
+/* ==========================================================
+   Admin Layout
+========================================================== */
+
+.layout {
+  min-height: 100vh;
+  background: #f4f7fb;
+}
+
+.contentWrapper {
+  margin-left: 280px;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1;
+
+  padding: 30px;
+
+  overflow-x: auto;
+}
+
+/* Responsive */
+
+@media (max-width: 992px) {
+  .contentWrapper {
+    margin-left: 0;
+  }
+
+  .main {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .main {
+    padding: 15px;
+  }
+}

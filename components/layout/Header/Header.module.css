@@ -796,3 +796,71 @@
 
 }
 
+
+/* ==========================================
+   Member Login Button
+========================================== */
+
+.memberButton{
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+padding:13px 26px;
+
+border:2px solid #2563eb;
+
+border-radius:14px;
+
+background:white;
+
+color:#2563eb;
+
+font-weight:700;
+
+text-decoration:none;
+
+transition:.3s;
+
+}
+
+.memberButton:hover{
+
+background:#2563eb;
+
+color:white;
+
+}
+
+/* ==========================================
+   Logout Button
+========================================== */
+
+.logoutButton{
+
+padding:13px 24px;
+
+border:none;
+
+border-radius:14px;
+
+background:#ef4444;
+
+color:white;
+
+font-weight:700;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.logoutButton:hover{
+
+background:#dc2626;
+
+}

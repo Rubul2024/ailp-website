@@ -1,0 +1,248 @@
+/* ==========================================================
+   Admin Error Page
+========================================================== */
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+
+  background: linear-gradient(
+    135deg,
+    #0f172a,
+    #1e3a8a,
+    #2563eb
+  );
+}
+
+.card {
+  width: 100%;
+  max-width: 560px;
+
+  background: rgba(255,255,255,.96);
+
+  backdrop-filter: blur(15px);
+
+  border-radius: 28px;
+
+  padding: 50px;
+
+  text-align: center;
+
+  box-shadow: 0 25px 60px rgba(0,0,0,.25);
+
+  animation: pop .35s ease;
+}
+
+/* Icon */
+
+.icon {
+
+  width: 100px;
+
+  height: 100px;
+
+  margin: 0 auto 30px;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: #fee2e2;
+
+  color: #dc2626;
+
+}
+
+/* Heading */
+
+.title {
+
+  margin: 0;
+
+  font-size: 38px;
+
+  font-weight: 700;
+
+  color: #111827;
+
+}
+
+.subtitle {
+
+  margin-top: 16px;
+
+  color: #6b7280;
+
+  line-height: 1.8;
+
+  font-size: 16px;
+
+}
+
+/* Error Box */
+
+.errorBox {
+
+  margin-top: 28px;
+
+  padding: 18px;
+
+  border-radius: 14px;
+
+  background: #fff7ed;
+
+  border: 1px solid #fdba74;
+
+  color: #9a3412;
+
+  text-align: left;
+
+  font-size: 14px;
+
+  word-break: break-word;
+
+}
+
+/* Buttons */
+
+.actions {
+
+  margin-top: 35px;
+
+  display: flex;
+
+  justify-content: center;
+
+  gap: 16px;
+
+  flex-wrap: wrap;
+
+}
+
+.retry {
+
+  border: none;
+
+  cursor: pointer;
+
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #1d4ed8
+  );
+
+  color: white;
+
+  padding: 14px 28px;
+
+  border-radius: 14px;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  transition: .3s;
+
+}
+
+.retry:hover {
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 12px 25px rgba(37,99,235,.25);
+
+}
+
+.home {
+
+  text-decoration: none;
+
+  padding: 14px 28px;
+
+  border-radius: 14px;
+
+  background: #f3f4f6;
+
+  color: #111827;
+
+  font-weight: 600;
+
+  transition: .3s;
+
+}
+
+.home:hover {
+
+  background: #e5e7eb;
+
+}
+
+/* Footer */
+
+.footer {
+
+  margin-top: 35px;
+
+  color: #94a3b8;
+
+  font-size: 14px;
+
+}
+
+@keyframes pop {
+
+  from {
+
+    opacity: 0;
+
+    transform: scale(.9);
+
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform: scale(1);
+
+  }
+
+}
+
+@media(max-width:768px){
+
+.card{
+
+padding:35px 25px;
+
+}
+
+.title{
+
+font-size:30px;
+
+}
+
+.actions{
+
+flex-direction:column;
+
+}
+
+.retry,
+.home{
+
+width:100%;
+
+text-align:center;
+
+}
+
+}

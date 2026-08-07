@@ -1,0 +1,169 @@
+/* ==========================================================
+   Donation Page
+========================================================== */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Header */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title h1 {
+  margin: 0;
+  font-size: 32px;
+  color: #111827;
+}
+
+.title p {
+  margin-top: 8px;
+  color: #6b7280;
+}
+
+/* Card */
+
+.card {
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 35px;
+  box-shadow: 0 15px 35px rgba(0,0,0,.05);
+}
+
+/* Grid */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 25px;
+}
+
+/* Form */
+
+.group {
+  display: flex;
+  flex-direction: column;
+}
+
+.group label {
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.group input,
+.group textarea {
+  border: 1px solid #d1d5db;
+  border-radius: 14px;
+  padding: 14px 16px;
+  font-size: 15px;
+  outline: none;
+  transition: .3s;
+}
+
+.group input:focus,
+.group textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37,99,235,.12);
+}
+
+.group textarea {
+  min-height: 130px;
+  resize: vertical;
+}
+
+/* Full Width */
+
+.full {
+  grid-column: 1 / -1;
+}
+
+/* Toggle */
+
+.switchRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.switchRow input {
+  width: 20px;
+  height: 20px;
+}
+
+/* QR */
+
+.qrBox {
+  border: 2px dashed #cbd5e1;
+  border-radius: 16px;
+  padding: 30px;
+  text-align: center;
+  color: #64748b;
+}
+
+/* Buttons */
+
+.footer {
+  margin-top: 35px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.saveButton {
+  border: none;
+  background: linear-gradient(135deg,#2563eb,#1d4ed8);
+  color: white;
+  height: 52px;
+  padding: 0 30px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  transition: .3s;
+}
+
+.saveButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px rgba(37,99,235,.25);
+}
+
+/* Loading */
+
+.loading {
+  text-align: center;
+  padding: 80px;
+}
+
+/* Error */
+
+.error {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 18px;
+  border-radius: 14px;
+}
+
+.success {
+  background: #dcfce7;
+  color: #15803d;
+  padding: 18px;
+  border-radius: 14px;
+}
+/* Responsive */
+
+@media(max-width:900px){
+
+.grid{
+
+grid-template-columns:1fr;
+
+}
+
+}

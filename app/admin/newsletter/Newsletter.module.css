@@ -1,0 +1,372 @@
+/* ==========================================================
+   Newsletter Management
+========================================================== */
+
+.page{
+    display:flex;
+    flex-direction:column;
+    gap:30px;
+}
+
+/* ==========================================================
+   Header
+========================================================== */
+
+.topBar{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+
+}
+
+.title h1{
+
+    margin:0;
+
+    font-size:34px;
+
+    color:#111827;
+
+}
+
+.title p{
+
+    margin-top:8px;
+
+    color:#6b7280;
+
+    font-size:15px;
+
+}
+
+/* ==========================================================
+   Actions
+========================================================== */
+
+.actions{
+
+    display:flex;
+
+    gap:15px;
+
+    align-items:center;
+
+}
+
+.searchBox{
+
+    width:320px;
+
+    height:50px;
+
+    padding:0 18px;
+
+    border:1px solid #d1d5db;
+
+    border-radius:14px;
+
+    outline:none;
+
+    font-size:15px;
+
+    transition:.3s;
+
+}
+
+.searchBox:focus{
+
+    border-color:#2563eb;
+
+    box-shadow:0 0 0 4px rgba(37,99,235,.12);
+
+}
+
+.button{
+
+    height:50px;
+
+    border:none;
+
+    border-radius:14px;
+
+    padding:0 22px;
+
+    background:#2563eb;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.button:hover{
+
+    background:#1d4ed8;
+
+}
+
+/* ==========================================================
+   Card
+========================================================== */
+
+.card{
+
+    background:white;
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    box-shadow:0 18px 40px rgba(0,0,0,.05);
+
+}
+
+/* ==========================================================
+   Table
+========================================================== */
+
+.table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+.table thead{
+
+    background:#f8fafc;
+
+}
+
+.table th{
+
+    text-align:left;
+
+    padding:18px;
+
+    color:#475569;
+
+    font-size:14px;
+
+}
+
+.table td{
+
+    padding:18px;
+
+    border-top:1px solid #eef2f7;
+
+}
+
+.table tbody tr{
+
+    transition:.3s;
+
+}
+
+.table tbody tr:hover{
+
+    background:#f8fafc;
+
+}
+
+/* ==========================================================
+   Badge
+========================================================== */
+
+.badge{
+
+    display:inline-block;
+
+    padding:7px 14px;
+
+    border-radius:20px;
+
+    background:#dcfce7;
+
+    color:#15803d;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+/* ==========================================================
+   Buttons
+========================================================== */
+
+.buttons{
+
+    display:flex;
+
+    gap:10px;
+
+}
+
+.view{
+
+    background:#2563eb;
+
+}
+
+.delete{
+
+    background:#dc2626;
+
+}
+
+.view,
+.delete{
+
+    border:none;
+
+    color:white;
+
+    border-radius:10px;
+
+    padding:9px 14px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.view:hover{
+
+    background:#1d4ed8;
+
+}
+
+.delete:hover{
+
+    background:#b91c1c;
+
+}
+
+/* ==========================================================
+   Pagination
+========================================================== */
+
+.pagination{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.pageButton{
+
+    border:none;
+
+    background:#2563eb;
+
+    color:white;
+
+    padding:10px 18px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+}
+
+.pageButton:disabled{
+
+    opacity:.45;
+
+    cursor:not-allowed;
+
+}
+
+/* ==========================================================
+   Loading
+========================================================== */
+
+.loading{
+
+    text-align:center;
+
+    padding:80px;
+
+}
+
+.loading h2{
+
+    color:#2563eb;
+
+}
+
+/* ==========================================================
+   Empty
+========================================================== */
+
+.empty{
+
+    text-align:center;
+
+    padding:80px;
+
+    color:#64748b;
+
+}
+
+/* ==========================================================
+   Responsive
+========================================================== */
+
+@media(max-width:992px){
+
+.topBar{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+}
+
+.actions{
+
+width:100%;
+
+flex-direction:column;
+
+}
+
+.searchBox{
+
+width:100%;
+
+}
+
+.card{
+
+overflow-x:auto;
+
+}
+
+.table{
+
+min-width:850px;
+
+}
+
+}

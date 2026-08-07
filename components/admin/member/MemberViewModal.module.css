@@ -1,0 +1,200 @@
+/* ==========================================================
+   Member View Modal
+========================================================== */
+
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(15,23,42,.65);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    z-index:9999;
+
+    animation:fade .25s ease;
+}
+
+.modal{
+
+    width:750px;
+    max-width:95%;
+
+    background:#ffffff;
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    box-shadow:0 25px 60px rgba(0,0,0,.25);
+
+}
+
+.header{
+
+    padding:24px 30px;
+
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+
+    color:white;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.header h2{
+
+    margin:0;
+
+}
+
+.close{
+
+    border:none;
+
+    background:none;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:28px;
+
+}
+
+.body{
+
+    padding:35px;
+
+}
+
+.avatar{
+
+    width:90px;
+
+    height:90px;
+
+    border-radius:50%;
+
+    background:#2563eb;
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:32px;
+
+    font-weight:700;
+
+    margin-bottom:30px;
+
+}
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:25px;
+
+}
+
+.item{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.label{
+
+    font-size:13px;
+
+    color:#6b7280;
+
+    margin-bottom:8px;
+
+}
+
+.value{
+
+    font-size:16px;
+
+    color:#111827;
+
+    font-weight:600;
+
+}
+
+.footer{
+
+    padding:25px 35px;
+
+    border-top:1px solid #e5e7eb;
+
+    display:flex;
+
+    justify-content:flex-end;
+
+}
+
+.button{
+
+    border:none;
+
+    background:#2563eb;
+
+    color:white;
+
+    height:48px;
+
+    padding:0 28px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+}
+
+@keyframes fade{
+
+from{
+
+opacity:0;
+
+}
+
+to{
+
+opacity:1;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.grid{
+
+grid-template-columns:1fr;
+
+}
+
+.body{
+
+padding:25px;
+
+}
+
+}

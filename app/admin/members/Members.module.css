@@ -1,0 +1,384 @@
+/* ==========================================================
+   Members Management
+========================================================== */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* ==========================================================
+   Top Bar
+========================================================== */
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.title h1 {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.title p {
+  margin-top: 8px;
+  color: #6b7280;
+  font-size: 15px;
+}
+
+/* ==========================================================
+   Actions
+========================================================== */
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.searchBox {
+  width: 320px;
+  height: 50px;
+  padding: 0 18px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 14px;
+
+  outline: none;
+
+  font-size: 15px;
+
+  transition: .3s;
+}
+
+.searchBox:focus {
+
+  border-color: #2563eb;
+
+  box-shadow: 0 0 0 4px rgba(37,99,235,.12);
+
+}
+
+.refreshButton {
+
+  height: 50px;
+
+  padding: 0 24px;
+
+  border: none;
+
+  border-radius: 14px;
+
+  cursor: pointer;
+
+  background: linear-gradient(135deg,#2563eb,#1d4ed8);
+
+  color: white;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  transition: .3s;
+
+}
+
+.refreshButton:hover{
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 12px 25px rgba(37,99,235,.25);
+
+}
+
+/* ==========================================================
+   Card
+========================================================== */
+
+.card{
+
+  background:#ffffff;
+
+  border-radius:24px;
+
+  overflow:hidden;
+
+  box-shadow:0 18px 40px rgba(0,0,0,.05);
+
+}
+
+/* ==========================================================
+   Table
+========================================================== */
+
+.table{
+
+  width:100%;
+
+  border-collapse:collapse;
+
+}
+
+.table thead{
+
+  background:#f8fafc;
+
+}
+
+.table th{
+
+  text-align:left;
+
+  padding:18px;
+
+  color:#475569;
+
+  font-size:14px;
+
+  font-weight:600;
+
+}
+
+.table td{
+
+  padding:18px;
+
+  border-top:1px solid #eef2f7;
+
+  color:#374151;
+
+  font-size:15px;
+
+}
+
+.table tbody tr{
+
+  transition:.3s;
+
+}
+
+.table tbody tr:hover{
+
+  background:#f9fbfd;
+
+}
+
+/* ==========================================================
+   Member
+========================================================== */
+
+.member{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:15px;
+
+}
+
+.avatar{
+
+  width:48px;
+
+  height:48px;
+
+  border-radius:50%;
+
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  color:white;
+
+  font-weight:700;
+
+}
+
+/* ==========================================================
+   Badge
+========================================================== */
+
+.badge{
+
+  display:inline-flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  padding:7px 14px;
+
+  border-radius:20px;
+
+  background:#dcfce7;
+
+  color:#15803d;
+
+  font-size:13px;
+
+  font-weight:600;
+
+}
+
+/* ==========================================================
+   Buttons
+========================================================== */
+
+.buttons{
+
+  display:flex;
+
+  gap:10px;
+
+}
+
+.view{
+
+  background:#2563eb;
+
+}
+
+.edit{
+
+  background:#16a34a;
+
+}
+
+.delete{
+
+  background:#dc2626;
+
+}
+
+.view,
+.edit,
+.delete{
+
+  border:none;
+
+  color:white;
+
+  cursor:pointer;
+
+  border-radius:10px;
+
+  padding:9px 14px;
+
+  font-size:13px;
+
+  transition:.3s;
+
+}
+
+.view:hover{
+
+  background:#1d4ed8;
+
+}
+
+.edit:hover{
+
+  background:#15803d;
+
+}
+
+.delete:hover{
+
+  background:#b91c1c;
+
+}
+
+/* ==========================================================
+   Loading
+========================================================== */
+
+.loading{
+
+  text-align:center;
+
+  padding:80px;
+
+}
+
+.loading h2{
+
+  color:#2563eb;
+
+}
+
+/* ==========================================================
+   Empty
+========================================================== */
+
+.empty{
+
+  text-align:center;
+
+  padding:70px;
+
+  color:#64748b;
+
+}
+
+/* ==========================================================
+   Responsive
+========================================================== */
+
+@media(max-width:1100px){
+
+.actions{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+}
+
+.searchBox{
+
+width:100%;
+
+}
+
+.card{
+
+overflow-x:auto;
+
+}
+
+.table{
+
+min-width:1100px;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.topBar{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+}
+
+.title h1{
+
+font-size:28px;
+
+}
+
+}
