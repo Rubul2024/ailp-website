@@ -1,113 +1,124 @@
-/* ==========================================================
-   Member Card Page
-   All India Labour Party
-========================================================== */
-
 "use client";
 
-import { useRouter } from "next/navigation";
+/* ==========================================================
+   Member Digital Membership Card
+   All India Labour Party
+   Production Ready
+========================================================== */
 
-import {
-  ArrowLeft,
-  Download,
-  Printer,
-} from "lucide-react";
+import { useEffect, useState } from "react";
 
-import Sidebar from "@/components/member/Sidebar";
-import Header from "@/components/member/Header";
+
 import MembershipCard from "@/components/member/MembershipCard";
 
 import styles from "./CardPage.module.css";
 
 export default function MemberCardPage() {
-  const router = useRouter();
+
+  const [member, setMember] = useState(null);
+
+  const [loading, setLoading] = useState(true);
 
   /* ==========================================================
-     Print Card
+     Load Member
   ========================================================== */
 
-  function handlePrint() {
-    window.print();
+  useEffect(() => {
+    loadMember();
+  }, []);
+
+  async function loadMember() {
+
+    try {
+
+      const response = await fetch(
+        "/api/member/me",
+        {
+          credentials: "include",
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        setMember(data.member);
+      }
+
+    } catch (error) {
+
+      console.error(error);
+
+    } finally {
+
+      setLoading(false);
+
+    }
+
   }
 
   /* ==========================================================
-     Download Membership Card PDF
+     Loading
   ========================================================== */
 
-  function handleDownload() {
-    window.open(
-      "/api/member/download-card",
-      "_blank"
+  if (loading) {
+
+    return (
+      <main className={styles.loading}>
+        Loading Membership Card...
+      </main>
     );
+
   }
+
+  /* ==========================================================
+     Error
+  ========================================================== */
+
+  if (!member) {
+
+    return (
+      <main className={styles.loading}>
+        Unable to load Membership Card.
+      </main>
+    );
+
+  }
+
+  /* ==========================================================
+     Page
+  ========================================================== */
 
   return (
-    <div className={styles.container}>
-      {/* ==========================================
-          Sidebar
-      ========================================== */}
 
-      <aside className={styles.sidebar}>
-        <Sidebar />
-      </aside>
+    <main className={styles.page}>
 
-      {/* ==========================================
-          Main
-      ========================================== */}
+     
 
-      <main className={styles.main}>
-        {/* Header */}
+      <section className={styles.hero}>
 
-        <Header />
+        <div>
 
-        {/* Page Header */}
+          <h1>
+            Digital Membership Card
+          </h1>
 
-        <div className={styles.pageHeader}>
-          <div>
-            <h1>Membership Card</h1>
+          <p>
 
-            <p>
-              View, Print and Download your
-              official AILP Membership Card.
-            </p>
-          </div>
+            View, download and print your official
+            All India Labour Party Membership Card.
 
-          <div className={styles.actions}>
-            <button
-              className={styles.secondaryButton}
-              onClick={() =>
-                router.push("/member/dashboard")
-              }
-            >
-              <ArrowLeft size={18} />
+          </p>
 
-              Dashboard
-            </button>
-
-            <button
-              className={styles.secondaryButton}
-              onClick={handlePrint}
-            >
-              <Printer size={18} />
-
-              Print
-            </button>
-
-            <button
-              className={styles.primaryButton}
-              onClick={handleDownload}
-            >
-              <Download size={18} />
-
-              Download PDF
-            </button>
-          </div>
         </div>
 
-        {/* Membership Card */}
+      </section>
 
-        <MembershipCard />
-      </main>
-    </div>
+      <MembershipCard
+        member={member}
+      />
+
+    </main>
+
   );
+
 }

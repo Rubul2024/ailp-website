@@ -1,163 +1,95 @@
 "use client";
 
+/* ==========================================================
+   Profile Progress Card
+   All India Labour Party
+   Dynamic Profile Completion
+========================================================== */
+
+import { CheckCircle2, CircleAlert, ShieldCheck } from "lucide-react";
+
 import styles from "../ProfileForm.module.css";
 
 export default function ProgressCard({
-
-  formData,
-
+  percentage = 0,
+  completed = 0,
+  remaining = 0,
+  total = 0,
 }) {
-
-  const fields = [
-
-    formData.fullName,
-
-    formData.email,
-
-    formData.mobile,
-
-    formData.fatherName,
-
-    formData.motherName,
-
-    formData.gender,
-
-    formData.dateOfBirth,
-
-    formData.occupation,
-
-    formData.education,
-
-    formData.bloodGroup,
-
-    formData.country,
-
-    formData.state,
-
-    formData.district,
-
-    formData.assembly,
-
-    formData.block,
-
-    formData.village,
-
-    formData.city,
-
-    formData.pincode,
-
-    formData.address,
-
-    formData.emergencyName,
-
-    formData.relationship,
-
-    formData.emergencyMobile,
-
-  ];
-
-  const completed = fields.filter(
-
-    (field) =>
-
-      field !== "" &&
-
-      field !== null &&
-
-      field !== undefined
-
-  ).length;
-
-  const total = fields.length;
-
-  const percentage = Math.round(
-
-    (completed / total) * 100
-
-  );
-
   return (
+  <section className={styles.progressCard}>
 
-    <div className={styles.progressCard}>
+    <div className={styles.progressLeft}>
 
-      <div className={styles.progressTop}>
-
-        <div>
-
-          <h2>
-
-            Complete Your Membership Profile
-
-          </h2>
-
-          <p>
-
-            Complete your profile to generate
-
-            your official Membership Card.
-
-          </p>
-
-        </div>
-
-        <div className={styles.progressPercent}>
-
-          {percentage}%
-
-        </div>
-
+      <div
+        className={styles.progressCircle}
+        style={{
+          "--progress-angle": `${percentage * 3.6}deg`,
+        }}
+      >
+        <span>{percentage}%</span>
       </div>
 
-      <div className={styles.progressBar}>
+      <div className={styles.progressTitle}>
+        <span>Profile Completion</span>
+
+        <strong>
+          {completed} of {total} completed
+        </strong>
+      </div>
+
+    </div>
+
+
+    <div className={styles.progressDetails}>
+
+      <div className={styles.progressTop}>
+        <span>Profile Completion</span>
+
+        <strong>{percentage}%</strong>
+      </div>
+
+      <div className={styles.progressTrack}>
 
         <div
-
-          className={styles.progress}
-
+          className={styles.progressFill}
           style={{
-
-            width: `${percentage}%`,
-
+            "--progress": `${percentage}%`,
           }}
-
         />
 
       </div>
 
-      <div className={styles.progressInfo}>
+      <div className={styles.progressBottom}>
 
         <span>
+          <CheckCircle2 size={15} />
 
-          Completed :
-
-          <strong>
-
-            {" "}
-
-            {completed}
-
-          </strong>
-
+          {completed} completed
         </span>
 
         <span>
+          <CircleAlert size={15} />
 
-          Remaining :
-
-          <strong>
-
-            {" "}
-
-            {total - completed}
-
-          </strong>
-
+          {remaining} remaining
         </span>
 
       </div>
 
     </div>
 
-  );
 
+    <div className={styles.progressSecurity}>
+
+      <ShieldCheck size={18} />
+
+      <span>
+        Keep your information
+        up to date.
+      </span>
+
+    </div>
+
+  </section>
+);
 }

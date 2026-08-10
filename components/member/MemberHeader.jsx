@@ -1,6 +1,14 @@
 "use client";
 
+/* ==========================================================
+   Member Header
+   All India Labour Party
+   Production Ready
+========================================================== */
+
 import { useState } from "react";
+
+import { useRouter } from "next/navigation";
 
 import {
   Menu,
@@ -13,178 +21,139 @@ import {
 
 import styles from "./MemberHeader.module.css";
 
-export default function MemberHeader({
-
-  memberName = "Member",
-
-}) {
+export default function MemberHeader({ memberName = "Member", onMenuClick }) {
+  const router = useRouter();
 
   const [open, setOpen] = useState(false);
 
-  const today = new Date().toLocaleDateString(
+  const today = new Date().toLocaleDateString("en-IN", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 
-    "en-IN",
+  /* ==========================================================
+     Logout
+  ========================================================== */
 
-    {
+  async function handleLogout() {
+    try {
+      await fetch("/api/member/logout", {
+        method: "POST",
+        credentials: "include",
+      });
 
-      weekday: "long",
+      router.push("/member/login");
 
-      day: "numeric",
+      router.refresh();
+    } catch (error) {
+      console.error(error);
 
-      month: "long",
-
-      year: "numeric",
-
+      alert("Logout failed.");
     }
+  }
 
-  );
+  /* ==========================================================
+     Navigation
+  ========================================================== */
+
+  function goTo(path) {
+    setOpen(false);
+
+    router.push(path);
+  }
 
   return (
-
     <header className={styles.header}>
-
-      {/* Left */}
+      {/* ==========================================
+          Left
+      ========================================== */}
 
       <div className={styles.left}>
-
-        <button className={styles.mobileButton}>
-
-          <Menu size={24} />
-
-        </button>
+  <button
+  className={styles.mobileButton}
+  onClick={() => {
+    console.log("MENU CLICKED");
+    onMenuClick?.();
+  }}
+>
+  <Menu size={24} />
+</button>
 
         <div>
-
           <h1>
-
-            Welcome,
-
-            <span>
-
-              {memberName}
-
-            </span>
-
+            Welcome, <span>{memberName}</span>
           </h1>
 
           <div className={styles.date}>
-
             <CalendarDays size={16} />
 
             {today}
-
           </div>
-
         </div>
-
       </div>
 
-      {/* Search */}
+      {/* ==========================================
+          Search
+      ========================================== */}
 
       <div className={styles.searchBox}>
-
         <Search size={18} />
 
-        <input
-
-          type="text"
-
-          placeholder="Search..."
-
-        />
-
+        <input type="text" placeholder="Search..." />
       </div>
 
-      {/* Right */}
+      {/* ==========================================
+          Right
+      ========================================== */}
 
       <div className={styles.right}>
-
         {/* Notification */}
 
         <button className={styles.notification}>
-
           <Bell size={20} />
 
-          <span className={styles.badge}>
-
-            3
-
-          </span>
-
+          <span className={styles.badge}>3</span>
         </button>
 
         {/* Profile */}
 
         <div className={styles.profile}>
-
           <button
-
             className={styles.profileButton}
-
             onClick={() => setOpen(!open)}
-
           >
-
             <UserCircle2 size={42} />
 
             <div>
+              <strong>{memberName}</strong>
 
-              <strong>
-
-                {memberName}
-
-              </strong>
-
-              <small>
-
-                AILP Member
-
-              </small>
-
+              <small>AILP Member</small>
             </div>
 
             <ChevronDown size={18} />
-
           </button>
 
           {open && (
-
             <div className={styles.dropdown}>
-
-              <button>
-
+              <button onClick={() => goTo("/member/profile")}>
                 My Profile
-
               </button>
 
-              <button>
-
+              <button onClick={() => goTo("/member/card")}>
                 Membership Card
-
               </button>
 
-              <button>
+              <button onClick={() => goTo("/member/settings")}>Settings</button>
 
-                Settings
-
-              </button>
-
-              <button className={styles.logout}>
-
+              <button className={styles.logout} onClick={handleLogout}>
                 Logout
-
               </button>
-
             </div>
-
           )}
-
         </div>
-
       </div>
-
     </header>
-
   );
-
 }

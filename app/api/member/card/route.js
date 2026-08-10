@@ -1,40 +1,51 @@
 /* ==========================================================
-   Download Membership Card API
+   Member Card API
+   Production Ready
 ========================================================== */
 
 import { NextResponse } from "next/server";
 
 import connectDB from "@/lib/mongodb";
 import Member from "@/models/Member";
-
 import verifyMember from "@/utils/verifyMember";
 
+/* ==========================================================
+   Get Membership Card
+========================================================== */
+
 export async function GET(request) {
-
   try {
+    /* ==========================================
+       Connect Database
+    ========================================== */
 
-    // Verify Member
+    await connectDB();
+
+    /* ==========================================
+       Verify Member
+    ========================================== */
 
     const auth = verifyMember(request);
 
     if (!auth.success) {
-
-      return NextResponse.json(auth, {
-        status: 401,
-      });
-
+      return NextResponse.json(
+        {
+          success: false,
+          message: auth.message,
+        },
+        {
+          status: 401,
+        }
+      );
     }
 
-    // Connect Database
+    /* ==========================================
+       Find Member
+    ========================================== */
 
-    await connectDB();
-
-    // Find Member
-
-    const member = await Member.findById(auth.memberId);
+    const member = await Member.findById(auth.memberId).select("-password");
 
     if (!member) {
-
       return NextResponse.json(
         {
           success: false,
@@ -44,49 +55,68 @@ export async function GET(request) {
           status: 404,
         }
       );
-
     }
 
-    // Check Card
+    /* ==========================================
+       Card Not Generated
+    ========================================== */
 
-    if (!member.cardPdf) {
-
+    if (!member.cardGenerated) {
       return NextResponse.json(
         {
           success: false,
-          message: "Membership card is not available.",
+          message: "Membership card has not been generated yet.",
         },
         {
-          status: 404,
+          status: 400,
         }
       );
-
     }
 
-    return NextResponse.json({
+    /* ==========================================
+       Success
+    ========================================== */
 
+    return NextResponse.json({
       success: true,
 
-      memberId: member.memberId,
+      card: {
+        fullName: member.fullName,
 
-      cardPdf: member.cardPdf,
+        membershipId: member.membershipId,
 
+        membershipStatus: member.membershipStatus,
+
+        verified: member.verified,
+
+        joinDate: member.joinDate,
+
+        district: member.district,
+
+        state: member.state,
+
+        photo: member.photo,
+
+        qrCode: member.qrCode,
+
+        cardUrl: member.cardUrl,
+
+        cardGenerated: member.cardGenerated,
+
+        cardGeneratedAt: member.cardGeneratedAt,
+      },
     });
-
   } catch (error) {
-
-    console.error(error);
+    console.error("Member Card API Error:", error);
 
     return NextResponse.json(
       {
         success: false,
-        message: "Server Error",
+        message: "Internal Server Error",
       },
       {
         status: 500,
       }
     );
-
   }
-
 }

@@ -1,17 +1,15 @@
 /* ==========================================================
    Member Registration API
+   All India Labour Party
    Production Ready
 ========================================================== */
 
 import { NextResponse } from "next/server";
-
 import bcrypt from "bcryptjs";
 
 import connectDB from "@/lib/mongodb";
-
 import Member from "@/models/Member";
-
-import generateMemberId from "@/utils/generateMemberId";
+import generateMembershipId from "@/utils/generateMembershipId";
 
 /* ==========================================================
    Register Member
@@ -31,13 +29,9 @@ export async function POST(request) {
 
     const {
       fullName,
-
       email,
-
       mobile,
-
       password,
-
       confirmPassword,
     } = await request.json();
 
@@ -45,17 +39,21 @@ export async function POST(request) {
        Validation
     ========================================== */
 
-    if (!fullName || !email || !mobile || !password || !confirmPassword) {
+    if (
+      !fullName ||
+      !email ||
+      !mobile ||
+      !password ||
+      !confirmPassword
+    ) {
       return NextResponse.json(
         {
           success: false,
-
           message: "Please fill all required fields.",
         },
-
         {
           status: 400,
-        },
+        }
       );
     }
 
@@ -63,13 +61,11 @@ export async function POST(request) {
       return NextResponse.json(
         {
           success: false,
-
           message: "Passwords do not match.",
         },
-
         {
           status: 400,
-        },
+        }
       );
     }
 
@@ -77,35 +73,38 @@ export async function POST(request) {
       return NextResponse.json(
         {
           success: false,
-
           message: "Password must be at least 8 characters.",
         },
-
         {
           status: 400,
-        },
+        }
       );
     }
+
+    /* ==========================================
+       Normalize Input
+    ========================================== */
+
+    const normalizedEmail = email.trim().toLowerCase();
+    const normalizedMobile = mobile.trim();
 
     /* ==========================================
        Existing Email
     ========================================== */
 
     const emailExists = await Member.findOne({
-      email: email.toLowerCase(),
+      email: normalizedEmail,
     });
 
     if (emailExists) {
       return NextResponse.json(
         {
           success: false,
-
           message: "Email already registered.",
         },
-
         {
           status: 409,
-        },
+        }
       );
     }
 
@@ -114,20 +113,18 @@ export async function POST(request) {
     ========================================== */
 
     const mobileExists = await Member.findOne({
-      mobile,
+      mobile: normalizedMobile,
     });
 
     if (mobileExists) {
       return NextResponse.json(
         {
           success: false,
-
           message: "Mobile number already registered.",
         },
-
         {
           status: 409,
-        },
+        }
       );
     }
 
@@ -135,61 +132,60 @@ export async function POST(request) {
        Hash Password
     ========================================== */
 
-    const hashedPassword = await bcrypt.hash(
-      password,
-
-      12,
-    );
+    const hashedPassword = await bcrypt.hash(password, 12);
 
     /* ==========================================
-   Generate Membership ID
-========================================== */
+       Generate Membership ID
+    ========================================== */
 
-const membershipId = await generateMemberId();
+    const membershipId = await generateMembershipId();
 
     /* ==========================================
        Create Member
     ========================================== */
 
-   const member = await Member.create({
+    const member = await Member.create({
+      fullName: fullName.trim(),
 
-  fullName,
+      email: normalizedEmail,
 
-  email: email.toLowerCase(),
+      mobile: normalizedMobile,
 
-  mobile,
+      password: hashedPassword,
 
-  password: hashedPassword,
+      membershipId,
 
-  membershipId,
+      joinDate: new Date(),
 
-  joinDate: new Date(),
+      membershipStatus: "REGISTERED",
 
-  membershipStatus: "REGISTERED",
+      profileCompleted: false,
 
-  profileCompleted: false,
+      profilePercentage: 0,
 
-});
+      isActive: true,
+    });
 
     /* ==========================================
-       Success
+       Success Response
     ========================================== */
 
     return NextResponse.json(
       {
         success: true,
 
-        message: "Registration successful.",
+        message: "Registration completed successfully.",
 
         memberId: member._id,
-      },
 
+        membershipId: member.membershipId,
+      },
       {
         status: 201,
-      },
+      }
     );
   } catch (error) {
-    console.error(error);
+    console.error("Member Register Error:", error);
 
     return NextResponse.json(
       {
@@ -197,10 +193,9 @@ const membershipId = await generateMemberId();
 
         message: "Internal Server Error",
       },
-
       {
         status: 500,
-      },
+      }
     );
   }
 }

@@ -1,0 +1,201 @@
+/* ==========================================================
+   AILP CONTACT HERO
+========================================================== */
+
+.hero {
+  position: relative;
+
+  min-height: 430px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align: center;
+
+  overflow: hidden;
+
+  padding: 150px 20px 90px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f8fbff 0%,
+      #ffffff 55%,
+      #fff8f1 100%
+    );
+}
+
+/* ==========================================================
+   Background Effects
+========================================================== */
+
+.blurBlue {
+  position: absolute;
+
+  width: 420px;
+  height: 420px;
+
+  left: -180px;
+  top: -120px;
+
+  border-radius: 50%;
+
+  background: rgba(37, 99, 235, 0.12);
+
+  filter: blur(90px);
+}
+
+.blurOrange {
+  position: absolute;
+
+  width: 350px;
+  height: 350px;
+
+  right: -140px;
+  bottom: -120px;
+
+  border-radius: 50%;
+
+  background: rgba(255, 122, 0, 0.13);
+
+  filter: blur(85px);
+}
+
+.gridPattern {
+  position: absolute;
+
+  inset: 0;
+
+  opacity: 0.35;
+
+  background-image:
+    linear-gradient(
+      rgba(15, 23, 42, 0.035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(15, 23, 42, 0.035) 1px,
+      transparent 1px
+    );
+
+  background-size: 45px 45px;
+
+  pointer-events: none;
+}
+
+/* ==========================================================
+   Container
+========================================================== */
+
+.container {
+  position: relative;
+
+  z-index: 2;
+
+  width: min(850px, 92%);
+
+  margin: auto;
+}
+
+/* ==========================================================
+   Badge
+========================================================== */
+
+.badge {
+  display: inline-flex;
+
+  padding: 9px 17px;
+
+  border-radius: 999px;
+
+  background: #eef5ff;
+
+  border: 1px solid #dbeafe;
+
+  color: #0b4ea2;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  margin-bottom: 22px;
+}
+
+/* ==========================================================
+   Heading
+========================================================== */
+
+.container h1 {
+  margin: 0;
+
+  color: #0f172a;
+
+  font-size: clamp(44px, 6vw, 72px);
+
+  line-height: 1.05;
+
+  letter-spacing: -2px;
+
+  font-weight: 850;
+}
+
+.container h1 span {
+  color: #0b4ea2;
+}
+
+/* ==========================================================
+   Description
+========================================================== */
+
+.container p {
+  max-width: 700px;
+
+  margin: 25px auto 0;
+
+  color: #64748b;
+
+  font-size: 18px;
+
+  line-height: 1.8;
+}
+
+/* ==========================================================
+   Mobile
+========================================================== */
+
+@media (max-width: 768px) {
+  .hero {
+    min-height: 390px;
+
+    padding:
+      125px
+      20px
+      70px;
+  }
+
+  .container h1 {
+    font-size: 44px;
+
+    letter-spacing: -1.5px;
+  }
+
+  .container p {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding-top: 115px;
+  }
+
+  .container h1 {
+    font-size: 38px;
+  }
+}

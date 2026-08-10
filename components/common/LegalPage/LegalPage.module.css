@@ -1,0 +1,457 @@
+/* ==========================================================
+   AILP LEGAL PAGES
+   Privacy Policy / Terms / Disclaimer
+========================================================== */
+
+.page {
+  min-height: 100vh;
+
+  background: #f8fafc;
+}
+
+/* ==========================================================
+   HERO
+========================================================== */
+
+.hero {
+  position: relative;
+
+  overflow: hidden;
+
+  padding: 170px 20px 100px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #071a3a 0%,
+      #0b3f82 55%,
+      #0b4ea2 100%
+    );
+
+  color: #ffffff;
+}
+
+.heroGlowOne {
+  position: absolute;
+
+  width: 400px;
+  height: 400px;
+
+  top: -200px;
+  left: -100px;
+
+  border-radius: 50%;
+
+  background: rgba(255, 122, 0, 0.18);
+
+  filter: blur(80px);
+}
+
+.heroGlowTwo {
+  position: absolute;
+
+  width: 450px;
+  height: 450px;
+
+  right: -180px;
+  bottom: -250px;
+
+  border-radius: 50%;
+
+  background: rgba(37, 99, 235, 0.25);
+
+  filter: blur(90px);
+}
+
+/* ==========================================================
+   CONTAINER
+========================================================== */
+
+.container {
+  position: relative;
+
+  z-index: 2;
+
+  max-width: 1100px;
+
+  margin: 0 auto;
+
+  text-align: center;
+}
+
+/* ==========================================================
+   BADGE
+========================================================== */
+
+.badge {
+  display: inline-flex;
+
+  align-items: center;
+
+  padding: 9px 18px;
+
+  margin-bottom: 20px;
+
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.1);
+
+  color: #ffffff;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+}
+
+/* ==========================================================
+   HERO TITLE
+========================================================== */
+
+.container h1 {
+  margin: 0;
+
+  font-size: clamp(40px, 6vw, 68px);
+
+  line-height: 1.08;
+
+  font-weight: 800;
+
+  letter-spacing: -1.5px;
+}
+
+.container > p {
+  max-width: 760px;
+
+  margin: 24px auto 0;
+
+  color: rgba(255, 255, 255, 0.82);
+
+  font-size: 18px;
+
+  line-height: 1.8;
+}
+
+/* ==========================================================
+   LAST UPDATED
+========================================================== */
+
+.updated {
+  display: inline-block;
+
+  margin-top: 28px;
+
+  padding: 9px 16px;
+
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  color: #cbd5e1;
+
+  font-size: 13px;
+}
+
+/* ==========================================================
+   CONTENT SECTION
+========================================================== */
+
+.contentSection {
+  padding: 80px 20px 120px;
+}
+
+.contentContainer {
+  max-width: 1050px;
+
+  margin: 0 auto;
+}
+
+/* ==========================================================
+   CONTENT CARD
+========================================================== */
+
+.contentCard {
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 28px;
+
+  padding: 60px;
+
+  box-shadow:
+    0 25px 70px rgba(15, 23, 42, 0.08);
+}
+
+/* ==========================================================
+   CONTENT SECTION
+========================================================== */
+
+.section {
+  padding-bottom: 42px;
+
+  margin-bottom: 42px;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.section:last-of-type {
+  border-bottom: none;
+
+  margin-bottom: 0;
+}
+
+/* ==========================================================
+   SECTION TITLE
+========================================================== */
+
+.section h2 {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  margin: 0 0 20px;
+
+  color: #0f172a;
+
+  font-size: 25px;
+
+  line-height: 1.3;
+}
+
+.section h2 span {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-width: 42px;
+
+  height: 42px;
+
+  border-radius: 12px;
+
+  background: #eef5ff;
+
+  color: #0b4ea2;
+
+  font-size: 13px;
+
+  font-weight: 800;
+}
+
+/* ==========================================================
+   PARAGRAPHS
+========================================================== */
+
+.section p {
+  margin: 0 0 16px;
+
+  color: #475569;
+
+  font-size: 16px;
+
+  line-height: 1.9;
+}
+
+.section p:last-child {
+  margin-bottom: 0;
+}
+
+/* ==========================================================
+   LIST
+========================================================== */
+
+.section ul {
+  margin: 18px 0 0;
+
+  padding-left: 22px;
+
+  color: #475569;
+}
+
+.section li {
+  margin-bottom: 12px;
+
+  padding-left: 5px;
+
+  line-height: 1.8;
+}
+
+/* ==========================================================
+   CONTACT CTA
+========================================================== */
+
+.contactBox {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 30px;
+
+  margin-top: 50px;
+
+  padding: 32px;
+
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #eff6ff,
+      #f8fafc
+    );
+
+  border: 1px solid #dbeafe;
+}
+
+.contactBox span {
+  color: #0b4ea2;
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.08em;
+}
+
+.contactBox h3 {
+  margin: 7px 0;
+
+  color: #0f172a;
+
+  font-size: 22px;
+}
+
+.contactBox p {
+  margin: 0;
+
+  color: #64748b;
+
+  line-height: 1.7;
+}
+
+/* ==========================================================
+   CONTACT BUTTON
+========================================================== */
+
+.contactButton {
+  flex-shrink: 0;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 14px 25px;
+
+  border-radius: 12px;
+
+  background: #0b4ea2;
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-weight: 700;
+
+  transition: 0.3s;
+}
+
+.contactButton:hover {
+  background: #083b7d;
+
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 12px 25px rgba(11, 78, 162, 0.22);
+}
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 140px 20px 75px;
+  }
+
+  .container h1 {
+    font-size: 42px;
+  }
+
+  .container > p {
+    font-size: 16px;
+  }
+
+  .contentSection {
+    padding: 50px 15px 80px;
+  }
+
+  .contentCard {
+    padding: 30px 22px;
+
+    border-radius: 20px;
+  }
+
+  .section h2 {
+    font-size: 21px;
+  }
+
+  .section h2 span {
+    min-width: 36px;
+
+    height: 36px;
+  }
+
+  .section p {
+    font-size: 15px;
+  }
+
+  .contactBox {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    padding: 25px;
+  }
+
+  .contactButton {
+    width: 100%;
+  }
+}
+
+/* ==========================================================
+   SMALL MOBILE
+========================================================== */
+
+@media (max-width: 480px) {
+  .hero {
+    padding-top: 125px;
+  }
+
+  .container h1 {
+    font-size: 34px;
+  }
+
+  .contentCard {
+    padding: 25px 18px;
+  }
+
+  .section {
+    padding-bottom: 30px;
+
+    margin-bottom: 30px;
+  }
+}

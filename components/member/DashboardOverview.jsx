@@ -2,228 +2,285 @@
 
 import { useEffect, useState } from "react";
 
+import Link from "next/link";
+
 import {
   User,
-  CreditCard,
   BadgeCheck,
+  CreditCard,
   IndianRupee,
   CalendarDays,
-  MapPin,
+  ShieldCheck,
+  Download,
+  RefreshCw,
 } from "lucide-react";
 
 import styles from "./DashboardOverview.module.css";
 
 export default function DashboardOverview() {
-  const [member, setMember] = useState(null);
-
   const [loading, setLoading] = useState(true);
 
+  const [dashboard, setDashboard] = useState(null);
+
+  const [error, setError] = useState("");
+
   /* ==========================================================
-     Load Member Information
+     Load Dashboard
   ========================================================== */
 
   useEffect(() => {
-    async function loadMember() {
-      try {
-        const response = await fetch("/api/member/me", {
-          credentials: "include",
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-          setMember(data.member);
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadMember();
+    loadDashboard();
   }, []);
 
-  /* ==========================================================
-     Profile Completion
-  ========================================================== */
+  async function loadDashboard() {
+    try {
+      setLoading(true);
 
-  function calculateProfileProgress() {
-    if (!member) return 0;
+      const response = await fetch(
+        "/api/member/dashboard",
+        {
+          credentials: "include",
+        }
+      );
 
-    const fields = [
-      member.fullName,
-      member.email,
-      member.mobile,
-      member.membershipId,
-      member.photo,
-      member.state,
-      member.district,
-    ];
+      const data = await response.json();
 
-    const completed = fields.filter(Boolean).length;
+      if (!data.success) {
+        setError(data.message);
+        return;
+      }
 
-    return Math.round((completed / fields.length) * 100);
+      setDashboard(data.dashboard);
+    } catch (error) {
+      console.error(error);
+
+      setError("Unable to load dashboard.");
+    } finally {
+      setLoading(false);
+    }
   }
 
-  const profileProgress = calculateProfileProgress();
+  /* ==========================================================
+     Loading
+  ========================================================== */
+
+  if (loading) {
+    return (
+      <div className={styles.loading}>
+        Loading Dashboard...
+      </div>
+    );
+  }
+
+  /* ==========================================================
+     Error
+  ========================================================== */
+
+  if (error) {
+    return (
+      <div className={styles.error}>
+        {error}
+      </div>
+    );
+  }
 
   return (
     <div className={styles.wrapper}>
       {/* ==========================================
-          Welcome Banner
+          Statistics Cards
       ========================================== */}
 
-      <section className={styles.banner}>
-        <div>
-          <h2>
-            Welcome Back{" "}
-            {loading
-              ? ""
-              : `, ${member?.fullName}`}
-            👋
-          </h2>
-
-          <p>
-            Welcome to the All India Labour
-            Party Member Portal.
-          </p>
-        </div>
-      </section>
-
-      {/* ==========================================
-          Cards
-      ========================================== */}
-
-      <section className={styles.grid}>
-        {/* Membership ID */}
+      <div className={styles.grid}>
+        {/* Member */}
 
         <div className={styles.card}>
-          <CreditCard
-            className={styles.icon}
-            size={34}
-          />
+          <User size={34} />
 
-          <h3>Membership ID</h3>
+          <h4>Member</h4>
 
-          <h4>
-            {loading
-              ? "Loading..."
-              : member?.membershipId ||
-                "Pending"}
-          </h4>
+          <h3>{dashboard.fullName}</h3>
+        </div>
+
+        {/* Membership */}
+
+        <div className={styles.card}>
+          <BadgeCheck size={34} />
+
+          <h4>Membership ID</h4>
+
+          <h3>
+            {dashboard.membershipId || "Pending"}
+          </h3>
         </div>
 
         {/* Status */}
 
         <div className={styles.card}>
-          <BadgeCheck
-            className={styles.icon}
-            size={34}
-          />
+          <ShieldCheck size={34} />
 
-          <h3>Status</h3>
+          <h4>Status</h4>
 
-          <span
-            className={styles.status}
-          >
-            {loading
-              ? "Loading..."
-              : member?.membershipStatus}
-          </span>
+          <h3>
+            {dashboard.membershipStatus}
+          </h3>
         </div>
 
         {/* Donation */}
 
         <div className={styles.card}>
-          <IndianRupee
-            className={styles.icon}
-            size={34}
-          />
+          <IndianRupee size={34} />
 
-          <h3>Total Donation</h3>
+          <h4>Total Donation</h4>
 
-          <h4>
+          <h3>
             ₹
-            {loading
-              ? "0"
-              : member?.totalDonation ||
-                0}
-          </h4>
+            {dashboard.totalDonation?.toLocaleString()}
+          </h3>
         </div>
+      </div>
 
-        {/* Join Date */}
+      {/* ==========================================
+          Information
+      ========================================== */}
 
-        <div className={styles.card}>
-          <CalendarDays
-            className={styles.icon}
-            size={34}
-          />
+      <div className={styles.infoSection}>
+        <div className={styles.infoCard}>
+          <h3>Membership Details</h3>
 
-          <h3>Join Date</h3>
+          <div className={styles.row}>
+            <span>Profile Completed</span>
 
-          <h4>
-            {loading
-              ? "Loading..."
-              : member?.joinDate
-              ? new Date(
-                  member.joinDate
-                ).toLocaleDateString(
-                  "en-IN"
-                )
-              : "Pending"}
-          </h4>
-        </div>
-
-        {/* Location */}
-
-        <div className={styles.card}>
-          <MapPin
-            className={styles.icon}
-            size={34}
-          />
-
-          <h3>Location</h3>
-
-          <h4>
-            {loading
-              ? "Loading..."
-              : `${member?.district || "-"}, ${
-                  member?.state || "-"
-                }`}
-          </h4>
-        </div>
-
-        {/* Profile */}
-
-        <div className={styles.card}>
-          <User
-            className={styles.icon}
-            size={34}
-          />
-
-          <h3>Profile Completion</h3>
-
-          <div
-            className={
-              styles.progressBar
-            }
-          >
-            <div
-              className={
-                styles.progress
-              }
-              style={{
-                width: `${profileProgress}%`,
-              }}
-            />
+            <strong>
+              {dashboard.profileCompleted
+                ? "Yes"
+                : "No"}
+            </strong>
           </div>
 
-          <strong>
-            {profileProgress}%
-          </strong>
+          <div className={styles.row}>
+            <span>Completion</span>
+
+            <strong>
+              {dashboard.profilePercentage}%
+            </strong>
+          </div>
+
+          <div className={styles.row}>
+            <span>Card Generated</span>
+
+            <strong>
+              {dashboard.cardGenerated
+                ? "Yes"
+                : "No"}
+            </strong>
+          </div>
+
+          <div className={styles.row}>
+            <span>Verified</span>
+
+            <strong>
+              {dashboard.verified
+                ? "Verified"
+                : "Pending"}
+            </strong>
+          </div>
+
+          <div className={styles.row}>
+            <span>Join Date</span>
+
+            <strong>
+              {dashboard.joinDate
+                ? new Date(
+                    dashboard.joinDate
+                  ).toLocaleDateString()
+                : "--"}
+            </strong>
+          </div>
         </div>
-      </section>
+
+        {/* ==========================================
+            Quick Actions
+        ========================================== */}
+
+        <div className={styles.infoCard}>
+          <h3>Quick Actions</h3>
+
+          <div className={styles.actions}>
+            <Link href="/member/profile">
+              Edit Profile
+            </Link>
+
+            <Link href="/member/card">
+              View Membership Card
+            </Link>
+
+            <Link href="/member/donation">
+              Make Donation
+            </Link>
+
+            {dashboard.cardGenerated && (
+              <a
+                href={dashboard.cardUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Download size={18} />
+
+                Download Card
+              </a>
+            )}
+
+            <button
+              onClick={loadDashboard}
+            >
+              <RefreshCw size={18} />
+
+              Refresh Dashboard
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* ==========================================
+          Donation Summary
+      ========================================== */}
+
+      <div className={styles.summary}>
+        <div className={styles.summaryCard}>
+          <CreditCard size={32} />
+
+          <h4>Total Donations</h4>
+
+          <h2>
+            {dashboard.donationCount}
+          </h2>
+        </div>
+
+        <div className={styles.summaryCard}>
+          <IndianRupee size={32} />
+
+          <h4>Highest Donation</h4>
+
+          <h2>
+            ₹
+            {dashboard.highestDonation?.toLocaleString()}
+          </h2>
+        </div>
+
+        <div className={styles.summaryCard}>
+          <CalendarDays size={32} />
+
+          <h4>Last Donation</h4>
+
+          <h2>
+            {dashboard.lastDonation
+              ? new Date(
+                  dashboard.lastDonation
+                ).toLocaleDateString()
+              : "--"}
+          </h2>
+        </div>
+      </div>
     </div>
   );
 }

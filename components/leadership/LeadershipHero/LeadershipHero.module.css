@@ -1,0 +1,637 @@
+/* ==========================================================
+   AILP LEADERSHIP HERO
+========================================================== */
+
+.hero {
+  position: relative;
+
+  min-height: 760px;
+
+  display: flex;
+
+  align-items: center;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f8fbff 0%,
+      #ffffff 48%,
+      #fff8f1 100%
+    );
+
+  padding-top: 120px;
+}
+
+/* ==========================================================
+   Background Effects
+========================================================== */
+
+.blurBlue {
+  position: absolute;
+
+  width: 420px;
+  height: 420px;
+
+  left: -180px;
+  top: 80px;
+
+  border-radius: 50%;
+
+  background: rgba(37, 99, 235, 0.12);
+
+  filter: blur(90px);
+}
+
+.blurOrange {
+  position: absolute;
+
+  width: 380px;
+  height: 380px;
+
+  right: -150px;
+  bottom: -100px;
+
+  border-radius: 50%;
+
+  background: rgba(255, 122, 0, 0.12);
+
+  filter: blur(90px);
+}
+
+/* ==========================================================
+   Grid Pattern
+========================================================== */
+
+.gridPattern {
+  position: absolute;
+
+  inset: 0;
+
+  opacity: 0.35;
+
+  background-image:
+    linear-gradient(
+      rgba(15, 23, 42, 0.035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(15, 23, 42, 0.035) 1px,
+      transparent 1px
+    );
+
+  background-size: 45px 45px;
+
+  pointer-events: none;
+}
+
+/* ==========================================================
+   Container
+========================================================== */
+
+.container {
+  position: relative;
+
+  z-index: 2;
+
+  width: min(1400px, 92%);
+
+  margin: auto;
+
+  display: grid;
+
+  grid-template-columns: 1fr 0.9fr;
+
+  align-items: center;
+
+  gap: 90px;
+}
+
+/* ==========================================================
+   Content
+========================================================== */
+
+.content {
+  max-width: 700px;
+
+  animation: fadeUp 0.8s ease both;
+}
+
+/* ==========================================================
+   Badge
+========================================================== */
+
+.badge {
+  display: inline-flex;
+
+  align-items: center;
+
+  padding: 9px 16px;
+
+  border-radius: 999px;
+
+  background: #eef5ff;
+
+  color: #0b4ea2;
+
+  border: 1px solid #dbeafe;
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.8px;
+
+  margin-bottom: 24px;
+}
+
+/* ==========================================================
+   Title
+========================================================== */
+
+.title {
+  margin: 0;
+
+  color: #0f172a;
+
+  font-size: clamp(46px, 5vw, 76px);
+
+  line-height: 1.03;
+
+  letter-spacing: -2px;
+
+  font-weight: 850;
+}
+
+.title span {
+  color: #0b4ea2;
+}
+
+/* ==========================================================
+   Description
+========================================================== */
+
+.description {
+  max-width: 650px;
+
+  margin: 28px 0 0;
+
+  color: #64748b;
+
+  font-size: 18px;
+
+  line-height: 1.85;
+}
+
+/* ==========================================================
+   Stats
+========================================================== */
+
+.stats {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 14px;
+
+  margin-top: 40px;
+}
+
+.stat {
+  min-width: 155px;
+
+  padding: 18px 20px;
+
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.82);
+
+  border: 1px solid #e2e8f0;
+
+  box-shadow: 0 15px 40px rgba(15, 23, 42, 0.06);
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+.stat strong {
+  font-size: 25px;
+
+  color: #0b4ea2;
+}
+
+.stat span {
+  color: #64748b;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+/* ==========================================================
+   Image Area
+========================================================== */
+
+.imageWrapper {
+  position: relative;
+
+  min-height: 560px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+}
+
+.imageGlow {
+  position: absolute;
+
+  width: 430px;
+
+  height: 430px;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(11, 78, 162, 0.2),
+      rgba(255, 122, 0, 0.18)
+    );
+
+  filter: blur(55px);
+}
+
+/* ==========================================================
+   Image Card
+========================================================== */
+
+.imageCard {
+  position: relative;
+
+  width: min(470px, 100%);
+
+  height: 560px;
+
+  overflow: hidden;
+
+  border-radius: 34px;
+
+  border: 8px solid rgba(255, 255, 255, 0.9);
+
+  box-shadow:
+    0 35px 90px rgba(15, 23, 42, 0.18),
+    0 10px 35px rgba(11, 78, 162, 0.08);
+
+  transform: rotate(2deg);
+
+  background: #e2e8f0;
+}
+
+.image {
+  object-fit: cover;
+}
+
+/* ==========================================================
+   Image Overlay
+========================================================== */
+
+.imageOverlay {
+  position: absolute;
+
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+
+  padding: 18px 20px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 5px;
+
+  border-radius: 18px;
+
+  background: rgba(15, 23, 42, 0.72);
+
+  backdrop-filter: blur(12px);
+
+  color: #ffffff;
+}
+
+.imageOverlay span {
+  font-size: 11px;
+
+  letter-spacing: 1px;
+
+  opacity: 0.75;
+}
+
+.imageOverlay strong {
+  font-size: 20px;
+}
+
+/* ==========================================================
+   Floating Card
+========================================================== */
+
+.floatingCard {
+  position: absolute;
+
+  left: -35px;
+
+  bottom: 70px;
+
+  z-index: 3;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 16px 20px;
+
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.95);
+
+  border: 1px solid #e2e8f0;
+
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.14);
+
+  animation: floating 4s ease-in-out infinite;
+}
+
+.floatingIcon {
+  width: 42px;
+
+  height: 42px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background: #eef5ff;
+
+  font-size: 20px;
+}
+
+.floatingCard div {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.floatingCard strong {
+  color: #0f172a;
+
+  font-size: 14px;
+}
+
+.floatingCard span {
+  color: #64748b;
+
+  font-size: 12px;
+}
+
+/* ==========================================================
+   Scroll Indicator
+========================================================== */
+
+.scrollIndicator {
+  position: absolute;
+
+  bottom: 28px;
+
+  left: 50%;
+
+  width: 25px;
+
+  height: 40px;
+
+  border: 2px solid #94a3b8;
+
+  border-radius: 20px;
+
+  transform: translateX(-50%);
+}
+
+.scrollIndicator span {
+  position: absolute;
+
+  top: 7px;
+
+  left: 50%;
+
+  width: 5px;
+
+  height: 8px;
+
+  border-radius: 999px;
+
+  background: #0b4ea2;
+
+  transform: translateX(-50%);
+
+  animation: scrollDown 1.8s ease-in-out infinite;
+}
+
+/* ==========================================================
+   Animations
+========================================================== */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+@keyframes floating {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes scrollDown {
+  0%,
+  100% {
+    opacity: 0.4;
+
+    transform: translate(-50%, 0);
+  }
+
+  50% {
+    opacity: 1;
+
+    transform: translate(-50%, 10px);
+  }
+}
+
+/* ==========================================================
+   Tablet
+========================================================== */
+
+@media (max-width: 1100px) {
+  .container {
+    grid-template-columns: 1fr 0.8fr;
+
+    gap: 50px;
+  }
+
+  .title {
+    font-size: 58px;
+  }
+
+  .imageCard {
+    height: 500px;
+  }
+
+  .imageWrapper {
+    min-height: 500px;
+  }
+
+  .floatingCard {
+    left: -10px;
+  }
+}
+
+/* ==========================================================
+   Mobile
+========================================================== */
+
+@media (max-width: 768px) {
+  .hero {
+    padding-top: 120px;
+
+    padding-bottom: 80px;
+  }
+
+  .container {
+    width: min(94%, 620px);
+
+    grid-template-columns: 1fr;
+
+    gap: 55px;
+  }
+
+  .content {
+    text-align: center;
+  }
+
+  .badge {
+    margin-bottom: 20px;
+  }
+
+  .title {
+    font-size: clamp(40px, 11vw, 58px);
+
+    letter-spacing: -1.5px;
+  }
+
+  .description {
+    margin-left: auto;
+
+    margin-right: auto;
+
+    font-size: 16px;
+  }
+
+  .stats {
+    justify-content: center;
+  }
+
+  .stat {
+    min-width: 135px;
+  }
+
+  .imageWrapper {
+    min-height: 480px;
+  }
+
+  .imageCard {
+    width: min(390px, 90%);
+
+    height: 480px;
+  }
+
+  .floatingCard {
+    left: 2%;
+
+    bottom: 40px;
+  }
+}
+
+/* ==========================================================
+   Small Mobile
+========================================================== */
+
+@media (max-width: 480px) {
+  .hero {
+    padding-top: 105px;
+  }
+
+  .title {
+    font-size: 39px;
+  }
+
+  .stats {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .stat {
+    min-width: 0;
+  }
+
+  .imageWrapper {
+    min-height: 390px;
+  }
+
+  .imageCard {
+    height: 390px;
+
+    border-radius: 25px;
+  }
+
+  .floatingCard {
+    left: 0;
+
+    bottom: 15px;
+
+    padding: 12px 14px;
+  }
+
+  .floatingIcon {
+    width: 36px;
+
+    height: 36px;
+  }
+}

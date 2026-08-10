@@ -1,0 +1,77 @@
+/* ==========================================================
+   AILP NEWS PAGE
+========================================================== */
+
+.page {
+  min-height: 100vh;
+
+  background: #ffffff;
+
+  color: #0f172a;
+}
+
+.newsSection {
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #f8fafc 100%
+    );
+}
+
+.container {
+  max-width: 1320px;
+
+  margin: auto;
+
+  padding: 100px 30px;
+}
+
+.heading {
+  max-width: 720px;
+
+  margin: 0 auto 55px;
+
+  text-align: center;
+}
+
+.heading > span {
+  color: #2563eb;
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+}
+
+.heading h2 {
+  margin: 14px 0;
+
+  font-size: clamp(32px, 4vw, 48px);
+
+  line-height: 1.15;
+
+  letter-spacing: -1.5px;
+}
+
+.heading h2 strong {
+  color: #2563eb;
+}
+
+.heading p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 16px;
+
+  line-height: 1.8;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding:
+      75px 20px;
+  }
+}

@@ -1,206 +1,167 @@
 "use client";
 
+/* ==========================================================
+   Member Sidebar
+   All India Labour Party
+   Production Ready
+========================================================== */
+
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
 import {
-
-LayoutDashboard,
-
-BadgeCheck,
-
-User,
-
-IndianRupee,
-
-Settings,
-
-LogOut,
-
-ChevronRight,
-
+  LayoutDashboard,
+  BadgeCheck,
+  User,
+  IndianRupee,
+  Settings,
+  LogOut,
+  Building2,
 } from "lucide-react";
 
 import styles from "./MemberSidebar.module.css";
 
-const menus=[
+/* ==========================================================
+   Menu Items
+========================================================== */
 
-{
-
-title:"Dashboard",
-
-href:"/member/dashboard",
-
-icon:LayoutDashboard,
-
-},
-
-{
-
-title:"Membership Card",
-
-href:"/member/membership",
-
-icon:BadgeCheck,
-
-},
-
-{
-
-title:"My Profile",
-
-href:"/member/profile",
-
-icon:User,
-
-},
-
-{
-
-title:"Donation",
-
-href:"/member/donation",
-
-icon:IndianRupee,
-
-},
-
-{
-
-title:"Settings",
-
-href:"/member/settings",
-
-icon:Settings,
-
-},
-
+const menus = [
+  {
+    title: "Dashboard",
+    href: "/member/dashboard",
+    icon: LayoutDashboard,
+  },
+  {
+    title: "My Profile",
+    href: "/member/profile",
+    icon: User,
+  },
+  {
+    title: "Membership Card",
+    href: "/member/card",
+    icon: BadgeCheck,
+  },
+  {
+    title: "Donation",
+    href: "/member/donation",
+    icon: IndianRupee,
+  },
+  {
+    title: "Settings",
+    href: "/member/settings",
+    icon: Settings,
+  },
 ];
 
-export default function MemberSidebar(){
+/* ==========================================================
+   Sidebar
+========================================================== */
 
-const pathname=usePathname();
+export default function MemberSidebar({
+  open,
+  onClose,
+}) {
+  const pathname = usePathname();
 
-const router=useRouter();
+  const router = useRouter();
 
-async function handleLogout(){
+  async function handleLogout() {
+    try {
+      await fetch("/api/member/logout", {
+        method: "POST",
+        credentials: "include",
+      });
 
-try{
+      router.push("/member/login");
 
-await fetch(
+      router.refresh();
 
-"/api/auth/logout",
+    } catch (error) {
 
-{
+      console.error(error);
 
-method:"POST",
+      alert("Logout failed.");
+    }
+  }
 
-credentials:"include",
+  return (
+    <>
+      {/* Mobile Overlay */}
 
-}
+      {open && (
+        <div
+          className={styles.overlay}
+          onClick={onClose}
+        />
+      )}
 
-);
+      {/* Sidebar */}
 
-router.push("/member/login");
+      <aside
+        className={`${styles.sidebar} ${
+          open ? styles.open : ""
+        }`}
+      >
+        {/* Logo */}
 
-router.refresh();
+        <div className={styles.logo}>
+          <Building2 size={34} />
 
-}
+          <div>
+            <h2>AILP</h2>
 
-catch{
+            <span>Member Portal</span>
+          </div>
+        </div>
 
-alert("Logout failed.");
+        {/* Navigation */}
 
-}
+        <nav className={styles.navigation}>
+          {menus.map((item) => {
 
-}
+            const Icon = item.icon;
 
-return(
+            const active =
+              pathname === item.href;
 
-<aside className={styles.sidebar}>
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`${styles.item} ${
+                  active
+                    ? styles.active
+                    : ""
+                }`}
+                onClick={onClose}
+              >
+                <Icon size={20} />
 
-<div className={styles.logoArea}>
+                <span>{item.title}</span>
+              </Link>
+            );
 
-<div className={styles.logo}>
+          })}
+        </nav>
 
-AIL<span>P</span>
+        {/* Footer */}
 
-</div>
+        <div className={styles.footer}>
 
-<p>
+          <button
+            className={styles.logout}
+            onClick={handleLogout}
+          >
+            <LogOut size={20} />
 
-Member Portal
+            <span>Logout</span>
 
-</p>
+          </button>
 
-</div>
+        </div>
 
-<nav className={styles.menu}>
+      </aside>
 
-{
-
-menus.map(item=>{
-
-const Icon=item.icon;
-
-const active=pathname===item.href;
-
-return(
-
-<Link
-
-key={item.href}
-
-href={item.href}
-
-className={`${styles.item} ${active?styles.active:""}`}
-
->
-
-<div className={styles.left}>
-
-<Icon size={21}/>
-
-<span>
-
-{item.title}
-
-</span>
-
-</div>
-
-<ChevronRight size={18}/>
-
-</Link>
-
-);
-
-})
-
-}
-
-</nav>
-
-<div className={styles.bottom}>
-
-<button
-
-className={styles.logout}
-
-onClick={handleLogout}
-
->
-
-<LogOut size={20}/>
-
-Logout
-
-</button>
-
-</div>
-
-</aside>
-
-);
-
+    </>
+  );
 }

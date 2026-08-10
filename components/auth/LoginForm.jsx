@@ -53,20 +53,17 @@ export default function LoginForm() {
     setError("");
 
     try {
-      const response = await fetch(
-  "/api/member/login",
-  {
-    method: "POST",
+      const response = await fetch("/api/member/login", {
+        method: "POST",
 
-    headers: {
-      "Content-Type": "application/json",
-    },
+        headers: {
+          "Content-Type": "application/json",
+        },
 
-    credentials: "include",
+        credentials: "include",
 
-    body: JSON.stringify(formData),
-  }
-);
+        body: JSON.stringify(formData),
+      });
 
       const data = await response.json();
 
@@ -161,7 +158,7 @@ export default function LoginForm() {
 
       <div className={styles.footer}>
         Don't have an account?
-        <Link href="/register">Register</Link>
+        <Link href="/member/register">Register</Link>
       </div>
     </div>
   );

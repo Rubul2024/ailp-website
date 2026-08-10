@@ -1,14 +1,16 @@
 "use client";
-import { usePathname } from "next/navigation";
-import { useEffect } from "react";
 
 /* ==========================================================
-   Mobile Menu Component
-   ----------------------------------------------------------
-   This component creates the mobile side drawer.
-   ========================================================== */
+   AILP PUBLIC WEBSITE
+   MOBILE NAVIGATION MENU
+
+   All India Labour Party
+   Production Ready
+========================================================== */
 
 import Link from "next/link";
+import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 import {
   FaHouse,
@@ -17,6 +19,9 @@ import {
   FaNewspaper,
   FaImages,
   FaPhone,
+  FaBullseye,
+  FaLightbulb,
+  FaCircleQuestion,
   FaFacebookF,
   FaInstagram,
   FaYoutube,
@@ -27,9 +32,10 @@ import { FaXTwitter } from "react-icons/fa6";
 
 import styles from "./Header.module.css";
 
+
 /* ==========================================================
-   Mobile Navigation Menu
-   ========================================================== */
+   MOBILE NAVIGATION
+========================================================== */
 
 const menu = [
   {
@@ -69,142 +75,276 @@ const menu = [
   },
 ];
 
+
 /* ==========================================================
-   Mobile Menu Component
-   ========================================================== */
+   RESOURCES
+========================================================== */
 
-export default function MobileMenu({ open, closeMenu }) {
+const resources = [
+  {
+    title: "Our Mission",
+    href: "/mission",
+    icon: <FaBullseye />,
+  },
 
-  /* ==========================================
-   Lock Body Scroll
-========================================== */
+  {
+    title: "Our Vision",
+    href: "/vision",
+    icon: <FaLightbulb />,
+  },
 
-useEffect(() => {
+  {
+    title: "FAQ",
+    href: "/faq",
+    icon: <FaCircleQuestion />,
+  },
+];
 
-    if(open){
 
-        document.body.style.overflow = "hidden";
+/* ==========================================================
+   COMPONENT
+========================================================== */
 
-    }
+export default function MobileMenu({
+  open,
+  closeMenu,
+}) {
+  const pathname = usePathname();
 
-    else{
 
-        document.body.style.overflow = "";
+  /* ========================================================
+     Lock Body Scroll
+  ======================================================== */
 
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
     }
 
     return () => {
-
-        document.body.style.overflow = "";
-
+      document.body.style.overflow = "";
     };
+  }, [open]);
 
-}, [open]);
 
-/* ==========================================
-   ESC Key Close
-========================================== */
+  /* ========================================================
+     ESC KEY CLOSE
+  ======================================================== */
 
-useEffect(() => {
+  useEffect(() => {
+    function handleKeyDown(event) {
+      if (event.key === "Escape") {
+        closeMenu();
+      }
+    }
 
-    const handleKeyDown = (event) => {
-
-        if(event.key === "Escape"){
-
-            closeMenu();
-
-        }
-
-    };
-
-    window.addEventListener(
+    if (open) {
+      window.addEventListener(
         "keydown",
         handleKeyDown
-    );
+      );
+    }
 
     return () => {
-
-        window.removeEventListener(
-            "keydown",
-            handleKeyDown
-        );
-
+      window.removeEventListener(
+        "keydown",
+        handleKeyDown
+      );
     };
+  }, [open, closeMenu]);
 
-}, [closeMenu]);
 
-  const pathname = usePathname();
+  /* ========================================================
+     Active Page
+  ======================================================== */
+
+  function isActive(href) {
+    if (href === "/") {
+      return pathname === "/";
+    }
+
+    return (
+      pathname === href ||
+      pathname.startsWith(`${href}/`)
+    );
+  }
+
+
+  /* ========================================================
+     Render
+  ======================================================== */
 
   return (
     <>
-      {/* ======================================================
+      {/* ====================================================
           Background Overlay
-      ======================================================= */}
+      ==================================================== */}
 
       <div
-        className={`${styles.overlay} ${open ? styles.showOverlay : ""}`}
+        className={`${styles.overlay} ${
+          open ? styles.showOverlay : ""
+        }`}
         onClick={closeMenu}
+        aria-hidden="true"
       />
 
-      {/* ======================================================
-          Mobile Drawer
-      ======================================================= */}
 
-      <aside className={`${styles.mobileMenu} ${open ? styles.showMenu : ""}`}>
-        {/* ======================================================
+      {/* ====================================================
+          Mobile Drawer
+      ==================================================== */}
+
+      <aside
+        className={`${styles.mobileMenu} ${
+          open ? styles.showMenu : ""
+        }`}
+        aria-label="Mobile navigation"
+        aria-hidden={!open}
+      >
+
+        {/* ==================================================
             Close Button
-        ======================================================= */}
+        ================================================== */}
 
         <button
+          type="button"
           className={styles.closeButton}
           onClick={closeMenu}
-          aria-label="Close Menu"
+          aria-label="Close navigation menu"
         >
-          ✕
+          ×
         </button>
 
-        {/* ======================================================
-            Logo Section
-        ======================================================= */}
+
+        {/* ==================================================
+            Mobile Logo
+        ================================================== */}
 
         <div className={styles.mobileLogo}>
-          <img src="/images/logo.png" alt="AILP Logo" />
+          <img
+            src="/images/logo.png"
+            alt="All India Labour Party"
+          />
 
-          <h3>All India Labour Party</h3>
+          <h3>
+            All India Labour Party
+          </h3>
 
-          <p>Together for Employment, Equality and Social Justice.</p>
+          <p>
+            Together for Employment, Equality
+            and Social Justice.
+          </p>
         </div>
 
-        {/* ======================================================
-            Navigation Menu
-        ======================================================= */}
 
-        {menu.map((item, index) => (
-          <Link
-            key={item.title}
-            href={item.href}
-            className={`${styles.mobileLink} ${
-              pathname === item.href ? styles.mobileActive : ""
-            }`}
-            onClick={closeMenu}
-            style={{
-              animationDelay: `${0.08 * index}s`,
-            }}
-          >
-            <span className={styles.menuIcon}>{item.icon}</span>
+        {/* ==================================================
+            Main Navigation
+        ================================================== */}
 
-            <span>{item.title}</span>
-          </Link>
-        ))}
+        <nav
+          className={styles.mobileNavigation}
+          aria-label="Mobile main navigation"
+        >
 
-        {/* ======================================================
+          {menu.map((item, index) => (
+            <Link
+              key={item.title}
+              href={item.href}
+              className={`${styles.mobileLink} ${
+                isActive(item.href)
+                  ? styles.mobileActive
+                  : ""
+              }`}
+              onClick={closeMenu}
+              style={{
+                animationDelay:
+                  `${0.08 * index}s`,
+              }}
+              aria-current={
+                isActive(item.href)
+                  ? "page"
+                  : undefined
+              }
+            >
+
+              <span
+                className={styles.menuIcon}
+              >
+                {item.icon}
+              </span>
+
+              <span>
+                {item.title}
+              </span>
+
+            </Link>
+          ))}
+
+        </nav>
+
+
+        {/* ==================================================
+            Resources
+        ================================================== */}
+
+        <div className={styles.mobileNavigation}>
+
+          {resources.map(
+            (item, index) => (
+              <Link
+                key={item.title}
+                href={item.href}
+                className={`${styles.mobileLink} ${
+                  isActive(item.href)
+                    ? styles.mobileActive
+                    : ""
+                }`}
+                onClick={closeMenu}
+                style={{
+                  animationDelay:
+                    `${0.08 * (index + menu.length)}s`,
+                }}
+                aria-current={
+                  isActive(item.href)
+                    ? "page"
+                    : undefined
+                }
+              >
+
+                <span
+                  className={styles.menuIcon}
+                >
+                  {item.icon}
+                </span>
+
+                <span>
+                  {item.title}
+                </span>
+
+              </Link>
+            )
+          )}
+
+        </div>
+
+
+        {/* ==================================================
             Action Buttons
-        ======================================================= */}
+        ================================================== */}
 
-        <div className={styles.mobileActions}>
-          <Link href="/join" className={styles.joinButton} onClick={closeMenu}>
-            Join AILP
+        <div
+          className={styles.mobileActions}
+        >
+
+          <Link
+            href="/join"
+            className={styles.joinButton}
+            onClick={closeMenu}
+          >
+            Join Membership
           </Link>
+
 
           <Link
             href="/donate"
@@ -213,37 +353,76 @@ useEffect(() => {
           >
             Donate
           </Link>
+
+
+          <Link
+            href="/member/login"
+            className={styles.memberButton}
+            onClick={closeMenu}
+          >
+            Member Login
+          </Link>
+
         </div>
 
-        {/* ======================================================
-            Social Icons
-        ======================================================= */}
 
-        <div className={styles.mobileFooter}>
-          <div className={styles.socialIcons}>
-            <a href="#">
+        {/* ==================================================
+            Social Media
+        ================================================== */}
+
+        <div
+          className={styles.mobileFooter}
+        >
+
+          <div
+            className={styles.socialIcons}
+          >
+
+            <a
+              href="#"
+              aria-label="Facebook"
+            >
               <FaFacebookF />
             </a>
 
-            <a href="#">
+            <a
+              href="#"
+              aria-label="Instagram"
+            >
               <FaInstagram />
             </a>
 
-            <a href="#">
+            <a
+              href="#"
+              aria-label="X"
+            >
               <FaXTwitter />
             </a>
 
-            <a href="#">
+            <a
+              href="#"
+              aria-label="YouTube"
+            >
               <FaYoutube />
             </a>
 
-            <a href="#">
+            <a
+              href="#"
+              aria-label="LinkedIn"
+            >
               <FaLinkedinIn />
             </a>
+
           </div>
 
-          <p>© 2026 All India Labour Party</p>
+
+          <p>
+            © {new Date().getFullYear()}{" "}
+            All India Labour Party
+          </p>
+
         </div>
+
       </aside>
     </>
   );

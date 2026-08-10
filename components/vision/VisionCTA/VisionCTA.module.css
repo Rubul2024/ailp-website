@@ -1,0 +1,108 @@
+/* ==========================================================
+   AILP VISION CTA
+========================================================== */
+
+.section {
+  padding: 100px 20px;
+
+  background: #f8fafc;
+}
+
+.container {
+  max-width: 1200px;
+
+  margin: auto;
+
+  overflow: hidden;
+
+  border-radius: 30px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #061a38,
+      #0b4ea2
+    );
+
+  box-shadow:
+    0 30px 70px
+    rgba(11, 78, 162, 0.18);
+}
+
+.content {
+  padding: 85px 30px;
+
+  text-align: center;
+
+  color: #ffffff;
+}
+
+.content > span {
+  color: #bfdbfe;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+}
+
+.content h2 {
+  margin: 18px 0;
+
+  font-size: clamp(
+    36px,
+    5vw,
+    54px
+  );
+
+  line-height: 1.15;
+}
+
+.content p {
+  max-width: 650px;
+
+  margin: auto;
+
+  color: #dbeafe;
+
+  line-height: 1.8;
+}
+
+.button {
+  display: inline-flex;
+
+  margin-top: 30px;
+
+  padding: 15px 32px;
+
+  border-radius: 999px;
+
+  background: #ff7a00;
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-weight: 800;
+
+  transition: 0.3s;
+}
+
+.button:hover {
+  transform: translateY(-4px);
+
+  background: #ffffff;
+
+  color: #0b4ea2;
+}
+
+@media (max-width: 600px) {
+  .section {
+    padding: 75px 20px;
+  }
+
+  .content {
+    padding: 60px 22px;
+  }
+}

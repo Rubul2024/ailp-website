@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 
 import {
   Search,
@@ -18,43 +18,44 @@ import {
 import styles from "./Header.module.css";
 
 export default function Header() {
-  const router = useRouter();
-
-  const dropdownRef = useRef(null);
-
-  const [member, setMember] = useState(null);
+  const [dashboard, setDashboard] = useState(null);
 
   const [loading, setLoading] = useState(true);
 
-  const [showDropdown, setShowDropdown] = useState(false);
-
   const [search, setSearch] = useState("");
 
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const dropdownRef = useRef(null);
+
   /* ==========================================================
-     Load Member
+     Load Dashboard Data
   ========================================================== */
 
   useEffect(() => {
-    async function loadMember() {
-      try {
-        const response = await fetch("/api/member/me", {
-          credentials: "include",
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-          setMember(data.member);
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadMember();
+    loadDashboard();
   }, []);
+
+  async function loadDashboard() {
+    try {
+      const response = await fetch(
+        "/api/member/dashboard",
+        {
+          credentials: "include",
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        setDashboard(data.dashboard);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   /* ==========================================================
      Close Dropdown
@@ -62,25 +63,24 @@ export default function Header() {
 
   useEffect(() => {
     function handleClickOutside(event) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target)
+      ) {
         setShowDropdown(false);
       }
     }
 
-    function handleEscape(event) {
-      if (event.key === "Escape") {
-        setShowDropdown(false);
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    document.addEventListener("keydown", handleEscape);
+    document.addEventListener(
+      "mousedown",
+      handleClickOutside
+    );
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-
-      document.removeEventListener("keydown", handleEscape);
+      document.removeEventListener(
+        "mousedown",
+        handleClickOutside
+      );
     };
   }, []);
 
@@ -92,12 +92,9 @@ export default function Header() {
     try {
       await fetch("/api/member/logout", {
         method: "POST",
-        credentials: "include",
       });
 
-      router.push("/member/login");
-
-      router.refresh();
+      window.location.href = "/member/login";
     } catch (error) {
       console.error(error);
     }
@@ -105,91 +102,122 @@ export default function Header() {
 
   return (
     <header className={styles.header}>
-      {/* Left */}
+      {/* ==========================================
+          Left
+      ========================================== */}
 
       <div className={styles.left}>
         <h1>Member Dashboard</h1>
 
         <p>
           Welcome back
-          {member ? `, ${member.fullName}` : ""}
+          {dashboard?.fullName
+            ? `, ${dashboard.fullName}`
+            : ""}
         </p>
       </div>
 
-      {/* Search */}
+      {/* ==========================================
+          Search
+      ========================================== */}
 
       <div className={styles.searchBox}>
         <Search size={18} />
 
         <input
           type="text"
-          placeholder="Search dashboard..."
+          placeholder="Search..."
           value={search}
-          onChange={(event) => setSearch(event.target.value)}
+          onChange={(event) =>
+            setSearch(event.target.value)
+          }
         />
       </div>
 
-      {/* Right */}
+      {/* ==========================================
+          Right
+      ========================================== */}
 
-      <div className={styles.right} ref={dropdownRef}>
+      <div className={styles.right}>
         {/* Notification */}
 
         <button className={styles.notification}>
           <Bell size={22} />
 
-          <span className={styles.badge}>3</span>
+          <span className={styles.badge}>
+            3
+          </span>
         </button>
 
         {/* Profile */}
 
-        <button
-          className={styles.profileButton}
-          onClick={() => setShowDropdown(!showDropdown)}
+        <div
+          className={styles.profileWrapper}
+          ref={dropdownRef}
         >
-          <Image
-            src={member?.photo?.url || "/images/avatar.png"}
-            alt="Member"
-            width={46}
-            height={46}
-            className={styles.avatar}
-          />
+          <button
+            className={styles.profileButton}
+            onClick={() =>
+              setShowDropdown(
+                !showDropdown
+              )
+            }
+          >
+            <Image
+              src={
+                dashboard?.photo?.url ||
+                "/images/avatar.png"
+              }
+              alt="Member"
+              width={46}
+              height={46}
+              className={styles.avatar}
+            />
 
-          <div className={styles.profileInfo}>
-            <h4>{loading ? "Loading..." : member?.fullName}</h4>
+            <div className={styles.profileInfo}>
+              <h4>
+                {loading
+                  ? "Loading..."
+                  : dashboard?.fullName}
+              </h4>
 
-            <span>{member?.membershipId || "Membership Pending"}</span>
-          </div>
+              <span>
+                {dashboard?.membershipId ||
+                  "New Member"}
+              </span>
+            </div>
 
-          <ChevronDown size={18} />
-        </button>
+            <ChevronDown size={18} />
+          </button>
 
-        {/* Dropdown */}
+          {showDropdown && (
+            <div className={styles.dropdown}>
+              <Link href="/member/profile">
+                <User size={18} />
+                My Profile
+              </Link>
 
-        {showDropdown && (
-          <div className={styles.dropdown}>
-            <Link href="/member/profile">
-              <User size={18} />
-              My Profile
-            </Link>
+              <Link href="/member/card">
+                <CreditCard size={18} />
+                Membership Card
+              </Link>
 
-            <Link href="/member/card">
-              <CreditCard size={18} />
-              Membership Card
-            </Link>
+              <Link href="/member/settings">
+                <Settings size={18} />
+                Settings
+              </Link>
 
-            <Link href="/member/settings">
-              <Settings size={18} />
-              Settings
-            </Link>
+              <hr />
 
-            <hr />
-
-            <button onClick={handleLogout}>
-              <LogOut size={18} />
-              Logout
-            </button>
-          </div>
-        )}
+              <button
+                onClick={handleLogout}
+              >
+                <LogOut size={18} />
+                Logout
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </header>
   );

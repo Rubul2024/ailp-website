@@ -1,254 +1,1667 @@
-/* ==========================================
-   Progress Card
-========================================== */
+/* ==========================================================
+   AILP MEMBER PROFILE
+   ProfileForm.module.css
 
-.progressCard {
-  background: #ffffff;
+   Modern Professional Member Portal
+   All India Labour Party
+
+   Design System:
+   - Clean white cards
+   - Soft blue background
+   - AILP blue / indigo accents
+   - Colored section identities
+   - Responsive layout
+   - Modern form controls
+   - Smooth accordion interactions
+========================================================== */
+
+
+/* ==========================================================
+   ROOT VARIABLES
+========================================================== */
+
+.form {
+  --ailp-blue: #2563eb;
+  --ailp-blue-dark: #1d4ed8;
+  --ailp-indigo: #4f46e5;
+
+  --text-primary: #172033;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+
+  --border: #e2e8f0;
+  --border-light: #edf2f7;
+
+  --surface: #ffffff;
+  --surface-soft: #f8fafc;
+
+  --page-bg: #f4f7fb;
+
+  --success: #16a34a;
+  --success-bg: #ecfdf3;
+
+  --warning: #f59e0b;
+  --warning-bg: #fffbeb;
+
+  --danger: #ef4444;
+  --danger-bg: #fef2f2;
+
+  width: 100%;
+  max-width: 1180px;
+
+  margin: 0 auto;
+
+  padding: 34px 28px 70px;
+
+  box-sizing: border-box;
+
+  color: var(--text-primary);
+
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+
+/* ==========================================================
+   PAGE HERO
+========================================================== */
+
+.profileHero {
+  position: relative;
+
+  overflow: hidden;
+
+  margin-bottom: 24px;
 
   padding: 30px;
 
-  border-radius: 22px;
+  border: 1px solid #dce6f3;
 
-  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+  border-radius: 24px;
 
-  margin-bottom: 30px;
+  background:
+    radial-gradient(
+      circle at 95% 10%,
+      rgba(37, 99, 235, 0.12),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 5% 100%,
+      rgba(79, 70, 229, 0.08),
+      transparent 32%
+    ),
+    linear-gradient(
+      135deg,
+      #ffffff 0%,
+      #f8fbff 100%
+    );
+
+  box-shadow:
+    0 10px 35px rgba(15, 23, 42, 0.06);
 }
+
+
+/* Decorative glow */
+
+.profileHero::before {
+  content: "";
+
+  position: absolute;
+
+  width: 180px;
+  height: 180px;
+
+  right: -70px;
+  top: -80px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(37, 99, 235, 0.07);
+
+  pointer-events: none;
+}
+
+
+/* ==========================================================
+   HERO TOP
+========================================================== */
+
+.heroTop {
+  position: relative;
+
+  z-index: 1;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 30px;
+
+  margin-bottom: 28px;
+}
+
+
+/* ==========================================================
+   HERO IDENTITY
+========================================================== */
+
+.heroIdentity {
+  display: flex;
+
+  align-items: center;
+
+  gap: 17px;
+
+  min-width: 0;
+}
+
+
+.heroIcon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto;
+
+  width: 58px;
+  height: 58px;
+
+  border-radius: 17px;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #4f46e5
+    );
+
+  box-shadow:
+    0 10px 22px rgba(37, 99, 235, 0.22);
+}
+
+
+.heroEyebrow {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #2563eb;
+
+  font-size: 11px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.12em;
+}
+
+
+.heroIdentity h1 {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: clamp(
+    28px,
+    4vw,
+    38px
+  );
+
+  line-height: 1.1;
+
+  font-weight: 800;
+
+  letter-spacing: -0.035em;
+}
+
+
+.heroIdentity p {
+  margin: 8px 0 0;
+
+  max-width: 650px;
+
+  color: #64748b;
+
+  font-size: 14px;
+
+  line-height: 1.6;
+}
+
+
+/* ==========================================================
+   MEMBERSHIP BADGE
+========================================================== */
+
+.heroMemberBadge {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-end;
+
+  justify-content: center;
+
+  flex: 0 0 auto;
+
+  min-width: 180px;
+
+  padding: 13px 17px;
+
+  border: 1px solid #dbe5f1;
+
+  border-radius: 14px;
+
+  background:
+    rgba(255, 255, 255, 0.82);
+
+  box-shadow:
+    0 5px 15px rgba(15, 23, 42, 0.04);
+}
+
+
+.heroMemberBadge span {
+  color: #94a3b8;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.07em;
+}
+
+
+.heroMemberBadge strong {
+  margin-top: 4px;
+
+  color: #1e40af;
+
+  font-size: 14px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.02em;
+}
+
+
+/* ==========================================================
+   PROGRESS CARD
+========================================================== */
+
+.progressCard {
+  position: relative;
+
+  z-index: 2;
+
+  display: grid;
+
+  grid-template-columns:
+    auto
+    minmax(180px, 1fr)
+    minmax(300px, 1.7fr)
+    auto;
+
+  align-items: center;
+
+  gap: 28px;
+
+  width: 100%;
+
+  min-height: 118px;
+
+  padding: 22px 24px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #dce6f3;
+
+  border-radius: 20px;
+
+  background:
+    rgba(255, 255, 255, 0.95);
+
+  box-shadow:
+    0 8px 28px rgba(15, 23, 42, 0.07);
+}
+
+
+/* ==========================================================
+   PROGRESS CIRCLE
+========================================================== */
+
+.circle,
+.progressCircle {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto;
+
+  width: 76px;
+  height: 76px;
+
+  border-radius: 50%;
+
+  background:
+    conic-gradient(
+      #2563eb var(--progress, 85%),
+      #e8eef7 var(--progress, 85%)
+    );
+}
+
+
+.circle::after,
+.progressCircle::after {
+  content: "";
+
+  position: absolute;
+
+  width: 58px;
+  height: 58px;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+}
+
+
+.circle span,
+.progressCircle span {
+  position: relative;
+
+  z-index: 1;
+
+  color: #172033;
+
+  font-size: 19px;
+
+  font-weight: 800;
+}
+
+
+/* ==========================================================
+   PROGRESS LEFT
+========================================================== */
+
+.progressLeft {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+}
+
+
+.progressTitle {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+
+.progressTitle span {
+  color: #64748b;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+
+.progressTitle strong {
+  color: #172033;
+
+  font-size: 15px;
+
+  font-weight: 800;
+}
+
+
+/* ==========================================================
+   PROGRESS DETAILS
+========================================================== */
+
+.progressDetails {
+  min-width: 0;
+}
+
 
 .progressTop {
   display: flex;
 
+  align-items: center;
+
   justify-content: space-between;
 
-  align-items: flex-start;
+  gap: 15px;
 
-  gap: 20px;
-
-  margin-bottom: 20px;
+  margin-bottom: 9px;
 }
 
-.progressTop h2 {
-  font-size: 28px;
 
-  font-weight: 700;
-
-  color: #0f172a;
-
-  margin-bottom: 8px;
-}
-
-.progressTop p {
+.progressTop span {
   color: #64748b;
 
-  font-size: 15px;
+  font-size: 12px;
 
-  line-height: 1.7;
+  font-weight: 600;
 }
 
-.progressPercent {
-  width: 90px;
 
-  height: 90px;
+.progressTop strong {
+  color: #2563eb;
 
-  border-radius: 50%;
+  font-size: 17px;
 
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  font-weight: 800;
+}
 
+
+/* ==========================================================
+   PROGRESS TRACK
+========================================================== */
+
+.progressTrack {
+  position: relative;
+
+  width: 100%;
+
+  height: 9px;
+
+  overflow: hidden;
+
+  border-radius: 999px;
+
+  background: #e8eef7;
+}
+
+
+.progressFill {
+  width: var(--progress, 0%);
+
+  height: 100%;
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      90deg,
+      #2563eb,
+      #4f46e5
+    );
+
+  box-shadow:
+    0 2px 7px rgba(37, 99, 235, 0.24);
+
+  transition:
+    width 0.6s ease;
+}
+
+
+.progressBottom {
   display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-top: 8px;
+}
+
+
+.progressBottom span {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  color: #64748b;
+
+  font-size: 11px;
+
+  font-weight: 600;
+}
+
+
+.progressBottom span:first-child {
+  color: #16a34a;
+}
+
+
+.progressBottom span:last-child {
+  color: #f59e0b;
+}
+
+
+/* ==========================================================
+   PROGRESS SECURITY
+========================================================== */
+
+.progressSecurity {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  min-width: 185px;
+
+  padding: 12px 14px;
+
+  border: 1px solid #c9f1d8;
+
+  border-radius: 13px;
+
+  color: #15803d;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f0fdf4,
+      #ecfdf5
+    );
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  line-height: 1.45;
+}
+
+
+/* ==========================================================
+   PROFILE INTRO
+========================================================== */
+
+.profileIntro {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 25px;
+
+  margin-bottom: 18px;
+
+  padding: 23px 25px;
+
+  border: 1px solid #e1e8f1;
+
+  border-radius: 18px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 5px 20px rgba(15, 23, 42, 0.035);
+}
+
+
+.introBadge {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  margin-bottom: 7px;
+
+  padding: 5px 9px;
+
+  border-radius: 999px;
+
+  color: #4338ca;
+
+  background: #eef2ff;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.07em;
+}
+
+
+.profileIntro h2 {
+  margin: 0;
+
+  color: #172033;
+
+  font-size: 20px;
+
+  line-height: 1.3;
+
+  font-weight: 800;
+}
+
+
+.profileIntro p {
+  margin: 5px 0 0;
+
+  max-width: 650px;
+
+  color: #64748b;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+}
+
+
+/* ==========================================================
+   INTRO STATS
+========================================================== */
+
+.introStats {
+  display: flex;
+
+  align-items: stretch;
+
+  flex: 0 0 auto;
+
+  overflow: hidden;
+
+  border: 1px solid #e5eaf1;
+
+  border-radius: 13px;
+
+  background: #f8fafc;
+}
+
+
+.introStats div {
+  display: flex;
+
+  flex-direction: column;
 
   align-items: center;
 
   justify-content: center;
 
-  color: white;
+  min-width: 95px;
 
-  font-size: 24px;
-
-  font-weight: 700;
-
-  flex-shrink: 0;
+  padding: 11px 15px;
 }
 
-.progressBar {
-  height: 12px;
 
-  background: #e2e8f0;
+.introStats div + div {
+  border-left: 1px solid #e2e8f0;
+}
 
-  border-radius: 999px;
+
+.introStats strong {
+  color: #2563eb;
+
+  font-size: 18px;
+
+  font-weight: 800;
+}
+
+
+.introStats div:nth-child(2) strong {
+  color: #f59e0b;
+}
+
+
+.introStats span {
+  margin-top: 2px;
+
+  color: #64748b;
+
+  font-size: 10px;
+
+  font-weight: 600;
+}
+
+
+/* ==========================================================
+   ACCORDION LIST
+========================================================== */
+
+.accordionList {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 14px;
+
+  width: 100%;
+}
+
+
+/* ==========================================================
+   ACCORDION ITEM
+========================================================== */
+
+.accordionItem {
+  width: 100%;
 
   overflow: hidden;
 
-  margin-bottom: 18px;
+  border: 1px solid #e1e8f1;
+
+  border-radius: 18px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 5px 18px rgba(15, 23, 42, 0.035);
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
 }
 
-.progress {
-  height: 100%;
 
-  background: linear-gradient(90deg, #2563eb, #1d4ed8);
+.accordionItem:hover {
+  border-color: #cbd9eb;
+
+  box-shadow:
+    0 9px 26px rgba(15, 23, 42, 0.065);
+}
+
+
+.accordionItemOpen {
+  border-color: #b8d1fa;
+
+  box-shadow:
+    0 10px 30px rgba(37, 99, 235, 0.09);
+}
+
+
+.accordionItemComplete {
+  border-color: #dce8e0;
+}
+
+
+/* ==========================================================
+   ACCORDION HEADER
+========================================================== */
+
+.accordionHeader {
+  position: relative;
+
+  display: grid;
+
+  grid-template-columns:
+    56px
+    minmax(0, 1fr)
+    auto
+    40px;
+
+  align-items: center;
+
+  gap: 16px;
+
+  width: 100%;
+
+  min-height: 92px;
+
+  padding: 16px 20px;
+
+  border: 0;
+
+  color: inherit;
+
+  background: #ffffff;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  font: inherit;
+
+  transition:
+    background 0.2s ease;
+}
+
+
+.accordionHeader:hover {
+  background:
+    linear-gradient(
+      90deg,
+      #ffffff,
+      #f9fbff
+    );
+}
+
+
+.accordionItemOpen
+  .accordionHeader {
+  background:
+    linear-gradient(
+      90deg,
+      #ffffff,
+      #f8fbff
+    );
+}
+
+
+/* ==========================================================
+   SECTION ICON
+========================================================== */
+
+.sectionIcon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 52px;
+  height: 52px;
+
+  flex: 0 0 auto;
+
+  border-radius: 16px;
+
+  transition:
+    transform 0.25s ease;
+}
+
+
+.accordionHeader:hover
+  .sectionIcon {
+  transform: translateY(-2px);
+}
+
+
+/* Blue */
+
+.iconblue {
+  color: #2563eb;
+
+  background:
+    linear-gradient(
+      135deg,
+      #eff6ff,
+      #dbeafe
+    );
+
+  border: 1px solid #d5e6ff;
+}
+
+
+/* Purple */
+
+.iconpurple {
+  color: #7c3aed;
+
+  background:
+    linear-gradient(
+      135deg,
+      #faf5ff,
+      #ede9fe
+    );
+
+  border: 1px solid #e9ddff;
+}
+
+
+/* Orange */
+
+.iconorange {
+  color: #ea580c;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff7ed,
+      #ffedd5
+    );
+
+  border: 1px solid #ffe1c2;
+}
+
+
+/* Green */
+
+.icongreen {
+  color: #16a34a;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f0fdf4,
+      #dcfce7
+    );
+
+  border: 1px solid #c9f3d5;
+}
+
+
+/* Red */
+
+.iconred {
+  color: #dc2626;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff1f2,
+      #ffe4e6
+    );
+
+  border: 1px solid #ffd4d8;
+}
+
+
+/* Indigo */
+
+.iconindigo {
+  color: #4f46e5;
+
+  background:
+    linear-gradient(
+      135deg,
+      #eef2ff,
+      #e0e7ff
+    );
+
+  border: 1px solid #d9ddff;
+}
+
+
+/* ==========================================================
+   SECTION INFO
+========================================================== */
+
+.sectionInfo {
+  min-width: 0;
+}
+
+
+.sectionInfo h3 {
+  margin: 0;
+
+  overflow: hidden;
+
+  color: #172033;
+
+  font-size: 16px;
+
+  line-height: 1.35;
+
+  font-weight: 800;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+
+.sectionInfo p {
+  margin: 4px 0 0;
+
+  overflow: hidden;
+
+  color: #718096;
+
+  font-size: 12px;
+
+  line-height: 1.45;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+
+/* ==========================================================
+   SECTION STATUS
+========================================================== */
+
+.sectionStatus {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  white-space: nowrap;
+}
+
+
+.completedBadge,
+.pendingBadge {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 7px 10px;
 
   border-radius: 999px;
 
-  transition: 0.4s;
+  font-size: 11px;
+
+  font-weight: 700;
 }
 
-.progressInfo {
+
+.completedBadge {
+  color: #15803d;
+
+  background: #f0fdf4;
+
+  border: 1px solid #d5f3df;
+}
+
+
+.pendingBadge {
+  color: #64748b;
+
+  background: #f8fafc;
+
+  border: 1px solid #e8edf3;
+}
+
+
+/* ==========================================================
+   CHEVRON
+========================================================== */
+
+.chevron {
   display: flex;
 
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
 
-  font-size: 15px;
+  width: 36px;
+  height: 36px;
 
-  color: #475569;
+  border-radius: 10px;
+
+  color: #94a3b8;
+
+  transition:
+    transform 0.25s ease,
+    color 0.25s ease,
+    background 0.25s ease;
 }
 
-.progressInfo strong {
-  color: #0f172a;
+
+.accordionHeader:hover
+  .chevron {
+  color: #2563eb;
+
+  background: #eff6ff;
 }
 
-/* ==========================================
-   Section Header
-========================================== */
+
+.chevronOpen {
+  color: #2563eb;
+
+  transform: rotate(180deg);
+
+  background: #eff6ff;
+}
+
+
+/* ==========================================================
+   ACCORDION CONTENT
+========================================================== */
+
+.accordionContent {
+  padding: 0 26px 28px;
+
+  border-top: 1px solid #e7edf5;
+
+  background:
+    linear-gradient(
+      180deg,
+      #fbfdff 0%,
+      #ffffff 100%
+    );
+
+  animation:
+    contentReveal
+    0.25s ease;
+}
+
+
+@keyframes contentReveal {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+}
+
+
+/* ==========================================================
+   SECTION CONTENT
+========================================================== */
+
+.accordionContent
+  > .section {
+  margin-top: 24px;
+}
+
+
+/* ==========================================================
+   SECTION HEADER
+========================================================== */
 
 .sectionHeader {
   display: flex;
 
-  justify-content: space-between;
+  align-items: flex-start;
 
-  align-items: center;
+  gap: 14px;
 
-  margin-bottom: 22px;
+  margin: 0 0 22px;
+
+  padding-top: 24px;
 }
+
+
+.sectionHeader > div {
+  width: 100%;
+}
+
 
 .sectionHeader h2 {
-  font-size: 24px;
+  margin: 0;
 
-  font-weight: 700;
+  color: #172033;
 
-  color: #0f172a;
+  font-size: 22px;
 
-  margin-bottom: 8px;
+  line-height: 1.25;
+
+  font-weight: 800;
+
+  letter-spacing: -0.02em;
 }
 
+
 .sectionHeader p {
-  font-size: 15px;
+  margin: 6px 0 0;
+
+  max-width: 760px;
 
   color: #64748b;
 
-  line-height: 1.7;
+  font-size: 13px;
+
+  line-height: 1.6;
 }
 
-/* ==========================================
-   Input Group
-========================================== */
+
+.sectionHeader .sectionIcon {
+  margin-bottom: 12px;
+}
+
+
+/* ==========================================================
+   FORM GRID
+========================================================== */
+
+.grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 20px 22px;
+
+  width: 100%;
+}
+
+
+/* ==========================================================
+   INPUT GROUP
+========================================================== */
 
 .inputGroup {
   display: flex;
 
   flex-direction: column;
 
-  gap: 10px;
+  min-width: 0;
+
+  gap: 8px;
 }
+
 
 .inputGroup label {
-  font-size: 15px;
+  display: inline-flex;
 
-  font-weight: 600;
+  align-items: center;
+
+  gap: 7px;
 
   color: #334155;
+
+  font-size: 12px;
+
+  line-height: 1.3;
+
+  font-weight: 700;
 }
 
-.inputGroup input {
+
+.inputGroup label svg {
+  flex: 0 0 auto;
+
+  color: #2563eb;
+}
+
+
+/* ==========================================================
+   INPUT / SELECT / TEXTAREA
+========================================================== */
+
+.inputGroup input,
+.inputGroup select,
+.inputGroup textarea {
   width: 100%;
+
+  box-sizing: border-box;
+
+  border: 1px solid #d9e2ec;
+
+  border-radius: 11px;
+
+  outline: none;
+
+  color: #1e293b;
+
+  background: #f8fafc;
+
+  font-family: inherit;
+
+  font-size: 13px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
 }
 
-/* ==========================================
-   Identity Upload
-========================================== */
+
+.inputGroup input,
+.inputGroup select {
+  height: 48px;
+
+  padding: 0 14px;
+}
+
+
+.inputGroup textarea {
+  min-height: 125px;
+
+  padding: 13px 14px;
+
+  resize: vertical;
+
+  line-height: 1.55;
+}
+
+
+/* ==========================================================
+   INPUT HOVER
+========================================================== */
+
+.inputGroup input:hover,
+.inputGroup select:hover,
+.inputGroup textarea:hover {
+  border-color: #bfd0e3;
+
+  background: #ffffff;
+}
+
+
+/* ==========================================================
+   INPUT FOCUS
+========================================================== */
+
+.inputGroup input:focus,
+.inputGroup select:focus,
+.inputGroup textarea:focus {
+  border-color: #60a5fa;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 0 0 4px
+    rgba(37, 99, 235, 0.09);
+}
+
+
+/* ==========================================================
+   READ ONLY INPUT
+========================================================== */
+
+.readOnlyInput {
+  color: #64748b !important;
+
+  background:
+    #f1f5f9 !important;
+
+  border-color:
+    #e2e8f0 !important;
+
+  cursor: not-allowed;
+
+  opacity: 1;
+}
+
+
+.readOnlyInput:focus {
+  box-shadow: none !important;
+}
+
+
+/* ==========================================================
+   SELECT
+========================================================== */
+
+.inputGroup select {
+  cursor: pointer;
+
+  appearance: auto;
+}
+
+
+/* ==========================================================
+   DATE INPUT
+========================================================== */
+
+.inputGroup input[type="date"] {
+  color-scheme: light;
+}
+
+
+/* ==========================================================
+   PLACEHOLDER
+========================================================== */
+
+.inputGroup input::placeholder,
+.inputGroup textarea::placeholder {
+  color: #a0aec0;
+
+  opacity: 1;
+}
+
+
+/* ==========================================================
+   HELPER TEXT
+========================================================== */
+
+.helperText {
+  display: block;
+
+  margin-top: 0;
+
+  color: #718096;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+}
+
+
+/* ==========================================================
+   UPLOAD GRID
+========================================================== */
 
 .uploadGrid {
   display: grid;
 
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
 
-  gap: 24px;
+  gap: 20px;
 
-  margin-top: 20px;
+  margin-top: 5px;
 }
+
+
+/* ==========================================================
+   UPLOAD CARD
+========================================================== */
 
 .uploadCard {
-  background: #ffffff;
-
-  border: 2px dashed #dbe4ee;
-
-  border-radius: 20px;
-
-  padding: 25px;
-
-  text-align: center;
-
-  transition: 0.3s;
-}
-
-.uploadCard:hover {
-  border-color: #2563eb;
-}
-
-.preview {
-  width: 150px;
-
-  height: 150px;
-
-  margin: auto;
-
-  border-radius: 18px;
-
-  background: #f8fafc;
-
   display: flex;
+
+  flex-direction: column;
 
   align-items: center;
 
   justify-content: center;
 
-  overflow: hidden;
+  min-height: 285px;
 
-  margin-bottom: 18px;
+  padding: 25px;
 
-  color: #94a3b8;
+  box-sizing: border-box;
+
+  border: 1.5px dashed #cbd8e8;
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #fbfdff,
+      #f7faff
+    );
+
+  text-align: center;
+
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
-.previewImage {
-  width: 100%;
 
-  height: 100%;
+.uploadCard:hover {
+  border-color: #7da9ee;
 
-  object-fit: cover;
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #f4f8ff
+    );
+
+  box-shadow:
+    0 10px 25px rgba(37, 99, 235, 0.07);
+
+  transform: translateY(-2px);
 }
+
+
+/* ==========================================================
+   UPLOAD ICON
+========================================================== */
+
+.uploadIcon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 58px;
+  height: 58px;
+
+  margin-bottom: 14px;
+
+  border-radius: 16px;
+
+  color: #2563eb;
+
+  background:
+    linear-gradient(
+      135deg,
+      #eff6ff,
+      #dbeafe
+    );
+}
+
+
+.uploadCard:nth-child(2)
+  .uploadIcon {
+  color: #7c3aed;
+
+  background:
+    linear-gradient(
+      135deg,
+      #faf5ff,
+      #ede9fe
+    );
+}
+
+
+/* ==========================================================
+   UPLOAD CARD TEXT
+========================================================== */
+
+.uploadCard h3 {
+  margin: 0;
+
+  color: #172033;
+
+  font-size: 16px;
+
+  font-weight: 800;
+}
+
+
+.uploadCard > p {
+  max-width: 300px;
+
+  margin: 7px 0 16px;
+
+  color: #64748b;
+
+  font-size: 12px;
+
+  line-height: 1.55;
+}
+
+
+.uploadCardInfo {
+  margin: 12px 0 15px;
+}
+
+
+.uploadCardInfo h3 {
+  margin: 0 0 5px;
+}
+
+
+.uploadCardInfo p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 12px;
+}
+
+
+/* ==========================================================
+   FILE INPUT
+========================================================== */
+
+.fileInput {
+  display: none !important;
+}
+
+
+/* ==========================================================
+   UPLOAD BUTTON
+========================================================== */
 
 .uploadButton {
-  display: inline-block;
+  display: inline-flex;
 
-  padding: 12px 22px;
+  align-items: center;
+  justify-content: center;
 
-  background: #2563eb;
+  gap: 7px;
 
-  color: white;
+  min-height: 40px;
 
-  border-radius: 12px;
+  padding: 0 15px;
 
-  font-weight: 600;
+  border: 1px solid #c9d9f2;
+
+  border-radius: 10px;
+
+  color: #2563eb;
+
+  background: #ffffff;
+
+  font-size: 12px;
+
+  font-weight: 700;
 
   cursor: pointer;
 
-  transition: 0.3s;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
+
 
 .uploadButton:hover {
-  background: #1d4ed8;
+  color: #ffffff;
+
+  border-color: #2563eb;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #4f46e5
+    );
+
+  transform:
+    translateY(-1px);
 }
 
-.removeButton {
-  margin-top: 14px;
 
+/* ==========================================================
+   UPLOAD ACTIONS
+========================================================== */
+
+.uploadActions {
   display: flex;
 
   align-items: center;
@@ -256,200 +1669,1030 @@
   justify-content: center;
 
   gap: 8px;
+}
 
-  width: 100%;
 
-  padding: 12px;
+.removeButton {
+  display: flex;
 
-  border: none;
+  align-items: center;
+  justify-content: center;
 
-  border-radius: 12px;
+  width: 40px;
+  height: 40px;
 
-  background: #ef4444;
+  border: 1px solid #fecaca;
 
-  color: white;
+  border-radius: 10px;
 
-  font-weight: 600;
+  color: #dc2626;
+
+  background: #fff;
 
   cursor: pointer;
 
-  transition: 0.3s;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
 }
+
 
 .removeButton:hover {
-  background: #dc2626;
+  color: #ffffff;
+
+  background: #ef4444;
 }
 
+
 /* ==========================================================
-   Success Message
+   PREVIEW
 ========================================================== */
 
-.successMessage {
+.preview {
+  width: 112px;
+  height: 112px;
+
+  object-fit: cover;
+
+  border: 4px solid #ffffff;
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 8px 22px rgba(15, 23, 42, 0.13);
+}
+
+
+.signaturePreview {
+  display: block;
+
+  width: min(100%, 270px);
+
+  height: 100px;
+
+  object-fit: contain;
+
+  padding: 10px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 12px;
+
+  background: #ffffff;
+}
+
+
+/* ==========================================================
+   UPLOAD HINT
+========================================================== */
+
+.uploadHint {
+  margin-top: 12px;
+
+  color: #94a3b8;
+
+  font-size: 10px;
+
+  line-height: 1.4;
+}
+
+
+/* ==========================================================
+   UPLOAD NOTICE
+========================================================== */
+
+.uploadNotice {
   display: flex;
 
   align-items: flex-start;
 
-  gap: 16px;
+  gap: 11px;
 
-  padding: 20px;
+  margin-top: 20px;
 
-  margin-top: 30px;
+  padding: 14px 16px;
 
-  border-radius: 18px;
+  border: 1px solid #dbeafe;
 
-  background: #ecfdf5;
+  border-radius: 13px;
 
-  border: 1px solid #bbf7d0;
+  color: #1d4ed8;
 
-  color: #166534;
-
-  animation: fadeUp 0.35s ease;
+  background:
+    #eff6ff;
 }
 
-.successMessage strong {
-  display: block;
 
-  font-size: 17px;
+.uploadNotice > svg {
+  flex: 0 0 auto;
 
-  margin-bottom: 6px;
+  margin-top: 1px;
 }
 
-.successMessage p {
-  margin: 0;
 
-  line-height: 1.7;
+.uploadNotice div {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
 }
+
+
+.uploadNotice strong {
+  color: #1e40af;
+
+  font-size: 12px;
+}
+
+
+.uploadNotice span {
+  color: #64748b;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+}
+
 
 /* ==========================================================
-   Error Message
+   FORM MESSAGES
 ========================================================== */
 
+.formMessage,
+.successMessage,
 .errorMessage {
   display: flex;
 
   align-items: flex-start;
 
-  gap: 16px;
+  gap: 10px;
 
-  padding: 20px;
+  margin-top: 18px;
 
-  margin-top: 30px;
+  padding: 13px 16px;
 
-  border-radius: 18px;
+  border-radius: 12px;
 
-  background: #fef2f2;
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+
+
+.successMessage {
+  color: #166534;
+
+  border: 1px solid #bbf7d0;
+
+  background: #f0fdf4;
+}
+
+
+.errorMessage {
+  color: #991b1b;
 
   border: 1px solid #fecaca;
 
-  color: #b91c1c;
-
-  animation: fadeUp 0.35s ease;
+  background: #fef2f2;
 }
 
-.errorMessage strong {
-  display: block;
-
-  font-size: 17px;
-
-  margin-bottom: 6px;
-}
-
-.errorMessage p {
-  margin: 0;
-
-  line-height: 1.7;
-}
 
 /* ==========================================================
-   Animation
+   SAVE BAR
 ========================================================== */
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-
-    transform: translateY(0);
-  }
-}
-
-/* ==========================================================
-   Submit Button
-========================================================== */
-
-.submitWrapper {
-  margin-top: 35px;
-
-  display: flex;
-
-  justify-content: center;
-}
-
-/* Button */
-
-.submitButton {
+.profileSaveBar {
   display: flex;
 
   align-items: center;
 
+  justify-content: space-between;
+
+  gap: 25px;
+
+  margin-top: 22px;
+
+  padding: 18px 20px;
+
+  border-top: 1px solid #e2e8f0;
+
+  border-radius: 16px;
+
+  background:
+    rgba(255, 255, 255, 0.92);
+
+  box-shadow:
+    0 8px 25px rgba(15, 23, 42, 0.045);
+}
+
+
+/* ==========================================================
+   SAVE INFO
+========================================================== */
+
+.saveInfo {
+  display: flex;
+
+  align-items: center;
+
+  gap: 11px;
+}
+
+
+.saveSecurityIcon {
+  display: flex;
+
+  align-items: center;
   justify-content: center;
 
-  gap: 12px;
+  width: 42px;
+  height: 42px;
+
+  flex: 0 0 auto;
+
+  border-radius: 12px;
+
+  color: #15803d;
+
+  background:
+    #ecfdf3;
+
+  border: 1px solid #c9f1d8;
+}
+
+
+.saveInfo div:last-child {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+
+.saveInfo strong {
+  color: #334155;
+
+  font-size: 12px;
+
+  font-weight: 800;
+}
+
+
+.saveInfo span {
+  color: #94a3b8;
+
+  font-size: 11px;
+}
+
+
+/* ==========================================================
+   LOADING
+========================================================== */
+
+.loadingContainer {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 420px;
 
   width: 100%;
 
-  padding: 18px 28px;
+  color: #64748b;
+
+  text-align: center;
+}
+
+
+.loadingContainer p {
+  margin-top: 15px;
+
+  color: #64748b;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+
+.loadingSpinner {
+  width: 40px;
+  height: 40px;
+
+  border: 3px solid #dbeafe;
+
+  border-top-color: #2563eb;
+
+  border-radius: 50%;
+
+  animation:
+    profileSpin
+    0.8s linear infinite;
+}
+
+
+@keyframes profileSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+@media (max-width: 1100px) {
+  .form {
+    padding:
+      28px 22px 60px;
+  }
+
+
+  .profileHero {
+    padding: 25px;
+  }
+
+
+  .progressCard {
+    grid-template-columns:
+      auto
+      minmax(150px, 1fr)
+      minmax(220px, 1.5fr)
+      auto;
+
+    gap: 20px;
+  }
+}
+
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@media (max-width: 850px) {
+  .heroTop {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+
+  .heroMemberBadge {
+    align-items: flex-start;
+
+    width: 100%;
+
+    box-sizing: border-box;
+  }
+
+
+  .progressCard {
+    grid-template-columns:
+      auto
+      1fr;
+
+    gap: 18px;
+  }
+
+
+  .progressDetails {
+    grid-column: 2;
+  }
+
+
+  .progressSecurity {
+    grid-column:
+      1 / -1;
+
+    width: 100%;
+
+    box-sizing: border-box;
+  }
+
+
+  .profileIntro {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+
+  .introStats {
+    width: 100%;
+  }
+
+
+  .introStats div {
+    flex: 1;
+  }
+
+
+  .accordionHeader {
+    grid-template-columns:
+      52px
+      minmax(0, 1fr)
+      auto
+      36px;
+
+    gap: 13px;
+
+    padding:
+      14px 16px;
+  }
+
+
+  .sectionIcon {
+    width: 48px;
+    height: 48px;
+  }
+
+
+  .grid {
+    grid-template-columns:
+      1fr;
+  }
+
+
+  .uploadGrid {
+    grid-template-columns:
+      1fr;
+  }
+}
+
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media (max-width: 620px) {
+  .form {
+    padding:
+      18px 12px 45px;
+  }
+
+
+  .profileHero {
+    padding: 20px 16px;
+
+    border-radius: 18px;
+  }
+
+
+  .heroIdentity {
+    align-items: flex-start;
+
+    gap: 12px;
+  }
+
+
+  .heroIcon {
+    width: 48px;
+    height: 48px;
+
+    border-radius: 14px;
+  }
+
+
+  .heroIdentity h1 {
+    font-size: 27px;
+  }
+
+
+  .heroIdentity p {
+    font-size: 12px;
+  }
+
+
+  .progressCard {
+    grid-template-columns:
+      1fr;
+
+    gap: 16px;
+
+    padding: 18px;
+
+    border-radius: 17px;
+  }
+
+
+  .progressLeft {
+    justify-content: flex-start;
+  }
+
+
+  .progressDetails {
+    grid-column: auto;
+  }
+
+
+  .progressSecurity {
+    grid-column: auto;
+
+    min-width: 0;
+  }
+
+
+  .circle,
+  .progressCircle {
+    width: 68px;
+    height: 68px;
+  }
+
+
+  .circle::after,
+  .progressCircle::after {
+    width: 52px;
+    height: 52px;
+  }
+
+
+  .circle span,
+  .progressCircle span {
+    font-size: 17px;
+  }
+
+
+  .profileIntro {
+    padding: 18px;
+
+    border-radius: 16px;
+  }
+
+
+  .profileIntro h2 {
+    font-size: 18px;
+  }
+
+
+  .profileIntro p {
+    font-size: 12px;
+  }
+
+
+  .introStats {
+    width: 100%;
+  }
+
+
+  .accordionList {
+    gap: 11px;
+  }
+
+
+  .accordionItem {
+    border-radius: 15px;
+  }
+
+
+  .accordionHeader {
+    grid-template-columns:
+      45px
+      minmax(0, 1fr)
+      32px;
+
+    gap: 11px;
+
+    min-height: 78px;
+
+    padding:
+      12px 13px;
+  }
+
+
+  .sectionIcon {
+    width: 45px;
+    height: 45px;
+
+    border-radius: 13px;
+  }
+
+
+  .sectionInfo h3 {
+    font-size: 14px;
+  }
+
+
+  .sectionInfo p {
+    font-size: 10px;
+  }
+
+
+  .sectionStatus {
+    display: none;
+  }
+
+
+  .chevron {
+    width: 32px;
+    height: 32px;
+  }
+
+
+  .accordionContent {
+    padding:
+      0 15px 20px;
+  }
+
+
+  .sectionHeader {
+    padding-top: 20px;
+
+    margin-bottom: 18px;
+  }
+
+
+  .sectionHeader h2 {
+    font-size: 19px;
+  }
+
+
+  .sectionHeader p {
+    font-size: 12px;
+  }
+
+
+  .inputGroup input,
+  .inputGroup select {
+    height: 46px;
+  }
+
+
+  .uploadCard {
+    min-height: 250px;
+
+    padding: 20px;
+  }
+
+
+  .profileSaveBar {
+    align-items: stretch;
+
+    flex-direction: column;
+
+    padding: 16px;
+  }
+
+
+  .saveInfo {
+    align-items: flex-start;
+  }
+
+
+  .profileSaveBar button {
+    width: 100%;
+  }
+}
+
+
+/* ==========================================================
+   SMALL MOBILE
+========================================================== */
+
+@media (max-width: 400px) {
+  .form {
+    padding:
+      14px 9px 35px;
+  }
+
+
+  .heroIdentity h1 {
+    font-size: 24px;
+  }
+
+
+  .heroIcon {
+    width: 44px;
+    height: 44px;
+  }
+
+
+  .heroEyebrow {
+    font-size: 9px;
+  }
+
+
+  .profileIntro {
+    padding: 15px;
+  }
+
+
+  .accordionHeader {
+    grid-template-columns:
+      42px
+      minmax(0, 1fr)
+      30px;
+
+    padding:
+      11px 10px;
+  }
+
+
+  .sectionIcon {
+    width: 42px;
+    height: 42px;
+  }
+
+
+  .sectionInfo h3 {
+    font-size: 13px;
+  }
+
+
+  .sectionInfo p {
+    font-size: 9px;
+  }
+}
+
+
+/* ==========================================================
+   ACCESSIBILITY
+========================================================== */
+
+.accordionHeader:focus-visible,
+.uploadButton:focus-visible,
+.removeButton:focus-visible,
+.inputGroup input:focus-visible,
+.inputGroup select:focus-visible,
+.inputGroup textarea:focus-visible {
+  outline:
+    3px solid
+    rgba(37, 99, 235, 0.18);
+
+  outline-offset: 2px;
+}
+
+
+/* ==========================================================
+   REDUCED MOTION
+========================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .accordionItem,
+  .sectionIcon,
+  .chevron,
+  .progressFill,
+  .uploadCard,
+  .uploadButton {
+    transition: none;
+  }
+
+
+  .accordionContent {
+    animation: none;
+  }
+
+
+  .loadingSpinner {
+    animation: none;
+  }
+}
+
+/* ==========================================================
+   PROFILE SUBMIT BAR
+   Modern Professional Save Area
+========================================================== */
+
+.submitBar {
+  width: 100%;
+  margin-top: 28px;
+  padding: 20px 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.98),
+      rgba(248, 250, 255, 0.98)
+    );
+
+  border: 1px solid #e4eaf4;
+  border-radius: 20px;
+
+  box-shadow:
+    0 12px 30px rgba(15, 23, 42, 0.06),
+    0 2px 8px rgba(15, 23, 42, 0.03);
+
+  box-sizing: border-box;
+}
+
+
+/* ==========================================================
+   SECURITY INFORMATION
+========================================================== */
+
+.submitInfo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  min-width: 0;
+}
+
+
+.submitInfoIcon {
+  width: 44px;
+  height: 44px;
+
+  flex: 0 0 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #16a34a;
+
+  background: #ecfdf3;
+
+  border: 1px solid #c9f2d8;
+
+  border-radius: 13px;
+}
+
+
+.submitInfoContent {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  min-width: 0;
+}
+
+
+.submitInfoContent strong {
+  color: #14213d;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  line-height: 1.35;
+}
+
+
+.submitInfoContent span {
+  color: #64748b;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+
+/* ==========================================================
+   SAVE BUTTON
+========================================================== */
+
+.submitButton {
+  min-width: 170px;
+  height: 52px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  padding: 0 24px;
 
   border: none;
-
-  border-radius: 18px;
-
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  border-radius: 13px;
 
   color: #ffffff;
 
-  font-size: 17px;
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #4f46e5
+    );
 
+  font-size: 14px;
   font-weight: 700;
 
   cursor: pointer;
 
-  transition: 0.35s;
+  box-shadow:
+    0 10px 22px rgba(37, 99, 235, 0.22);
 
-  box-shadow: 0 15px 35px rgba(37, 99, 235, 0.25);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
 }
 
-.submitButton:hover {
-  transform: translateY(-3px);
 
-  box-shadow: 0 22px 40px rgba(37, 99, 235, 0.35);
+.submitButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 14px 28px rgba(37, 99, 235, 0.28);
+
+  filter: brightness(1.03);
 }
+
+
+.submitButton:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+
+.submitButton:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.2);
+  outline-offset: 3px;
+}
+
 
 .submitButton:disabled {
-  cursor: not-allowed;
-
   opacity: 0.7;
 
+  cursor: not-allowed;
+
   transform: none;
+
+  box-shadow:
+    0 6px 14px rgba(37, 99, 235, 0.12);
 }
 
-/* Loading */
 
-.spin {
-  animation: spin 0.8s linear infinite;
+/* ==========================================================
+   LOADING SPINNER
+========================================================== */
+
+.spinner {
+  animation: submitSpinner 0.9s linear infinite;
 }
 
-@keyframes spin {
+
+@keyframes submitSpinner {
   from {
     transform: rotate(0deg);
   }
 
   to {
     transform: rotate(360deg);
+  }
+}
+
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+@media (max-width: 768px) {
+  .submitBar {
+    flex-direction: column;
+    align-items: stretch;
+
+    padding: 18px;
+
+    border-radius: 16px;
+  }
+
+  .submitInfo {
+    align-items: flex-start;
+  }
+
+  .submitButton {
+    width: 100%;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .submitBar {
+    margin-top: 22px;
+
+    padding: 16px;
+  }
+
+  .submitInfoIcon {
+    width: 40px;
+    height: 40px;
+
+    flex-basis: 40px;
+  }
+
+  .submitInfoContent strong {
+    font-size: 14px;
+  }
+
+  .submitInfoContent span {
+    font-size: 12px;
+  }
+
+  .submitButton {
+    height: 50px;
+
+    font-size: 13px;
   }
 }

@@ -1,6 +1,5 @@
 "use client";
 
-
 /* ==========================================================
    Join AILP CTA
    Module 9 - Lesson 32A
@@ -58,7 +57,7 @@ export default function JoinCTA() {
           ========================== */}
 
           <div className={styles.actions}>
-            <Link href="/join" className={styles.primaryButton}>
+            <Link href="/join-membership" className={styles.primaryButton}>
               <>
                 Join AILP
                 <span className={styles.arrow}>→</span>
@@ -74,8 +73,6 @@ export default function JoinCTA() {
           </div>
         </div>
       </div>
-
-   
     </section>
   );
 }

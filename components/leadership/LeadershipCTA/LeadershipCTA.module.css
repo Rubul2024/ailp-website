@@ -1,0 +1,206 @@
+/* ==========================================================
+   LEADERSHIP CTA
+========================================================== */
+
+.section {
+  padding: 30px 20px 120px;
+}
+
+.container {
+  width: min(1250px, 92%);
+
+  margin: auto;
+
+  padding: 65px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 50px;
+
+  border-radius: 30px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0b4ea2,
+      #2563eb
+    );
+
+  box-shadow:
+    0 30px 70px rgba(11, 78, 162, 0.2);
+
+  overflow: hidden;
+
+  position: relative;
+}
+
+.container::after {
+  content: "";
+
+  position: absolute;
+
+  width: 350px;
+
+  height: 350px;
+
+  right: -120px;
+
+  top: -180px;
+
+  border-radius: 50%;
+
+  background: rgba(255, 122, 0, 0.22);
+
+  filter: blur(20px);
+}
+
+.content {
+  position: relative;
+
+  z-index: 2;
+
+  max-width: 680px;
+}
+
+.content > span {
+  color: #bfdbfe;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+}
+
+.content h2 {
+  margin: 14px 0;
+
+  color: #ffffff;
+
+  font-size: clamp(35px, 4vw, 52px);
+
+  line-height: 1.1;
+}
+
+.content p {
+  margin: 0;
+
+  color: #dbeafe;
+
+  font-size: 16px;
+
+  line-height: 1.8;
+}
+
+.actions {
+  position: relative;
+
+  z-index: 2;
+
+  display: flex;
+
+  gap: 12px;
+
+  flex-shrink: 0;
+}
+
+.primary,
+.secondary {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-width: 135px;
+
+  padding: 15px 24px;
+
+  border-radius: 999px;
+
+  text-decoration: none;
+
+  font-weight: 700;
+
+  transition: 0.3s;
+}
+
+.primary {
+  background: #ff7a00;
+
+  color: #ffffff;
+}
+
+.primary:hover {
+  transform: translateY(-3px);
+
+  background: #ffffff;
+
+  color: #0b4ea2;
+}
+
+.secondary {
+  background: rgba(255, 255, 255, 0.1);
+
+  color: #ffffff;
+
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.secondary:hover {
+  background: #ffffff;
+
+  color: #0b4ea2;
+
+  transform: translateY(-3px);
+}
+
+/* ==========================================================
+   Responsive
+========================================================== */
+
+@media (max-width: 850px) {
+  .container {
+    padding: 45px 30px;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+  .actions {
+    width: 100%;
+  }
+
+  .primary,
+  .secondary {
+    flex: 1;
+  }
+}
+
+@media (max-width: 500px) {
+  .section {
+    padding-bottom: 80px;
+  }
+
+  .container {
+    width: 94%;
+
+    padding: 35px 24px;
+
+    border-radius: 24px;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .primary,
+  .secondary {
+    width: 100%;
+  }
+}

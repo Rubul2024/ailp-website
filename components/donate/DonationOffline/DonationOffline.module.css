@@ -1,0 +1,288 @@
+.section {
+  background: #f8fafc;
+}
+
+.container {
+  max-width: 1150px;
+
+  margin: auto;
+
+  padding: 100px 30px;
+}
+
+.heading {
+  max-width: 700px;
+
+  margin:
+    0 auto
+    50px;
+
+  text-align: center;
+}
+
+.heading > span {
+  color: #2563eb;
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+}
+
+.heading h2 {
+  margin: 14px 0;
+
+  color: #0f172a;
+
+  font-size: clamp(32px, 4vw, 46px);
+}
+
+.heading h2 strong {
+  color: #2563eb;
+}
+
+.heading p {
+  margin: 0;
+
+  color: #64748b;
+
+  line-height: 1.8;
+}
+
+.grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, 1fr);
+
+  gap: 24px;
+}
+
+.card {
+  padding: 30px;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 24px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 15px 40px
+    rgba(15, 23, 42, 0.05);
+}
+
+.cardHeader {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  margin-bottom: 25px;
+}
+
+.icon {
+  width: 52px;
+
+  height: 52px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 16px;
+
+  background: #eaf2ff;
+
+  color: #2563eb;
+}
+
+.cardHeader h3 {
+  margin: 0 0 4px;
+
+  color: #0f172a;
+
+  font-size: 19px;
+}
+
+.cardHeader p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 13px;
+}
+
+.qr {
+  display: flex;
+
+  justify-content: center;
+
+  margin-bottom: 25px;
+}
+
+.qr img {
+  width: 210px;
+
+  height: 210px;
+
+  padding: 12px;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 18px;
+
+  object-fit: contain;
+
+  background: #ffffff;
+}
+
+.upiBox {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+
+  padding: 16px;
+
+  border-radius: 15px;
+
+  background: #f8fafc;
+}
+
+.upiBox span,
+.detail > span {
+  color: #64748b;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.5px;
+}
+
+.upiBox strong {
+  color: #0f172a;
+
+  word-break: break-all;
+}
+
+.upiBox button {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 7px;
+
+  align-self: flex-start;
+
+  margin-top: 4px;
+
+  padding: 8px 13px;
+
+  border: 1px solid #dbe4f0;
+
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  color: #2563eb;
+
+  cursor: pointer;
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+.bankDetails {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+.detail {
+  padding-bottom: 14px;
+
+  border-bottom: 1px solid #eef2f7;
+}
+
+.detail > div {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-top: 5px;
+}
+
+.detail strong {
+  color: #0f172a;
+
+  word-break: break-word;
+}
+
+.detail button {
+  width: 34px;
+
+  height: 34px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border: none;
+
+  border-radius: 9px;
+
+  background: #eef5ff;
+
+  color: #2563eb;
+
+  cursor: pointer;
+}
+
+.bankNotice {
+  margin-top: 5px;
+
+  padding: 14px;
+
+  border-radius: 12px;
+
+  background: #fff7ed;
+
+  color: #9a3412;
+
+  font-size: 12px;
+
+  line-height: 1.6;
+}
+
+@media (max-width: 750px) {
+  .container {
+    padding:
+      75px 20px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

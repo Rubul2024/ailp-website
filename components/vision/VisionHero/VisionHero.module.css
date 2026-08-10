@@ -1,0 +1,225 @@
+/* ==========================================================
+   AILP VISION HERO
+========================================================== */
+
+.hero {
+  position: relative;
+
+  min-height: 560px;
+
+  display: flex;
+
+  align-items: center;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      #061a38,
+      #0b4ea2 55%,
+      #172554
+    );
+
+  color: #ffffff;
+}
+
+/* ==========================================================
+   Decorative Orbs
+========================================================== */
+
+.orbOne {
+  position: absolute;
+
+  width: 450px;
+  height: 450px;
+
+  top: -220px;
+  right: -100px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 122, 0, 0.22);
+
+  filter: blur(50px);
+}
+
+.orbTwo {
+  position: absolute;
+
+  width: 350px;
+  height: 350px;
+
+  bottom: -180px;
+  left: -120px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(96, 165, 250, 0.22);
+
+  filter: blur(60px);
+}
+
+/* ==========================================================
+   Container
+========================================================== */
+
+.container {
+  position: relative;
+
+  z-index: 2;
+
+  width: 100%;
+
+  max-width: 1320px;
+
+  margin: auto;
+
+  padding:
+    155px
+    30px
+    90px;
+}
+
+.content {
+  max-width: 850px;
+
+  margin: auto;
+
+  text-align: center;
+}
+
+/* ==========================================================
+   Badge
+========================================================== */
+
+.badge {
+  display: inline-flex;
+
+  padding: 9px 18px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(255, 255, 255, 0.1);
+
+  border: 1px solid
+    rgba(255, 255, 255, 0.18);
+
+  color: #dbeafe;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+}
+
+/* ==========================================================
+   Heading
+========================================================== */
+
+.content h1 {
+  margin: 28px 0 22px;
+
+  font-size: clamp(
+    44px,
+    6vw,
+    72px
+  );
+
+  line-height: 1.05;
+
+  font-weight: 900;
+
+  letter-spacing: -2px;
+}
+
+.content h1 span {
+  color: #ffb15c;
+}
+
+/* ==========================================================
+   Description
+========================================================== */
+
+.content p {
+  max-width: 720px;
+
+  margin: auto;
+
+  color: #dbeafe;
+
+  font-size: 18px;
+
+  line-height: 1.8;
+}
+
+/* ==========================================================
+   Button
+========================================================== */
+
+.button {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  margin-top: 35px;
+
+  padding: 15px 30px;
+
+  border-radius: 999px;
+
+  background: #ff7a00;
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-weight: 800;
+
+  box-shadow:
+    0 15px 35px
+    rgba(255, 122, 0, 0.25);
+
+  transition: 0.3s;
+}
+
+.button:hover {
+  transform: translateY(-4px);
+
+  background: #ffffff;
+
+  color: #0b4ea2;
+}
+
+/* ==========================================================
+   Responsive
+========================================================== */
+
+@media (max-width: 768px) {
+  .container {
+    padding:
+      130px
+      20px
+      75px;
+  }
+
+  .content h1 {
+    letter-spacing: -1px;
+  }
+
+  .content p {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .content h1 {
+    font-size: 38px;
+  }
+}

@@ -1,276 +1,140 @@
 "use client";
 
+/* ==========================================================
+   Member Dashboard
+   All India Labour Party
+   Production Ready
+========================================================== */
+
+import { useEffect, useState } from "react";
+
 import styles from "./Dashboard.module.css";
 
-import {
-  UserCheck,
-  CreditCard,
-  IndianRupee,
-  BadgeCheck,
-  ArrowRight,
-  User,
-} from "lucide-react";
+/* ==========================================================
+   Dashboard Components
+========================================================== */
+
+import WelcomeBanner from "@/components/member/dashboard/WelcomeBanner";
+
+import DashboardStats from "@/components/member/dashboard/DashboardStats";
+
+import ProfileCompletion from "@/components/member/dashboard/ProfileCompletion";
+
+import QuickActions from "@/components/member/dashboard/QuickActions";
+
+import RecentActivity from "@/components/member/dashboard/RecentActivity";
+
+import LatestAnnouncements from "@/components/member/dashboard/LatestAnnouncements";
+
+import Notifications from "@/components/member/dashboard/Notifications";
+
+import DonationSummary from "@/components/member/dashboard/DonationSummary";
 
 export default function MemberDashboard() {
+  const [member, setMember] = useState(null);
 
-  const member = {
+  const [loading, setLoading] = useState(true);
 
-    fullName: "Welcome Member",
+  /* ==========================================================
+     Load Member
+  ========================================================== */
 
-    membershipStatus: "REGISTERED",
+  useEffect(() => {
+    loadMember();
+  }, []);
 
-    profileCompleted: false,
+  async function loadMember() {
+    try {
+      const response = await fetch(
+        "/api/member/me",
+        {
+          credentials: "include",
+        }
+      );
 
-    membershipId: "Not Generated",
+      const data = await response.json();
 
-    totalDonation: 0,
+      if (data.success) {
+        setMember(data.member);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
-  };
+  /* ==========================================================
+     Loading
+  ========================================================== */
+
+  if (loading) {
+    return (
+      <div className={styles.loading}>
+        Loading Dashboard...
+      </div>
+    );
+  }
+
+  /* ==========================================================
+     Error
+  ========================================================== */
+
+  if (!member) {
+    return (
+      <div className={styles.error}>
+        Unable to load dashboard.
+      </div>
+    );
+  }
+
+  /* ==========================================================
+     Dashboard
+  ========================================================== */
 
   return (
-
     <div className={styles.dashboard}>
+      {/* ==========================================
+          Welcome Banner
+      ========================================== */}
 
-      {/* Hero */}
+      <WelcomeBanner member={member} />
 
-      <section className={styles.hero}>
+      {/* ==========================================
+          Statistics
+      ========================================== */}
 
-        <div>
+      <DashboardStats member={member} />
 
-          <h1>
+      {/* ==========================================
+          Dashboard Grid
+      ========================================== */}
 
-            Welcome,
+      <div className={styles.dashboardGrid}>
+        {/* ==========================================
+            Left Column
+        ========================================== */}
 
-            <span>
+        <div className={styles.leftColumn}>
+          <QuickActions />
 
-              {member.fullName}
+          <RecentActivity member={member} />
 
-            </span>
-
-          </h1>
-
-          <p>
-
-            Complete your profile to generate your
-            Digital Membership Card.
-
-          </p>
-
+          <LatestAnnouncements />
         </div>
 
-        <button className={styles.completeButton}>
+        {/* ==========================================
+            Right Column
+        ========================================== */}
 
-          Complete Profile
+        <div className={styles.rightColumn}>
+          <ProfileCompletion member={member} />
 
-          <ArrowRight size={18} />
+          <DonationSummary member={member} />
 
-        </button>
-
-      </section>
-
-      {/* Statistics */}
-
-      <section className={styles.statistics}>
-
-        <div className={styles.card}>
-
-          <div className={styles.iconBlue}>
-
-            <UserCheck size={26} />
-
-          </div>
-
-          <div>
-
-            <h3>
-
-              Profile
-
-            </h3>
-
-            <p>
-
-              {
-
-                member.profileCompleted
-
-                ? "Completed"
-
-                : "Pending"
-
-              }
-
-            </p>
-
-          </div>
-
+          <Notifications member={member} />
         </div>
-
-        <div className={styles.card}>
-
-          <div className={styles.iconGreen}>
-
-            <BadgeCheck size={26} />
-
-          </div>
-
-          <div>
-
-            <h3>
-
-              Status
-
-            </h3>
-
-            <p>
-
-              {member.membershipStatus}
-
-            </p>
-
-          </div>
-
-        </div>
-
-        <div className={styles.card}>
-
-          <div className={styles.iconOrange}>
-
-            <CreditCard size={26} />
-
-          </div>
-
-          <div>
-
-            <h3>
-
-              Membership ID
-
-            </h3>
-
-            <p>
-
-              {member.membershipId}
-
-            </p>
-
-          </div>
-
-        </div>
-
-        <div className={styles.card}>
-
-          <div className={styles.iconPurple}>
-
-            <IndianRupee size={26} />
-
-          </div>
-
-          <div>
-
-            <h3>
-
-              Donation
-
-            </h3>
-
-            <p>
-
-              ₹{member.totalDonation}
-
-            </p>
-
-          </div>
-
-        </div>
-
-      </section>
-
-      {/* Two Column */}
-
-      <section className={styles.grid}>
-
-        {/* Membership Card */}
-
-        <div className={styles.membershipCard}>
-
-          <h2>
-
-            Digital Membership Card
-
-          </h2>
-
-          <div className={styles.cardPreview}>
-
-            <User
-
-              size={70}
-
-            />
-
-            <h3>
-
-              Membership Card
-
-            </h3>
-
-            <p>
-
-              Complete your profile to
-              generate your Digital Card.
-
-            </p>
-
-          </div>
-
-          <button>
-
-            Generate Membership Card
-
-          </button>
-
-        </div>
-
-        {/* Quick Actions */}
-
-        <div className={styles.actions}>
-
-          <h2>
-
-            Quick Actions
-
-          </h2>
-
-          <button>
-
-            Complete Profile
-
-          </button>
-
-          <button>
-
-            Download Membership Card
-
-          </button>
-
-          <button>
-
-            Donate Now
-
-          </button>
-
-          <button>
-
-            View Donation History
-
-          </button>
-
-        </div>
-
-      </section>
-
+      </div>
     </div>
-
   );
-
 }

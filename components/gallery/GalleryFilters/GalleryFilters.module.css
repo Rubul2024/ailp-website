@@ -1,0 +1,72 @@
+/* ==========================================================
+   GALLERY FILTERS
+========================================================== */
+
+.filters {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  flex-wrap: wrap;
+
+  margin-bottom: 45px;
+}
+
+.filters button {
+  padding: 11px 18px;
+
+  border: 1px solid #dbe4f0;
+
+  border-radius: 999px;
+
+  background: #ffffff;
+
+  color: #475569;
+
+  cursor: pointer;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  transition: 0.3s;
+}
+
+.filters button:hover {
+  color: #2563eb;
+
+  border-color: #2563eb;
+
+  transform: translateY(-2px);
+}
+
+.filters button.active {
+  color: #ffffff;
+
+  border-color: #2563eb;
+
+  background: linear-gradient(
+    135deg,
+    #0b4ea2,
+    #2563eb
+  );
+
+  box-shadow:
+    0 10px 25px rgba(37, 99, 235, 0.2);
+}
+
+@media (max-width: 480px) {
+  .filters {
+    gap: 8px;
+  }
+
+  .filters button {
+    padding: 9px 13px;
+
+    font-size: 12px;
+  }
+}

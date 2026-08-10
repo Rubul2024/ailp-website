@@ -1,429 +1,1579 @@
 /* ==========================================================
-   AILP Membership Card
+   AILP DIGITAL MEMBERSHIP CARD
+   All India Labour Party
+   Modern Professional Design
 ========================================================== */
 
-.wrapper{
-    width:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:40px 20px;
-}
 
 /* ==========================================================
-   Card
+   WRAPPER
 ========================================================== */
 
-.card{
-    width:100%;
-    max-width:860px;
-    min-height:500px;
+.wrapper {
+  width: 100%;
+}
 
-    background:
+
+/* ==========================================================
+   ACTIONS
+========================================================== */
+/* ==========================================================
+   ACTION BUTTONS
+========================================================== */
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+
+  gap: 12px;
+
+  margin-bottom: 24px;
+}
+
+.actions button {
+  min-height: 44px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 11px 18px;
+
+  border-radius: 12px;
+
+  font-family: "Roboto", Arial, sans-serif;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+
+/* ==========================================================
+   DOWNLOAD
+========================================================== */
+
+.downloadButton {
+  color: #ffffff;
+
+  border: 1px solid transparent;
+
+  background:
     linear-gradient(
-        135deg,
-        #1e3a8a,
-        #2563eb,
-        #0ea5e9
+      135deg,
+      #2563eb,
+      #4f46e5
     );
 
-    color:#ffffff;
-
-    border-radius:26px;
-
-    overflow:hidden;
-
-    box-shadow:
-    0 25px 60px rgba(37,99,235,.28);
-
-    position:relative;
+  box-shadow:
+    0 8px 20px
+    rgba(37, 99, 235, 0.18);
 }
 
-/* Decorative Circles */
+.downloadButton:hover {
+  transform: translateY(-2px);
 
-.card::before{
-    content:"";
-    position:absolute;
-    width:260px;
-    height:260px;
-    border-radius:50%;
-    background:rgba(255,255,255,.08);
-    top:-120px;
-    right:-80px;
+  box-shadow:
+    0 12px 25px
+    rgba(37, 99, 235, 0.25);
 }
 
-.card::after{
-    content:"";
-    position:absolute;
-    width:180px;
-    height:180px;
-    border-radius:50%;
-    background:rgba(255,255,255,.05);
-    bottom:-70px;
-    left:-50px;
+
+/* ==========================================================
+   PRINT
+========================================================== */
+
+.printButton {
+  color: #1e293b;
+
+  background: #ffffff;
+
+  border: 1px solid #dbe3ef;
+
+  box-shadow:
+    0 4px 12px
+    rgba(15, 23, 42, 0.05);
+}
+
+.printButton:hover {
+  transform: translateY(-2px);
+
+  color: #2563eb;
+
+  border-color: #bfdbfe;
+
+  background: #f8fbff;
+}
+
+
+/* ==========================================================
+   SHARE
+========================================================== */
+
+.shareButton {
+  color: #ffffff;
+
+  border: 1px solid transparent;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0f766e,
+      #059669
+    );
+
+  box-shadow:
+    0 8px 20px
+    rgba(5, 150, 105, 0.16);
+}
+
+.shareButton:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 25px
+    rgba(5, 150, 105, 0.24);
+}
+
+
+/* ==========================================================
+   Disabled
+========================================================== */
+
+.actions button:disabled {
+  opacity: 0.65;
+
+  cursor: not-allowed;
+
+  transform: none;
+
+  box-shadow: none;
+}
+
+
+/* ==========================================================
+   Focus
+========================================================== */
+
+.actions button:focus-visible {
+  outline: 3px solid
+    rgba(37, 99, 235, 0.2);
+
+  outline-offset: 3px;
 }
 
 /* ==========================================================
-   Header
+   CARD TOP DECORATION
 ========================================================== */
 
-.header{
-    display:flex;
-    align-items:center;
-    gap:20px;
+.card::before {
+  content: "";
 
-    padding:25px 35px;
+  position: absolute;
 
-    border-bottom:1px solid rgba(255,255,255,.12);
+  top: 0;
+  left: 0;
 
-    position:relative;
-    z-index:2;
+  width: 100%;
+  height: 4px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #1d4ed8,
+      #2563eb,
+      #4f46e5
+    );
+
+  z-index: 5;
 }
 
-.header img{
-    background:#ffffff;
-    padding:8px;
-    border-radius:16px;
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+.header {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 24px;
+
+  padding: 24px 28px;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0f172a 0%,
+      #172554 48%,
+      #2563eb 100%
+    );
+
+  overflow: hidden;
 }
 
-.header h2{
-    margin:0;
-    font-size:28px;
-    font-weight:700;
-    letter-spacing:.5px;
+
+/* Decorative light */
+
+.header::after {
+  content: "";
+
+  position: absolute;
+
+  width: 220px;
+  height: 220px;
+
+  right: -80px;
+  top: -120px;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  pointer-events: none;
 }
 
-.header p{
-    margin-top:6px;
-    opacity:.9;
-    font-size:15px;
+
+/* ==========================================================
+   LOGO AREA
+========================================================== */
+
+.logoArea {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  min-width: 0;
+}
+
+
+/* ==========================================================
+   LOGO WRAPPER
+========================================================== */
+
+.logoWrapper {
+  flex-shrink: 0;
+
+  width: 54px;
+  height: 54px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #ffffff;
+
+  border: 1px solid rgba(255, 255, 255, 0.5);
+
+  border-radius: 14px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.16);
+}
+
+.logoWrapper img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  padding: 7px;
+}
+
+
+/* ==========================================================
+   BRAND TEXT
+========================================================== */
+
+.brandText {
+  min-width: 0;
+}
+
+.brandText h2 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 20px;
+
+  line-height: 1.2;
+
+  font-weight: 800;
+
+  letter-spacing: 0.4px;
+}
+
+.brandText p {
+  margin: 5px 0 0;
+
+  color: rgba(255, 255, 255, 0.75);
+
+  font-size: 12px;
+
+  line-height: 1.4;
+
+  font-weight: 400;
+}
+
+
+/* ==========================================================
+   MEMBERSHIP STATUS
+========================================================== */
+
+.status {
+  position: relative;
+  z-index: 2;
+
+  flex-shrink: 0;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 8px 13px;
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.12);
+
+  color: #ffffff;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.3px;
+
+  backdrop-filter: blur(12px);
+}
+
+
+/* ==========================================================
+   BODY
+========================================================== */
+
+.body {
+  display: grid;
+
+  grid-template-columns:
+    250px
+    minmax(0, 1fr)
+    150px;
+
+  align-items: stretch;
+
+  gap: 24px;
+
+  padding: 26px;
+}
+
+
+/* ==========================================================
+   PROFILE SECTION
+========================================================== */
+
+.profile {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align: center;
+
+  padding: 8px 4px;
+}
+
+
+/* ==========================================================
+   PROFILE PHOTO
+========================================================== */
+
+.photoBox {
+  position: relative;
+
+  width: 142px;
+  height: 142px;
+
+  padding: 4px;
+
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #4f46e5
+    );
+
+  box-shadow:
+    0 15px 35px rgba(37, 99, 235, 0.18);
+}
+
+.photoBox::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 5px;
+
+  border: 1px solid rgba(255, 255, 255, 0.8);
+
+  border-radius: 18px;
+
+  pointer-events: none;
+}
+
+.photo {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  border-radius: 18px;
+
+  background: #f1f5f9;
+}
+
+
+/* ==========================================================
+   MEMBER NAME
+========================================================== */
+
+.memberName {
+  width: 100%;
+
+  margin: 15px 0 4px;
+
+  color: #0f172a;
+
+  font-size: 20px;
+
+  line-height: 1.25;
+
+  font-weight: 800;
+
+  word-break: break-word;
+}
+
+
+/* ==========================================================
+   MEMBERSHIP ID
+========================================================== */
+
+.membershipId {
+  margin: 0;
+
+  color: #2563eb;
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.8px;
+}
+
+
+/* ==========================================================
+   PROFILE COMPLETE
+========================================================== */
+
+.profileComplete,
+.profilePending {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  margin-top: 12px;
+
+  padding: 7px 11px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+
+  font-weight: 700;
+}
+
+
+/* Complete */
+
+.profileComplete {
+  background: #ecfdf5;
+
+  border: 1px solid #bbf7d0;
+
+  color: #15803d;
+}
+
+
+/* Pending */
+
+.profilePending {
+  background: #fff7ed;
+
+  border: 1px solid #fed7aa;
+
+  color: #c2410c;
+}
+
+
+/* ==========================================================
+   DETAILS
+========================================================== */
+
+.details {
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  min-width: 0;
+}
+
+
+/* ==========================================================
+   DETAIL ROW
+========================================================== */
+
+.row {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  min-width: 0;
+
+  padding: 11px 13px;
+
+  background: #ffffff;
+
+  border: 1px solid #e6edf6;
+
+  border-radius: 12px;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.row:hover {
+  background: #f8fbff;
+
+  border-color: #cbdaf0;
+
+  transform: translateX(2px);
+}
+
+
+/* ==========================================================
+   ROW ICON
+========================================================== */
+
+.rowIcon {
+  flex-shrink: 0;
+
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+}
+
+
+/* ==========================================================
+   ROW CONTENT
+========================================================== */
+
+.rowContent {
+  min-width: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.rowContent span {
+  color: #64748b;
+
+  font-size: 10px;
+
+  line-height: 1.3;
+
+  font-weight: 600;
+}
+
+.rowContent strong {
+  color: #172033;
+
+  font-size: 13px;
+
+  line-height: 1.35;
+
+  font-weight: 700;
+
+  word-break: break-word;
+}
+
+
+/* ==========================================================
+   QR SECTION
+========================================================== */
+
+.qrSection {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  min-width: 0;
+
+  padding-left: 8px;
+
+  border-left: 1px dashed #dbe3ef;
+}
+
+
+/* ==========================================================
+   QR BOX
+========================================================== */
+
+.qrBox {
+  width: 132px;
+  height: 132px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 8px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 10px 25px rgba(15, 23, 42, 0.08);
+}
+
+
+/* ==========================================================
+   QR IMAGE
+========================================================== */
+
+.qrImage {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  background: #ffffff;
+
+  border-radius: 8px;
+}
+
+
+/* ==========================================================
+   QR LOADING
+========================================================== */
+
+.qrLoading {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  color: #64748b;
+
+  font-size: 10px;
+
+  text-align: center;
+}
+
+
+/* ==========================================================
+   QR LABEL
+========================================================== */
+
+.qrLabel {
+  color: #475569;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  text-align: center;
 }
 
 /* ==========================================================
-   Body
+   PARTY PRESIDENT SIGNATURE
 ========================================================== */
 
-.body{
-    display:grid;
-    grid-template-columns:250px 1fr;
-    gap:40px;
+.presidentSignature {
+  width: 100%;
 
-    padding:35px;
+  display: flex;
 
-    position:relative;
-    z-index:2;
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  margin-top: 10px;
+
+  text-align: center;
+}
+
+
+/* ==========================================================
+   SIGNATURE IMAGE
+========================================================== */
+
+.signatureImageBox {
+  width: 100px;
+  height: 38px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+
+.signatureImage {
+  width: 90px;
+  height: 35px;
+
+  object-fit: contain;
+}
+
+
+/* ==========================================================
+   SIGNATURE LINE
+========================================================== */
+
+.signatureLine {
+  width: 100px;
+
+  height: 1px;
+
+  margin-top: 1px;
+
+  background: #94a3b8;
+}
+
+
+/* ==========================================================
+   PRESIDENT TITLE
+========================================================== */
+
+.presidentSignature strong {
+  margin-top: 4px;
+
+  color: #334155;
+
+  font-size: 10px;
+
+  line-height: 1.2;
+
+  font-weight: 800;
 }
 
 /* ==========================================================
-   Left
+   FOOTER
 ========================================================== */
 
-.left{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
+.footer {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-wrap: wrap;
+
+  gap: 4px;
+
+  padding: 13px 24px;
+
+  background: #f8fafc;
+
+  border-top: 1px solid #e5eaf1;
+
+  color: #64748b;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+
+  text-align: center;
 }
 
-.photo{
-    width:140px;
-    height:170px;
+.footer strong {
+  color: #2563eb;
 
-    object-fit:cover;
-
-    border-radius:18px;
-
-    border:4px solid #ffffff;
-
-    background:#ffffff;
-
-    box-shadow:
-    0 10px 30px rgba(0,0,0,.20);
+  font-weight: 800;
 }
+
 
 /* ==========================================================
-   Status
+   CARD ANIMATION
 ========================================================== */
 
-.status{
-    margin-top:20px;
+@keyframes cardFade {
 
-    display:flex;
-    align-items:center;
-    gap:8px;
+  from {
+    opacity: 0;
 
-    background:#16a34a;
+    transform:
+      translateY(14px)
+      scale(0.99);
+  }
 
-    color:#ffffff;
+  to {
+    opacity: 1;
 
-    padding:10px 18px;
+    transform:
+      translateY(0)
+      scale(1);
+  }
 
-    border-radius:999px;
-
-    font-size:14px;
-
-    font-weight:700;
 }
+
 
 /* ==========================================================
-   Right
+   TABLET
 ========================================================== */
 
-.right{
-    display:flex;
-    flex-direction:column;
-    gap:18px;
+@media (max-width: 1000px) {
+
+  .body {
+    grid-template-columns:
+      210px
+      minmax(0, 1fr);
+
+    gap: 20px;
+  }
+
+  .qrSection {
+    grid-column: 1 / -1;
+
+    flex-direction: row;
+
+    padding: 18px 0 0;
+
+    border-left: none;
+
+    border-top: 1px dashed #dbe3ef;
+  }
+
+  .qrBox {
+    width: 110px;
+    height: 110px;
+  }
+
 }
+
 
 /* ==========================================================
-   Member Information
+   TABLET / MOBILE
 ========================================================== */
 
-.item{
-    background:rgba(255,255,255,.08);
+@media (max-width: 768px) {
 
-    backdrop-filter:blur(12px);
+  .card {
+    border-radius: 20px;
+  }
 
-    border:1px solid rgba(255,255,255,.12);
+  .header {
+    padding: 20px;
 
-    border-radius:16px;
+    align-items: flex-start;
+  }
 
-    padding:16px 20px;
+  .brandText h2 {
+    font-size: 17px;
+  }
+
+  .body {
+    grid-template-columns: 1fr;
+
+    padding: 22px;
+
+    gap: 20px;
+  }
+
+  .profile {
+    padding-bottom: 20px;
+
+    border-bottom: 1px dashed #dbe3ef;
+  }
+
+  .details {
+    width: 100%;
+  }
+
+  .qrSection {
+    grid-column: auto;
+
+    flex-direction: column;
+
+    padding: 20px 0 0;
+
+    border-top: 1px dashed #dbe3ef;
+  }
+
 }
 
-.item label{
-    display:block;
-
-    font-size:13px;
-
-    text-transform:uppercase;
-
-    letter-spacing:1px;
-
-    opacity:.85;
-
-    margin-bottom:8px;
-}
-
-.item h3{
-    margin:0;
-
-    display:flex;
-    align-items:center;
-    gap:10px;
-
-    font-size:20px;
-
-    font-weight:700;
-
-    word-break:break-word;
-}
 
 /* ==========================================================
-   Footer
+   MOBILE
 ========================================================== */
 
-.footer{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+@media (max-width: 560px) {
 
-    gap:30px;
+  .actions {
+    justify-content: stretch;
+  }
 
-    padding:25px 35px;
+  .actions button {
+    flex: 1 1 calc(50% - 6px);
+  }
 
-    border-top:1px solid rgba(255,255,255,.12);
+  .header {
+    flex-direction: column;
 
-    position:relative;
-    z-index:2;
+    align-items: center;
+
+    text-align: center;
+  }
+
+  .logoArea {
+    flex-direction: column;
+  }
+
+  .status {
+    align-self: center;
+  }
+
+  .body {
+    padding: 18px;
+  }
+
+  .photoBox {
+    width: 125px;
+    height: 125px;
+  }
+
+  .memberName {
+    font-size: 18px;
+  }
+
+  .row {
+    padding: 10px;
+  }
+
+  .rowContent strong {
+    font-size: 12px;
+  }
+
 }
+
 
 /* ==========================================================
-   QR Box
+   SMALL MOBILE
 ========================================================== */
 
-.qrBox{
-    width:120px;
-    height:120px;
+@media (max-width: 400px) {
 
-    background:#ffffff;
+  .actions {
+    flex-direction: column;
+  }
 
-    color:#1e3a8a;
+  .actions button {
+    width: 100%;
+  }
 
-    border-radius:18px;
+  .brandText h2 {
+    font-size: 15px;
+  }
 
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
+  .body {
+    padding: 15px;
+  }
 
-    gap:10px;
+  .photoBox {
+    width: 110px;
+    height: 110px;
+  }
 
-    font-size:12px;
+  .qrBox {
+    width: 110px;
+    height: 110px;
+  }
 
-    font-weight:600;
 }
 
-.qrBox img{
-    width:90px;
-    height:90px;
-}
 
 /* ==========================================================
-   Footer Text
+   PRINT
+   Physical ID Card:
+   85.6mm × 53.98mm
 ========================================================== */
 
-.footerText{
-    flex:1;
-}
+@media print {
 
-.footerText strong{
-    display:block;
+  /* --------------------------------------------------------
+     Hide actions
+  -------------------------------------------------------- */
 
-    font-size:20px;
+  .actions {
+    display: none !important;
+  }
 
-    margin-bottom:10px;
-}
 
-.footerText p{
-    margin:0;
+  /* --------------------------------------------------------
+     Card itself
+  -------------------------------------------------------- */
 
-    line-height:1.7;
+  .card {
 
-    opacity:.9;
-}
+    width: 85.6mm !important;
 
-/* ==========================================================
-   Loading
-========================================================== */
+    height: 53.98mm !important;
 
-.loading{
-    text-align:center;
+    max-width: none !important;
 
-    padding:80px;
+    margin: 0 !important;
+    padding: 0 !important;
 
-    font-size:22px;
+    overflow: hidden !important;
 
-    font-weight:600;
+    border: 0.25mm solid #cbd5e1 !important;
 
-    color:#2563eb;
-}
+    border-radius: 0 !important;
 
-/* ==========================================================
-   Tablet
-========================================================== */
+    box-shadow: none !important;
 
-@media(max-width:900px){
+    animation: none !important;
 
-.body{
+    background: #ffffff !important;
 
-    grid-template-columns:1fr;
+    font-family:
+      "Roboto",
+      Arial,
+      sans-serif !important;
 
-    text-align:center;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
 
-}
 
-.left{
+  /* --------------------------------------------------------
+     Top decoration
+  -------------------------------------------------------- */
 
-    justify-content:center;
+  .card::before {
 
-}
+    height: 0.8mm !important;
 
-.item h3{
+    background:
+      linear-gradient(
+        90deg,
+        #1d4ed8,
+        #2563eb,
+        #4f46e5
+      ) !important;
 
-    justify-content:center;
+  }
 
-}
 
-.footer{
+  /* --------------------------------------------------------
+     Header
+  -------------------------------------------------------- */
 
-    flex-direction:column;
+  .header {
 
-    text-align:center;
+    height: 11mm !important;
 
-}
+    min-height: 11mm !important;
 
-}
+    padding:
+      2.5mm 3.5mm !important;
 
-/* ==========================================================
-   Mobile
-========================================================== */
+    gap: 3mm !important;
 
-@media(max-width:600px){
+    background:
+      linear-gradient(
+        135deg,
+        #0f172a,
+        #1e3a8a,
+        #2563eb
+      ) !important;
 
-.card{
+    color: #ffffff !important;
 
-    border-radius:18px;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
 
-}
+  }
 
-.header{
 
-    flex-direction:column;
+  .header::after {
+    display: none !important;
+  }
 
-    text-align:center;
 
-    padding:25px;
+  /* --------------------------------------------------------
+     Logo
+  -------------------------------------------------------- */
 
-}
+  .logoArea {
+    gap: 2.5mm !important;
+  }
 
-.header h2{
 
-    font-size:22px;
+  .logoWrapper {
 
-}
+    width: 7mm !important;
+    height: 7mm !important;
 
-.body{
+    border-radius: 1.5mm !important;
 
-    padding:25px;
+    box-shadow: none !important;
 
-    gap:25px;
+  }
 
-}
 
-.photo{
+  .logoWrapper img {
+    padding: 0.8mm !important;
+  }
 
-    width:120px;
 
-    height:145px;
+  /* --------------------------------------------------------
+     Brand
+  -------------------------------------------------------- */
 
-}
+  .brandText h2 {
 
-.item{
+    font-size: 3.2mm !important;
 
-    padding:15px;
+    line-height: 1.1 !important;
 
-}
+    letter-spacing: 0.1mm !important;
 
-.item h3{
+  }
 
-    font-size:18px;
 
-}
+  .brandText p {
 
-.footer{
+    margin-top: 0.8mm !important;
 
-    padding:20px;
+    font-size: 1.9mm !important;
 
-}
+    line-height: 1.1 !important;
 
-.qrBox{
+  }
 
-    width:100px;
 
-    height:100px;
+  /* --------------------------------------------------------
+     Status
+  -------------------------------------------------------- */
 
-}
+  .status {
 
-.footerText strong{
+    padding:
+      1.4mm 2.2mm !important;
 
-    font-size:18px;
+    gap: 1mm !important;
 
-}
+    border-radius: 10mm !important;
 
-.footerText p{
+    font-size: 1.8mm !important;
 
-    font-size:14px;
+    background:
+      rgba(255, 255, 255, 0.15) !important;
 
-}
+    border:
+      0.2mm solid rgba(255, 255, 255, 0.25) !important;
+
+    backdrop-filter: none !important;
+
+  }
+
+
+  /* --------------------------------------------------------
+     Body
+     
+     Three columns:
+     Profile | Details | QR
+  -------------------------------------------------------- */
+
+  .body {
+
+    display: grid !important;
+
+    grid-template-columns:
+      23mm
+      48mm
+      10.6mm !important;
+
+    gap: 1.5mm !important;
+
+    width: 100% !important;
+
+    height: 37.5mm !important;
+
+    padding:
+      2.5mm 3mm !important;
+
+    box-sizing: border-box !important;
+
+  }
+
+
+  /* --------------------------------------------------------
+     Profile
+  -------------------------------------------------------- */
+
+  .profile {
+
+    padding: 0 !important;
+
+    justify-content: center !important;
+
+  }
+
+
+  .photoBox {
+
+    width: 15mm !important;
+
+    height: 15mm !important;
+
+    padding: 0.6mm !important;
+
+    border-radius: 2.2mm !important;
+
+    box-shadow: none !important;
+
+  }
+
+
+  .photoBox::after {
+    display: none !important;
+  }
+
+
+  .photo {
+
+    border-radius: 1.7mm !important;
+
+  }
+
+
+  .memberName {
+
+    margin:
+      1.8mm 0 0.6mm !important;
+
+    font-size: 2.8mm !important;
+
+    line-height: 1.1 !important;
+
+    max-width: 22mm !important;
+
+  }
+
+
+  .membershipId {
+
+    font-size: 1.8mm !important;
+
+    letter-spacing: 0.2mm !important;
+
+  }
+
+
+  .profileComplete,
+  .profilePending {
+
+    gap: 0.7mm !important;
+
+    margin-top: 1.3mm !important;
+
+    padding:
+      0.9mm 1.4mm !important;
+
+    font-size: 1.6mm !important;
+
+    border-radius: 10mm !important;
+
+  }
+
+
+  /* --------------------------------------------------------
+     Details
+  -------------------------------------------------------- */
+
+  .details {
+
+    gap: 1mm !important;
+
+    min-width: 0 !important;
+
+    justify-content: center !important;
+
+  }
+
+
+  .row {
+
+    min-height: 5.7mm !important;
+
+    height: 5.7mm !important;
+
+    padding:
+      0.7mm 1.2mm !important;
+
+    gap: 1.3mm !important;
+
+    border-radius: 1.3mm !important;
+
+    border:
+      0.15mm solid #e2e8f0 !important;
+
+    transform: none !important;
+
+    box-shadow: none !important;
+
+  }
+
+
+  .rowIcon {
+
+    width: 4mm !important;
+    height: 4mm !important;
+
+    border-radius: 1mm !important;
+
+  }
+
+
+  .rowIcon svg {
+
+    width: 2.3mm !important;
+    height: 2.3mm !important;
+
+  }
+
+
+  .rowContent {
+
+    gap: 0.2mm !important;
+
+  }
+
+
+  .rowContent span {
+
+    font-size: 1.45mm !important;
+
+    line-height: 1 !important;
+
+  }
+
+
+  .rowContent strong {
+
+    font-size: 1.85mm !important;
+
+    line-height: 1.1 !important;
+
+    max-width: 38mm !important;
+
+    overflow: hidden !important;
+
+    text-overflow: ellipsis !important;
+
+    white-space: nowrap !important;
+
+  }
+
+
+  /* --------------------------------------------------------
+     QR
+  -------------------------------------------------------- */
+
+  .qrSection {
+
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    align-items: center !important;
+
+    justify-content: center !important;
+
+    gap: 1mm !important;
+
+    padding:
+      0 0 0 1.5mm !important;
+
+    border-left:
+      0.2mm dashed #dbe3ef !important;
+
+    border-top: none !important;
+
+  }
+
+
+  .qrBox {
+
+    width: 9mm !important;
+
+    height: 9mm !important;
+
+    padding: 0.6mm !important;
+
+    border-radius: 1.2mm !important;
+
+    border:
+      0.15mm solid #e2e8f0 !important;
+
+    box-shadow: none !important;
+
+  }
+
+
+  .qrImage {
+
+    width: 100% !important;
+
+    height: 100% !important;
+
+    padding: 0 !important;
+
+    border-radius: 0.5mm !important;
+
+  }
+
+
+  .qrLoading {
+
+    font-size: 1.3mm !important;
+
+  }
+
+
+  .qrLabel {
+
+    font-size: 1.45mm !important;
+
+    line-height: 1 !important;
+
+    white-space: nowrap !important;
+
+  }
+
+
+  /* --------------------------------------------------------
+     Footer
+  -------------------------------------------------------- */
+
+  .footer {
+
+    height: 5.5mm !important;
+
+    min-height: 5.5mm !important;
+
+    box-sizing: border-box !important;
+
+    padding:
+      1.2mm 2mm !important;
+
+    gap: 0.5mm !important;
+
+    font-size: 1.55mm !important;
+
+    line-height: 1.1 !important;
+
+    border-top:
+      0.2mm solid #e2e8f0 !important;
+
+    background: #f8fafc !important;
+
+  }
+
+
+  .footer strong {
+    color: #2563eb !important;
+  }
 
 }

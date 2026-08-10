@@ -1,13 +1,26 @@
-import AnnouncementBar from "@/components/layout/AnnouncementBar/AnnouncementBar";
 import Header from "@/components/layout/Header/Header";
+import Footer from "@/components/layout/Footer/Footer";
 
 export default function WebsiteLayout({ children }) {
   return (
     <>
-      <AnnouncementBar />
+      {/* ==========================================
+          Public AILP Header
+      ========================================== */}
+
       <Header />
 
-      {children}
+      {/* ==========================================
+          Public Website Content
+      ========================================== */}
+
+      <main>{children}</main>
+
+      {/* ==========================================
+          Public AILP Footer
+      ========================================== */}
+
+      <Footer />
     </>
   );
 }

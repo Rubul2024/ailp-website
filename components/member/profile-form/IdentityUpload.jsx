@@ -1,239 +1,360 @@
 "use client";
 
-import { useState } from "react";
+/* ==========================================================
+   Identity Upload
+   All India Labour Party
+   Modern Professional Member Portal
+========================================================== */
 
-import { Camera, PencilLine, Loader2, X, Upload } from "lucide-react";
+import {
+  useEffect,
+  useState,
+} from "react";
+
+import {
+  Camera,
+  PenLine,
+  Upload,
+  FileCheck2,
+  X,
+} from "lucide-react";
 
 import styles from "../ProfileForm.module.css";
 
 export default function IdentityUpload({
   formData,
-
   setFormData,
+  handleFileChange,
 }) {
-  const [uploading, setUploading] = useState({
-    photo: false,
+  /* ========================================================
+     Preview State
+  ======================================================== */
 
-    signature: false,
-  });
+  const [photoPreview, setPhotoPreview] =
+    useState(null);
 
-  const [error, setError] = useState("");
+  const [signaturePreview, setSignaturePreview] =
+    useState(null);
 
-  async function uploadImage(event, type) {
-    const file = event.target.files[0];
+  /* ========================================================
+     Profile Photo Preview
+  ======================================================== */
 
-    if (!file) return;
-
-    setError("");
-
-    /* ==============================
-       Client Validation
-    ============================== */
-
-    const allowed = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
-
-    if (!allowed.includes(file.type)) {
-      setError("Only JPG, JPEG, PNG and WEBP images are allowed.");
+  useEffect(() => {
+    if (!(formData.photo instanceof File)) {
+      setPhotoPreview(null);
 
       return;
     }
 
-    if (file.size > 2 * 1024 * 1024) {
-      setError("Maximum image size is 2 MB.");
+    const objectUrl =
+      URL.createObjectURL(formData.photo);
+
+    setPhotoPreview(objectUrl);
+
+    return () => {
+      URL.revokeObjectURL(objectUrl);
+    };
+  }, [formData.photo]);
+
+  /* ========================================================
+     Signature Preview
+  ======================================================== */
+
+  useEffect(() => {
+    if (!(formData.signature instanceof File)) {
+      setSignaturePreview(null);
 
       return;
     }
 
-    setUploading((previous) => ({
+    const objectUrl =
+      URL.createObjectURL(formData.signature);
+
+    setSignaturePreview(objectUrl);
+
+    return () => {
+      URL.revokeObjectURL(objectUrl);
+    };
+  }, [formData.signature]);
+
+  /* ========================================================
+     Remove Photo
+  ======================================================== */
+
+  function removePhoto() {
+    setFormData((previous) => ({
       ...previous,
-
-      [type]: true,
+      photo: null,
     }));
-
-    try {
-      const body = new FormData();
-
-      body.append("file", file);
-
-      body.append(
-        "folder",
-
-        type === "photo" ? "AILP/members/photos" : "AILP/members/signatures",
-      );
-
-      const response = await fetch(
-        "/api/upload",
-
-        {
-          method: "POST",
-
-          body,
-        },
-      );
-
-      const data = await response.json();
-
-      if (!data.success) {
-        setError(data.message);
-
-        return;
-      }
-
-      setFormData((previous) => ({
-        ...previous,
-
-        [type]: {
-          url: data.image.url,
-
-          publicId: data.image.publicId,
-
-          width: data.image.width,
-
-          height: data.image.height,
-        },
-      }));
-    } catch (error) {
-      console.error(error);
-
-      setError("Image upload failed.");
-    } finally {
-      setUploading((previous) => ({
-        ...previous,
-
-        [type]: false,
-      }));
-    }
   }
 
-  async function removeImage(type) {
-    try {
-      const currentImage = formData[type];
+  /* ========================================================
+     Remove Signature
+  ======================================================== */
 
-      if (currentImage?.publicId) {
-        await fetch(
-          "/api/upload/delete",
-
-          {
-            method: "POST",
-
-            headers: {
-              "Content-Type": "application/json",
-            },
-
-            body: JSON.stringify({
-              publicId: currentImage.publicId,
-            }),
-          },
-        );
-      }
-
-      setFormData((previous) => ({
-        ...previous,
-
-        [type]: {
-          url: "",
-
-          publicId: "",
-        },
-      }));
-    } catch (error) {
-      console.error(error);
-    }
+  function removeSignature() {
+    setFormData((previous) => ({
+      ...previous,
+      signature: null,
+    }));
   }
+
+  /* ========================================================
+     Render
+  ======================================================== */
 
   return (
-    <section className={styles.section}>
-      <div className={styles.sectionHeader}>
-        <div>
-          <h2>Identity Upload</h2>
+    <section className={styles.profileSection}>
+      {/* ==================================================
+          Section Header
+      ================================================== */}
 
-          <p>
-            Upload your profile photo and signature. These images will appear on
-            your Membership Card.
-          </p>
+      <div className={styles.sectionHeader}>
+        <div className={styles.sectionHeaderContent}>
+          {/* Section Icon */}
+
+          <div className={styles.sectionIcon}>
+            <Camera size={21} />
+          </div>
+
+          <div>
+            <h2>
+              Profile Photo & Signature
+            </h2>
+
+            <p>
+              Upload a clear profile photograph and your
+              signature for your AILP membership record.
+            </p>
+          </div>
         </div>
       </div>
 
-      {error && <div className={styles.errorMessage}>{error}</div>}
+      {/* ==================================================
+          Upload Grid
+      ================================================== */}
 
       <div className={styles.uploadGrid}>
-        {/* =====================================
+        {/* =================================================
             Profile Photo
-        ===================================== */}
+        ================================================= */}
 
-        <UploadCard
-          title="Profile Photo"
-          loading={uploading.photo}
-          image={formData.photo}
-          icon={<Camera size={44} />}
-          onUpload={(event) => uploadImage(event, "photo")}
-          onRemove={() => removeImage("photo")}
-        />
+        <div className={styles.uploadCard}>
+          {photoPreview ? (
+            <>
+              {/* Photo Preview */}
 
-        {/* =====================================
+              <img
+                src={photoPreview}
+                alt="Profile photo preview"
+                className={styles.imagePreview}
+              />
+
+              {/* Selected Message */}
+
+              <div className={styles.uploadCardInfo}>
+                <h3>
+                  Profile Photo Selected
+                </h3>
+
+                <p>
+                  Your new profile photo is ready to
+                  upload.
+                </p>
+              </div>
+
+              {/* Actions */}
+
+              <div className={styles.uploadActions}>
+                <label
+                  htmlFor="photo"
+                  className={styles.uploadButton}
+                >
+                  <Upload size={16} />
+
+                  <span>
+                    Change Photo
+                  </span>
+                </label>
+
+                <button
+                  type="button"
+                  className={styles.removeButton}
+                  onClick={removePhoto}
+                  aria-label="Remove profile photo"
+                >
+                  <X size={16} />
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              {/* Empty State Icon */}
+
+              <div className={styles.uploadIcon}>
+                <Camera size={25} />
+              </div>
+
+              <h3>
+                Profile Photo
+              </h3>
+
+              <p>
+                Upload a recent passport-style
+                photograph.
+              </p>
+
+              <label
+                htmlFor="photo"
+                className={styles.uploadButton}
+              >
+                <Upload size={16} />
+
+                <span>
+                  Choose Photo
+                </span>
+              </label>
+            </>
+          )}
+
+          {/* Hidden File Input */}
+
+          <input
+            id="photo"
+            name="photo"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            onChange={handleFileChange}
+            className={styles.fileInput}
+          />
+
+          {/* File Information */}
+
+          <span className={styles.uploadHint}>
+            JPG, PNG or WebP • Maximum 5 MB
+          </span>
+        </div>
+
+        {/* =================================================
             Signature
-        ===================================== */}
+        ================================================= */}
 
-        <UploadCard
-          title="Signature"
-          loading={uploading.signature}
-          image={formData.signature}
-          icon={<PencilLine size={44} />}
-          onUpload={(event) => uploadImage(event, "signature")}
-          onRemove={() => removeImage("signature")}
-        />
+        <div className={styles.uploadCard}>
+          {signaturePreview ? (
+            <>
+              {/* Signature Preview */}
+
+              <img
+                src={signaturePreview}
+                alt="Signature preview"
+                className={styles.signaturePreview}
+              />
+
+              {/* Selected Message */}
+
+              <div className={styles.uploadCardInfo}>
+                <h3>
+                  Signature Selected
+                </h3>
+
+                <p>
+                  Your signature is ready to upload.
+                </p>
+              </div>
+
+              {/* Actions */}
+
+              <div className={styles.uploadActions}>
+                <label
+                  htmlFor="signature"
+                  className={styles.uploadButton}
+                >
+                  <Upload size={16} />
+
+                  <span>
+                    Change Signature
+                  </span>
+                </label>
+
+                <button
+                  type="button"
+                  className={styles.removeButton}
+                  onClick={removeSignature}
+                  aria-label="Remove signature"
+                >
+                  <X size={16} />
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              {/* Empty State Icon */}
+
+              <div className={styles.uploadIcon}>
+                <PenLine size={25} />
+              </div>
+
+              <h3>
+                Signature
+              </h3>
+
+              <p>
+                Upload a clear image of your
+                handwritten signature.
+              </p>
+
+              <label
+                htmlFor="signature"
+                className={styles.uploadButton}
+              >
+                <Upload size={16} />
+
+                <span>
+                  Choose Signature
+                </span>
+              </label>
+            </>
+          )}
+
+          {/* Hidden File Input */}
+
+          <input
+            id="signature"
+            name="signature"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            onChange={handleFileChange}
+            className={styles.fileInput}
+          />
+
+          {/* File Information */}
+
+          <span className={styles.uploadHint}>
+            JPG, PNG or WebP • Maximum 5 MB
+          </span>
+        </div>
+      </div>
+
+      {/* ==================================================
+          Upload Guidelines
+      ================================================== */}
+
+      <div className={styles.uploadNotice}>
+        <FileCheck2 size={18} />
+
+        <div>
+          <strong>
+            Upload Guidelines
+          </strong>
+
+          <span>
+            Use clear, readable images. Avoid blurry,
+            dark or heavily cropped photographs and
+            signatures.
+          </span>
+        </div>
       </div>
     </section>
-  );
-}
-
-/* ==========================================================
-   Upload Card Component
-========================================================== */
-
-function UploadCard({
-  title,
-
-  loading,
-
-  image,
-
-  icon,
-
-  onUpload,
-
-  onRemove,
-}) {
-  return (
-    <div className={styles.uploadCard}>
-      <div className={styles.preview}>
-        {loading ? (
-          <Loader2 size={42} className={styles.spin} />
-        ) : image?.url ? (
-          <img src={image.url} alt={title} className={styles.previewImage} />
-        ) : (
-          icon
-        )}
-      </div>
-
-      <label className={styles.uploadButton}>
-        <Upload size={18} />
-
-        {loading ? "Uploading..." : `Choose ${title}`}
-
-        <input hidden type="file" accept="image/*" onChange={onUpload} />
-      </label>
-
-      {image?.url && (
-        <button
-          type="button"
-          className={styles.removeButton}
-          onClick={onRemove}
-        >
-          <X size={16} />
-          Remove
-        </button>
-      )}
-    </div>
   );
 }

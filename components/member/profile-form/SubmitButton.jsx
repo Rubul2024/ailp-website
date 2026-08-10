@@ -1,65 +1,72 @@
 "use client";
 
-import { Loader2, Save } from "lucide-react";
+/* ==========================================================
+   Profile Submit Button
+   All India Labour Party
+   Modern Professional Member Portal
+========================================================== */
+
+import {
+  Save,
+  LoaderCircle,
+  ShieldCheck,
+} from "lucide-react";
 
 import styles from "../ProfileForm.module.css";
 
-export default function SubmitButton({
-
-  loading,
-
-}) {
-
+export default function SubmitButton({ loading }) {
   return (
+    <div className={styles.submitBar}>
+      {/* ====================================================
+          Security Information
+      ==================================================== */}
 
-    <div className={styles.submitWrapper}>
+      <div className={styles.submitInfo}>
+        <div className={styles.submitInfoIcon}>
+          <ShieldCheck size={20} />
+        </div>
+
+        <div className={styles.submitInfoContent}>
+          <strong>
+            Your information is secure
+          </strong>
+
+          <span>
+            Review your details before saving your profile.
+          </span>
+        </div>
+      </div>
+
+      {/* ====================================================
+          Save Profile Button
+      ==================================================== */}
 
       <button
-
         type="submit"
-
         className={styles.submitButton}
-
         disabled={loading}
-
       >
-
-        {
-
-          loading
-
-          ?
-
+        {loading ? (
           <>
-
-            <Loader2
-
-              size={20}
-
-              className={styles.spin}
-
+            <LoaderCircle
+              size={19}
+              className={styles.spinner}
             />
 
-            Saving Profile...
-
+            <span>
+              Saving Profile...
+            </span>
           </>
-
-          :
-
+        ) : (
           <>
+            <Save size={19} />
 
-            <Save size={20} />
-
-            Save Membership Profile
-
+            <span>
+              Save Profile
+            </span>
           </>
-
-        }
-
+        )}
       </button>
-
     </div>
-
   );
-
 }

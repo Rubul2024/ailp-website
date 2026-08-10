@@ -1,93 +1,68 @@
 /* ==========================================================
-   Contact Model
+   AILP Contact Model
+   All India Labour Party
 ========================================================== */
 
 import mongoose from "mongoose";
 
-const contactSchema = new mongoose.Schema(
-
+const ContactSchema = new mongoose.Schema(
   {
-
-    fullName: {
-
+    name: {
       type: String,
-
       required: true,
-
       trim: true,
-
+      maxlength: 100,
     },
 
     email: {
-
       type: String,
-
       required: true,
-
       trim: true,
-
       lowercase: true,
-
+      maxlength: 150,
     },
 
-    mobile: {
-
+    phone: {
       type: String,
-
-      required: true,
-
       trim: true,
-
+      maxlength: 20,
+      default: "",
     },
 
     subject: {
-
       type: String,
-
       required: true,
-
       trim: true,
-
+      maxlength: 200,
     },
 
     message: {
+      type: String,
+      required: true,
+      trim: true,
+      maxlength: 3000,
+    },
 
+    status: {
       type: String,
 
-      required: true,
+      enum: [
+        "NEW",
+        "READ",
+        "REPLIED",
+        "CLOSED",
+      ],
 
-      trim: true,
-
+      default: "NEW",
+      index: true,
     },
-
-    isRead: {
-
-      type: Boolean,
-
-      default: false,
-
-    },
-
   },
 
   {
-
     timestamps: true,
-
   }
-
 );
 
-const Contact =
-
+export default
   mongoose.models.Contact ||
-
-  mongoose.model(
-
-    "Contact",
-
-    contactSchema
-
-  );
-
-export default Contact;
+  mongoose.model("Contact", ContactSchema);

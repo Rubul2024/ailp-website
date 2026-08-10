@@ -13,6 +13,10 @@ export default function HeaderActions() {
 
   const [loggedIn, setLoggedIn] = useState(false);
 
+  /* ==========================================================
+     Check Member Login
+  ========================================================== */
+
   useEffect(() => {
     checkMember();
   }, []);
@@ -21,67 +25,114 @@ export default function HeaderActions() {
     try {
       const response = await fetch(
         "/api/member/me",
-
         {
           credentials: "include",
-        },
+          cache: "no-store",
+        }
       );
 
       const data = await response.json();
 
-      setLoggedIn(data.success);
-    } catch {
+      setLoggedIn(
+        data.authenticated === true
+      );
+    } catch (error) {
+      console.error(
+        "Member session check failed:",
+        error
+      );
+
       setLoggedIn(false);
     }
   }
+
+  /* ==========================================================
+     Logout
+  ========================================================== */
 
   async function handleLogout() {
     try {
       await fetch(
         "/api/auth/logout",
-
         {
           method: "POST",
-
           credentials: "include",
-        },
+        }
       );
+
+      setLoggedIn(false);
 
       router.push("/");
 
       router.refresh();
-    } catch {
+    } catch (error) {
+      console.error("Logout Error:", error);
+
       alert("Logout failed.");
     }
   }
+
+  /* ==========================================================
+     Header Actions
+  ========================================================== */
 
   return (
     <div className={styles.actions}>
       {loggedIn ? (
         <>
-          <Link href="/member/dashboard" className={styles.joinButton}>
+          {/* Dashboard */}
+
+          <Link
+            href="/member/dashboard"
+            className={styles.joinButton}
+          >
             Dashboard
           </Link>
 
-          <Link href="/member/profile" className={styles.donateButton}>
+          {/* Profile */}
+
+          <Link
+            href="/member/profile"
+            className={styles.donateButton}
+          >
             My Profile
           </Link>
 
-          <button onClick={handleLogout} className={styles.logoutButton}>
+          {/* Logout */}
+
+          <button
+            onClick={handleLogout}
+            className={styles.logoutButton}
+          >
             Logout
           </button>
         </>
       ) : (
         <>
-          <Link href="/member/register" className={styles.joinButton}>
+          {/* Join AILP */}
+
+          <Link
+            href="/member/register"
+            className={styles.joinButton}
+          >
             Join AILP
           </Link>
 
-          <Link href="/member/login" className={styles.memberButton}>
+          {/* Member Login */}
+
+          <Link
+            href="/member/login"
+            className={styles.memberButton}
+          >
             Member Login
           </Link>
 
-          <Link href="/donate" className={styles.donateButton}>
+          {/* Donate */}
+
+          <Link
+            href="/donate"
+            className={styles.donateButton}
+          >
             Donate
           </Link>
         </>

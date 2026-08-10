@@ -1,0 +1,1107 @@
+/* ==========================================================
+   AILP ABOUT INTRODUCTION
+   Modern / Professional / Responsive
+========================================================== */
+
+
+/* ==========================================================
+   SECTION
+========================================================== */
+
+.section {
+  position: relative;
+
+  overflow: hidden;
+
+  padding:
+    115px 0;
+
+  background:
+    #ffffff;
+
+  isolation: isolate;
+}
+
+
+/* ==========================================================
+   BACKGROUND BLUE GLOW
+========================================================== */
+
+.blueGlow {
+  position: absolute;
+
+  width: 420px;
+  height: 420px;
+
+  top: 40px;
+  left: -220px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(11, 78, 162, 0.07);
+
+  filter:
+    blur(90px);
+
+  pointer-events: none;
+
+  z-index: -1;
+}
+
+
+/* ==========================================================
+   BACKGROUND ORANGE GLOW
+========================================================== */
+
+.orangeGlow {
+  position: absolute;
+
+  width: 400px;
+  height: 400px;
+
+  right: -220px;
+  bottom: -180px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 122, 0, 0.07);
+
+  filter:
+    blur(90px);
+
+  pointer-events: none;
+
+  z-index: -1;
+}
+
+
+/* ==========================================================
+   CONTAINER
+========================================================== */
+
+.container {
+  width:
+    min(
+      calc(100% - 80px),
+      1380px
+    );
+
+  margin:
+    0 auto;
+}
+
+
+/* ==========================================================
+   SECTION HEADING
+========================================================== */
+
+.sectionHeading {
+  max-width:
+    820px;
+
+  margin:
+    0 auto 70px;
+
+  text-align:
+    center;
+}
+
+
+/* ==========================================================
+   EYEBROW
+========================================================== */
+
+.eyebrow,
+.contentLabel {
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  color:
+    #0b4ea2;
+
+  font-size:
+    12px;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.14em;
+}
+
+
+/* ==========================================================
+   EYEBROW LINE
+========================================================== */
+
+.eyebrow::before,
+.contentLabel::before {
+  content:
+    "";
+
+  width:
+    24px;
+
+  height:
+    2px;
+
+  margin-right:
+    9px;
+
+  border-radius:
+    20px;
+
+  background:
+    #ff7a00;
+}
+
+
+/* ==========================================================
+   SECTION HEADING TITLE
+========================================================== */
+
+.sectionHeading h2 {
+  margin:
+    18px 0 20px;
+
+  color:
+    #0f172a;
+
+  font-size:
+    clamp(
+      34px,
+      4vw,
+      52px
+    );
+
+  font-weight:
+    850;
+
+  letter-spacing:
+    -0.04em;
+
+  line-height:
+    1.1;
+}
+
+
+/* ==========================================================
+   TITLE HIGHLIGHT
+========================================================== */
+
+.sectionHeading h2 span {
+  display:
+    block;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0b4ea2,
+      #2563eb 60%,
+      #ff7a00
+    );
+
+  -webkit-background-clip:
+    text;
+
+  background-clip:
+    text;
+
+  -webkit-text-fill-color:
+    transparent;
+}
+
+
+/* ==========================================================
+   SECTION DESCRIPTION
+========================================================== */
+
+.sectionHeading > p {
+  max-width:
+    700px;
+
+  margin:
+    0 auto;
+
+  color:
+    #64748b;
+
+  font-size:
+    16px;
+
+  line-height:
+    1.85;
+}
+
+
+/* ==========================================================
+   CONTENT GRID
+========================================================== */
+
+.contentGrid {
+  display:
+    grid;
+
+  grid-template-columns:
+    minmax(0, 0.95fr)
+    minmax(0, 1.05fr);
+
+  align-items:
+    center;
+
+  gap:
+    85px;
+}
+
+
+/* ==========================================================
+   IMAGE COLUMN
+========================================================== */
+
+.imageColumn {
+  position:
+    relative;
+}
+
+
+/* ==========================================================
+   IMAGE WRAPPER
+========================================================== */
+
+.imageWrapper {
+  position:
+    relative;
+
+  min-height:
+    570px;
+
+  overflow:
+    hidden;
+
+  border-radius:
+    32px;
+
+  background:
+    #e8eef7;
+
+  box-shadow:
+    0 30px 70px
+    rgba(15, 23, 42, 0.14);
+
+  isolation:
+    isolate;
+}
+
+
+/* ==========================================================
+   IMAGE
+========================================================== */
+
+.image {
+  object-fit:
+    cover;
+
+  object-position:
+    center;
+
+  transition:
+    transform
+    0.8s
+    cubic-bezier(
+      0.22,
+      0.61,
+      0.36,
+      1
+    );
+}
+
+
+/* ==========================================================
+   IMAGE HOVER
+========================================================== */
+
+.imageWrapper:hover .image {
+  transform:
+    scale(1.045);
+}
+
+
+/* ==========================================================
+   IMAGE OVERLAY
+========================================================== */
+
+.imageOverlay {
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  z-index:
+    1;
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent 45%,
+      rgba(6, 22, 45, 0.72) 100%
+    );
+
+  pointer-events:
+    none;
+}
+
+
+/* ==========================================================
+   IMAGE BADGE
+========================================================== */
+
+.imageBadge {
+  position:
+    absolute;
+
+  z-index:
+    3;
+
+  left:
+    24px;
+
+  right:
+    24px;
+
+  bottom:
+    24px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    14px;
+
+  padding:
+    16px 18px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.2);
+
+  border-radius:
+    18px;
+
+  color:
+    #ffffff;
+
+  background:
+    rgba(6, 22, 45, 0.72);
+
+  backdrop-filter:
+    blur(14px);
+
+  -webkit-backdrop-filter:
+    blur(14px);
+}
+
+
+/* ==========================================================
+   BADGE TITLE
+========================================================== */
+
+.imageBadge strong {
+  display:
+    block;
+
+  margin-bottom:
+    3px;
+
+  font-size:
+    18px;
+
+  font-weight:
+    850;
+}
+
+
+/* ==========================================================
+   BADGE TEXT
+========================================================== */
+
+.imageBadge span {
+  display:
+    block;
+
+  color:
+    rgba(255, 255, 255, 0.72);
+
+  font-size:
+    12px;
+}
+
+
+/* ==========================================================
+   IMAGE DECORATION
+========================================================== */
+
+.imageDecoration {
+  position:
+    absolute;
+
+  width:
+    110px;
+
+  height:
+    110px;
+
+  right:
+    -25px;
+
+  top:
+    -25px;
+
+  border-radius:
+    28px;
+
+  border:
+    12px solid
+    rgba(255, 122, 0, 0.12);
+
+  pointer-events:
+    none;
+}
+
+
+/* ==========================================================
+   CONTENT
+========================================================== */
+
+.content {
+  max-width:
+    650px;
+}
+
+
+/* ==========================================================
+   CONTENT TITLE
+========================================================== */
+
+.content h3 {
+  margin:
+    18px 0 24px;
+
+  color:
+    #0f172a;
+
+  font-size:
+    clamp(
+      30px,
+      3vw,
+      44px
+    );
+
+  font-weight:
+    850;
+
+  letter-spacing:
+    -0.035em;
+
+  line-height:
+    1.15;
+}
+
+
+/* ==========================================================
+   CONTENT TITLE HIGHLIGHT
+========================================================== */
+
+.content h3 span {
+  color:
+    #0b4ea2;
+}
+
+
+/* ==========================================================
+   PARAGRAPH
+========================================================== */
+
+.content > p {
+  margin:
+    0 0 17px;
+
+  color:
+    #475569;
+
+  font-size:
+    15px;
+
+  line-height:
+    1.9;
+}
+
+
+/* ==========================================================
+   VALUES
+========================================================== */
+
+.values {
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap:
+    14px;
+
+  margin-top:
+    30px;
+
+  padding-top:
+    28px;
+
+  border-top:
+    1px solid
+    #e5eaf2;
+}
+
+
+/* ==========================================================
+   VALUE ITEM
+========================================================== */
+
+.valueItem {
+  display:
+    flex;
+
+  align-items:
+    flex-start;
+
+  gap:
+    11px;
+
+  padding:
+    13px;
+
+  border:
+    1px solid
+    #edf1f6;
+
+  border-radius:
+    15px;
+
+  background:
+    rgba(248, 250, 252, 0.75);
+
+  transition:
+    transform
+    0.3s ease,
+
+    box-shadow
+    0.3s ease,
+
+    border-color
+    0.3s ease;
+}
+
+
+/* ==========================================================
+   VALUE HOVER
+========================================================== */
+
+.valueItem:hover {
+  transform:
+    translateY(-4px);
+
+  border-color:
+    rgba(11, 78, 162, 0.15);
+
+  box-shadow:
+    0 12px 28px
+    rgba(15, 23, 42, 0.07);
+}
+
+
+/* ==========================================================
+   VALUE ICON
+========================================================== */
+
+.valueIcon {
+  width:
+    38px;
+
+  height:
+    38px;
+
+  flex:
+    0 0 38px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  border-radius:
+    11px;
+
+  color:
+    #0b4ea2;
+
+  background:
+    rgba(11, 78, 162, 0.08);
+}
+
+
+/* ==========================================================
+   VALUE TITLE
+========================================================== */
+
+.valueItem h4 {
+  margin:
+    1px 0 3px;
+
+  color:
+    #172033;
+
+  font-size:
+    13px;
+
+  font-weight:
+    800;
+}
+
+
+/* ==========================================================
+   VALUE DESCRIPTION
+========================================================== */
+
+.valueItem p {
+  margin:
+    0;
+
+  color:
+    #64748b;
+
+  font-size:
+    11px;
+
+  line-height:
+    1.55;
+}
+
+
+/* ==========================================================
+   ACTION
+========================================================== */
+
+.action {
+  margin-top:
+    30px;
+}
+
+
+/* ==========================================================
+   BUTTON
+========================================================== */
+
+.button {
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    10px;
+
+  min-height:
+    50px;
+
+  padding:
+    0 21px;
+
+  border-radius:
+    13px;
+
+  color:
+    #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0b4ea2,
+      #2563eb
+    );
+
+  text-decoration:
+    none;
+
+  font-size:
+    13px;
+
+  font-weight:
+    750;
+
+  box-shadow:
+    0 13px 30px
+    rgba(11, 78, 162, 0.2);
+
+  transition:
+    transform
+    0.3s ease,
+
+    box-shadow
+    0.3s ease;
+}
+
+
+/* ==========================================================
+   BUTTON HOVER
+========================================================== */
+
+.button:hover {
+  transform:
+    translateY(-4px);
+
+  box-shadow:
+    0 18px 38px
+    rgba(11, 78, 162, 0.28);
+}
+
+
+/* ==========================================================
+   BUTTON ICON
+========================================================== */
+
+.button svg {
+  transition:
+    transform
+    0.3s ease;
+}
+
+.button:hover svg {
+  transform:
+    translateX(4px);
+}
+
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@media (max-width: 1100px) {
+
+  .container {
+    width:
+      calc(100% - 60px);
+  }
+
+  .contentGrid {
+    gap:
+      55px;
+  }
+
+  .imageWrapper {
+    min-height:
+      520px;
+  }
+
+}
+
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@media (max-width: 992px) {
+
+  .section {
+    padding:
+      90px 0;
+  }
+
+  .contentGrid {
+    grid-template-columns:
+      1fr;
+
+    gap:
+      55px;
+  }
+
+  .imageColumn {
+    width:
+      100%;
+
+    max-width:
+      720px;
+
+    margin:
+      0 auto;
+  }
+
+  .imageWrapper {
+    min-height:
+      520px;
+  }
+
+  .content {
+    max-width:
+      760px;
+
+    margin:
+      0 auto;
+
+    text-align:
+      center;
+  }
+
+  .contentLabel {
+    justify-content:
+      center;
+  }
+
+  .content h3 {
+    max-width:
+      680px;
+
+    margin-left:
+      auto;
+
+    margin-right:
+      auto;
+  }
+
+  .content > p {
+    max-width:
+      700px;
+
+    margin-left:
+      auto;
+
+    margin-right:
+      auto;
+  }
+
+  .values {
+    text-align:
+      left;
+  }
+
+  .action {
+    display:
+      flex;
+
+    justify-content:
+      center;
+  }
+
+}
+
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media (max-width: 768px) {
+
+  .section {
+    padding:
+      75px 0;
+  }
+
+  .container {
+    width:
+      calc(100% - 40px);
+  }
+
+  .sectionHeading {
+    margin-bottom:
+      50px;
+  }
+
+  .sectionHeading h2 {
+    font-size:
+      34px;
+  }
+
+  .sectionHeading > p {
+    font-size:
+      14px;
+
+    line-height:
+      1.8;
+  }
+
+  .imageWrapper {
+    min-height:
+      440px;
+
+    border-radius:
+      25px;
+  }
+
+  .content h3 {
+    font-size:
+      32px;
+  }
+
+  .content > p {
+    font-size:
+      14px;
+
+    line-height:
+      1.8;
+  }
+
+  .values {
+    grid-template-columns:
+      1fr;
+
+    gap:
+      12px;
+  }
+
+  .valueItem {
+    padding:
+      12px;
+  }
+
+}
+
+
+/* ==========================================================
+   SMALL MOBILE
+========================================================== */
+
+@media (max-width: 480px) {
+
+  .section {
+    padding:
+      65px 0;
+  }
+
+  .container {
+    width:
+      calc(100% - 30px);
+  }
+
+  .sectionHeading {
+    margin-bottom:
+      40px;
+  }
+
+  .eyebrow,
+  .contentLabel {
+    font-size:
+      10px;
+  }
+
+  .sectionHeading h2 {
+    margin-top:
+      15px;
+
+    font-size:
+      30px;
+  }
+
+  .sectionHeading > p {
+    font-size:
+      13px;
+  }
+
+  .imageWrapper {
+    min-height:
+      370px;
+
+    border-radius:
+      21px;
+  }
+
+  .imageBadge {
+    left:
+      12px;
+
+    right:
+      12px;
+
+    bottom:
+      12px;
+
+    padding:
+      13px;
+
+    border-radius:
+      14px;
+  }
+
+  .imageBadge strong {
+    font-size:
+      15px;
+  }
+
+  .imageBadge span {
+    font-size:
+      10px;
+  }
+
+  .content h3 {
+    font-size:
+      29px;
+  }
+
+  .content > p {
+    font-size:
+      13px;
+  }
+
+  .valueItem {
+    padding:
+      11px;
+  }
+
+  .valueIcon {
+    width:
+      35px;
+
+    height:
+      35px;
+
+    flex-basis:
+      35px;
+  }
+
+  .button {
+    width:
+      100%;
+  }
+
+}
+
+
+/* ==========================================================
+   REDUCED MOTION
+========================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .image,
+  .valueItem,
+  .button,
+  .button svg {
+    transition:
+      none;
+  }
+
+}

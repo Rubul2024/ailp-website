@@ -1,41 +1,55 @@
 /* ==========================================================
    Member Dashboard API
+   Production Ready
 ========================================================== */
 
 import { NextResponse } from "next/server";
 
 import connectDB from "@/lib/mongodb";
+
 import Member from "@/models/Member";
 
 import verifyMember from "@/utils/verifyMember";
 
+/* ==========================================================
+   Dashboard Data
+========================================================== */
+
 export async function GET(request) {
-
   try {
+    /* ==========================================
+       Connect Database
+    ========================================== */
 
-    // Verify Login
+    await connectDB();
+
+    /* ==========================================
+       Verify Member
+    ========================================== */
 
     const auth = verifyMember(request);
 
     if (!auth.success) {
-
-      return NextResponse.json(auth, {
-        status: 401,
-      });
-
+      return NextResponse.json(
+        {
+          success: false,
+          message: auth.message,
+        },
+        {
+          status: 401,
+        },
+      );
     }
 
-    // Connect Database
+    /* ==========================================
+       Find Member
+    ========================================== */
 
-    await connectDB();
-
-    // Find Member
-
-    const member = await Member.findById(auth.memberId)
-      .select("-password");
+    const member = await Member.findById(
+      auth.memberId
+    ).select("-password");
 
     if (!member) {
-
       return NextResponse.json(
         {
           success: false,
@@ -43,57 +57,78 @@ export async function GET(request) {
         },
         {
           status: 404,
-        }
+        },
       );
-
     }
 
-    // Dashboard Data
+    /* ==========================================
+       Dashboard Response
+    ========================================== */
 
     return NextResponse.json({
-
       success: true,
 
       dashboard: {
-
-        memberId: member.memberId,
-
         fullName: member.fullName,
 
-        email: member.email,
+        membershipId: member.membershipId,
 
-        mobile: member.mobile,
+        membershipStatus: member.membershipStatus,
 
-        photo: member.photo,
+        profileCompleted:
+          member.profileCompleted,
 
-        qrCode: member.qrCode,
+        profilePercentage:
+          member.profilePercentage,
 
-        cardPdf: member.cardPdf,
+        cardGenerated:
+          member.cardGenerated,
 
-        state: member.state,
+        cardUrl:
+          member.cardUrl,
 
-        district: member.district,
+        qrCode:
+          member.qrCode,
 
-        status: member.status,
+        joinDate:
+          member.joinDate,
 
+        photo:
+          member.photo,
+
+        totalDonation:
+          member.totalDonation,
+
+        donationCount:
+          member.donationCount,
+
+        lastDonation:
+          member.lastDonation,
+
+        highestDonation:
+          member.highestDonation,
+
+        verified:
+          member.verified,
       },
-
     });
 
   } catch (error) {
 
-    console.error(error);
+    console.error(
+      "Dashboard API Error:",
+      error
+    );
 
     return NextResponse.json(
       {
         success: false,
-        message: "Server Error",
+        message:
+          "Internal Server Error",
       },
       {
         status: 500,
-      }
+      },
     );
-
   }
-
 }

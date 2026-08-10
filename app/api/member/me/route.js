@@ -1,70 +1,159 @@
+/* ==========================================================
+   MEMBER SESSION API
+   All India Labour Party
+========================================================== */
+
 import { NextResponse } from "next/server";
 
 import connectDB from "@/lib/mongodb";
+
 import Member from "@/models/Member";
-import verifyMember from "@/utils/verifyMember";
+
+import jwt from "jsonwebtoken";
+
+/* ==========================================================
+   GET CURRENT MEMBER
+========================================================== */
 
 export async function GET(request) {
   try {
-    await connectDB();
+    /* ======================================================
+       Get Member Token
+    ====================================================== */
 
-    const auth = verifyMember(request);
+    const token = request.cookies.get("memberToken")?.value;
 
-    if (!auth.success) {
+    /* ======================================================
+       No Token
+       
+       This is NOT a server error.
+       It simply means the member is not logged in.
+    ====================================================== */
+
+    if (!token) {
       return NextResponse.json(
         {
           success: false,
-          message: auth.message,
+          authenticated: false,
+          member: null,
+          message: "Member is not logged in.",
         },
         {
-          status: 401,
+          status: 200,
         }
       );
     }
 
-    console.log("Authenticated Member ID:", auth.memberId);
+    /* ======================================================
+       Verify JWT
+    ====================================================== */
 
-    const member = await Member.findById(auth.memberId).select({
-      fullName: 1,
-      email: 1,
-      mobile: 1,
-      membershipId: 1,
-      membershipStatus: 1,
-      profileCompleted: 1,
-      joinDate: 1,
-      photo: 1,
-      state: 1,
-      district: 1,
-      _id: 0,
-    });
+    let decoded;
+
+    try {
+      decoded = jwt.verify(
+        token,
+        process.env.JWT_SECRET
+      );
+    } catch (error) {
+      console.error("Invalid Member Token:", error);
+
+      return NextResponse.json(
+        {
+          success: false,
+          authenticated: false,
+          member: null,
+          message: "Invalid or expired session.",
+        },
+        {
+          status: 200,
+        }
+      );
+    }
+
+    /* ======================================================
+       Connect MongoDB
+    ====================================================== */
+
+    await connectDB();
+
+    /* ======================================================
+       Find Member
+       
+       Depending on your login API, your JWT may contain:
+       - memberId
+       - id
+       - _id
+    ====================================================== */
+
+    const memberId =
+      decoded.memberId ||
+      decoded.id ||
+      decoded._id;
+
+    if (!memberId) {
+      return NextResponse.json(
+        {
+          success: false,
+          authenticated: false,
+          member: null,
+          message: "Invalid member session.",
+        },
+        {
+          status: 200,
+        }
+      );
+    }
+
+    /* ======================================================
+       Find Member
+    ====================================================== */
+
+    const member = await Member.findById(memberId).select(
+      "-password"
+    );
+
+    /* ======================================================
+       Member Not Found
+    ====================================================== */
 
     if (!member) {
       return NextResponse.json(
         {
           success: false,
-          message: "Member not found.",
+          authenticated: false,
+          member: null,
+          message: "Member account not found.",
         },
         {
-          status: 404,
+          status: 200,
         }
       );
     }
 
-    return NextResponse.json({
-      success: true,
-      member,
-    });
+    /* ======================================================
+       Success
+    ====================================================== */
+
+    return NextResponse.json(
+      {
+        success: true,
+        authenticated: true,
+        member,
+      },
+      {
+        status: 200,
+      }
+    );
   } catch (error) {
-    console.error("========== MEMBER API ERROR ==========");
-    console.error(error);
-    console.error("Name:", error.name);
-    console.error("Message:", error.message);
-    console.error("Stack:", error.stack);
+    console.error("Member Me API Error:", error);
 
     return NextResponse.json(
       {
         success: false,
-        message: error.message || "Internal Server Error",
+        authenticated: false,
+        member: null,
+        message: "Internal Server Error",
       },
       {
         status: 500,

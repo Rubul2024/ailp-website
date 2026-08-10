@@ -19,13 +19,12 @@ export default function WhyJoin() {
 
           <h2>
             Together We Can Build
-            <br />
-            A Better India
+            <br />A Better India
           </h2>
 
           <p>
-            Join a movement dedicated to workers' rights, employment,
-            social justice, and inclusive national development.
+            Join a movement dedicated to workers' rights, employment, social
+            justice, and inclusive national development.
           </p>
         </div>
 
@@ -44,48 +43,41 @@ export default function WhyJoin() {
         </div>
       </div>
 
-<div className={styles.statsSection}>
+      <div className={styles.statsSection}>
+        <div className={styles.statCard}>
+          <h3>25,000+</h3>
+          <p>Citizens Connected</p>
+        </div>
 
-  <div className={styles.statCard}>
-    <h3>25,000+</h3>
-    <p>Citizens Connected</p>
-  </div>
+        <div className={styles.statCard}>
+          <h3>150+</h3>
+          <p>District Volunteers</p>
+        </div>
 
-  <div className={styles.statCard}>
-    <h3>150+</h3>
-    <p>District Volunteers</p>
-  </div>
+        <div className={styles.statCard}>
+          <h3>50+</h3>
+          <p>Awareness Campaigns</p>
+        </div>
+      </div>
 
-  <div className={styles.statCard}>
-    <h3>50+</h3>
-    <p>Awareness Campaigns</p>
-  </div>
+      <div className={styles.ctaSection}>
+        <h3>Become Part of the Change</h3>
 
-</div>
+        <p>
+          Every member strengthens our mission to build a more just, inclusive,
+          and progressive India.
+        </p>
 
-<div className={styles.ctaSection}>
+        <div className={styles.ctaButtons}>
+          <a href="/join" className={styles.joinButton}>
+            Join AILP
+          </a>
 
-  <h3>Become Part of the Change</h3>
-
-  <p>
-    Every member strengthens our mission to build a more just,
-    inclusive, and progressive India.
-  </p>
-
-  <div className={styles.ctaButtons}>
-
-    <a href="/join" className={styles.joinButton}>
-      Join AILP
-    </a>
-
-    <a href="/about" className={styles.learnButton}>
-      Learn More
-    </a>
-
-  </div>
-
-</div>
-
+          <a href="/about" className={styles.learnButton}>
+            Learn More
+          </a>
+        </div>
+      </div>
     </section>
   );
 }

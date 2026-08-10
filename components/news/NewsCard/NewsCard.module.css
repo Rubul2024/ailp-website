@@ -1,0 +1,162 @@
+/* ==========================================================
+   NEWS CARD
+========================================================== */
+
+.card {
+  overflow: hidden;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 22px;
+
+  background: #ffffff;
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+
+  border-color: #bfdbfe;
+
+  box-shadow:
+    0 25px 55px rgba(15, 23, 42, 0.1);
+}
+
+.imageLink {
+  display: block;
+
+  text-decoration: none;
+}
+
+.imageWrapper {
+  position: relative;
+
+  height: 230px;
+
+  overflow: hidden;
+
+  background: #eef2f7;
+}
+
+.image {
+  object-fit: cover;
+
+  transition:
+    transform 0.5s ease;
+}
+
+.card:hover .image {
+  transform: scale(1.05);
+}
+
+.category {
+  position: absolute;
+
+  left: 18px;
+
+  top: 18px;
+
+  padding: 7px 12px;
+
+  border-radius: 999px;
+
+  background: rgba(15, 23, 42, 0.82);
+
+  color: #ffffff;
+
+  font-size: 11px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.3px;
+
+  backdrop-filter: blur(10px);
+}
+
+.content {
+  padding: 25px;
+}
+
+.date {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  margin-bottom: 12px;
+
+  color: #64748b;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+.content h3 {
+  margin: 0 0 12px;
+
+  font-size: 20px;
+
+  line-height: 1.4;
+}
+
+.content h3 a {
+  color: #0f172a;
+
+  text-decoration: none;
+
+  transition: 0.3s;
+}
+
+.content h3 a:hover {
+  color: #2563eb;
+}
+
+.content p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 14px;
+
+  line-height: 1.75;
+
+  display: -webkit-box;
+
+  
+
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+}
+
+.readMore {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  margin-top: 20px;
+
+  color: #2563eb;
+
+  text-decoration: none;
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  transition: 0.3s;
+}
+
+.readMore:hover {
+  gap: 11px;
+
+  color: #0b4ea2;
+}

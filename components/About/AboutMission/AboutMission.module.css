@@ -1,0 +1,684 @@
+/* ==========================================================
+   AILP ABOUT MISSION
+========================================================== */
+
+
+/* ==========================================================
+   SECTION
+========================================================== */
+
+.section {
+  position: relative;
+
+  overflow: hidden;
+
+  padding: 115px 0;
+
+  background:
+    #ffffff;
+
+  isolation: isolate;
+}
+
+
+/* ==========================================================
+   GLOWS
+========================================================== */
+
+.blueGlow {
+  position: absolute;
+
+  width: 450px;
+  height: 450px;
+
+  left: -230px;
+  bottom: -180px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(11, 78, 162, 0.07);
+
+  filter: blur(95px);
+
+  z-index: -1;
+}
+
+.orangeGlow {
+  position: absolute;
+
+  width: 360px;
+  height: 360px;
+
+  right: -180px;
+  top: -140px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 122, 0, 0.07);
+
+  filter: blur(85px);
+
+  z-index: -1;
+}
+
+
+/* ==========================================================
+   CONTAINER
+========================================================== */
+
+.container {
+  width:
+    min(
+      calc(100% - 80px),
+      1380px
+    );
+
+  margin:
+    0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    0.9fr
+    1.1fr;
+
+  align-items: center;
+
+  gap: 90px;
+}
+
+
+/* ==========================================================
+   VISUAL
+========================================================== */
+
+.visual {
+  position: relative;
+
+  min-height: 500px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+}
+
+
+/* ==========================================================
+   VISUAL CARD
+========================================================== */
+
+.visualCard {
+  position: relative;
+
+  z-index: 2;
+
+  width: min(100%, 460px);
+
+  min-height: 430px;
+
+  padding: 50px 45px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  border-radius: 32px;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      145deg,
+      #071d42 0%,
+      #0b4ea2 55%,
+      #2563eb 100%
+    );
+
+  box-shadow:
+    0 35px 80px
+    rgba(11, 78, 162, 0.25);
+
+  overflow: hidden;
+}
+
+
+/* ==========================================================
+   CARD DECORATION
+========================================================== */
+
+.visualCard::after {
+  content: "";
+
+  position: absolute;
+
+  width: 230px;
+  height: 230px;
+
+  right: -100px;
+  bottom: -100px;
+
+  border-radius: 50%;
+
+  border:
+    45px solid
+    rgba(255, 255, 255, 0.07);
+}
+
+
+/* ==========================================================
+   VISUAL ICON
+========================================================== */
+
+.visualIcon {
+  width: 72px;
+
+  height: 72px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  margin-bottom: 30px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.2);
+
+  border-radius: 20px;
+
+  background:
+    rgba(255, 255, 255, 0.12);
+
+  backdrop-filter:
+    blur(10px);
+}
+
+
+/* ==========================================================
+   VISUAL LABEL
+========================================================== */
+
+.visualCard > span {
+  margin-bottom: 15px;
+
+  color:
+    rgba(255, 255, 255, 0.72);
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.15em;
+}
+
+
+/* ==========================================================
+   VISUAL TITLE
+========================================================== */
+
+.visualCard strong {
+  position: relative;
+
+  z-index: 2;
+
+  max-width: 360px;
+
+  font-size:
+    clamp(
+      28px,
+      3vw,
+      40px
+    );
+
+  line-height: 1.18;
+
+  letter-spacing: -0.03em;
+}
+
+
+/* ==========================================================
+   VISUAL DESCRIPTION
+========================================================== */
+
+.visualCard p {
+  position: relative;
+
+  z-index: 2;
+
+  max-width: 350px;
+
+  margin-top: 20px;
+
+  color:
+    rgba(255, 255, 255, 0.72);
+
+  font-size: 14px;
+
+  line-height: 1.8;
+}
+
+
+/* ==========================================================
+   CIRCLES
+========================================================== */
+
+.circle {
+  position: absolute;
+
+  width: 190px;
+  height: 190px;
+
+  top: 0;
+  right: 0;
+
+  border-radius: 50%;
+
+  border:
+    35px solid
+    rgba(255, 122, 0, 0.13);
+}
+
+.smallCircle {
+  position: absolute;
+
+  width: 80px;
+  height: 80px;
+
+  left: 20px;
+  bottom: 20px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 122, 0, 0.12);
+
+  filter: blur(5px);
+}
+
+
+/* ==========================================================
+   CONTENT
+========================================================== */
+
+.content {
+  max-width: 680px;
+}
+
+
+/* ==========================================================
+   EYEBROW
+========================================================== */
+
+.eyebrow {
+  display: inline-flex;
+
+  align-items: center;
+
+  color: #0b4ea2;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.14em;
+}
+
+.eyebrow::before {
+  content: "";
+
+  width: 25px;
+
+  height: 2px;
+
+  margin-right: 9px;
+
+  border-radius: 20px;
+
+  background: #ff7a00;
+}
+
+
+/* ==========================================================
+   TITLE
+========================================================== */
+
+.content h2 {
+  margin:
+    18px 0 25px;
+
+  color: #0f172a;
+
+  font-size:
+    clamp(
+      34px,
+      4vw,
+      52px
+    );
+
+  font-weight: 850;
+
+  line-height: 1.1;
+
+  letter-spacing: -0.04em;
+}
+
+.content h2 span {
+  display: block;
+
+  color: #0b4ea2;
+}
+
+
+/* ==========================================================
+   PARAGRAPHS
+========================================================== */
+
+.content p {
+  margin:
+    0 0 16px;
+
+  color: #64748b;
+
+  font-size: 15px;
+
+  line-height: 1.9;
+}
+
+.content .intro {
+  color: #475569;
+
+  font-size: 16px;
+
+  font-weight: 500;
+}
+
+
+/* ==========================================================
+   POINTS
+========================================================== */
+
+.points {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap:
+    12px 25px;
+
+  margin:
+    30px 0;
+}
+
+
+/* ==========================================================
+   POINT
+========================================================== */
+
+.point {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 9px;
+
+  color: #334155;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+}
+
+.point svg {
+  flex:
+    0 0 auto;
+
+  margin-top: 2px;
+
+  color: #0b4ea2;
+}
+
+
+/* ==========================================================
+   BUTTON
+========================================================== */
+
+.button {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  min-height: 50px;
+
+  padding:
+    0 22px;
+
+  border-radius: 13px;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0b4ea2,
+      #2563eb
+    );
+
+  text-decoration: none;
+
+  font-size: 13px;
+
+  font-weight: 750;
+
+  box-shadow:
+    0 13px 30px
+    rgba(11, 78, 162, 0.2);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.button:hover {
+  transform:
+    translateY(-4px);
+
+  box-shadow:
+    0 18px 40px
+    rgba(11, 78, 162, 0.28);
+}
+
+.button svg {
+  transition:
+    transform 0.3s ease;
+}
+
+.button:hover svg {
+  transform:
+    translateX(4px);
+}
+
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@media (max-width: 1050px) {
+
+  .container {
+    width:
+      calc(100% - 60px);
+
+    gap: 55px;
+  }
+}
+
+
+/* ==========================================================
+   TABLET / MOBILE
+========================================================== */
+
+@media (max-width: 900px) {
+
+  .section {
+    padding: 90px 0;
+  }
+
+  .container {
+    grid-template-columns: 1fr;
+
+    gap: 60px;
+  }
+
+  .visual {
+    max-width: 650px;
+
+    width: 100%;
+
+    margin:
+      0 auto;
+  }
+
+  .content {
+    max-width: 760px;
+
+    margin:
+      0 auto;
+
+    text-align: center;
+  }
+
+  .eyebrow {
+    justify-content: center;
+  }
+
+  .content h2 {
+    max-width: 700px;
+
+    margin-left: auto;
+
+    margin-right: auto;
+  }
+
+  .content p {
+    max-width: 700px;
+
+    margin-left: auto;
+
+    margin-right: auto;
+  }
+
+  .points {
+    text-align: left;
+  }
+}
+
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media (max-width: 650px) {
+
+  .section {
+    padding: 75px 0;
+  }
+
+  .container {
+    width:
+      calc(100% - 40px);
+  }
+
+  .visual {
+    min-height: 420px;
+  }
+
+  .visualCard {
+    min-height: 390px;
+
+    padding:
+      35px 30px;
+
+    border-radius: 25px;
+  }
+
+  .visualCard strong {
+    font-size: 29px;
+  }
+
+  .points {
+    grid-template-columns: 1fr;
+  }
+
+  .button {
+    width: 100%;
+  }
+}
+
+
+/* ==========================================================
+   SMALL MOBILE
+========================================================== */
+
+@media (max-width: 480px) {
+
+  .container {
+    width:
+      calc(100% - 30px);
+  }
+
+  .visualCard {
+    min-height: 350px;
+
+    padding: 28px;
+  }
+
+  .visualIcon {
+    width: 60px;
+
+    height: 60px;
+
+    border-radius: 17px;
+  }
+
+  .visualCard strong {
+    font-size: 26px;
+  }
+
+  .content h2 {
+    font-size: 30px;
+  }
+
+  .content p {
+    font-size: 13px;
+  }
+
+  .point {
+    font-size: 12px;
+  }
+}
+
+
+/* ==========================================================
+   REDUCED MOTION
+========================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .button,
+  .button svg {
+    transition: none;
+  }
+}

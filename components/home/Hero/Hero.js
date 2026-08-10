@@ -51,7 +51,7 @@ export default function Hero() {
     Hero Action Buttons
 ========================================== */}
           <div className={styles.actions}>
-            <a href="/join" className={styles.primaryButton}>
+            <a href="/join-membership" className={styles.primaryButton}>
               Join AILP
             </a>
 

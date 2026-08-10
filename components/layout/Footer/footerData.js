@@ -12,7 +12,7 @@ export const quickLinks = [
 ];
 
 export const resources = [
-  { title: "Join Membership", href: "/join" },
+  { title: "Join Membership", href: "/join-membership" },
   { title: "Our Mission", href: "/mission" },
   { title: "Our Vision", href: "/vision" },
   { title: "Latest News", href: "/news" },

@@ -124,16 +124,20 @@ export async function POST(request) {
 
     return response;
   } catch (error) {
-    console.error("Admin Login Error:", error);
+  console.error("========== ADMIN LOGIN ERROR ==========");
+  console.error(error);
+  console.error("Name:", error.name);
+  console.error("Message:", error.message);
+  console.error("Stack:", error.stack);
 
-    return NextResponse.json(
-      {
-        success: false,
-        message: "Internal Server Error",
-      },
-      {
-        status: 500,
-      },
-    );
-  }
+  return NextResponse.json(
+    {
+      success: false,
+      message: error.message,
+    },
+    {
+      status: 500,
+    },
+  );
+}
 }

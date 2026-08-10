@@ -1,0 +1,116 @@
+/* ==========================================================
+   Member Settings
+========================================================== */
+
+.page {
+  width: 100%;
+  padding: 10px;
+}
+
+.header {
+  margin-bottom: 35px;
+}
+
+.header h1 {
+  font-size: 34px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.header p {
+  margin-top: 8px;
+  color: #64748b;
+  font-size: 16px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 30px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.icon,
+.iconDanger {
+  width: 65px;
+  height: 65px;
+  border-radius: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.icon {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.iconDanger {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.content {
+  flex: 1;
+}
+
+.content h2 {
+  font-size: 22px;
+  margin-bottom: 10px;
+  color: #0f172a;
+}
+
+.content p {
+  color: #64748b;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.content button {
+  border: none;
+  background: #2563eb;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 12px;
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+.danger {
+  background: #dc2626 !important;
+}
+
+@media (max-width: 992px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: 5px;
+  }
+
+  .header h1 {
+    font-size: 28px;
+  }
+
+  .card {
+    padding: 22px;
+  }
+}

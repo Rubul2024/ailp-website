@@ -1,18 +1,18 @@
 /* ==========================================================
    Member Registration API
-   Backend Module 3 - Lesson 3B
+   All India Labour Party
+   Production Ready
 ========================================================== */
-import generateMemberId from "@/utils/generateMemberId";
-import { NextResponse } from "next/server";
 
-import generateQRCode from "@/utils/generateQRCode";
-import uploadImageToCloudinary from "@/utils/uploadImageToCloudinary";
-import generateMembershipCard from "@/utils/generateMembershipCard";
-import uploadPdfToCloudinary from "@/utils/uploadPdfToCloudinary";
+import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 
 import connectDB from "@/lib/mongodb";
 import Member from "@/models/Member";
+
+/* ==========================================================
+   Register Member
+========================================================== */
 
 export async function POST(request) {
   try {
@@ -23,143 +23,126 @@ export async function POST(request) {
     await connectDB();
 
     /* ==========================================
-       Read Request Body
+       Read Request
     ========================================== */
 
-    const data = await request.json();
+    const body = await request.json();
 
-    const {
-      fullName,
-      fatherName,
-      gender,
-      dateOfBirth,
-      mobile,
-      email,
-      password,
-      photo,
-      address,
-      villageCity,
-      district,
-      state,
-      pincode,
-      occupation,
-    } = data;
+    const fullName = body.fullName?.trim();
+    const email = body.email?.trim().toLowerCase();
+    const mobile = body.mobile?.trim();
+    const password = body.password;
 
     /* ==========================================
-       Required Validation
-    ========================================== */
-if (
-  !fullName ||
-  !email ||
-  !mobile ||
-  !password
-) {
-  return NextResponse.json(
-    {
-      success: false,
-      message: "Please fill all required fields.",
-    },
-    {
-      status: 400,
-    }
-  );
-}
-
-    /* ==========================================
-       Check Duplicate Mobile
+       Validation
     ========================================== */
 
-    const existingMember = await Member.findOne({
-      email: email.toLowerCase(),
-    });
-
-    if (existingMember) {
-      return Response.json(
+    if (!fullName || !email || !mobile || !password) {
+      return NextResponse.json(
         {
           success: false,
-          message: "Email is already registered.",
+          message: "All fields are required.",
         },
         {
-          status: 409,
+          status: 400,
+        }
+      );
+    }
+
+    if (password.length < 8) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Password must be at least 8 characters.",
         },
+        {
+          status: 400,
+        }
       );
     }
 
     /* ==========================================
-       Generate Membership ID
+       Duplicate Email
     ========================================== */
 
-    const memberId = await generateMemberId();
-
-    const qrImage = await generateQRCode(memberId);
-
-    const qrCode = await uploadImageToCloudinary(
-      qrImage,
-      "ailp/qrcodes",
-      memberId,
-    );
-
-    const pdfBuffer = await generateMembershipCard({
-      memberId,
-
-      fullName,
-
-      mobile,
-
-      district,
-
-      state,
+    const emailExists = await Member.findOne({
+      email,
     });
 
-    const cardPdf = await uploadPdfToCloudinary(
-      pdfBuffer,
+    if (emailExists) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Email already registered.",
+        },
+        {
+          status: 409,
+        }
+      );
+    }
 
-      memberId,
-    );
+    /* ==========================================
+       Duplicate Mobile
+    ========================================== */
+
+    const mobileExists = await Member.findOne({
+      mobile,
+    });
+
+    if (mobileExists) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Mobile number already registered.",
+        },
+        {
+          status: 409,
+        }
+      );
+    }
+
+    /* ==========================================
+       Hash Password
+    ========================================== */
+
+    const hashedPassword = await bcrypt.hash(password, 12);
 
     /* ==========================================
        Create Member
     ========================================== */
-const hashedPassword = await bcrypt.hash(password, 10);
-   const member = await Member.create({
-  membershipId: memberId,
 
-  fullName,
+    const member = await Member.create({
+      fullName,
+      email,
+      mobile,
+      password: hashedPassword,
 
-  email: email.toLowerCase(),
+      membershipStatus: "REGISTERED",
+      profileCompleted: false,
+      profilePercentage: 0,
 
-  mobile,
-
-  password: hashedPassword,
-
-  membershipStatus: "REGISTERED",
-
-  profileCompleted: false,
-
-  joinDate: new Date(),
-});
-   
+      isActive: true,
+    });
 
     /* ==========================================
-       Success Response
+       Response
     ========================================== */
 
     return NextResponse.json(
       {
         success: true,
-        message: "Membership application submitted successfully.",
-        member: {
-          memberId: member.memberId,
-          fullName: member.fullName,
-          status: member.status,
-        },
+
+        message:
+          "Registration completed successfully. Please login.",
+
+        memberId: member._id,
       },
       {
         status: 201,
-      },
+      }
     );
   } catch (error) {
-    console.error(error);
+    console.error("Member Register Error:", error);
 
     return NextResponse.json(
       {
@@ -168,7 +151,7 @@ const hashedPassword = await bcrypt.hash(password, 10);
       },
       {
         status: 500,
-      },
+      }
     );
   }
 }

@@ -1,0 +1,145 @@
+/* ==========================================================
+   CONTACT INFORMATION
+========================================================== */
+
+.wrapper {
+  width: 100%;
+}
+
+.heading > span {
+  color: #0b4ea2;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+}
+
+.heading h2 {
+  margin: 14px 0;
+
+  color: #0f172a;
+
+  font-size: clamp(36px, 4vw, 52px);
+
+  line-height: 1.1;
+
+  letter-spacing: -1.5px;
+}
+
+.heading h2 strong {
+  color: #0b4ea2;
+}
+
+.heading > p {
+  margin: 0 0 35px;
+
+  color: #64748b;
+
+  font-size: 16px;
+
+  line-height: 1.8;
+}
+
+/* ==========================================================
+   Contact List
+========================================================== */
+
+.list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 15px;
+}
+
+.item {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 16px;
+
+  padding: 20px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 12px 30px rgba(15, 23, 42, 0.05);
+
+  transition: 0.3s;
+}
+
+.item:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 20px 40px rgba(15, 23, 42, 0.08);
+}
+
+.icon {
+  width: 46px;
+
+  height: 46px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background: #eef5ff;
+
+  color: #0b4ea2;
+}
+
+.item h3 {
+  margin: 0 0 5px;
+
+  color: #0f172a;
+
+  font-size: 15px;
+}
+
+.item p {
+  margin: 0 0 4px;
+
+  color: #334155;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+.item span {
+  color: #64748b;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+
+/* ==========================================================
+   Mobile
+========================================================== */
+
+@media (max-width: 768px) {
+  .heading {
+    text-align: center;
+  }
+
+  .heading > p {
+    margin-left: auto;
+
+    margin-right: auto;
+  }
+}

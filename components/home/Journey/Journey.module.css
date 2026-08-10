@@ -1,498 +1,634 @@
-/* ==========================================================
+/* =========================================================
    OUR JOURNEY
-========================================================== */
+========================================================= */
 
 .journey {
   position: relative;
-  padding: 120px 20px;
-  overflow: hidden;
-  background: linear-gradient(
-    180deg,
-    #f8fbff 0%,
-    #ffffff 50%,
-    #f6f9fc 100%
-  );
+
+  width: 100%;
+  max-width: 100%;
+
+  padding: 110px 20px;
+
+  overflow-x: hidden;
+  overflow-y: hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      #f8fbff 0%,
+      #ffffff 50%,
+      #f6f9fc 100%
+    );
 }
 
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
 .container {
-  max-width: 1200px;
-  margin: auto;
   position: relative;
+
+  width: 100%;
+  max-width: 1200px;
+
+  margin: 0 auto;
+
   z-index: 2;
 }
 
-/* ==========================================================
-   Heading
-========================================================== */
+
+/* =========================================================
+   HEADING
+========================================================= */
 
 .heading {
+  width: 100%;
   max-width: 760px;
-  margin: auto;
+
+  margin: 0 auto 80px;
+
   text-align: center;
-  margin-bottom: 80px;
 }
+
 
 .badge {
   display: inline-block;
+
   padding: 10px 22px;
+
   border-radius: 999px;
+
   background: rgba(11, 78, 162, 0.08);
+
   color: #0b4ea2;
+
+  font-size: 14px;
   font-weight: 700;
+
+  letter-spacing: 0.04em;
+
   margin-bottom: 24px;
 }
 
+
 .heading h2 {
-  font-size: clamp(2.3rem, 5vw, 4rem);
+  margin: 0 0 22px;
+
   color: #0f172a;
-  margin-bottom: 22px;
+
+  font-size: clamp(2.3rem, 5vw, 4rem);
+
+  line-height: 1.1;
 }
 
+
 .heading p {
+  width: 100%;
+  max-width: 760px;
+
+  margin: 0 auto;
+
   color: #64748b;
+
   line-height: 1.8;
+
   font-size: 18px;
 }
 
-/* ==========================================================
-   PREMIUM TIMELINE
-========================================================== */
-.timelineLine{
 
-    position:absolute;
+/* =========================================================
+   TIMELINE WRAPPER
+========================================================= */
 
-    top:16px;
+.timelineWrapper {
+  position: relative;
 
-    left:0;
+  width: 100%;
+  max-width: 100%;
 
-    width:100%;
+  margin-top: 90px;
 
-    height:4px;
+  overflow: hidden;
+}
 
-    background:linear-gradient(
-        90deg,
-        #0B4EA2,
-        #2563EB,
-        #FF7A00
+
+/* =========================================================
+   TIMELINE LINE
+========================================================= */
+
+.timelineLine {
+  position: absolute;
+
+  top: 16px;
+  left: 0;
+
+  width: 100%;
+  height: 4px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #0b4ea2,
+      #2563eb,
+      #ff7a00
     );
 
-    border-radius:20px;
+  border-radius: 20px;
 
-}
-
-/* ==========================================================
-   HORIZONTAL TIMELINE
-========================================================== */
-
-.timelineWrapper{
-
-    position:relative;
-
-    margin-top:90px;
-
-}
-
-.timeline{
-
-    display:grid;
-
-    grid-template-columns:repeat(4,1fr);
-
-    gap:28px;
-
-    position:relative;
-
-    z-index:2;
-
-}
-
-/* ==========================================================
-   Timeline Item
-========================================================== */
-
-.timelineItem{
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-}
-
-.timelineItem:nth-child(odd){
-
-    left:0;
-
-    text-align:right;
-
-}
-
-.timelineItem:nth-child(even){
-
-    left:50%;
-
+  z-index: 1;
 }
 
 
-/* ==========================================================
-   Timeline Circle
-========================================================== */
+/* =========================================================
+   TIMELINE
+========================================================= */
 
-.circle{
+.timeline {
+  position: relative;
 
-    width:34px;
+  width: 100%;
+  max-width: 100%;
 
-    height:34px;
+  display: grid;
 
-    border-radius:50%;
+  grid-template-columns:
+    repeat(9, minmax(0, 1fr));
 
-    background:white;
+  gap: 18px;
 
-    border:7px solid #FF7A00;
-
-    box-shadow:
-
-        0 0 0 10px rgba(255,122,0,.12);
-
-    transition:.4s;
-
+  z-index: 2;
 }
 
-.timelineItem:hover .circle{
 
-    transform:scale(1.2);
+/* =========================================================
+   TIMELINE ITEM
+========================================================= */
 
+.timelineItem {
+  position: relative;
+
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  color: #64748b;
+
+  transition: 0.35s ease;
 }
 
-.item:nth-child(odd)::before{
 
-    right:-15px;
-
+.timelineItem:hover {
+  color: #0b4ea2;
 }
 
-.item:nth-child(even)::before{
 
-    left:-15px;
+.timelineItem span {
+  font-weight: 700;
 
+  font-size: 15px;
+
+  white-space: nowrap;
 }
 
-.year{
 
-    margin-top:18px;
+/* =========================================================
+   TIMELINE CIRCLE
+========================================================= */
 
-    margin-bottom:24px;
+.circle {
+  width: 34px;
+  height: 34px;
 
-    font-weight:700;
+  flex: 0 0 34px;
 
-    color:#0B4EA2;
+  border-radius: 50%;
 
-    letter-spacing:.08em;
+  background: #ffffff;
 
+  border: 7px solid #ff7a00;
+
+  box-shadow:
+    0 0 0 10px rgba(255, 122, 0, 0.12);
+
+  transition: 0.4s ease;
 }
 
-.card{
 
-    background:rgba(255,255,255,.82);
-
-    backdrop-filter:blur(22px);
-
-    padding:30px;
-
-    border-radius:26px;
-
-    box-shadow:
-
-        0 20px 45px rgba(15,23,42,.08);
-
-    transition:.4s;
-
-    text-align:center;
-
-    height:100%;
-
+.timelineItem:hover .circle {
+  transform: scale(1.15);
 }
 
-.card:hover{
 
-    transform:
+/* =========================================================
+   ACTIVE TIMELINE
+========================================================= */
 
-        translateY(-10px);
-
-    box-shadow:
-
-        0 35px 65px rgba(15,23,42,.14);
-
+.active {
+  color: #0b4ea2;
 }
 
-.card h3{
 
-    font-size:30px;
+.active .circle {
+  background: #ff7a00;
 
-    margin-bottom:18px;
+  transform: scale(1.25);
 
-    color:#0F172A;
-
+  box-shadow:
+    0 0 0 12px rgba(255, 122, 0, 0.18);
 }
 
-.card p{
 
-    color:#64748B;
+/* =========================================================
+   ACTIVE CARD
+========================================================= */
 
-    line-height:1.9;
+.activeCard {
+  width: 100%;
+  max-width: 900px;
 
-    font-size:17px;
+  margin: 70px auto 0;
 
+  padding: 40px;
+
+  background: rgba(255, 255, 255, 0.88);
+
+  backdrop-filter: blur(20px);
+
+  border-radius: 28px;
+
+  text-align: center;
+
+  box-shadow:
+    0 25px 60px rgba(15, 23, 42, 0.1);
+
+  transition: 0.35s ease;
 }
 
-/* ==========================================================
-   Background
-========================================================== */
+
+.activeYear {
+  display: inline-block;
+
+  margin-bottom: 18px;
+
+  padding: 10px 22px;
+
+  border-radius: 999px;
+
+  background: #0b4ea2;
+
+  color: #ffffff;
+
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+}
+
+
+.activeCard h3 {
+  margin: 0 0 18px;
+
+  color: #0f172a;
+
+  font-size: 32px;
+
+  line-height: 1.2;
+}
+
+
+.activeCard p {
+  width: 100%;
+  max-width: 760px;
+
+  margin: 0 auto;
+
+  color: #64748b;
+
+  line-height: 1.9;
+
+  font-size: 17px;
+}
+
+
+/* =========================================================
+   BACKGROUND DECORATIONS
+========================================================= */
 
 .blueBlur,
 .orangeBlur {
   position: absolute;
+
   border-radius: 50%;
+
   filter: blur(90px);
+
   opacity: 0.25;
+
+  pointer-events: none;
 }
+
 
 .blueBlur {
   width: 300px;
   height: 300px;
+
   background: #0b4ea2;
+
   top: -80px;
   left: -80px;
 }
 
+
 .orangeBlur {
   width: 260px;
   height: 260px;
+
   background: #ff7a00;
+
   bottom: -70px;
   right: -70px;
 }
 
+
 .grid {
   position: absolute;
+
   inset: 0;
+
   opacity: 0.04;
+
+  pointer-events: none;
+
   background-image:
-    linear-gradient(#0b4ea2 1px, transparent 1px),
-    linear-gradient(90deg, #0b4ea2 1px, transparent 1px);
+    linear-gradient(
+      #0b4ea2 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      #0b4ea2 1px,
+      transparent 1px
+    );
+
   background-size: 40px 40px;
 }
 
-/* ==========================================================
-   Responsive
-========================================================== */
 
-@media(max-width:992px){
+/* =========================================================
+   TABLET
+========================================================= */
 
-.timeline{
-
-grid-template-columns:1fr;
-
-gap:60px;
-
-}
-
-.timelineLine{
-
-display:none;
-
-}
-
-.timelineItem{
-
-align-items:flex-start;
-
-}
-
-.card{
-
-text-align:left;
-
-width:100%;
-
-}
-
-}
-
-  .year {
-    margin-bottom: 10px;
-  }
-
-  .card {
-    padding: 28px;
-  }
-
+@media (max-width: 992px) {
   .journey {
     padding: 90px 20px;
   }
 
+  .heading {
+    margin-bottom: 55px;
+  }
 
-  /* ==========================================================
-   ACTIVE CARD
-========================================================== */
+  .timelineWrapper {
+    margin-top: 60px;
+  }
 
-.activeCard{
+  /*
+    Allow the timeline itself to scroll,
+    NOT the entire webpage.
+  */
 
-    margin-top:70px;
+  .timeline {
+    display: flex;
 
-    background:rgba(255,255,255,.88);
+    width: 100%;
+    max-width: 100%;
 
-    backdrop-filter:blur(20px);
+    gap: 28px;
 
-    border-radius:28px;
+    overflow-x: auto;
+    overflow-y: hidden;
 
-    padding:40px;
+    padding:
+      10px
+      6px
+      20px;
 
-    text-align:center;
+    scrollbar-width: none;
 
-    box-shadow:0 25px 60px rgba(15,23,42,.10);
+    -webkit-overflow-scrolling: touch;
+  }
 
-    transition:.35s;
+  .timeline::-webkit-scrollbar {
+    display: none;
+  }
 
+  .timelineLine {
+    display: none;
+  }
+
+  .timelineItem {
+    flex: 0 0 78px;
+
+    width: 78px;
+    min-width: 78px;
+  }
+
+  .activeCard {
+    margin-top: 40px;
+  }
 }
 
-.activeYear{
 
-    display:inline-block;
+/* =========================================================
+   MOBILE
+========================================================= */
 
-    margin-bottom:18px;
+@media (max-width: 768px) {
+  .journey {
+    width: 100%;
+    max-width: 100%;
 
-    padding:10px 22px;
+    padding:
+      70px
+      16px;
+  }
 
-    border-radius:999px;
+  .container {
+    width: 100%;
+    max-width: 100%;
+  }
 
-    background:#0B4EA2;
+  .heading {
+    width: 100%;
+    max-width: 100%;
 
-    color:#ffffff;
+    margin-bottom: 40px;
+  }
 
-    font-weight:700;
+  .badge {
+    padding: 8px 18px;
 
-    letter-spacing:.08em;
+    font-size: 12px;
+  }
 
+  .heading h2 {
+    font-size: clamp(2rem, 8vw, 2.8rem);
+
+    line-height: 1.12;
+  }
+
+  .heading p {
+    width: 100%;
+    max-width: 100%;
+
+    font-size: 16px;
+
+    line-height: 1.7;
+  }
+
+  .timelineWrapper {
+    width: 100%;
+    max-width: 100%;
+
+    margin-top: 40px;
+
+    overflow: hidden;
+  }
+
+  .timeline {
+    width: 100%;
+    max-width: 100%;
+
+    display: flex;
+
+    gap: 22px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    padding:
+      10px
+      4px
+      18px;
+
+    scrollbar-width: none;
+
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .timeline::-webkit-scrollbar {
+    display: none;
+  }
+
+  .timelineItem {
+    flex: 0 0 72px;
+
+    width: 72px;
+    min-width: 72px;
+  }
+
+  .circle {
+    width: 28px;
+    height: 28px;
+
+    flex-basis: 28px;
+
+    border-width: 5px;
+  }
+
+  .timelineItem span {
+    font-size: 13px;
+  }
+
+  .activeCard {
+    width: 100%;
+    max-width: 100%;
+
+    margin-top: 30px;
+
+    padding: 28px 20px;
+
+    border-radius: 22px;
+
+    text-align: center;
+  }
+
+  .activeYear {
+    padding: 8px 18px;
+
+    font-size: 13px;
+  }
+
+  .activeCard h3 {
+    font-size: 24px;
+
+    line-height: 1.25;
+  }
+
+  .activeCard p {
+    width: 100%;
+    max-width: 100%;
+
+    font-size: 15px;
+
+    line-height: 1.7;
+  }
 }
 
-.activeCard h3{
 
-    font-size:32px;
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
 
-    margin-bottom:18px;
+@media (max-width: 480px) {
+  .journey {
+    padding:
+      60px
+      14px;
+  }
 
-    color:#0F172A;
+  .heading h2 {
+    font-size: 2rem;
+  }
 
-}
+  .heading p {
+    font-size: 15px;
+  }
 
-.activeCard p{
+  .timeline {
+    gap: 18px;
+  }
 
-    max-width:760px;
+  .timelineItem {
+    flex-basis: 68px;
+    width: 68px;
+    min-width: 68px;
+  }
 
-    margin:auto;
+  .activeCard {
+    padding: 24px 18px;
+  }
 
-    line-height:1.9;
+  .activeCard h3 {
+    font-size: 22px;
+  }
 
-    color:#64748B;
-
-}
-
-/* ==========================================================
-   ACTIVE TIMELINE
-========================================================== */
-
-.timelineItem{
-
-    background:none;
-
-    border:none;
-
-    cursor:pointer;
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    gap:14px;
-
-    color:#64748B;
-
-    transition:.35s;
-
-}
-
-.timelineItem span{
-
-    font-weight:700;
-
-}
-
-.active{
-
-    color:#0B4EA2;
-
-}
-
-.active .circle{
-
-    background:#FF7A00;
-
-    transform:scale(1.25);
-
-    box-shadow:0 0 0 12px rgba(255,122,0,.18);
-
-}
-
-/* ==========================================================
-  MOBILE Responsive */
-  
-@media (max-width: 768px){
-
-.timeline{
-
-display:grid;
-
-grid-template-columns:repeat(4,minmax(70px,1fr));
-
-gap:12px;
-
-overflow-x:auto;
-
-padding-bottom:10px;
-
-scrollbar-width:none;
-
-}
-
-.timeline::-webkit-scrollbar{
-
-display:none;
-
-}
-
-.timelineItem{
-
-min-width:70px;
-
-}
-
-.activeCard{
-
-margin-top:40px;
-
-padding:28px;
-
-text-align:left;
-
-}
-
-.activeCard h3{
-
-font-size:24px;
-
-}
-
+  .activeCard p {
+    font-size: 14px;
+  }
 }

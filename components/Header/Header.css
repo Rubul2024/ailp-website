@@ -1,76 +1,969 @@
-.header{
+/* ==========================================================
+   AILP PUBLIC WEBSITE HEADER
+   All India Labour Party
 
-    position:sticky;
-    top:0;
+   Modern Professional Design
+   Responsive
+   Sticky Navigation
+========================================================== */
 
-    width:100%;
 
-    background:#ffffff;
+/* ==========================================================
+   ROOT HEADER
+========================================================== */
 
-    box-shadow:var(--shadow-sm);
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 
-    z-index:1000;
+  width: 100%;
+
+  background: rgba(255, 255, 255, 0.94);
+
+  border-bottom: 1px solid
+    rgba(15, 23, 42, 0.08);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
-.header-container{
 
-    display:flex;
+/* ==========================================================
+   HEADER CONTAINER
+========================================================== */
 
-    justify-content:space-between;
+.header-container {
+  width: min(
+    100% - 48px,
+    1380px
+  );
 
-    align-items:center;
+  min-height: 82px;
 
-    height:80px;
+  margin: 0 auto;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 30px;
 }
 
-.logo-text{
 
-    font-size:32px;
+/* ==========================================================
+   LOGO
+========================================================== */
 
-    font-weight:bold;
+.ailp-logo {
+  display: flex;
 
-    color:var(--primary-color);
+  align-items: center;
 
-    letter-spacing:2px;
+  gap: 11px;
+
+  flex-shrink: 0;
+
+  text-decoration: none;
+
+  color: #0f172a;
 }
 
-.nav-links{
 
-    display:flex;
+/* ==========================================================
+   LOGO MARK
+========================================================== */
 
-    gap:35px;
+.ailp-logo-mark {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0f3d91,
+      #1d5fd1
+    );
+
+  color: #ffffff;
+
+  font-size: 15px;
+
+  font-weight: 900;
+
+  letter-spacing: 0.5px;
+
+  box-shadow:
+    0 8px 22px
+    rgba(29, 95, 209, 0.25);
 }
 
-.nav-links a{
 
-    font-size:16px;
+/* ==========================================================
+   LOGO TEXT
+========================================================== */
 
-    font-weight:600;
+.ailp-logo-content {
+  display: flex;
 
-    transition:var(--transition);
+  flex-direction: column;
+
+  line-height: 1.05;
 }
 
-.nav-links a:hover{
+.ailp-logo-content strong {
+  font-size: 13px;
 
-    color:var(--primary-color);
+  font-weight: 800;
+
+  letter-spacing: 0.8px;
+
+  color: #0f172a;
 }
 
-.join-btn{
+.ailp-logo-content span {
+  margin-top: 4px;
 
-    padding:12px 28px;
+  font-size: 11px;
 
-    background:var(--primary-color);
+  font-weight: 700;
 
-    color:#fff;
+  letter-spacing: 1.2px;
 
-    border-radius:30px;
-
-    transition:var(--transition);
+  color: #64748b;
 }
 
-.join-btn:hover{
 
-    background:var(--secondary-color);
+/* ==========================================================
+   DESKTOP NAVIGATION
+========================================================== */
 
-    transform:translateY(-2px);
+.desktop-navigation {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 4px;
+
+  margin-left: auto;
+}
+
+
+/* ==========================================================
+   NAV LINK
+========================================================== */
+
+.nav-link {
+  position: relative;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  padding: 10px 13px;
+
+  border: 0;
+
+  background: transparent;
+
+  color: #475569;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  transition:
+    color 0.25s ease,
+    background 0.25s ease;
+}
+
+.nav-link:hover {
+  color: #0f3d91;
+
+  background:
+    rgba(29, 95, 209, 0.06);
+
+  border-radius: 9px;
+}
+
+
+/* ==========================================================
+   ACTIVE-LIKE UNDERLINE
+========================================================== */
+
+.nav-link::after {
+  content: "";
+
+  position: absolute;
+
+  left: 13px;
+  right: 13px;
+
+  bottom: 3px;
+
+  height: 2px;
+
+  border-radius: 10px;
+
+  background: #1d5fd1;
+
+  transform: scaleX(0);
+
+  transform-origin: center;
+
+  transition:
+    transform 0.25s ease;
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+
+/* ==========================================================
+   RESOURCES DROPDOWN
+========================================================== */
+
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-button {
+  font-family: inherit;
+}
+
+
+/* ==========================================================
+   DROPDOWN ARROW
+========================================================== */
+
+.nav-dropdown-button svg {
+  transition:
+    transform 0.25s ease;
+}
+
+.dropdown-arrow-open {
+  transform: rotate(180deg);
+}
+
+
+/* ==========================================================
+   RESOURCES MENU
+========================================================== */
+
+.resources-menu {
+  position: absolute;
+
+  top: calc(100% + 12px);
+
+  left: 50%;
+
+  min-width: 215px;
+
+  padding: 8px;
+
+  background: #ffffff;
+
+  border: 1px solid
+    rgba(15, 23, 42, 0.08);
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 24px 60px
+    rgba(15, 23, 42, 0.14);
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  transform:
+    translate(-50%, -8px);
+
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease,
+    transform 0.2s ease;
+}
+
+.nav-dropdown:hover .resources-menu,
+.resources-menu-open {
+  opacity: 1;
+
+  visibility: visible;
+
+  transform:
+    translate(-50%, 0);
+}
+
+
+/* ==========================================================
+   RESOURCE LINKS
+========================================================== */
+
+.resources-menu a {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  padding: 12px 13px;
+
+  border-radius: 10px;
+
+  color: #334155;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  text-decoration: none;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    padding 0.2s ease;
+}
+
+.resources-menu a:hover {
+  color: #0f3d91;
+
+  background:
+    #f1f5ff;
+
+  padding-left: 17px;
+}
+
+.resources-menu a svg {
+  color: #64748b;
+
+  transition:
+    transform 0.2s ease;
+}
+
+.resources-menu a:hover svg {
+  color: #1d5fd1;
+
+  transform:
+    translateX(3px);
+}
+
+
+/* ==========================================================
+   JOIN BUTTON
+========================================================== */
+
+.header-join-button {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  flex-shrink: 0;
+
+  min-height: 45px;
+
+  padding: 0 18px;
+
+  border-radius: 11px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0f3d91,
+      #1d5fd1
+    );
+
+  color: #ffffff;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  text-decoration: none;
+
+  box-shadow:
+    0 10px 24px
+    rgba(29, 95, 209, 0.2);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.header-join-button:hover {
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0 14px 30px
+    rgba(29, 95, 209, 0.28);
+}
+
+.header-join-button svg {
+  transition:
+    transform 0.25s ease;
+}
+
+.header-join-button:hover svg {
+  transform:
+    translateX(3px);
+}
+
+
+/* ==========================================================
+   MOBILE MENU BUTTON
+========================================================== */
+
+.mobile-menu-button {
+  display: none;
+
+  width: 44px;
+  height: 44px;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid
+    rgba(15, 23, 42, 0.1);
+
+  border-radius: 11px;
+
+  background: #ffffff;
+
+  color: #0f172a;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.mobile-menu-button:hover {
+  background: #f1f5ff;
+
+  color: #0f3d91;
+}
+
+
+/* ==========================================================
+   MOBILE OVERLAY
+========================================================== */
+
+.mobile-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 1001;
+
+  background:
+    rgba(2, 6, 23, 0.48);
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  pointer-events: none;
+
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+}
+
+.mobile-overlay-visible {
+  opacity: 1;
+
+  visibility: visible;
+
+  pointer-events: auto;
+}
+
+
+/* ==========================================================
+   MOBILE NAVIGATION DRAWER
+========================================================== */
+
+.mobile-navigation {
+  position: fixed;
+
+  top: 0;
+  right: 0;
+
+  z-index: 1002;
+
+  width: min(
+    390px,
+    88vw
+  );
+
+  height: 100dvh;
+
+  display: flex;
+
+  flex-direction: column;
+
+  background: #ffffff;
+
+  box-shadow:
+    -20px 0 60px
+    rgba(15, 23, 42, 0.18);
+
+  transform:
+    translateX(100%);
+
+  visibility: hidden;
+
+  transition:
+    transform 0.35s
+      cubic-bezier(
+        0.22,
+        1,
+        0.36,
+        1
+      ),
+    visibility 0.35s ease;
+}
+
+.mobile-navigation-open {
+  transform:
+    translateX(0);
+
+  visibility: visible;
+}
+
+
+/* ==========================================================
+   MOBILE HEADER
+========================================================== */
+
+.mobile-navigation-header {
+  min-height: 82px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 0 22px;
+
+  border-bottom: 1px solid
+    #e2e8f0;
+}
+
+
+/* ==========================================================
+   MOBILE BRAND
+========================================================== */
+
+.mobile-brand {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+.mobile-brand .ailp-logo-mark {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 11px;
+
+  font-size: 13px;
+}
+
+.mobile-brand > div:last-child {
+  display: flex;
+
+  flex-direction: column;
+
+  line-height: 1.05;
+}
+
+.mobile-brand strong {
+  font-size: 12px;
+
+  letter-spacing: 0.7px;
+
+  color: #0f172a;
+}
+
+.mobile-brand span {
+  margin-top: 4px;
+
+  font-size: 10px;
+
+  letter-spacing: 1px;
+
+  color: #64748b;
+}
+
+
+/* ==========================================================
+   MOBILE CLOSE BUTTON
+========================================================== */
+
+.mobile-close-button {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid
+    #e2e8f0;
+
+  border-radius: 10px;
+
+  background: #f8fafc;
+
+  color: #334155;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.mobile-close-button:hover {
+  background: #eff6ff;
+
+  color: #1d4ed8;
+}
+
+
+/* ==========================================================
+   MOBILE NAV LINKS
+========================================================== */
+
+.mobile-nav-links {
+  flex: 1;
+
+  overflow-y: auto;
+
+  padding: 22px;
+}
+
+.mobile-nav-links > a,
+.mobile-resources-button {
+  width: 100%;
+
+  min-height: 52px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 0 14px;
+
+  margin-bottom: 6px;
+
+  border: 0;
+
+  border-radius: 11px;
+
+  background: transparent;
+
+  color: #334155;
+
+  font-family: inherit;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  text-decoration: none;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    padding 0.2s ease;
+}
+
+.mobile-nav-links > a:hover,
+.mobile-resources-button:hover {
+  background: #f1f5ff;
+
+  color: #0f3d91;
+
+  padding-left: 18px;
+}
+
+
+/* ==========================================================
+   MOBILE RESOURCES
+========================================================== */
+
+.mobile-resources {
+  margin-bottom: 6px;
+}
+
+.mobile-resources-button {
+  margin-bottom: 0;
+}
+
+.mobile-resources-button svg {
+  transition:
+    transform 0.25s ease;
+}
+
+
+/* ==========================================================
+   MOBILE RESOURCE LINKS
+========================================================== */
+
+.mobile-resource-links {
+  margin: 4px 0 8px 14px;
+
+  padding-left: 12px;
+
+  border-left: 2px solid
+    #dbeafe;
+}
+
+.mobile-resource-links a {
+  display: flex;
+
+  align-items: center;
+
+  min-height: 44px;
+
+  padding: 0 12px;
+
+  color: #64748b;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  text-decoration: none;
+
+  border-radius: 8px;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease;
+}
+
+.mobile-resource-links a:hover {
+  background: #f8fafc;
+
+  color: #1d5fd1;
+}
+
+
+/* ==========================================================
+   MOBILE FOOTER
+========================================================== */
+
+.mobile-navigation-footer {
+  padding: 20px 22px 28px;
+
+  border-top: 1px solid
+    #e2e8f0;
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff,
+      #f8fafc
+    );
+}
+
+
+/* ==========================================================
+   MOBILE JOIN BUTTON
+========================================================== */
+
+.mobile-join-button {
+  min-height: 52px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 9px;
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0f3d91,
+      #1d5fd1
+    );
+
+  color: #ffffff;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  text-decoration: none;
+
+  box-shadow:
+    0 12px 28px
+    rgba(29, 95, 209, 0.22);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.mobile-join-button:hover {
+  transform:
+    translateY(-1px);
+
+  box-shadow:
+    0 15px 32px
+    rgba(29, 95, 209, 0.28);
+}
+
+
+/* ==========================================================
+   MOBILE FOOTER TEXT
+========================================================== */
+
+.mobile-navigation-footer p {
+  margin: 12px 0 0;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+
+  text-align: center;
+}
+
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@media (max-width: 1100px) {
+
+  .header-container {
+    width:
+      min(
+        100% - 36px,
+        1380px
+      );
+
+    gap: 15px;
+  }
+
+  .desktop-navigation {
+    gap: 0;
+  }
+
+  .nav-link {
+    padding-left: 9px;
+    padding-right: 9px;
+
+    font-size: 13px;
+  }
+
+  .header-join-button {
+    padding: 0 14px;
+
+    font-size: 12px;
+  }
+
+}
+
+
+/* ==========================================================
+   MOBILE / TABLET NAVIGATION
+========================================================== */
+
+@media (max-width: 900px) {
+
+  .header-container {
+    min-height: 74px;
+  }
+
+  .desktop-navigation,
+  .header-join-button {
+    display: none;
+  }
+
+  .mobile-menu-button {
+    display: flex;
+  }
+
+}
+
+
+/* ==========================================================
+   SMALL MOBILE
+========================================================== */
+
+@media (max-width: 480px) {
+
+  .header-container {
+    width:
+      calc(100% - 28px);
+  }
+
+  .ailp-logo-mark {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 11px;
+  }
+
+  .ailp-logo-content strong {
+    font-size: 11px;
+  }
+
+  .ailp-logo-content span {
+    font-size: 9px;
+  }
+
+  .mobile-navigation {
+    width: 92vw;
+  }
+
 }
