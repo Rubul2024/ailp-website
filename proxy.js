@@ -1,6 +1,7 @@
 /* ==========================================================
-   AILP Middleware
+   AILP Proxy
    Production Ready
+   Next.js 16
 ========================================================== */
 
 import { NextResponse } from "next/server";
@@ -17,10 +18,10 @@ async function verifyToken(token) {
 }
 
 /* ==========================================================
-   Middleware
+   Proxy
 ========================================================== */
 
-export async function middleware(request) {
+export async function proxy(request) {
   const { pathname } = request.nextUrl;
 
   /* ==========================================
