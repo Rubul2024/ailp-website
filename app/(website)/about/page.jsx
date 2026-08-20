@@ -2,15 +2,11 @@
    AILP ABOUT PAGE
    All India Labour Party
 ========================================================== */
-import AboutHero from "@/components/About/AboutHero/AboutHero";
-
-import AboutIntroduction from "@/components/About/AboutIntroduction/AboutIntroduction";
-
-import AboutValues from "@/components/About/AboutValues/AboutValues";
-
-import AboutMission from "@/components/About/AboutMission/AboutMission";
-
-import AboutJourney from "@/components/About/AboutJourney/AboutJourney";
+import AboutHero from "@/components/about/AboutHero/AboutHero";
+import AboutIntroduction from "@/components/about/AboutIntroduction/AboutIntroduction";
+import AboutValues from "@/components/about/AboutValues/AboutValues";
+import AboutMission from "@/components/about/AboutMission/AboutMission";
+import AboutJourney from "@/components/about/AboutJourney/AboutJourney";
 
 export const metadata = {
   title: "About Us | All India Labour Party",
