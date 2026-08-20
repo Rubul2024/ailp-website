@@ -23,11 +23,11 @@ export default function DonationOffline() {
 
   const accountNumber =
     process.env.NEXT_PUBLIC_AILP_ACCOUNT_NUMBER ||
-    "XXXXXXXXXXXX";
+    "50200120538331";
 
   const ifsc =
     process.env.NEXT_PUBLIC_AILP_IFSC ||
-    "XXXXXXXXXXX";
+    "HDFC0008348";
 
   async function copyText(value, type) {
     try {
