@@ -4,7 +4,7 @@ import Header from "@/components/layout/Header/Header";
 // Home Sections
 
 import Hero from "@/components/home/Hero/Hero";
-import About from "@/components/About/About";
+import About from "@/components/about/About";
 import Journey from "@/components/home/Journey/Journey";
 import WhyJoin from "@/components/home/WhyJoin/WhyJoin";
 import CoreValues from "@/components/home/CoreValues/CoreValues";
