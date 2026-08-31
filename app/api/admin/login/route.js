@@ -38,8 +38,8 @@ export async function POST(request) {
 
     // Find Admin
     const admin = await Admin.findOne({
-      email: email.trim().toLowerCase(),
-    });
+  email: email.trim().toLowerCase(),
+}).select("+password");
 
     if (!admin) {
       return NextResponse.json(
