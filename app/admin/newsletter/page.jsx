@@ -1,439 +1,433 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
+import { useEffect, useState, useCallback, useTransition } from "react";
+import {
+  Search,
+  Download,
+  RefreshCw,
+  Mail,
+  Trash2,
+  AlertCircle,
+  Users,
+  CheckCircle2,
+  XCircle,
+  ChevronLeft,
+  ChevronRight,
+  UserCheck,
+  UserX,
+  Send,
+  Calendar,
+} from "lucide-react";
 import styles from "./Newsletter.module.css";
 
-export default function NewsletterPage() {
-
+export default function AdminNewsletterPage() {
   const [subscribers, setSubscribers] = useState([]);
-
+  const [activeCount, setActiveCount] = useState(0);
+  const [pagination, setPagination] = useState({ page: 1, limit: 10, total: 0, totalPages: 1 });
   const [loading, setLoading] = useState(true);
-
   const [error, setError] = useState("");
+  const [, startTransition] = useTransition();
 
+  // Filters
   const [search, setSearch] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("ALL");
 
-  const [page, setPage] = useState(1);
+  const [actionLoading, setActionLoading] = useState(false);
+  const [exporting, setExporting] = useState(false);
 
-  const [totalPages, setTotalPages] = useState(1);
-
-  async function loadSubscribers(currentPage = page) {
-
+  const fetchSubscribers = useCallback(async (page = 1) => {
+    setLoading(true);
+    setError("");
     try {
+      const params = new URLSearchParams({
+        page: page.toString(),
+        limit: "10",
+        search: search.trim(),
+        status: selectedStatus,
+      });
 
-      setLoading(true);
+      const res = await fetch(`/api/admin/newsletter?${params.toString()}`, {
+        method: "GET",
+        credentials: "include",
+        cache: "no-store",
+      });
+      const data = await res.json();
 
-      setError("");
-
-      const response = await fetch(
-
-        `/api/admin/newsletter?page=${currentPage}&limit=10&search=${encodeURIComponent(search)}`,
-
-        {
-
-          credentials: "include",
-
-        }
-
-      );
-
-      const data = await response.json();
-
-      if (!data.success) {
-
-        setError(data.message);
-
-        return;
-
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || "Failed to load subscribers.");
       }
 
-      setSubscribers(data.subscribers);
-
-      setTotalPages(data.totalPages);
-
-      setPage(data.currentPage);
-
-    }
-
-    catch {
-
-      setError("Unable to load subscribers.");
-
-    }
-
-    finally {
-
+      setSubscribers(data.subscribers || []);
+      setActiveCount(data.activeCount || 0);
+      setPagination(data.pagination || { page: 1, limit: 10, total: 0, totalPages: 1 });
+    } catch (err) {
+      setError(err.message);
+    } finally {
       setLoading(false);
-
     }
-
-  }
+  }, [search, selectedStatus]);
 
   useEffect(() => {
+    const handler = setTimeout(() => {
+      startTransition(() => {
+        fetchSubscribers(1);
+      });
+    }, 350);
+    return () => clearTimeout(handler);
+  }, [fetchSubscribers]);
 
-    loadSubscribers(1);
+  const handleStatusToggle = async (id, newStatus) => {
+    setActionLoading(true);
+    try {
+      const res = await fetch("/api/admin/newsletter", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ id, status: newStatus }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || "Could not update status.");
+      }
 
-  }, []);
+      setSubscribers((prev) =>
+        prev.map((s) => (s._id === id ? { ...s, status: newStatus } : s))
+      );
+      if (newStatus === "Active") {
+        setActiveCount((prev) => prev + 1);
+      } else {
+        setActiveCount((prev) => Math.max(0, prev - 1));
+      }
+    } catch (err) {
+      alert(err.message);
+    } finally {
+      setActionLoading(false);
+    }
+  };
 
-  function handleSearch(event) {
+  const handleDelete = async (id) => {
+    if (!confirm("Are you sure you want to remove this subscriber?")) return;
+    setActionLoading(true);
+    try {
+      const res = await fetch(`/api/admin/newsletter?id=${id}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || "Failed to delete subscriber.");
+      }
 
-    event.preventDefault();
+      setSubscribers((prev) => prev.filter((s) => s._id !== id));
+      fetchSubscribers(pagination.page);
+    } catch (err) {
+      alert(err.message);
+    } finally {
+      setActionLoading(false);
+    }
+  };
 
-    loadSubscribers(1);
+  const handleExportCSV = async () => {
+    setExporting(true);
+    try {
+      const params = new URLSearchParams({
+        export: "true",
+        search: search.trim(),
+        status: selectedStatus,
+      });
 
-  }
+      const res = await fetch(`/api/admin/newsletter?${params.toString()}`, {
+        credentials: "include",
+      });
+      const data = await res.json();
 
-  function handleRefresh() {
+      if (!data.success || !data.subscribers?.length) {
+        alert("No subscribers found to export.");
+        return;
+      }
 
-    loadSubscribers(page);
+      const headers = ["Email Address", "Status", "Source", "Subscribed Date"];
+      const rows = data.subscribers.map((s) => [
+        `"${s.email || ""}"`,
+        `"${s.status || "Active"}"`,
+        `"${s.source || "Website Footer"}"`,
+        `"${s.createdAt ? new Date(s.createdAt).toLocaleDateString("en-IN") : ""}"`,
+      ]);
 
-  }
+      const csvContent =
+        "data:text/csv;charset=utf-8," +
+        [headers.join(","), ...rows.map((e) => e.join(","))].join("\n");
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute(
+        "download",
+        `AILP_Newsletter_Subscribers_${new Date().toISOString().slice(0, 10)}.csv`
+      );
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (err) {
+      alert("Failed to export: " + err.message);
+    } finally {
+      setExporting(false);
+    }
+  };
 
-  function handleView(subscriber) {
-
-    alert(
-
-      `Newsletter Subscriber\n\n${subscriber.email}`
-
-    );
-
-  }
-
-  function handleDelete(subscriber) {
-
-    const confirmDelete = window.confirm(
-
-      `Delete ${subscriber.email}?`
-
-    );
-
-    if (!confirmDelete) return;
-
-    alert(
-
-      "Delete API will be added in the next lesson."
-
-    );
-
-  }
-
-  if (loading) {
-
-    return (
-
-      <div className={styles.loading}>
-
-        <h2>
-
-          Loading Subscribers...
-
-        </h2>
-
-      </div>
-
-    );
-
-  }
-
-  if (error) {
-
-    return (
-
-      <div className={styles.empty}>
-
-        <h2>
-
-          {error}
-
-        </h2>
-
-      </div>
-
-    );
-
-  }
+  const inactiveCount = Math.max(0, pagination.total - activeCount);
 
   return (
-
-    <div className={styles.page}>
-
-      {/* Header */}
-
-      <div className={styles.topBar}>
-
-        <div className={styles.title}>
-
-          <h1>
-
-            Newsletter Subscribers
-
-          </h1>
-
-          <p>
-
-            Manage all newsletter subscriptions.
-
-          </p>
-
+    <div className={styles.container}>
+      {/* Top Stat Cards Grid */}
+      <div className={styles.statsGrid}>
+        <div className={`${styles.statCard} ${styles.statBlue}`}>
+          <div className={styles.statContent}>
+            <span className={styles.statTitle}>Total Subscribers</span>
+            <span className={styles.statNumber}>{pagination.total}</span>
+            <span className={styles.statHint}>Audience reach</span>
+          </div>
+          <div className={styles.statIconBadge}>
+            <Users size={22} />
+          </div>
         </div>
 
-        <form
+        <div className={`${styles.statCard} ${styles.statGreen}`}>
+          <div className={styles.statContent}>
+            <span className={styles.statTitle}>Active Audience</span>
+            <span className={styles.statNumber}>{activeCount}</span>
+            <span className={styles.statHint}>Receiving party broadcasts</span>
+          </div>
+          <div className={styles.statIconBadge}>
+            <CheckCircle2 size={22} />
+          </div>
+        </div>
 
-          className={styles.actions}
+        <div className={`${styles.statCard} ${styles.statOrange}`}>
+          <div className={styles.statContent}>
+            <span className={styles.statTitle}>Unsubscribed</span>
+            <span className={styles.statNumber}>{inactiveCount}</span>
+            <span className={styles.statHint}>Opted out of emails</span>
+          </div>
+          <div className={styles.statIconBadge}>
+            <XCircle size={22} />
+          </div>
+        </div>
+      </div>
 
-          onSubmit={handleSearch}
-
-        >
-
+      {/* Filter & Action Toolbar */}
+      <div className={styles.filterCard}>
+        <div className={styles.searchBox}>
+          <Search size={17} className={styles.searchIcon} />
           <input
-
             type="text"
-
-            placeholder="Search email..."
-
-            className={styles.searchBox}
-
+            placeholder="Search by subscriber email address..."
             value={search}
-
-            onChange={(event) =>
-
-              setSearch(event.target.value)
-
-            }
-
+            onChange={(e) => setSearch(e.target.value)}
+            className={styles.searchInput}
           />
+        </div>
+
+        <div className={styles.filterControls}>
+          <div className={styles.selectWrapper}>
+            <select
+              value={selectedStatus}
+              onChange={(e) => setSelectedStatus(e.target.value)}
+              className={styles.customSelect}
+            >
+              <option value="ALL">All Statuses</option>
+              <option value="Active">Active</option>
+              <option value="Unsubscribed">Unsubscribed</option>
+            </select>
+          </div>
 
           <button
-
-            type="submit"
-
-            className={styles.button}
-
-          >
-
-            Search
-
-          </button>
-
-          <button
-
             type="button"
-
-            className={styles.button}
-
-            onClick={handleRefresh}
-
+            className={styles.exportButton}
+            onClick={handleExportCSV}
+            disabled={exporting || loading}
           >
-
-            Refresh
-
+            <Download size={15} />
+            <span>{exporting ? "Exporting..." : "Export CSV"}</span>
           </button>
 
-        </form>
-
+          <button
+            type="button"
+            className={styles.refreshButton}
+            onClick={() => fetchSubscribers(pagination.page)}
+            disabled={loading}
+            title="Refresh Subscribers"
+          >
+            <RefreshCw size={16} className={loading ? styles.spin : ""} />
+          </button>
+        </div>
       </div>
 
-      {/* Table */}
+      {error && (
+        <div className={styles.errorAlert}>
+          <AlertCircle size={18} />
+          <span>{error}</span>
+        </div>
+      )}
 
-      <div className={styles.card}>
-
-        <table className={styles.table}>
-
-          <thead>
-
-            <tr>
-
-              <th>#</th>
-
-              <th>Email Address</th>
-
-              <th>Status</th>
-
-              <th>Action</th>
-
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-            {subscribers.length === 0 ? (
-
+      {/* Main Subscribers Table */}
+      <div className={styles.tableCard}>
+        <div className={styles.tableWrapper}>
+          <table className={styles.table}>
+            <thead>
               <tr>
-
-                <td
-
-                  colSpan="4"
-
-                  className={styles.empty}
-
-                >
-
-                  No Subscribers Found
-
-                </td>
-
+                <th>#</th>
+                <th>Subscriber Email</th>
+                <th>Subscription Source</th>
+                <th>Status</th>
+                <th>Subscribed Date</th>
+                <th className={styles.alignRight}>Actions</th>
               </tr>
+            </thead>
+            <tbody>
+              {loading ? (
+                <tr>
+                  <td colSpan="6" className={styles.emptyCell}>
+                    <div className={styles.loadingRow}>
+                      <RefreshCw size={18} className={styles.spin} />
+                      <span>Loading subscriber database...</span>
+                    </div>
+                  </td>
+                </tr>
+              ) : subscribers.length > 0 ? (
+                subscribers.map((s, idx) => {
+                  const itemIndex = (pagination.page - 1) * pagination.limit + idx + 1;
+                  const isActive = (s.status || "Active") === "Active";
 
-            ) : (
+                  return (
+                    <tr key={s._id}>
+                      <td className={styles.indexCell}>{itemIndex}</td>
 
-              subscribers.map(
+                      <td>
+                        <div className={styles.emailCell}>
+                          <div className={styles.mailIconCircle}>
+                            <Mail size={15} />
+                          </div>
+                          <strong>{s.email}</strong>
+                        </div>
+                      </td>
 
-                (subscriber, index) => (
+                      <td>
+                        <span className={styles.sourceText}>{s.source || "Website Footer"}</span>
+                      </td>
 
-                  <tr
-
-                    key={subscriber._id}
-
-                  >
-
-                    <td>
-
-                      {(page - 1) * 10 +
-
-                        index +
-
-                        1}
-
-                    </td>
-
-                    <td>
-
-                      {subscriber.email}
-
-                    </td>
-
-                    <td>
-
-                      <span
-
-                        className={styles.badge}
-
-                      >
-
-                        Active
-
-                      </span>
-
-                    </td>
-
-                    <td>
-
-                      <div
-
-                        className={styles.buttons}
-
-                      >
-
-                        <button
-
-                          className={styles.view}
-
-                          onClick={() =>
-
-                            handleView(
-
-                              subscriber
-
-                            )
-
-                          }
-
+                      <td>
+                        <span
+                          className={`${styles.statusPill} ${
+                            isActive ? styles.pillActive : styles.pillInactive
+                          }`}
                         >
+                          <span className={styles.statusDot} />
+                          {s.status || "Active"}
+                        </span>
+                      </td>
 
-                          View
+                      <td>
+                        <span className={styles.dateText}>
+                          {s.createdAt
+                            ? new Date(s.createdAt).toLocaleDateString("en-IN", {
+                                day: "numeric",
+                                month: "short",
+                                year: "numeric",
+                              })
+                            : "—"}
+                        </span>
+                      </td>
 
-                        </button>
+                      <td>
+                        <div className={styles.actionsCell}>
+                          {isActive ? (
+                            <button
+                              type="button"
+                              className={`${styles.actionBtn} ${styles.warningHover}`}
+                              onClick={() => handleStatusToggle(s._id, "Unsubscribed")}
+                              disabled={actionLoading}
+                              title="Unsubscribe Member"
+                            >
+                              <UserX size={15} />
+                            </button>
+                          ) : (
+                            <button
+                              type="button"
+                              className={`${styles.actionBtn} ${styles.successHover}`}
+                              onClick={() => handleStatusToggle(s._id, "Active")}
+                              disabled={actionLoading}
+                              title="Reactivate Subscription"
+                            >
+                              <UserCheck size={15} />
+                            </button>
+                          )}
 
-                        <button
+                          <button
+                            type="button"
+                            className={`${styles.actionBtn} ${styles.dangerHover}`}
+                            onClick={() => handleDelete(s._id)}
+                            disabled={actionLoading}
+                            title="Delete Subscriber"
+                          >
+                            <Trash2 size={15} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td colSpan="6" className={styles.emptyCell}>
+                    No newsletter subscribers found.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
 
-                          className={styles.delete}
+        {/* Footer & Pagination */}
+        <div className={styles.footerBar}>
+          <span className={styles.showingText}>
+            Showing{" "}
+            <strong>
+              {subscribers.length ? (pagination.page - 1) * pagination.limit + 1 : 0}
+            </strong>{" "}
+            to{" "}
+            <strong>
+              {Math.min(pagination.page * pagination.limit, pagination.total)}
+            </strong>{" "}
+            of <strong>{pagination.total}</strong> subscribers
+          </span>
 
-                          onClick={() =>
+          <div className={styles.paginationActions}>
+            <button
+              type="button"
+              className={styles.pageButton}
+              onClick={() => fetchSubscribers(pagination.page - 1)}
+              disabled={pagination.page <= 1 || loading}
+            >
+              <ChevronLeft size={15} />
+              <span>Previous</span>
+            </button>
 
-                            handleDelete(
+            <span className={styles.pageStatus}>
+              Page <strong>{pagination.page}</strong> of <strong>{pagination.totalPages}</strong>
+            </span>
 
-                              subscriber
-
-                            )
-
-                          }
-
-                        >
-
-                          Delete
-
-                        </button>
-
-                      </div>
-
-                    </td>
-
-                  </tr>
-
-                )
-
-              )
-
-            )}
-
-          </tbody>
-
-        </table>
-
+            <button
+              type="button"
+              className={styles.pageButton}
+              onClick={() => fetchSubscribers(pagination.page + 1)}
+              disabled={pagination.page >= pagination.totalPages || loading}
+            >
+              <span>Next</span>
+              <ChevronRight size={15} />
+            </button>
+          </div>
+        </div>
       </div>
-
-      {/* Pagination */}
-
-      <div className={styles.pagination}>
-
-        <button
-
-          className={styles.pageButton}
-
-          disabled={page === 1}
-
-          onClick={() =>
-
-            loadSubscribers(page - 1)
-
-          }
-
-        >
-
-          Previous
-
-        </button>
-
-        <span>
-
-          Page {page} of {totalPages}
-
-        </span>
-
-        <button
-
-          className={styles.pageButton}
-
-          disabled={page >= totalPages}
-
-          onClick={() =>
-
-            loadSubscribers(page + 1)
-
-          }
-
-        >
-
-          Next
-
-        </button>
-
-      </div>
-
     </div>
-
   );
-
 }

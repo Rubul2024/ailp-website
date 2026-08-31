@@ -1,57 +1,95 @@
 /* ==========================================================
-   Generate Membership Card PDF
+   AILP Official Membership ID Card PDF Generator
 ========================================================== */
+import PDFDocument from "pdfkit";
 
-import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
-import fetch from "node-fetch";
+export default async function generateMembershipCard({
+  memberId,
+  fullName,
+  fatherName,
+  gender,
+  dateOfBirth,
+  mobile,
+  email,
+  address,
+  villageCity,
+  district,
+  state,
+  pincode,
+  photo,
+  qrCode,
+}) {
+  return new Promise((resolve, reject) => {
+    try {
+      // Standard CR80 / ID Card proportions in points (approx 3.37 inch x 2.125 inch scaled up)
+      const doc = new PDFDocument({
+        size: [340, 215],
+        margins: { top: 10, bottom: 10, left: 10, right: 10 },
+      });
 
-export default async function generateMembershipCard(member) {
+      const buffers = [];
+      doc.on("data", (chunk) => buffers.push(chunk));
+      doc.on("end", () => resolve(Buffer.concat(buffers)));
 
-  const pdf = await PDFDocument.create();
+      // Outer Card Background & Border
+      doc.rect(0, 0, 340, 215).fill("#FFFFFF");
+      doc.lineWidth(1.5).strokeColor("#cbd5e1").rect(5, 5, 330, 205).stroke();
 
-  const page = pdf.addPage([500, 300]);
+      // Tricolor Stripe on the Left (Saffron, White, Green theme accents)
+      doc.rect(5, 5, 12, 205).fill("#ff9933"); // Saffron accent
+      doc.rect(17, 5, 8, 205).fill("#ffffff");  // White divider
+      doc.rect(25, 5, 12, 205).fill("#138808"); // Green accent
 
-  const font = await pdf.embedFont(StandardFonts.HelveticaBold);
+      // Header Title
+      doc.fillColor("#b91c1c").font("Helvetica-Bold").fontSize(13)
+         .text("ALL INDIA LABOUR PARTY", 45, 12, { align: "center", width: 280 });
 
-  page.drawText("ALL INDIA LABOUR PARTY", {
-    x: 130,
-    y: 270,
-    size: 18,
-    font,
-    color: rgb(0,0.4,0.8),
+      doc.fillColor("#334155").font("Helvetica").fontSize(7)
+         .text("Regd. No.: 56/1/19/2018-18/PPS-I", 45, 27, { align: "center", width: 280 });
+      doc.text("C Office-Manas Road, Barpeta, Assam", 45, 36, { align: "center", width: 280 });
+
+      // Identity Card Badge Banner
+      doc.rect(80, 48, 180, 16).fill("#0f172a");
+      doc.fillColor("#ffffff").font("Helvetica-Bold").fontSize(9)
+         .text("IDENTITY CARD", 80, 52, { align: "center", width: 180 });
+
+      // Member Photo Box Placeholder / Image
+      doc.rect(45, 72, 70, 85).lineWidth(1).strokeColor("#94a3b8").stroke();
+      doc.fillColor("#f1f5f9").rect(46, 73, 68, 83).fill();
+      doc.fillColor("#64748b").font("Helvetica").fontSize(8)
+         .text("PHOTO", 45, 110, { align: "center", width: 70 });
+
+      // Member Details Fields
+      const startX = 125;
+      let startY = 75;
+      const lineHeight = 13;
+
+      const details = [
+        { label: "MEMBER ID", value: memberId || "PENDING" },
+        { label: "NAME", value: fullName?.toUpperCase() || "—" },
+        { label: "FATHER'S NAME", value: fatherName?.toUpperCase() || "—" },
+        { label: "DOB", value: dateOfBirth ? new Date(dateOfBirth).toLocaleDateString("en-IN") : "—" },
+        { label: "GENDER", value: gender?.toUpperCase() || "—" },
+        { label: "MOBILE", value: mobile || "—" },
+        { label: "DISTRICT", value: `${district || "—"}, ${state || "Assam"}` },
+      ];
+
+      details.forEach((item) => {
+        doc.fillColor("#475569").font("Helvetica-Bold").fontSize(7.5).text(item.label, startX, startY);
+        doc.fillColor("#0f172a").font("Helvetica").fontSize(8).text(`: ${item.value}`, startX + 65, startY);
+        startY += lineHeight;
+      });
+
+      // Footer Signatures / General Secretary text
+      doc.fillColor("#0f172a").font("Helvetica-Bold").fontSize(7)
+         .text("A. GENERAL SECRETARY", 45, 185, { align: "left", width: 140 });
+
+      doc.fillColor("#64748b").font("Helvetica").fontSize(6)
+         .text("Authorized Signature", 45, 195, { align: "left", width: 140 });
+
+      doc.end();
+    } catch (err) {
+      reject(err);
+    }
   });
-
-  page.drawText(`Name : ${member.fullName}`, {
-    x:150,
-    y:220,
-    size:12
-  });
-
-  page.drawText(`Member ID : ${member.memberId}`, {
-    x:150,
-    y:200,
-    size:12
-  });
-
-  page.drawText(`Mobile : ${member.mobile}`, {
-    x:150,
-    y:180,
-    size:12
-  });
-
-  page.drawText(`District : ${member.district}`, {
-    x:150,
-    y:160,
-    size:12
-  });
-
-  page.drawText(`State : ${member.state}`, {
-    x:150,
-    y:140,
-    size:12
-  });
-
-  const pdfBytes = await pdf.save();
-
-return Buffer.from(pdfBytes);
 }

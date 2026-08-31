@@ -1,201 +1,189 @@
 "use client";
 
-import { useState } from "react";
-
-import {
-  Smartphone,
-  Building2,
-  Copy,
-  Check,
-} from "lucide-react";
-
+import { useEffect, useState } from "react";
+import { Smartphone, Building2, Copy, Check, QrCode, ShieldCheck } from "lucide-react";
 import styles from "./DonationOffline.module.css";
 
 export default function DonationOffline() {
-  const [copied, setCopied] = useState("");
+  const [settings, setSettings] = useState(null);
+  const [copiedKey, setCopiedKey] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [imgError, setImgError] = useState(false);
 
-  const upiId =
-    process.env.NEXT_PUBLIC_AILP_UPI_ID ||
-    "your-upi-id@bank";
-
-  const accountName =
-    "ALL INDIA LABOUR PARTY";
-
-  const accountNumber =
-    process.env.NEXT_PUBLIC_AILP_ACCOUNT_NUMBER ||
-    "50200120538331";
-
-  const ifsc =
-    process.env.NEXT_PUBLIC_AILP_IFSC ||
-    "HDFC0008348";
-
-  async function copyText(value, type) {
-    try {
-      await navigator.clipboard.writeText(value);
-
-      setCopied(type);
-
-      setTimeout(() => {
-        setCopied("");
-      }, 2000);
-    } catch {
-      setCopied("");
+  useEffect(() => {
+    async function fetchDonationSettings() {
+      try {
+        const res = await fetch(`/api/donation/settings?t=${Date.now()}`, {
+          cache: "no-store",
+        });
+        const data = await res.json();
+        if (data.success && data.settings) {
+          setSettings(data.settings);
+        }
+      } catch (err) {
+        console.error("Failed to load public donation details:", err);
+      } finally {
+        setLoading(false);
+      }
     }
+    fetchDonationSettings();
+  }, []);
+
+  const handleCopy = (text, key) => {
+    if (!text) return;
+    navigator.clipboard.writeText(text);
+    setCopiedKey(key);
+    setTimeout(() => setCopiedKey(""), 2000);
+  };
+
+  if (!loading && settings && settings.donationEnabled === false) {
+    return (
+      <div className={styles.disabledNotice}>
+        <ShieldCheck size={32} />
+        <h3>Online Donations Paused</h3>
+        <p>Direct contributions are currently not being accepted. Please check back later.</p>
+      </div>
+    );
   }
 
+  const bankName = settings?.bankName || "State Bank of India";
+  const accountHolder = settings?.accountHolder || "ALL INDIA LABOUR PARTY";
+  const accountNumber = settings?.accountNumber || "20370176285";
+  const ifscCode = settings?.ifscCode || "SBIN0000058";
+  const branch = settings?.branch || "";
+  const upiId = settings?.upiId || "9967647612@ybl";
+  const qrCode = settings?.qrCode || "";
+
   return (
-    <section className={styles.section}>
+    <section className={styles.wrapper}>
       <div className={styles.container}>
-        <div className={styles.heading}>
-          <span>OTHER WAYS TO CONTRIBUTE</span>
-
-          <h2>
-            Donate Through
-            <strong> UPI or Bank Transfer</strong>
-          </h2>
-
-          <p>
-            Prefer to contribute directly? You can use the
-            official payment details below.
-          </p>
-        </div>
-
-        <div className={styles.grid}>
-          {/* UPI */}
-
-          <article className={styles.card}>
+        <div className={styles.cardsGrid}>
+          {/* Left Card: UPI & QR Code */}
+          <div className={styles.card}>
             <div className={styles.cardHeader}>
-              <div className={styles.icon}>
-                <Smartphone size={24} />
+              <div className={styles.iconWrap}>
+                <Smartphone size={22} />
               </div>
-
-              <div>
+              <div className={styles.headerText}>
                 <h3>UPI Contribution</h3>
-
-                <p>Fast and convenient</p>
+                <p>Fast and convenient via any UPI app</p>
               </div>
             </div>
 
-            <div className={styles.qr}>
-              <img
-                src="/images/donation/upi-qr.png"
-                alt="AILP UPI payment QR code"
-              />
+            <div className={styles.qrContainer}>
+              {qrCode && !imgError ? (
+                <img
+                  src={qrCode}
+                  alt="AILP Official UPI QR Code"
+                  className={styles.qrImage}
+                  onError={() => setImgError(true)}
+                />
+              ) : (
+                <div className={styles.qrEmpty}>
+                  <QrCode size={56} className={styles.qrEmptyIcon} />
+                  <span>UPI QR Code Available Soon</span>
+                </div>
+              )}
             </div>
 
             <div className={styles.upiBox}>
-              <span>UPI ID</span>
-
-              <strong>{upiId}</strong>
-
+              <div className={styles.upiInfo}>
+                <span className={styles.fieldLabel}>UPI ID / VPA</span>
+                <strong className={styles.upiValue}>{upiId}</strong>
+              </div>
               <button
                 type="button"
-                onClick={() =>
-                  copyText(upiId, "upi")
-                }
+                className={styles.copyBtn}
+                onClick={() => handleCopy(upiId, "upi")}
               >
-                {copied === "upi" ? (
-                  <Check size={17} />
-                ) : (
-                  <Copy size={17} />
-                )}
-
-                {copied === "upi"
-                  ? "Copied"
-                  : "Copy"}
+                {copiedKey === "upi" ? <Check size={16} /> : <Copy size={16} />}
+                <span>{copiedKey === "upi" ? "COPIED" : "COPY"}</span>
               </button>
             </div>
-          </article>
+          </div>
 
-          {/* Bank */}
-
-          <article className={styles.card}>
+          {/* Right Card: Bank Transfer Details */}
+          <div className={styles.card}>
             <div className={styles.cardHeader}>
-              <div className={styles.icon}>
-                <Building2 size={24} />
+              <div className={styles.iconWrap}>
+                <Building2 size={22} />
               </div>
-
-              <div>
+              <div className={styles.headerText}>
                 <h3>Bank Transfer</h3>
-
-                <p>Direct contribution</p>
+                <p>Direct contribution to official account</p>
               </div>
             </div>
 
-            <div className={styles.bankDetails}>
-              <Detail
-                label="Account Name"
-                value={accountName}
-                onCopy={() =>
-                  copyText(accountName, "name")
-                }
-                copied={
-                  copied === "name"
-                }
-              />
+            <div className={styles.detailsList}>
+              <div className={styles.detailRow}>
+                <div className={styles.detailContent}>
+                  <span className={styles.fieldLabel}>ACCOUNT NAME</span>
+                  <strong className={styles.fieldValue}>{accountHolder}</strong>
+                </div>
+                <button
+                  type="button"
+                  className={styles.iconCopyBtn}
+                  onClick={() => handleCopy(accountHolder, "holder")}
+                  title="Copy Account Name"
+                >
+                  {copiedKey === "holder" ? <Check size={16} /> : <Copy size={16} />}
+                </button>
+              </div>
 
-              <Detail
-                label="Account Number"
-                value={accountNumber}
-                onCopy={() =>
-                  copyText(
-                    accountNumber,
-                    "account"
-                  )
-                }
-                copied={
-                  copied === "account"
-                }
-              />
+              <div className={styles.detailRow}>
+                <div className={styles.detailContent}>
+                  <span className={styles.fieldLabel}>BANK NAME</span>
+                  <strong className={styles.fieldValue}>
+                    {bankName} {branch ? `(${branch})` : ""}
+                  </strong>
+                </div>
+                <button
+                  type="button"
+                  className={styles.iconCopyBtn}
+                  onClick={() => handleCopy(bankName, "bank")}
+                  title="Copy Bank Name"
+                >
+                  {copiedKey === "bank" ? <Check size={16} /> : <Copy size={16} />}
+                </button>
+              </div>
 
-              <Detail
-                label="IFSC Code"
-                value={ifsc}
-                onCopy={() =>
-                  copyText(ifsc, "ifsc")
-                }
-                copied={
-                  copied === "ifsc"
-                }
-              />
+              <div className={styles.detailRow}>
+                <div className={styles.detailContent}>
+                  <span className={styles.fieldLabel}>ACCOUNT NUMBER</span>
+                  <strong className={styles.fieldValueMono}>{accountNumber}</strong>
+                </div>
+                <button
+                  type="button"
+                  className={styles.iconCopyBtn}
+                  onClick={() => handleCopy(accountNumber, "acc")}
+                  title="Copy Account Number"
+                >
+                  {copiedKey === "acc" ? <Check size={16} /> : <Copy size={16} />}
+                </button>
+              </div>
 
-              <div className={styles.bankNotice}>
-                Please retain your transaction
-                reference for your records.
+              <div className={styles.detailRow}>
+                <div className={styles.detailContent}>
+                  <span className={styles.fieldLabel}>IFSC CODE</span>
+                  <strong className={styles.fieldValueMono}>{ifscCode}</strong>
+                </div>
+                <button
+                  type="button"
+                  className={styles.iconCopyBtn}
+                  onClick={() => handleCopy(ifscCode, "ifsc")}
+                  title="Copy IFSC Code"
+                >
+                  {copiedKey === "ifsc" ? <Check size={16} /> : <Copy size={16} />}
+                </button>
               </div>
             </div>
-          </article>
+
+            <div className={styles.noticeBox}>
+              <p>Please retain your transaction reference or UTR number for records.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
-  );
-}
-
-function Detail({
-  label,
-  value,
-  onCopy,
-  copied,
-}) {
-  return (
-    <div className={styles.detail}>
-      <span>{label}</span>
-
-      <div>
-        <strong>{value}</strong>
-
-        <button
-          type="button"
-          onClick={onCopy}
-          aria-label={`Copy ${label}`}
-        >
-          {copied ? (
-            <Check size={16} />
-          ) : (
-            <Copy size={16} />
-          )}
-        </button>
-      </div>
-    </div>
   );
 }

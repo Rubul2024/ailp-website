@@ -1,347 +1,466 @@
 /* ==========================================================
-   Dashboard Layout
+   AILP Executive Dashboard Design System
 ========================================================== */
 
-.dashboard {
+.container {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
+  width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
+  color: #0f172a;
 }
 
 /* ==========================================================
-   Top Bar
+   Top Welcome Banner
 ========================================================== */
-
-.topBar {
+.welcomeBanner {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  background: #ffffff;
+  padding: 18px 22px;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+}
+
+.bannerText h2 {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+}
+
+.bannerText p {
+  margin: 4px 0 0 0;
+  font-size: 13.5px;
+  color: #64748b;
+}
+
+.refreshBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  background: #0f172a;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+  transition: all 0.2s ease;
+}
+
+.refreshBtn:hover:not(:disabled) {
+  background: #1e293b;
+  transform: translateY(-1px);
+}
+
+.refreshBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.spin {
+  animation: spinAnim 0.8s linear infinite;
+}
+
+@keyframes spinAnim {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.errorAlert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #e11d48;
+  border-radius: 12px;
+  font-size: 13.5px;
+}
+
+.retryBtn {
+  background: #e11d48;
+  color: #ffffff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* ==========================================================
+   Visual KPI Stat Cards (Matching Image 2)
+========================================================== */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  width: 100%;
+}
+
+.statCard {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 20px -4px rgba(15, 23, 42, 0.05);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.statCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+}
+
+.statCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+}
+
+/* Color Accent Left Bars */
+.statBlue::before { background: linear-gradient(180deg, #3b82f6, #1d4ed8); }
+.statGreen::before { background: linear-gradient(180deg, #10b981, #047857); }
+.statOrange::before { background: linear-gradient(180deg, #f59e0b, #d97706); }
+.statPurple::before { background: linear-gradient(180deg, #8b5cf6, #6d28d9); }
+
+.statContent {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.statTitle {
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.statNumber {
+  font-size: 28px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.statHint {
+  font-size: 12px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.statIconBadge {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.statBlue .statIconBadge { background: #eff6ff; color: #2563eb; }
+.statGreen .statIconBadge { background: #ecfdf5; color: #059669; }
+.statOrange .statIconBadge { background: #fffbeb; color: #d97706; }
+.statPurple .statIconBadge { background: #f5f3ff; color: #7c3aed; }
+
+/* ==========================================================
+   Quick Bar
+========================================================== */
+.quickBar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: #ffffff;
+  padding: 14px 20px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+}
+
+.quickBarTitle {
+  font-size: 12px;
+  font-weight: 800;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.quickActionsList {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.quickLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  color: #1e293b;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.quickLink:hover {
+  background: #eff6ff;
+  border-color: #93c5fd;
+  color: #2563eb;
+  transform: translateY(-1px);
+}
+
+/* ==========================================================
+   Feed Grid (Tables)
+========================================================== */
+.feedGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
   gap: 20px;
 }
 
-.title h1 {
+.feedCard {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 4px 20px -4px rgba(15, 23, 42, 0.05);
+}
+
+.feedHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.feedHeader h3 {
   margin: 0;
-  font-size: 34px;
+  font-size: 16px;
   font-weight: 700;
-  color: #111827;
+  color: #0f172a;
 }
 
-.title p {
-  margin-top: 8px;
-  color: #6b7280;
-  font-size: 15px;
+.feedHeader p {
+  margin: 2px 0 0 0;
+  font-size: 12.5px;
+  color: #64748b;
 }
 
-/* Refresh Button */
+.viewAllBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
 
-.refreshButton {
+.viewAllBtn:hover {
+  text-decoration: underline;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.table th {
+  padding: 12px 14px;
+  background: #f8fafc;
+  color: #475569;
+  font-weight: 700;
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1.5px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+.table td {
+  padding: 13px 14px;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.userCell {
   display: flex;
   align-items: center;
   gap: 10px;
-
-  border: none;
-
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-
-  color: white;
-
-  height: 50px;
-
-  padding: 0 24px;
-
-  border-radius: 14px;
-
-  cursor: pointer;
-
-  font-size: 15px;
-
-  font-weight: 600;
-
-  transition: .3s;
 }
 
-.refreshButton:hover {
-
-  transform: translateY(-2px);
-
-  box-shadow: 0 12px 25px rgba(37,99,235,.25);
-
-}
-
-/* ==========================================================
-   Statistics Cards
-========================================================== */
-
-.cardGrid {
-
-  display: grid;
-
-  grid-template-columns: repeat(4,1fr);
-
-  gap: 24px;
-
-}
-
-.card {
-
-  background: white;
-
-  border-radius: 22px;
-
-  padding: 25px;
-
+.userAvatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 13px;
   display: flex;
-
-  justify-content: space-between;
-
   align-items: center;
-
-  box-shadow: 0 15px 35px rgba(0,0,0,.05);
-
-  transition: .35s;
-
+  justify-content: center;
+  flex-shrink: 0;
 }
 
-.card:hover{
-
-  transform: translateY(-6px);
-
+.avatarPurple {
+  background: linear-gradient(135deg, #8b5cf6, #d946ef);
 }
 
-.cardLeft p{
-
-  margin:0;
-
-  color:#6b7280;
-
-  font-size:15px;
-
+.userName {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #0f172a;
 }
 
-.cardLeft h2{
-
-  margin-top:12px;
-
-  font-size:40px;
-
-  color:#111827;
-
+.userMeta {
+  display: block;
+  font-size: 11.5px;
+  color: #64748b;
 }
 
-.iconBox{
-
-  width:70px;
-
-  height:70px;
-
-  border-radius:20px;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  color:white;
-
+.idBadge {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  background: #f1f5f9;
+  color: #1e293b;
+  padding: 3px 7px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
 }
 
-.blue{
-
-  background:#2563eb;
-
+.locationMeta {
+  display: flex;
+  flex-direction: column;
 }
 
-.green{
-
-  background:#16a34a;
-
+.locationMeta span {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e293b;
 }
 
-.orange{
-
-  background:#ea580c;
-
+.locationMeta small {
+  font-size: 11.5px;
+  color: #3b82f6;
+  font-weight: 600;
 }
 
-.purple{
-
-  background:#9333ea;
-
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: capitalize;
 }
 
-/* ==========================================================
-   Tables
-========================================================== */
-
-.tableCard{
-
-  background:white;
-
-  border-radius:22px;
-
-  box-shadow:0 15px 35px rgba(0,0,0,.05);
-
-  padding:28px;
-
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
 }
 
-.tableTitle{
-
-  margin-bottom:25px;
-
+.active {
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
 }
 
-.tableTitle h2{
-
-  margin:0;
-
-  font-size:24px;
-
+.active .statusDot {
+  background: #10b981;
 }
 
-.table{
-
-  width:100%;
-
-  border-collapse:collapse;
-
+.inactive {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
 }
 
-.table thead{
-
-  background:#f8fafc;
-
+.inactive .statusDot {
+  background: #ef4444;
 }
 
-.table th{
-
-  text-align:left;
-
-  padding:16px;
-
-  color:#475569;
-
-  font-size:14px;
-
+.subjectText {
+  font-size: 13px;
+  font-weight: 500;
+  color: #334155;
+  max-width: 170px;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.table td{
-
-  padding:16px;
-
-  border-top:1px solid #eef2f7;
-
-  color:#374151;
-
+.dateMeta {
+  font-size: 12.5px;
+  color: #64748b;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
-.table tbody tr{
-
-  transition:.3s;
-
+.loadingCell, .emptyCell {
+  text-align: center;
+  padding: 36px 14px !important;
+  color: #94a3b8;
+  font-size: 13.5px;
 }
 
-.table tbody tr:hover{
-
-  background:#f8fafc;
-
+.loadingCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
-/* ==========================================================
-   Loading
-========================================================== */
-
-.loading{
-
-  text-align:center;
-
-  padding:80px;
-
-}
-
-.loading h2{
-
-  color:#2563eb;
-
-}
-
-/* ==========================================================
-   Error
-========================================================== */
-
-.error{
-
-  background:#fee2e2;
-
-  border:1px solid #fecaca;
-
-  color:#b91c1c;
-
-  padding:20px;
-
-  border-radius:16px;
-
-}
-
-/* ==========================================================
-   Responsive
-========================================================== */
-
-@media(max-width:1200px){
-
-.cardGrid{
-
-grid-template-columns:repeat(2,1fr);
-
-}
-
-}
-
-@media(max-width:768px){
-
-.topBar{
-
-flex-direction:column;
-
-align-items:flex-start;
-
-}
-
-.cardGrid{
-
-grid-template-columns:1fr;
-
-}
-
-.tableCard{
-
-overflow-x:auto;
-
-}
-
-.table{
-
-min-width:700px;
-
-}
-
-}
-
-@media(max-width:576px){
-
-.title h1{
-
-font-size:28px;
-
-}
-
-.refreshButton{
-
-width:100%;
-
-justify-content:center;
-
-}
-
+@media (max-width: 900px) {
+  .feedGrid {
+    grid-template-columns: 1fr;
+  }
 }

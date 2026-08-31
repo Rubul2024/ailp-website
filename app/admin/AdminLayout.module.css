@@ -1,33 +1,74 @@
 /* ==========================================================
-   Admin Layout
+   AILP ADMIN LAYOUT
+   Production Ready
 ========================================================== */
 
 .layout {
   min-height: 100vh;
+  width: 100%;
   background: #f4f7fb;
 }
 
+/* ==========================================================
+   MAIN CONTENT WRAPPER
+========================================================== */
+
 .contentWrapper {
   margin-left: 280px;
+
   min-height: 100vh;
 
   display: flex;
   flex-direction: column;
+
+  width: calc(100% - 280px);
+
+  transition:
+    margin-left 0.3s ease,
+    width 0.3s ease;
 }
+
+/* ==========================================================
+   MAIN PAGE CONTENT
+========================================================== */
 
 .main {
   flex: 1;
 
+  width: 100%;
+
   padding: 30px;
 
   overflow-x: auto;
+
+  box-sizing: border-box;
 }
 
-/* Responsive */
+/* ==========================================================
+   LARGE TABLET
+========================================================== */
+
+@media (max-width: 1200px) {
+  .contentWrapper {
+    margin-left: 250px;
+
+    width: calc(100% - 250px);
+  }
+
+  .main {
+    padding: 25px;
+  }
+}
+
+/* ==========================================================
+   TABLET / MOBILE
+========================================================== */
 
 @media (max-width: 992px) {
   .contentWrapper {
     margin-left: 0;
+
+    width: 100%;
   }
 
   .main {
@@ -35,8 +76,32 @@
   }
 }
 
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media (max-width: 768px) {
+  .main {
+    padding: 16px;
+  }
+}
+
+/* ==========================================================
+   SMALL MOBILE
+========================================================== */
+
 @media (max-width: 576px) {
   .main {
-    padding: 15px;
+    padding: 12px;
+  }
+}
+
+/* ==========================================================
+   VERY SMALL MOBILE
+========================================================== */
+
+@media (max-width: 400px) {
+  .main {
+    padding: 10px;
   }
 }

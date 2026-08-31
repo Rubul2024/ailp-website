@@ -1,92 +1,70 @@
 /* ==========================================================
-   Admin Dashboard API
+   Admin Comprehensive Dashboard Feed API
 ========================================================== */
-
 import { NextResponse } from "next/server";
-
 import connectDB from "@/lib/mongodb";
 import verifyAdmin from "@/lib/verifyAdmin";
 import Member from "@/models/Member";
-import Donation from "@/models/Donation";
 import Contact from "@/models/Contact";
-import Newsletter from "@/models/Newsletter";
+import Donation from "@/models/Donation";
 
 export async function GET(request) {
   try {
-    // Verify Admin
     const auth = verifyAdmin(request);
-
     if (!auth.success) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: auth.message,
-        },
-        {
-          status: 401,
-        }
-      );
+      return NextResponse.json({ success: false, message: auth.message }, { status: 401 });
     }
 
-    // Connect Database
     await connectDB();
 
-    // Dashboard Statistics
+    // Parallel aggregate count retrieval for high performance
     const [
       totalMembers,
-      totalDonations,
+      activeMembers,
       totalContacts,
-      totalNewsletter,
+      recentMembers,
+      recentContacts,
+      donationSummary
     ] = await Promise.all([
       Member.countDocuments(),
-      Donation.countDocuments(),
+      Member.countDocuments({ status: "Active" }),
       Contact.countDocuments(),
-      Newsletter.countDocuments(),
+      Member.find()
+        .sort({ createdAt: -1 })
+        .limit(5)
+        .select("memberId fullName email mobile district state status createdAt"),
+      Contact.find()
+        .sort({ createdAt: -1 })
+        .limit(5)
+        .select("name email subject message createdAt isRead"),
+      Donation.find().sort({ createdAt: -1 }).limit(5)
     ]);
 
-    // Recent Members
-    const recentMembers = await Member.find()
-      .sort({ createdAt: -1 })
-      .limit(5)
-      .select("fullName email membershipId createdAt");
-
-    // Recent Donations
-    const recentDonations = await Donation.find()
-      .sort({ createdAt: -1 })
-      .limit(5)
-      .select("name amount paymentStatus createdAt");
-
-    // Recent Contacts
-    const recentContacts = await Contact.find()
-      .sort({ createdAt: -1 })
-      .limit(5)
-      .select("name email subject createdAt");
+    // Compute metrics
+    const totalDonations = donationSummary.length;
+    const totalRevenue = donationSummary.reduce((acc, curr) => acc + (Number(curr.amount) || 0), 0);
 
     return NextResponse.json({
       success: true,
-
-      statistics: {
+      metrics: {
         totalMembers,
-        totalDonations,
+        activeMembers,
         totalContacts,
-        totalNewsletter,
+        totalDonations,
+        totalRevenue,
       },
-
-      recentMembers,
-      recentDonations,
-      recentContacts,
+      feeds: {
+        recentMembers,
+        recentContacts,
+        recentDonations: donationSummary,
+      },
+      serverTime: new Date().toISOString(),
     });
   } catch (error) {
-    console.error("Dashboard API Error:", error);
-
+    console.error("Dashboard Aggregation Error:", error);
     return NextResponse.json(
-      {
-        success: false,
-        message: "Internal Server Error",
-      },
-      {
-        status: 500,
-      }
+      { success: false, message: "Failed to fetch dashboard metrics." },
+      { status: 500 }
     );
   }
 }
