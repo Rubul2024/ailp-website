@@ -1,424 +1,247 @@
 /* ==========================================================
-   Login Form
-   All India Labour Party
-========================================================== */
+   AILP MEMBER LOGIN FORM - 100% MOBILE RESPONSIVE
+========================================================= */
 
-.card{
-
-width:100%;
-
-max-width:500px;
-
-background:rgba(255,255,255,.92);
-
-backdrop-filter:blur(18px);
-
-border:1px solid rgba(255,255,255,.35);
-
-border-radius:28px;
-
-padding:42px;
-
-box-shadow:0 25px 60px rgba(15,23,42,.18);
-
-animation:fadeUp .6s ease;
-
+.card {
+  width: 100%;
+  max-width: 480px;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 24px;
+  padding: clamp(24px, 5vw, 42px);
+  box-shadow: 0 20px 50px -10px rgba(15, 23, 42, 0.14);
+  animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  box-sizing: border-box;
+  margin: 0 auto;
 }
 
-/* ==========================================
-   Header
-========================================== */
-
-.header{
-
-margin-bottom:32px;
-
+/* Header */
+.header {
+  margin-bottom: 28px;
+  text-align: left;
 }
 
-.header h2{
-
-margin:0;
-
-font-size:34px;
-
-font-weight:700;
-
-color:#0f172a;
-
+.header h2 {
+  margin: 0;
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
-.header p{
-
-margin-top:12px;
-
-font-size:15px;
-
-line-height:1.7;
-
-color:#64748b;
-
+.header p {
+  margin-top: 8px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #64748b;
 }
 
-/* ==========================================
-   Form
-========================================== */
-
-.form{
-
-display:flex;
-
-flex-direction:column;
-
-gap:18px;
-
+/* Form Structure */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
 }
 
-/* ==========================================
-   Input
-========================================== */
-
+/* Input Wrappers */
 .inputGroup,
-
-.passwordGroup{
-
-display:flex;
-
-align-items:center;
-
-height:58px;
-
-padding:0 18px;
-
-background:#ffffff;
-
-border:1px solid #dbe4ee;
-
-border-radius:16px;
-
-transition:.3s;
-
+.passwordGroup {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 52px;
+  padding: 0 16px;
+  background: #f8fafc;
+  border: 1.5px solid #dbe4ee;
+  border-radius: 14px;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
 }
 
 .inputGroup:hover,
-
-.passwordGroup:hover{
-
-border-color:#2563eb;
-
+.passwordGroup:hover {
+  border-color: #93c5fd;
 }
 
 .inputGroup:focus-within,
-
-.passwordGroup:focus-within{
-
-border-color:#2563eb;
-
-box-shadow:0 0 0 4px rgba(37,99,235,.12);
-
+.passwordGroup:focus-within {
+  background: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3.5px rgba(37, 99, 235, 0.12);
 }
 
 .inputGroup svg,
-
-.passwordGroup svg{
-
-color:#64748b;
-
-flex-shrink:0;
-
+.passwordGroup svg {
+  color: #64748b;
+  flex-shrink: 0;
 }
 
 .inputGroup input,
-
-.passwordGroup input{
-
-flex:1;
-
-margin-left:14px;
-
-border:none;
-
-outline:none;
-
-background:none;
-
-font-size:15px;
-
-color:#0f172a;
-
+.passwordGroup input {
+  flex: 1;
+  width: 100%;
+  min-width: 0; /* Prevents overflow inside flex containers */
+  margin-left: 12px;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14.5px;
+  color: #0f172a;
 }
 
 .inputGroup input::placeholder,
-
-.passwordGroup input::placeholder{
-
-color:#94a3b8;
-
+.passwordGroup input::placeholder {
+  color: #94a3b8;
 }
 
-/* ==========================================
-   Eye Button
-========================================== */
-
-.eyeButton{
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-background:none;
-
-border:none;
-
-cursor:pointer;
-
-padding:4px;
-
-color:#64748b;
-
-transition:.3s;
-
+/* Password Eye Button */
+.eyeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  color: #64748b;
+  flex-shrink: 0;
+  transition: color 0.2s ease;
 }
 
-.eyeButton:hover{
-
-color:#2563eb;
-
+.eyeButton:hover {
+  color: #2563eb;
 }
 
-/* ==========================================
-   Options
-========================================== */
-
-.options{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-margin-top:6px;
-
-font-size:14px;
-
+/* Options Bar (Remember Me / Forgot Password) */
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+  font-size: 13.5px;
+  flex-wrap: wrap;
 }
 
-.options label{
-
-display:flex;
-
-align-items:center;
-
-gap:8px;
-
-cursor:pointer;
-
-color:#475569;
-
+.options label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: #475569;
+  font-weight: 500;
+  user-select: none;
 }
 
-.options input{
-
-width:16px;
-
-height:16px;
-
-accent-color:#2563eb;
-
+.options input {
+  width: 16px;
+  height: 16px;
+  accent-color: #2563eb;
+  cursor: pointer;
 }
 
-.options a{
-
-text-decoration:none;
-
-font-weight:600;
-
-color:#2563eb;
-
-transition:.3s;
-
+.options a {
+  text-decoration: none;
+  font-weight: 600;
+  color: #2563eb;
+  transition: color 0.2s ease;
 }
 
-.options a:hover{
-
-color:#1d4ed8;
-
+.options a:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
 }
 
-/* ==========================================
-   Error
-========================================== */
-
-.error{
-
-padding:14px 18px;
-
-border-radius:14px;
-
-background:#fef2f2;
-
-border:1px solid #fecaca;
-
-color:#dc2626;
-
-font-size:14px;
-
+/* Error Notification */
+.error {
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1.5;
 }
 
-/* ==========================================
-   Login Button
-========================================== */
-
-.loginButton{
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-gap:10px;
-
-height:58px;
-
-margin-top:8px;
-
-border:none;
-
-border-radius:16px;
-
-background:linear-gradient(
-
-135deg,
-
-#2563eb,
-
-#1d4ed8
-
-);
-
-color:white;
-
-font-size:16px;
-
-font-weight:600;
-
-cursor:pointer;
-
-transition:.35s;
-
+/* Submit Button */
+.loginButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 52px;
+  margin-top: 6px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #1d4ed8, #2563eb);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+  transition: all 0.25s ease;
 }
 
-.loginButton:hover{
-
-transform:translateY(-2px);
-
-box-shadow:0 18px 40px rgba(37,99,235,.35);
-
+.loginButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.45);
 }
 
-.loginButton:disabled{
-
-opacity:.7;
-
-cursor:not-allowed;
-
-transform:none;
-
+.loginButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
 }
 
-/* ==========================================
-   Footer
-========================================== */
-
-.footer{
-
-margin-top:30px;
-
-text-align:center;
-
-font-size:15px;
-
-color:#64748b;
-
+/* Card Footer */
+.footer {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 14px;
+  color: #64748b;
 }
 
-.footer a{
-
-margin-left:8px;
-
-text-decoration:none;
-
-font-weight:700;
-
-color:#2563eb;
-
-transition:.3s;
-
+.footer a {
+  margin-left: 6px;
+  text-decoration: none;
+  font-weight: 700;
+  color: #2563eb;
+  transition: color 0.2s ease;
 }
 
-.footer a:hover{
-
-color:#1d4ed8;
-
-text-decoration:underline;
-
+.footer a:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
 }
 
-/* ==========================================
-   Animation
-========================================== */
-
-@keyframes fadeUp{
-
-from{
-
-opacity:0;
-
-transform:translateY(35px);
-
+/* Animation */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-to{
+/* Responsive Adjustments */
+@media (max-width: 480px) {
+  .card {
+    padding: 20px 16px;
+    border-radius: 18px;
+  }
 
-opacity:1;
-
-transform:translateY(0);
-
-}
-
-}
-
-/* ==========================================
-   Responsive
-========================================== */
-
-@media(max-width:768px){
-
-.card{
-
-padding:28px;
-
-border-radius:22px;
-
-}
-
-.header h2{
-
-font-size:28px;
-
-}
-
-.options{
-
-flex-direction:column;
-
-align-items:flex-start;
-
-gap:12px;
-
-}
-
+  .options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
 }
