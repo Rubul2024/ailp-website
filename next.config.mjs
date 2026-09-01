@@ -1,16 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* ======================================================
-     External Images
-  ====================================================== */
-
-  images: {
-    remotePatterns: [
+  async redirects() {
+    return [
       {
-        protocol: "https",
-        hostname: "res.cloudinary.com",
+        source: "/join",
+        destination: "/join-membership",
+        permanent: true,
       },
-    ],
+    ];
   },
 };
 

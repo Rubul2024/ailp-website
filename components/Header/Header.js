@@ -2,22 +2,18 @@
 
 import { useState } from "react";
 import Link from "next/link";
-
+import Image from "next/image";
 import {
   ChevronDown,
   Menu,
   X,
   ArrowRight,
 } from "lucide-react";
-
 import "./Header.css";
 
 export default function Header() {
-  const [mobileOpen, setMobileOpen] =
-    useState(false);
-
-  const [resourcesOpen, setResourcesOpen] =
-    useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [resourcesOpen, setResourcesOpen] = useState(false);
 
   function closeMobileMenu() {
     setMobileOpen(false);
@@ -25,448 +21,204 @@ export default function Header() {
   }
 
   function toggleResources() {
-    setResourcesOpen(
-      (previous) => !previous
-    );
+    setResourcesOpen((previous) => !previous);
   }
 
   return (
     <header className="site-header">
-
-      {/* =====================================================
-          Header Container
-      ===================================================== */}
-
       <div className="header-container">
-
-        {/* ===================================================
-            Logo
-        =================================================== */}
-
+        {/* ================= Logo ================= */}
         <Link
           href="/"
           className="ailp-logo"
           onClick={closeMobileMenu}
         >
-          <div className="ailp-logo-mark">
-            AILP
+          <div className="ailp-logo-symbol-wrap">
+            <Image
+              src="/images/ailp-symbol-logo.svg"
+              alt="AILP Election Symbol Glass"
+              width={44}
+              height={44}
+              priority
+            />
           </div>
 
           <div className="ailp-logo-content">
-            <strong>
-              ALL INDIA
-            </strong>
-
-            <span>
-              LABOUR PARTY
-            </span>
+            <strong>ALL INDIA</strong>
+            <span>LABOUR PARTY</span>
           </div>
         </Link>
 
-
-        {/* ===================================================
-            Desktop Navigation
-        =================================================== */}
-
+        {/* ================= Desktop Navigation ================= */}
         <nav
           className="desktop-navigation"
           aria-label="Main navigation"
         >
-
-          <Link
-            href="/"
-            className="nav-link"
-          >
+          <Link href="/" className="nav-link">
             Home
           </Link>
-
-          <Link
-            href="/about"
-            className="nav-link"
-          >
+          <Link href="/about" className="nav-link">
             About
           </Link>
-
-          <Link
-            href="/leadership"
-            className="nav-link"
-          >
+          <Link href="/leadership" className="nav-link">
             Leadership
           </Link>
-
-          <Link
-            href="/news"
-            className="nav-link"
-          >
+          <Link href="/news" className="nav-link">
             News
           </Link>
-
-          <Link
-            href="/gallery"
-            className="nav-link"
-          >
+          <Link href="/gallery" className="nav-link">
             Gallery
           </Link>
 
-
-          {/* =================================================
-              Resources Dropdown
-          ================================================= */}
-
+          {/* Resources Dropdown */}
           <div className="nav-dropdown">
-
             <button
               type="button"
               className="nav-link nav-dropdown-button"
               onClick={toggleResources}
-              aria-expanded={
-                resourcesOpen
-              }
+              aria-expanded={resourcesOpen}
             >
               Resources
-
               <ChevronDown
                 size={16}
-                className={
-                  resourcesOpen
-                    ? "dropdown-arrow-open"
-                    : ""
-                }
+                className={resourcesOpen ? "dropdown-arrow-open" : ""}
               />
             </button>
 
-
             <div
               className={`resources-menu ${
-                resourcesOpen
-                  ? "resources-menu-open"
-                  : ""
+                resourcesOpen ? "resources-menu-open" : ""
               }`}
             >
-
               <Link
                 href="/mission"
-                onClick={() =>
-                  setResourcesOpen(false)
-                }
+                onClick={() => setResourcesOpen(false)}
               >
-                <span>
-                  Our Mission
-                </span>
-
-                <ArrowRight
-                  size={15}
-                />
+                <span>Our Mission</span>
+                <ArrowRight size={15} />
               </Link>
-
               <Link
                 href="/vision"
-                onClick={() =>
-                  setResourcesOpen(false)
-                }
+                onClick={() => setResourcesOpen(false)}
               >
-                <span>
-                  Our Vision
-                </span>
-
-                <ArrowRight
-                  size={15}
-                />
+                <span>Our Vision</span>
+                <ArrowRight size={15} />
               </Link>
-
               <Link
                 href="/faq"
-                onClick={() =>
-                  setResourcesOpen(false)
-                }
+                onClick={() => setResourcesOpen(false)}
               >
-                <span>
-                  FAQ
-                </span>
-
-                <ArrowRight
-                  size={15}
-                />
+                <span>FAQ</span>
+                <ArrowRight size={15} />
               </Link>
-
             </div>
-
           </div>
 
-
-          <Link
-            href="/contact"
-            className="nav-link"
-          >
+          <Link href="/contact" className="nav-link">
             Contact
           </Link>
-
         </nav>
 
-
-        {/* ===================================================
-            Desktop Join Button
-        =================================================== */}
-
+        {/* ================= Join CTA Button ================= */}
         <Link
-          href="/join-membership"
+          href="/member/join"
           className="header-join-button"
         >
-          Join Membership
-
-          <ArrowRight
-            size={17}
-          />
+          <span>Join Membership</span>
+          <ArrowRight size={17} />
         </Link>
 
-
-        {/* ===================================================
-            Mobile Menu Button
-        =================================================== */}
-
+        {/* ================= Mobile Menu Trigger ================= */}
         <button
           type="button"
           className="mobile-menu-button"
-          onClick={() =>
-            setMobileOpen(
-              (previous) =>
-                !previous
-            )
-          }
-          aria-label={
-            mobileOpen
-              ? "Close navigation menu"
-              : "Open navigation menu"
-          }
-          aria-expanded={
-            mobileOpen
-          }
+          onClick={() => setMobileOpen((prev) => !prev)}
+          aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={mobileOpen}
         >
-
-          {mobileOpen ? (
-            <X size={25} />
-          ) : (
-            <Menu size={25} />
-          )}
-
+          {mobileOpen ? <X size={25} /> : <Menu size={25} />}
         </button>
-
       </div>
 
-
-      {/* =====================================================
-          Mobile Navigation Overlay
-      ===================================================== */}
-
+      {/* ================= Mobile Overlay & Drawer ================= */}
       <div
-        className={`mobile-overlay ${
-          mobileOpen
-            ? "mobile-overlay-visible"
-            : ""
-        }`}
+        className={`mobile-overlay ${mobileOpen ? "mobile-overlay-visible" : ""}`}
         onClick={closeMobileMenu}
         aria-hidden={!mobileOpen}
       />
 
-
-      {/* =====================================================
-          Mobile Navigation Drawer
-      ===================================================== */}
-
       <aside
-        className={`mobile-navigation ${
-          mobileOpen
-            ? "mobile-navigation-open"
-            : ""
-        }`}
+        className={`mobile-navigation ${mobileOpen ? "mobile-navigation-open" : ""}`}
         aria-hidden={!mobileOpen}
       >
-
         <div className="mobile-navigation-header">
-
           <div className="mobile-brand">
-            <div className="ailp-logo-mark">
-              AILP
-            </div>
-
+            <Image
+              src="/images/ailp-symbol-logo.svg"
+              alt="AILP Election Symbol"
+              width={38}
+              height={38}
+            />
             <div>
-              <strong>
-                ALL INDIA
-              </strong>
-
-              <span>
-                LABOUR PARTY
-              </span>
+              <strong>ALL INDIA</strong>
+              <span>LABOUR PARTY</span>
             </div>
           </div>
 
           <button
             type="button"
             className="mobile-close-button"
-            onClick={
-              closeMobileMenu
-            }
+            onClick={closeMobileMenu}
             aria-label="Close menu"
           >
             <X size={23} />
           </button>
-
         </div>
 
-
-        <nav
-          className="mobile-nav-links"
-          aria-label="Mobile navigation"
-        >
-
-          <Link
-            href="/"
-            onClick={
-              closeMobileMenu
-            }
-          >
-            Home
-          </Link>
-
-          <Link
-            href="/about"
-            onClick={
-              closeMobileMenu
-            }
-          >
-            About
-          </Link>
-
-          <Link
-            href="/leadership"
-            onClick={
-              closeMobileMenu
-            }
-          >
-            Leadership
-          </Link>
-
-          <Link
-            href="/news"
-            onClick={
-              closeMobileMenu
-            }
-          >
-            News
-          </Link>
-
-          <Link
-            href="/gallery"
-            onClick={
-              closeMobileMenu
-            }
-          >
-            Gallery
-          </Link>
-
-
-          {/* =================================================
-              Mobile Resources
-          ================================================= */}
+        <nav className="mobile-nav-links" aria-label="Mobile navigation">
+          <Link href="/" onClick={closeMobileMenu}>Home</Link>
+          <Link href="/about" onClick={closeMobileMenu}>About</Link>
+          <Link href="/leadership" onClick={closeMobileMenu}>Leadership</Link>
+          <Link href="/news" onClick={closeMobileMenu}>News</Link>
+          <Link href="/gallery" onClick={closeMobileMenu}>Gallery</Link>
 
           <div className="mobile-resources">
-
             <button
               type="button"
               className="mobile-resources-button"
-              onClick={
-                toggleResources
-              }
+              onClick={toggleResources}
             >
               Resources
-
               <ChevronDown
                 size={18}
-                className={
-                  resourcesOpen
-                    ? "dropdown-arrow-open"
-                    : ""
-                }
+                className={resourcesOpen ? "dropdown-arrow-open" : ""}
               />
             </button>
 
-
             {resourcesOpen && (
               <div className="mobile-resource-links">
-
-                <Link
-                  href="/mission"
-                  onClick={
-                    closeMobileMenu
-                  }
-                >
-                  Our Mission
-                </Link>
-
-                <Link
-                  href="/vision"
-                  onClick={
-                    closeMobileMenu
-                  }
-                >
-                  Our Vision
-                </Link>
-
-                <Link
-                  href="/faq"
-                  onClick={
-                    closeMobileMenu
-                  }
-                >
-                  FAQ
-                </Link>
-
+                <Link href="/mission" onClick={closeMobileMenu}>Our Mission</Link>
+                <Link href="/vision" onClick={closeMobileMenu}>Our Vision</Link>
+                <Link href="/faq" onClick={closeMobileMenu}>FAQ</Link>
               </div>
             )}
-
           </div>
 
-
-          <Link
-            href="/contact"
-            onClick={
-              closeMobileMenu
-            }
-          >
-            Contact
-          </Link>
-
+          <Link href="/contact" onClick={closeMobileMenu}>Contact</Link>
         </nav>
 
-
-        {/* ===================================================
-            Mobile CTA
-        =================================================== */}
-
         <div className="mobile-navigation-footer">
-
           <Link
-            href="/join-membership"
+            href="/member/join"
             className="mobile-join-button"
-            onClick={
-              closeMobileMenu
-            }
+            onClick={closeMobileMenu}
           >
-            Join Membership
-
-            <ArrowRight
-              size={18}
-            />
+            <span>Join Membership</span>
+            <ArrowRight size={18} />
           </Link>
-
-          <p>
-            Be part of the movement.
-          </p>
-
+          <p>Be part of the movement.</p>
         </div>
-
       </aside>
-
     </header>
   );
 }

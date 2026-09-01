@@ -1,8 +1,4 @@
-// Layout
-import Header from "@/components/layout/Header/Header";
-
 // Home Sections
-
 import Hero from "@/components/home/Hero/Hero";
 import About from "@/components/about/About";
 import Journey from "@/components/home/Journey/Journey";
@@ -17,41 +13,35 @@ import Subscribe from "@/components/home/Subscribe/Subscribe";
 export default function Home() {
   return (
     <>
-      <Header />
+      {/* Hero Banner */}
+      <Hero />
 
-      <main>
-        {/* Hero Banner */}
-        <Hero />
+      {/* About Section */}
+      <About />
 
-        {/* About */}
-        <About />
+      {/* Journey Section */}
+      <Journey />
 
-        {/* Journey */}
-        <Journey />
+      {/* Why Join */}
+      <WhyJoin />
 
-        {/* Why Join */}
-        <WhyJoin />
+      {/* Core Values */}
+      <CoreValues />
 
-        {/* Core Values */}
-        <CoreValues />
+      {/* Leadership */}
+      <Leadership />
 
-        {/* Leadership */}
-        <Leadership />
+      {/* India Map */}
+      <IndiaMap />
 
-        {/* India Map */}
-        <IndiaMap />
+      {/* Latest News */}
+      <LatestNews />
 
-        {/* Latest News */}
-        <LatestNews />
+      {/* Join CTA */}
+      <JoinCTA />
 
-        {/* Join CTA */}
-        <JoinCTA />
-
-        {/* Subscribe */}
-        <Subscribe />
-
-        
-      </main>
+      {/* Subscribe */}
+      <Subscribe />
     </>
   );
 }

@@ -1,1030 +1,422 @@
 /* ==========================================================
-   AILP PUBLIC WEBSITE
-   FOOTER STYLES
-
-   All India Labour Party
-   Modern / Professional / Responsive
-========================================================== */
-
-
-/* ==========================================================
-   FOOTER
+   AILP NATIONAL PARTY EXECUTIVE FOOTER DESIGN SYSTEM
 ========================================================== */
 
 .footer {
-  --primary: #0b4ea2;
-  --primary-dark: #082f68;
-  --secondary: #ff7a00;
-  --secondary-dark: #e96800;
-
-  --footer-dark: #06162d;
-  --footer-mid: #0b254f;
-
-  --white: #ffffff;
-  --text-light: #cbd5e1;
-  --text-muted: #94a3b8;
-
   position: relative;
-
+  width: 100%;
+  background: linear-gradient(180deg, #070e1c 0%, #03060c 100%);
+  color: #cbd5e1;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
   overflow: hidden;
-
-  margin-top: 100px;
-
-  color: var(--white);
-
-  background:
-    linear-gradient(
-      145deg,
-      #06162d 0%,
-      #0b254f 48%,
-      #082d61 72%,
-      #06162d 100%
-    );
 }
 
-
-/* ==========================================================
-   TOP ACCENT LINE
-========================================================== */
-
-.topAccent {
-  position: absolute;
-
-  top: 0;
-  left: 0;
-  right: 0;
-
-  height: 3px;
-
-  background:
-    linear-gradient(
-      90deg,
-      var(--primary),
-      #2563eb 45%,
-      var(--secondary)
-    );
-
-  z-index: 5;
+/* Tricolor Top Ribbon */
+.tricolorRibbon {
+  width: 100%;
+  height: 3.5px;
+  background: linear-gradient(
+    90deg,
+    #ff9933 0%,
+    #ffffff 50%,
+    #138808 100%
+  );
+  box-shadow: 0 0 12px rgba(255, 153, 51, 0.4);
 }
-
-
-/* ==========================================================
-   BACKGROUND GLOW — LEFT
-========================================================== */
-
-.footer::before {
-  content: "";
-
-  position: absolute;
-
-  width: 420px;
-  height: 420px;
-
-  left: -180px;
-  top: -180px;
-
-  border-radius: 50%;
-
-  background:
-    rgba(255, 122, 0, 0.10);
-
-  filter: blur(90px);
-
-  pointer-events: none;
-}
-
-
-/* ==========================================================
-   BACKGROUND GLOW — RIGHT
-========================================================== */
-
-.footer::after {
-  content: "";
-
-  position: absolute;
-
-  width: 500px;
-  height: 500px;
-
-  right: -220px;
-  bottom: -220px;
-
-  border-radius: 50%;
-
-  background:
-    rgba(37, 99, 235, 0.16);
-
-  filter: blur(100px);
-
-  pointer-events: none;
-}
-
-
-/* ==========================================================
-   MAIN CONTAINER
-========================================================== */
 
 .container {
-  position: relative;
-
-  z-index: 2;
-
-  width: min(
-    calc(100% - 48px),
-    1400px
-  );
-
+  width: 100%;
+  max-width: 1360px;
   margin: 0 auto;
+  padding: 56px 24px 28px;
+  box-sizing: border-box;
+}
 
-  padding: 85px 0 65px;
-
+/* 4-Column Grid */
+.footerGrid {
   display: grid;
-
-  grid-template-columns:
-    1.35fr
-    1fr
-    1fr
-    1.15fr;
-
-  gap: 55px;
+  grid-template-columns: 1.35fr 0.85fr 0.9fr 1.3fr;
+  gap: 36px;
+  padding-bottom: 44px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-
-/* ==========================================================
-   BRAND COLUMN
-========================================================== */
-
-.brandColumn {
-  min-width: 0;
+/* Brand Column */
+.brandCol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
 }
 
-
-/* ==========================================================
-   LOGO
-========================================================== */
-
-.logo {
-  display: inline-flex;
-
-  align-items: center;
-
+.logoLink {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
   text-decoration: none;
-
-  transition:
-    transform 0.3s ease,
-    opacity 0.3s ease;
+  cursor: pointer;
+  user-select: none;
 }
 
-.logo:hover {
-  transform: translateY(-3px);
+.logoBadge {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.25);
+  transition: transform 0.25s ease;
 }
 
-.logo img {
-  display: block;
+.logoLink:hover .logoBadge {
+  transform: scale(1.06);
+}
 
-  width: 180px;
-
-  height: auto;
-
+.logoSvg {
+  width: 100%;
+  height: 100%;
   object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45));
 }
 
-
-/* ==========================================================
-   DESCRIPTION
-========================================================== */
-
-.description {
-  max-width: 390px;
-
-  margin: 25px 0 0;
-
-  color: var(--text-light);
-
-  font-size: 15px;
-
-  line-height: 1.85;
+.brandTitleWrap {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
 }
 
-
-/* ==========================================================
-   FOOTER COLUMN
-========================================================== */
-
-.column {
-  min-width: 0;
+.brandTopRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-
-/* ==========================================================
-   COLUMN HEADING
-========================================================== */
-
-.column h3 {
-  position: relative;
-
-  display: inline-block;
-
-  margin: 0 0 24px;
-
-  padding-bottom: 10px;
-
-  color: var(--white);
-
-  font-size: 18px;
-
-  font-weight: 750;
-
+.brandMain {
+  font-size: 19px;
+  font-weight: 900;
+  color: #ffffff;
   letter-spacing: 0.01em;
 }
 
-
-/* ==========================================================
-   HEADING LINE
-========================================================== */
-
-.headingLine {
-  width: 42px;
-
-  height: 3px;
-
-  margin-top: -17px;
-
-  margin-bottom: 22px;
-
-  border-radius: 20px;
-
-  background:
-    linear-gradient(
-      90deg,
-      var(--secondary),
-      #ff9f1a
-    );
-
-  transition:
-    width 0.3s ease;
+.tagAilp {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: rgba(239, 68, 68, 0.25);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+  letter-spacing: 0.05em;
 }
 
-.column:hover .headingLine {
-  width: 68px;
+.brandSub {
+  font-size: 13.5px;
+  font-weight: 900;
+  color: #f87171;
+  letter-spacing: 0.14em;
+  margin-top: 2px;
 }
 
-
-/* ==========================================================
-   LIST
-========================================================== */
-
-.column ul {
-  list-style: none;
-
-  margin: 0;
-
-  padding: 0;
+.brandDesc {
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: #94a3b8;
+  max-width: 320px;
 }
 
-
-/* ==========================================================
-   LIST ITEM
-========================================================== */
-
-.column li {
-  margin-bottom: 13px;
+/* Titles */
+.colTitle {
+  font-size: 15px;
+  font-weight: 800;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 20px;
+  position: relative;
+  display: inline-block;
 }
 
-
-/* ==========================================================
-   LINKS
-========================================================== */
-
-.column li a {
-  display: inline-flex;
-
-  align-items: center;
-
-  color: var(--text-light);
-
-  text-decoration: none;
-
-  font-size: 14px;
-
-  line-height: 1.6;
-
-  transition:
-    color 0.25s ease,
-    transform 0.25s ease;
+.colTitle::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 28px;
+  height: 2px;
+  background: #f97316;
+  border-radius: 2px;
 }
 
-.column li a:hover {
-  color: var(--secondary);
-
-  transform: translateX(5px);
-}
-
-
-/* ==========================================================
-   DONATE BUTTON
-========================================================== */
-
-.donateButton {
-  display: inline-flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  gap: 9px;
-
-  margin-top: 18px;
-
-  min-height: 46px;
-
-  padding: 11px 22px;
-
-  border-radius: 12px;
-
-  color: var(--white);
-
-  background:
-    linear-gradient(
-      135deg,
-      var(--secondary),
-      #ff9f1a
-    );
-
-  text-decoration: none;
-
-  font-size: 14px;
-
-  font-weight: 700;
-
-  box-shadow:
-    0 12px 28px
-    rgba(255, 122, 0, 0.20);
-
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease,
-    background 0.3s ease;
-}
-
-.donateButton:hover {
-  background:
-    linear-gradient(
-      135deg,
-      var(--secondary-dark),
-      var(--secondary)
-    );
-
-  transform: translateY(-3px);
-
-  box-shadow:
-    0 18px 35px
-    rgba(255, 122, 0, 0.28);
-}
-
-
-/* ==========================================================
-   CONTACT LIST
-========================================================== */
-
-.contactList {
+/* Links List (Clean Single Bullet Dot) */
+.linkList {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
   display: flex;
-
   flex-direction: column;
+  gap: 12px;
+}
 
+.linkList li {
+  list-style-type: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.pageLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #94a3b8;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+/* Status Dot Icon */
+.linkDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #f97316;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.pageLink:hover {
+  color: #ffffff;
+  transform: translateX(4px);
+}
+
+.pageLink:hover .linkDot {
+  background: #38bdf8;
+  transform: scale(1.3);
+}
+
+/* Donate Button */
+.donateWrap {
+  margin-top: 20px;
+}
+
+.donateBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ea580c, #f97316);
+  color: #ffffff;
+  font-size: 13.5px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.35);
+  transition: all 0.2s ease;
+}
+
+.donateBtn:hover {
+  background: linear-gradient(135deg, #c2410c, #ea580c);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(234, 88, 12, 0.45);
+}
+
+/* Contact Us Column */
+.contactList {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.contactList li {
+  list-style-type: none !important;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 13.5px;
+  color: #94a3b8;
+  line-height: 1.5;
+}
+
+.contactIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #f97316;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: -2px;
+}
+
+.phoneStack {
+  display: flex;
+  flex-direction: column;
   gap: 2px;
 }
 
-
-/* ==========================================================
-   CONTACT ITEM
-========================================================== */
-
-.contactList li {
-  display: flex;
-
-  align-items: flex-start;
-
-  gap: 11px;
-
-  margin-bottom: 14px;
-
-  color: var(--text-light);
-
-  font-size: 14px;
-
-  line-height: 1.7;
-}
-
-
-/* ==========================================================
-   CONTACT ICON
-========================================================== */
-
-.contactIcon {
-  display: inline-flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  width: 34px;
-
-  height: 34px;
-
-  flex: 0 0 34px;
-
-  margin-top: 1px;
-
-  border-radius: 10px;
-
-  color: var(--secondary);
-
-  background:
-    rgba(255, 122, 0, 0.10);
-
-  border: 1px solid
-    rgba(255, 122, 0, 0.12);
-}
-
-
-/* ==========================================================
-   CONTACT LINKS
-========================================================== */
-
-.contactList a {
-  color: var(--text-light);
-
+.phoneStack a,
+.contactEmail {
+  color: #cbd5e1;
   text-decoration: none;
-
-  transition:
-    color 0.25s ease;
+  transition: color 0.15s ease;
+  word-break: break-all;
 }
 
-.contactList a:hover {
-  color: var(--secondary);
+.phoneStack a:hover,
+.contactEmail:hover {
+  color: #38bdf8;
 }
 
-
-/* ==========================================================
-   SOCIAL SECTION
-========================================================== */
-
-.socialSection {
-  position: relative;
-
-  z-index: 3;
-
-  border-top: 1px solid
-    rgba(255, 255, 255, 0.09);
-
-  border-bottom: 1px solid
-    rgba(255, 255, 255, 0.09);
-
-  background:
-    rgba(255, 255, 255, 0.025);
-}
-
-
-/* ==========================================================
-   SOCIAL INNER
-========================================================== */
-
-.socialInner {
-  width: min(
-    calc(100% - 48px),
-    1400px
-  );
-
-  min-height: 92px;
-
-  margin: 0 auto;
-
+/* Social Media Bar */
+.socialBar {
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
-
-  gap: 30px;
+  flex-wrap: wrap;
+  gap: 18px;
+  padding: 26px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-
-/* ==========================================================
-   SOCIAL TEXT
-========================================================== */
-
-.socialInner > div:first-child {
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 5px;
-}
-
-.socialInner strong {
-  color: var(--white);
-
+.socialTitle {
+  margin: 0;
   font-size: 15px;
-
-  font-weight: 750;
+  font-weight: 800;
+  color: #ffffff;
 }
 
-.socialInner span {
-  color: var(--text-muted);
-
-  font-size: 13px;
-}
-
-
-/* ==========================================================
-   SOCIAL LINKS
-
-   These classes can also be used by SocialLinks.jsx
-========================================================== */
-
-.socialWrapper {
-  margin-top: 28px;
+.socialSubtitle {
+  margin: 2px 0 0 0;
+  font-size: 12.5px;
+  color: #64748b;
 }
 
 .socialIcons {
   display: flex;
-
   align-items: center;
-
   gap: 10px;
-
-  flex-wrap: wrap;
 }
 
-.socialIcons a {
-  width: 42px;
-
-  height: 42px;
-
+.socialIconBtn {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
-  border-radius: 12px;
-
-  color: var(--text-light);
-
-  background:
-    rgba(255, 255, 255, 0.07);
-
-  border: 1px solid
-    rgba(255, 255, 255, 0.08);
-
   text-decoration: none;
-
-  transition:
-    color 0.3s ease,
-    background 0.3s ease,
-    border-color 0.3s ease,
-    transform 0.3s ease;
+  transition: all 0.2s ease;
 }
 
-.socialIcons a:hover {
-  color: var(--white);
-
-  background:
-    var(--primary);
-
-  border-color:
-    rgba(255, 255, 255, 0.15);
-
-  transform:
-    translateY(-4px);
+.socialIconBtn:hover {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+  transform: translateY(-2px);
 }
 
-
-/* ==========================================================
-   BOTTOM FOOTER
-========================================================== */
-
-.bottom {
-  position: relative;
-
-  z-index: 3;
-
-  border-top: 1px solid
-    rgba(255, 255, 255, 0.06);
-}
-
-
-/* ==========================================================
-   BOTTOM INNER
-========================================================== */
-
-.bottomInner {
-  width: min(
-    calc(100% - 48px),
-    1400px
-  );
-
-  min-height: 76px;
-
-  margin: 0 auto;
-
+/* Bottom Bar */
+.bottomBar {
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
-
-  gap: 25px;
-
   flex-wrap: wrap;
+  gap: 16px;
+  padding-top: 22px;
 }
 
-
-/* ==========================================================
-   COPYRIGHT
-========================================================== */
-
-.bottom p {
+.copyrightText {
   margin: 0;
-
-  color: var(--text-muted);
-
-  font-size: 13px;
-
-  line-height: 1.6;
+  font-size: 12.5px;
+  color: #64748b;
 }
 
-
-/* ==========================================================
-   BOTTOM LINKS
-========================================================== */
-
-.bottomLinks {
+.legalLinks {
   display: flex;
-
   align-items: center;
-
-  justify-content: flex-end;
-
-  gap: 22px;
-
+  gap: 20px;
   flex-wrap: wrap;
 }
 
-.bottomLinks a {
-  color: var(--text-light);
-
+.legalLinks a {
+  font-size: 12.5px;
+  color: #64748b;
   text-decoration: none;
-
-  font-size: 13px;
-
-  transition:
-    color 0.25s ease;
+  transition: color 0.2s ease;
 }
 
-.bottomLinks a:hover {
-  color: var(--secondary);
+.legalLinks a:hover {
+  color: #ffffff;
 }
 
-
-/* ==========================================================
-   SCROLL TO TOP
-========================================================== */
-
-.scrollTop {
-  position: fixed;
-
-  right: 26px;
-
-  bottom: 26px;
-
-  z-index: 999;
-
-  width: 50px;
-
-  height: 50px;
-
+/* Scroll To Top */
+.scrollTopBtn {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: #f97316;
+  color: #ffffff;
+  border: none;
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
-  padding: 0;
-
-  border: 1px solid
-    rgba(255, 255, 255, 0.15);
-
-  border-radius: 14px;
-
-  color: var(--white);
-
-  background:
-    linear-gradient(
-      135deg,
-      var(--secondary),
-      #ff9f1a
-    );
-
   cursor: pointer;
-
-  box-shadow:
-    0 15px 35px
-    rgba(255, 122, 0, 0.25);
-
-  transition:
-    transform 0.3s ease,
-    background 0.3s ease,
-    box-shadow 0.3s ease;
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.35);
+  transition: all 0.2s ease;
 }
 
-.scrollTop:hover {
-  background:
-    linear-gradient(
-      135deg,
-      var(--primary),
-      #2563eb
-    );
-
-  transform:
-    translateY(-5px);
-
-  box-shadow:
-    0 18px 40px
-    rgba(11, 78, 162, 0.28);
+.scrollTopBtn:hover {
+  background: #ea580c;
+  transform: translateY(-2px);
 }
-
-.scrollTop:focus-visible {
-  outline: 3px solid
-    rgba(255, 255, 255, 0.5);
-
-  outline-offset: 4px;
-}
-
 
 /* ==========================================================
-   TABLET
+   RESPONSIVE BREAKPOINTS
 ========================================================== */
+@media (max-width: 1024px) {
+  .footerGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+  }
+}
 
-@media (max-width: 1100px) {
+@media (max-width: 640px) {
+  .footerGrid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
 
   .container {
-    grid-template-columns:
-      1.3fr
-      1fr
-      1fr;
-
-    gap: 45px;
+    padding: 40px 18px 24px;
   }
 
-  .brandColumn {
-    grid-column: 1 / -1;
-  }
-
-  .description {
-    max-width: 600px;
-  }
-
-}
-
-
-/* ==========================================================
-   TABLET / MOBILE
-========================================================== */
-
-@media (max-width: 768px) {
-
-  .footer {
-    margin-top: 80px;
-  }
-
-
-  /* ========================================================
-     Main Grid
-  ======================================================== */
-
-  .container {
-    width: calc(100% - 40px);
-
-    padding:
-      65px 0
-      45px;
-
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
-
-    gap: 38px 28px;
-  }
-
-
-  /* ========================================================
-     Brand
-  ======================================================== */
-
-  .brandColumn {
-    grid-column: 1 / -1;
-
-    text-align: center;
-  }
-
-  .brandColumn .logo {
-    justify-content: center;
-  }
-
-  .brandColumn .description {
-    margin:
-      22px auto 0;
-
-    max-width: 520px;
-  }
-
-
-  /* ========================================================
-     Social Wrapper
-  ======================================================== */
-
-  .socialWrapper {
-    margin-top: 24px;
-
-    display: flex;
-
-    justify-content: center;
-  }
-
-
-  /* ========================================================
-     Headings
-  ======================================================== */
-
-  .column h3 {
-    font-size: 17px;
-  }
-
-
-  /* ========================================================
-     Social Section
-  ======================================================== */
-
-  .socialInner {
-    width: calc(100% - 40px);
-
-    padding:
-      22px 0;
-
+  .socialBar {
     flex-direction: column;
-
-    justify-content: center;
-
-    text-align: center;
-
-    gap: 18px;
+    align-items: flex-start;
   }
 
-  .socialInner > div:first-child {
-    align-items: center;
-  }
-
-
-  /* ========================================================
-     Bottom
-  ======================================================== */
-
-  .bottomInner {
-    width: calc(100% - 40px);
-
-    padding:
-      22px 0;
-
+  .bottomBar {
     flex-direction: column;
-
-    justify-content: center;
-
-    text-align: center;
-
-    gap: 14px;
+    align-items: flex-start;
   }
 
-  .bottomLinks {
-    justify-content: center;
-
-    gap: 15px 20px;
+  .scrollTopBtn {
+    display: none;
   }
-
-
-  /* ========================================================
-     Scroll Top
-  ======================================================== */
-
-  .scrollTop {
-    right: 18px;
-
-    bottom: 18px;
-
-    width: 46px;
-
-    height: 46px;
-
-    border-radius: 13px;
-  }
-
-}
-
-
-/* ==========================================================
-   SMALL MOBILE
-========================================================== */
-
-@media (max-width: 480px) {
-
-  .container {
-    width: calc(100% - 32px);
-
-    grid-template-columns:
-      1fr;
-
-    gap: 30px;
-  }
-
-
-  .brandColumn {
-    grid-column: auto;
-  }
-
-
-  .logo img {
-    width: 155px;
-  }
-
-
-  .description {
-    font-size: 14px;
-
-    line-height: 1.8;
-  }
-
-
-  .column h3 {
-    font-size: 17px;
-
-    margin-bottom: 18px;
-  }
-
-
-  .headingLine {
-    margin-top: -12px;
-
-    margin-bottom: 18px;
-  }
-
-
-  .column li {
-    margin-bottom: 11px;
-  }
-
-
-  .column li a,
-  .contactList li {
-    font-size: 13px;
-  }
-
-
-  .donateButton {
-    width: 100%;
-  }
-
-
-  .socialInner {
-    width: calc(100% - 32px);
-  }
-
-
-  .bottomInner {
-    width: calc(100% - 32px);
-  }
-
-
-  .bottomLinks {
-    flex-direction: column;
-
-    gap: 10px;
-  }
-
-}
-
-
-/* ==========================================================
-   REDUCED MOTION
-========================================================== */
-
-@media (prefers-reduced-motion: reduce) {
-
-  .logo,
-  .column a,
-  .donateButton,
-  .socialIcons a,
-  .scrollTop {
-    transition: none;
-  }
-
 }
