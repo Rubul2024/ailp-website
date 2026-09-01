@@ -7,7 +7,6 @@ import CoreValues from "@/components/home/CoreValues/CoreValues";
 import Leadership from "@/components/home/Leadership/Leadership";
 import IndiaMap from "@/components/home/IndiaMap/IndiaMap";
 import LatestNews from "@/components/home/LatestNews/LatestNews";
-import JoinCTA from "@/components/home/JoinCTA/JoinCTA";
 import Subscribe from "@/components/home/Subscribe/Subscribe";
 
 export default function Home() {
@@ -36,9 +35,6 @@ export default function Home() {
 
       {/* Latest News */}
       <LatestNews />
-
-      {/* Join CTA */}
-      <JoinCTA />
 
       {/* Subscribe */}
       <Subscribe />

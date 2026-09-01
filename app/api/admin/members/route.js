@@ -1,145 +1,104 @@
 /* ==========================================================
-   Admin Newsletter API - Server-side Filter, Export, Status & Delete
+   Admin Members Management API
+   All India Labour Party (AILP)
+   Production Ready
 ========================================================== */
+
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
-import verifyAdmin from "@/lib/verifyAdmin";
-import Newsletter from "@/models/Newsletter";
+import Member from "@/models/Member";
 
 export const dynamic = "force-dynamic";
 
-/* ==========================================
-   GET Subscribers
-========================================== */
 export async function GET(request) {
   try {
-    const auth = verifyAdmin(request);
-    if (!auth.success) {
-      return NextResponse.json({ success: false, message: auth.message }, { status: 401 });
-    }
-
     await connectDB();
 
     const { searchParams } = new URL(request.url);
-    const search = searchParams.get("search")?.trim() || "";
-    const status = searchParams.get("status")?.trim() || "ALL";
-    const page = Math.max(1, parseInt(searchParams.get("page") || "1", 10));
-    const limit = Math.max(1, parseInt(searchParams.get("limit") || "10", 10));
-    const exportCsv = searchParams.get("export") === "true";
-
-    const query = {};
-
-    if (status && status !== "ALL") {
-      query.status = status;
-    }
-
-    if (search) {
-      query.email = new RegExp(search, "i");
-    }
-
-    if (exportCsv) {
-      const allSubscribers = await Newsletter.find(query)
-        .sort({ createdAt: -1 })
-        .select("email status source createdAt");
-
-      return NextResponse.json({
-        success: true,
-        subscribers: allSubscribers,
-      });
-    }
-
+    const search = searchParams.get("search") || "";
+    const state = searchParams.get("state") || "";
+    const status = searchParams.get("status") || "";
+    const page = parseInt(searchParams.get("page") || "1", 10);
+    const limit = parseInt(searchParams.get("limit") || "10", 10);
     const skip = (page - 1) * limit;
 
-    const [subscribers, totalCount, activeCount] = await Promise.all([
-      Newsletter.find(query).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
-      Newsletter.countDocuments(query),
-      Newsletter.countDocuments({ status: "Active" }),
-    ]);
+    // Build filter query
+    const query = {};
 
-    return NextResponse.json({
-      success: true,
-      subscribers,
-      activeCount,
-      pagination: {
-        total: totalCount,
-        page,
-        limit,
-        totalPages: Math.ceil(totalCount / limit) || 1,
+    // Search by Name, Email, Mobile, or Membership ID
+    if (search.trim()) {
+      query.$or = [
+        { fullName: { $regex: search.trim(), $options: "i" } },
+        { email: { $regex: search.trim(), $options: "i" } },
+        { mobile: { $regex: search.trim(), $options: "i" } },
+        { membershipId: { $regex: search.trim(), $options: "i" } },
+        { memberId: { $regex: search.trim(), $options: "i" } },
+      ];
+    }
+
+    // State filter (only if selected)
+    if (state && state !== "All States" && state !== "ALL") {
+      query.state = { $regex: `^${state.trim()}$`, $options: "i" };
+    }
+
+    // Status filter
+    if (status && status !== "All Statuses" && status !== "ALL") {
+      if (status.toUpperCase() === "ACTIVE") {
+        query.isActive = true;
+      } else if (status.toUpperCase() === "INACTIVE") {
+        query.isActive = false;
+      } else {
+        query.membershipStatus = status.toUpperCase();
+      }
+    }
+
+    // Fetch members with pagination
+    const [members, totalFiltered, totalRegistered, activeCount, inactiveCount, distinctStates] =
+      await Promise.all([
+        Member.find(query)
+          .sort({ createdAt: -1 })
+          .skip(skip)
+          .limit(limit)
+          .select("-password")
+          .lean(),
+        Member.countDocuments(query),
+        Member.countDocuments({}),
+        Member.countDocuments({ isActive: true }),
+        Member.countDocuments({ isActive: false }),
+        Member.distinct("state"),
+      ]);
+
+    const totalPages = Math.ceil(totalFiltered / limit) || 1;
+
+    // Return structured data matching all standard frontend expectations
+    return NextResponse.json(
+      {
+        success: true,
+        data: members,
+        members: members, // Fallback key for compatibility
+        pagination: {
+          total: totalFiltered,
+          totalPages,
+          currentPage: page,
+          limit,
+        },
+        stats: {
+          totalRegistered,
+          activeMembers: activeCount,
+          inactiveMembers: inactiveCount,
+          totalStates: distinctStates.filter(Boolean).length || 1,
+        },
       },
-    });
-  } catch (error) {
-    console.error("Admin Newsletter GET Error:", error);
-    return NextResponse.json({ success: false, message: "Internal server error." }, { status: 500 });
-  }
-}
-
-/* ==========================================
-   PATCH: Update Subscription Status
-========================================== */
-export async function PATCH(request) {
-  try {
-    const auth = verifyAdmin(request);
-    if (!auth.success) {
-      return NextResponse.json({ success: false, message: auth.message }, { status: 401 });
-    }
-
-    await connectDB();
-    const { id, status } = await request.json();
-
-    if (!id || !["Active", "Unsubscribed"].includes(status)) {
-      return NextResponse.json({ success: false, message: "Invalid parameters." }, { status: 400 });
-    }
-
-    const updated = await Newsletter.findByIdAndUpdate(
-      id,
-      { $set: { status } },
-      { new: true }
+      { status: 200 }
     );
-
-    if (!updated) {
-      return NextResponse.json({ success: false, message: "Subscriber not found." }, { status: 404 });
-    }
-
-    return NextResponse.json({
-      success: true,
-      message: `Subscriber status set to ${status}.`,
-      subscriber: updated,
-    });
   } catch (error) {
-    console.error("Admin Newsletter PATCH Error:", error);
-    return NextResponse.json({ success: false, message: "Internal server error." }, { status: 500 });
-  }
-}
-
-/* ==========================================
-   DELETE: Remove Subscriber
-========================================== */
-export async function DELETE(request) {
-  try {
-    const auth = verifyAdmin(request);
-    if (!auth.success) {
-      return NextResponse.json({ success: false, message: auth.message }, { status: 401 });
-    }
-
-    await connectDB();
-    const { searchParams } = new URL(request.url);
-    const id = searchParams.get("id");
-
-    if (!id) {
-      return NextResponse.json({ success: false, message: "Subscriber ID is required." }, { status: 400 });
-    }
-
-    const deleted = await Newsletter.findByIdAndDelete(id);
-    if (!deleted) {
-      return NextResponse.json({ success: false, message: "Subscriber not found." }, { status: 404 });
-    }
-
-    return NextResponse.json({
-      success: true,
-      message: "Subscriber removed successfully.",
-    });
-  } catch (error) {
-    console.error("Admin Newsletter DELETE Error:", error);
-    return NextResponse.json({ success: false, message: "Internal server error." }, { status: 500 });
+    console.error("Admin Members API Error:", error);
+    return NextResponse.json(
+      {
+        success: false,
+        message: error.message || "Failed to fetch members list.",
+      },
+      { status: 500 }
+    );
   }
 }

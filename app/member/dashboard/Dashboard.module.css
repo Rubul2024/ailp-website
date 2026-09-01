@@ -1,429 +1,835 @@
-.dashboard{
-
-display:flex;
-
-flex-direction:column;
-
-gap:30px;
-
-}
-
-/* Hero */
-
-.hero{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-padding:45px;
-
-border-radius:28px;
-
-background:linear-gradient(
-135deg,
-#2563eb,
-#1d4ed8
-);
-
-color:white;
-
-box-shadow:0 20px 45px rgba(37,99,235,.25);
-
-}
-
-.hero h1{
-
-font-size:38px;
-
-margin-bottom:12px;
-
-}
-
-.hero span{
-
-margin-left:10px;
-
-color:#fde047;
-
-}
-
-.hero p{
-
-font-size:17px;
-
-opacity:.95;
-
-}
-
-.completeButton{
-
-display:flex;
-
-align-items:center;
-
-gap:10px;
-
-padding:16px 28px;
-
-border:none;
-
-border-radius:16px;
-
-background:white;
-
-color:#2563eb;
-
-font-size:16px;
-
-font-weight:700;
-
-cursor:pointer;
-
-transition:.3s;
-
-}
-
-.completeButton:hover{
-
-transform:translateY(-2px);
-
-}
-
-/* Cards */
-
-.statistics{
-
-display:grid;
-
-grid-template-columns:repeat(4,1fr);
-
-gap:24px;
-
-}
-
-.card{
-
-background:white;
-
-border-radius:24px;
-
-padding:26px;
-
-display:flex;
-
-align-items:center;
-
-gap:20px;
-
-box-shadow:0 10px 30px rgba(15,23,42,.08);
-
-}
-
-.card h3{
-
-margin-bottom:8px;
-
-font-size:17px;
-
-}
-
-.card p{
-
-font-size:16px;
-
-font-weight:600;
-
-color:#2563eb;
-
-}
-
-/* Icons */
-
-.iconBlue,
-.iconGreen,
-.iconOrange,
-.iconPurple{
-
-width:64px;
-
-height:64px;
-
-border-radius:18px;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-color:white;
-
-}
-
-.iconBlue{
-
-background:#2563eb;
-
-}
-
-.iconGreen{
-
-background:#10b981;
-
-}
-
-.iconOrange{
-
-background:#f97316;
-
-}
-
-.iconPurple{
-
-background:#7c3aed;
-
-}
-
-/* Grid */
-
-.grid{
-
-display:grid;
-
-grid-template-columns:2fr 1fr;
-
-gap:28px;
-
-}
-
-/* Membership Card */
-
-.membershipCard{
-
-background:white;
-
-padding:35px;
-
-border-radius:28px;
-
-box-shadow:0 10px 30px rgba(15,23,42,.08);
-
-}
-
-.membershipCard h2{
-
-margin-bottom:25px;
-
-}
-
-.cardPreview{
-
-border:2px dashed #dbeafe;
-
-border-radius:20px;
-
-padding:60px;
-
-text-align:center;
-
-background:#f8fbff;
-
-}
-
-.cardPreview svg{
-
-color:#2563eb;
-
-margin-bottom:20px;
-
-}
-
-.cardPreview h3{
-
-margin-bottom:12px;
-
-}
-
-.membershipCard button{
-
-margin-top:30px;
-
-width:100%;
-
-height:55px;
-
-border:none;
-
-border-radius:16px;
-
-background:#2563eb;
-
-color:white;
-
-font-size:16px;
-
-font-weight:600;
-
-cursor:pointer;
-
-}
-
-/* Actions */
-
-.actions{
-
-background:white;
-
-padding:35px;
-
-border-radius:28px;
-
-box-shadow:0 10px 30px rgba(15,23,42,.08);
-
-display:flex;
-
-flex-direction:column;
-
-}
-
-.actions h2{
-
-margin-bottom:25px;
-
-}
-
-.actions button{
-
-height:54px;
-
-margin-bottom:16px;
-
-border:none;
-
-border-radius:16px;
-
-background:#eff6ff;
-
-color:#2563eb;
-
-font-size:15px;
-
-font-weight:600;
-
-cursor:pointer;
-
-transition:.3s;
-
-}
-
-.actions button:hover{
-
-background:#2563eb;
-
-color:white;
-
-}
-
-/* Responsive */
-
-@media(max-width:1100px){
-
-.statistics{
-
-grid-template-columns:repeat(2,1fr);
-
-}
-
-.grid{
-
-grid-template-columns:1fr;
-
-}
-
-.hero{
-
-flex-direction:column;
-
-align-items:flex-start;
-
-gap:25px;
-
-}
-
-}
-
-@media(max-width:700px){
-
-.statistics{
-
-grid-template-columns:1fr;
-
-}
-
-.hero{
-
-padding:28px;
-
-}
-
-.hero h1{
-
-font-size:30px;
-
-}
-
-}
-
 /* ==========================================================
-   Dashboard Columns
+   AILP MEMBER DASHBOARD - EXECUTIVE STYLESHEET
+   Refined Standard Boldness & Official Card Architecture
 ========================================================== */
 
-.leftColumn,
-.rightColumn {
+.dashboardContainer {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 24px 20px 60px;
   display: flex;
   flex-direction: column;
+  gap: 28px;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
+  color: #0f172a;
+}
+
+/* ==========================================================
+   1. HERO IDENTITY BANNER
+========================================================== */
+.heroSection {
+  position: relative;
+  width: 100%;
+  border-radius: 20px;
+  padding: clamp(24px, 3.5vw, 36px);
+  background: linear-gradient(
+    135deg,
+    #0f172a 0%,
+    #1e3a8a 40%,
+    #1d4ed8 75%,
+    #c2410c 130%
+  );
+  color: #ffffff;
+  box-shadow: 0 15px 35px -10px rgba(15, 23, 42, 0.35);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.heroSection::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #ff9933 0%, #ffffff 50%, #138808 100%);
+}
+
+.heroContent {
+  flex: 1;
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  z-index: 2;
+}
+
+.badgeRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.officialPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.activePill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(52, 211, 153, 0.35);
+  color: #a7f3d0;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.pulseDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 6px #34d399;
+}
+
+/* Standard Bold Weight for Greeting */
+.heroGreeting {
+  font-size: clamp(24px, 3.2vw, 32px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.highlightName {
+  color: #fde047;
+  font-weight: 700;
+}
+
+.heroDescription {
+  font-size: clamp(13.5px, 1.5vw, 15px);
+  line-height: 1.55;
+  color: rgba(241, 245, 249, 0.88);
+  max-width: 560px;
+}
+
+.heroActionRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+.primaryHeroBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #0f172a;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transition: all 0.2s ease;
+}
+
+.primaryHeroBtn:hover {
+  transform: translateY(-2px);
+  background: #f8fafc;
+}
+
+.glassHeroBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  backdrop-filter: blur(10px);
+  transition: all 0.2s ease;
+}
+
+.glassHeroBtn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.heroEmblemCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  z-index: 2;
+  flex-shrink: 0;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 20px 24px;
+  border-radius: 18px;
+}
+
+.avatarWrapper {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  border: 2.5px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(30, 41, 59, 0.8);
+  overflow: hidden;
+}
+
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatarInitials {
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.emblemDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.emblemName {
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.emblemId {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11.5px;
+  font-family: monospace;
+  padding: 2px 7px;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.35);
+  color: #93c5fd;
+}
+
+.emblemLocation {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #cbd5e1;
+}
+
+/* ==========================================================
+   2. STATS & METRICS GRID
+========================================================== */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 18px;
+  width: 100%;
+}
+
+.statCard {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  box-shadow: 0 2px 12px rgba(15, 23, 42, 0.04);
+}
+
+.iconWrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.blueTheme {
+  background: rgba(37, 99, 235, 0.08);
+  color: #2563eb;
+}
+
+.emeraldTheme {
+  background: rgba(16, 185, 129, 0.08);
+  color: #10b981;
+}
+
+.saffronTheme {
+  background: rgba(249, 115, 22, 0.08);
+  color: #ea580c;
+}
+
+.purpleTheme {
+  background: rgba(139, 92, 246, 0.08);
+  color: #8b5cf6;
+}
+
+.statBody {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 100%;
+}
+
+.statTitle {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.statMainValue {
+  font-size: 17px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.monoVal {
+  font-family: monospace;
+  font-size: 15px;
+  color: #1d4ed8;
+}
+
+.meterContainer {
+  width: 100%;
+  height: 5px;
+  background: #f1f5f9;
+  border-radius: 999px;
+  margin: 4px 0 2px;
+  overflow: hidden;
+}
+
+.meterFill {
+  height: 100%;
+  background: linear-gradient(90deg, #2563eb, #38bdf8);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.statHint {
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.statHintText {
+  font-size: 11px;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.fundLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #8b5cf6;
+  text-decoration: none;
+}
+
+/* ==========================================================
+   3. WORKSPACE 2-COLUMN GRID
+========================================================== */
+.workspaceGrid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
   gap: 24px;
+  width: 100%;
+}
+
+.panelCard {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 2px 14px rgba(15, 23, 42, 0.04);
+}
+
+.panelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.panelTitle {
+  font-size: 16.5px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.panelSubtitle {
+  font-size: 13px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.actionPillBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: rgba(37, 99, 235, 0.08);
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
 }
 
 /* ==========================================================
-   Card Animation
+   EXACT AILP PHYSICAL IDENTITY CARD REPLICA
 ========================================================== */
-
-.panel,
-.progressCard,
-.statCard,
-.actionButton {
-  animation: fadeUp 0.5s ease;
+.officialCardWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
 }
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
+.officialCard {
+  width: 100%;
+  max-width: 560px;
+  min-height: 270px;
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
 
-    transform: translateY(20px);
-  }
+/* Left Green Strip */
+.cardLeftStrip {
+  width: 48px;
+  background: #68a436;
+  background: linear-gradient(180deg, #78be35 0%, #4b8b1e 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 4px;
+  color: #ffffff;
+  flex-shrink: 0;
+}
 
+.assemblyText {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.signatureBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.sigLine {
+  width: 32px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.signatureBox span {
+  font-size: 8px;
+  font-weight: 600;
+}
+
+/* Card Center Details */
+.cardCenterBody {
+  flex: 1;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #fdfdfd;
+}
+
+.cardPhotoRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.officialPhotoFrame {
+  position: relative;
+  width: 90px;
+  height: 105px;
+  border: 2px solid #f97316;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #e2e8f0;
+}
+
+.officialPhotoFrame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.officialPhotoPlaceholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  color: #475569;
+}
+
+.partySealStamp {
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1.5px dashed #1e40af;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.8);
+  color: #1e40af;
+  transform: rotate(-15deg);
+}
+
+.partySealStamp span {
+  font-size: 8px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.partySealStamp small {
+  font-size: 6px;
+}
+
+.qrCodeFrame {
+  width: 78px;
+  height: 78px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 3px;
+  background: #ffffff;
+}
+
+.qrCodeFrame img {
+  width: 100%;
+  height: 100%;
+}
+
+.officialFieldsTable {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.fieldRow {
+  display: flex;
+  align-items: center;
+  font-size: 11.5px;
+  border-bottom: 1px dotted #e2e8f0;
+  padding-bottom: 3px;
+}
+
+.fieldLabel {
+  width: 68px;
+  font-weight: 700;
+  color: #1e3a8a;
+  font-size: 11px;
+}
+
+.fieldValue {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* Right Saffron Strip Banner */
+.cardRightStrip {
+  width: 120px;
+  background: #f1592a;
+  background: linear-gradient(180deg, #f95f26 0%, #e04412 100%);
+  color: #ffffff;
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.verticalPartyName {
+  font-size: 13.5px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  margin: 0;
+  color: #ffffff;
+}
+
+.rightSubDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 7.5px;
+  line-height: 1.25;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.identityCardBadge {
+  background: #ffffff;
+  color: #e04412;
+  font-size: 8px;
+  font-weight: 800;
+  padding: 2px 4px;
+  border-radius: 3px;
+  margin: 3px 0;
+  letter-spacing: 0.04em;
+}
+
+.memberRoleBadge {
+  font-size: 7.5px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* ==========================================================
+   CHECKLIST & HELPLINE
+========================================================== */
+.stepperList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.stepItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.stepComplete .stepIcon {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.stepActive .stepIcon {
+  background: rgba(37, 99, 235, 0.1);
+  color: #2563eb;
+}
+
+.stepPending .stepIcon {
+  background: rgba(100, 116, 139, 0.1);
+  color: #64748b;
+}
+
+.stepIcon {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stepDetails {
+  flex: 1;
+}
+
+.stepDetails h4 {
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+}
+
+.stepDetails p {
+  font-size: 11px;
+  color: #64748b;
+  margin: 1px 0 0;
+}
+
+.stepBtn {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #2563eb;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(37, 99, 235, 0.08);
+  text-decoration: none;
+}
+
+.secretariatCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(37, 99, 235, 0.04);
+  border: 1px solid rgba(37, 99, 235, 0.12);
+}
+
+.supportIcon {
+  color: #2563eb;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.supportText h5 {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin: 0 0 2px;
+}
+
+.supportText p {
+  font-size: 11.5px;
+  color: #475569;
+  margin: 0 0 2px;
+}
+
+.emailSupport {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #2563eb;
+  text-decoration: none;
+}
+
+/* ==========================================================
+   LOADING SKELETON
+========================================================== */
+.loadingWrapper {
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.spinner {
+  width: 38px;
+  height: 38px;
+  border: 3px solid rgba(37, 99, 235, 0.15);
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.loadingText {
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+@keyframes spin {
   to {
-    opacity: 1;
-
-    transform: translateY(0);
+    transform: rotate(360deg);
   }
 }
 
 /* ==========================================================
-   Mobile Improvements
+   RESPONSIVE BREAKPOINTS
 ========================================================== */
-
-@media (max-width: 768px) {
-  .dashboardGrid {
+@media (max-width: 1024px) {
+  .heroSection {
+    flex-direction: column;
+    align-items: flex-start;
     gap: 20px;
   }
 
-  .leftColumn,
-  .rightColumn {
-    gap: 20px;
+  .heroEmblemCard {
+    align-self: stretch;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 14px 18px;
+  }
+
+  .workspaceGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .dashboardContainer {
+    padding: 16px 12px 40px;
+  }
+
+  .officialCard {
+    flex-direction: column;
+  }
+
+  .cardLeftStrip {
+    width: 100%;
+    height: 32px;
+    flex-direction: row;
+    padding: 4px 12px;
+  }
+
+  .assemblyText {
+    writing-mode: horizontal-tb;
+    transform: none;
+  }
+
+  .cardRightStrip {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
   }
 }

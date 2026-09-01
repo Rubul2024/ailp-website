@@ -65,7 +65,7 @@ export default function Hero() {
 ========================================== */}
           <div className={styles.stats}>
             <div className={styles.statCard}>
-              <h3>10K+</h3>
+              <h3>50L+</h3>
               <p>Members</p>
             </div>
 
@@ -75,7 +75,7 @@ export default function Hero() {
             </div>
 
             <div className={styles.statCard}>
-              <h3>50+</h3>
+              <h3>150+</h3>
               <p>Districts</p>
             </div>
           </div>
@@ -108,7 +108,7 @@ export default function Hero() {
             <span className={styles.cardIcon}>⭐</span>
 
             <div>
-              <h4>10K+ Members</h4>
+              <h4>50L+ Members</h4>
 
               <p>Growing across India</p>
             </div>

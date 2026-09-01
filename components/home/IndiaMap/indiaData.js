@@ -14,17 +14,17 @@ const stats = [
   },
 
   {
-    number: "750+",
+    number: "150+",
     title: "District Units",
   },
 
   {
-    number: "25K+",
+    number: "50L+",
     title: "Members",
   },
 
   {
-    number: "8K+",
+    number: "10K+",
     title: "Volunteers",
   },
 

@@ -30,6 +30,7 @@ export default function AdminMembersPage() {
   const [members, setMembers] = useState([]);
   const [availableStates, setAvailableStates] = useState([]);
   const [pagination, setPagination] = useState({ page: 1, limit: 10, total: 0, totalPages: 1 });
+  const [stats, setStats] = useState({ totalRegistered: 0, activeMembers: 0, inactiveMembers: 0, totalStates: 1 });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [, startTransition] = useTransition();
@@ -44,9 +45,22 @@ export default function AdminMembersPage() {
   const [actionLoading, setActionLoading] = useState(false);
   const [exporting, setExporting] = useState(false);
 
-  const totalCount = pagination.total || members.length;
-  const activeCount = members.filter((m) => (m.status || "active").toLowerCase() === "active").length;
-  const inactiveCount = members.filter((m) => (m.status || "").toLowerCase() === "inactive" || (m.status || "").toLowerCase() === "suspended").length;
+  // Helper to extract photo URL safely from string or object
+  const getPhotoUrl = (photo) => {
+    if (!photo) return null;
+    if (typeof photo === "string") return photo;
+    if (typeof photo === "object" && photo.url) return photo.url;
+    return null;
+  };
+
+  // Helper to determine active/inactive status across different schema patterns
+  const isMemberActive = (m) => {
+    if (typeof m.isActive === "boolean") return m.isActive;
+    if (m.status) return m.status.toLowerCase() === "active";
+    return true;
+  };
+
+  const getMemberId = (m) => m.membershipId || m.memberId || "PENDING";
 
   const fetchMembers = useCallback(async (page = 1) => {
     setLoading(true);
@@ -71,9 +85,28 @@ export default function AdminMembersPage() {
         throw new Error(data.message || "Failed to load members.");
       }
 
-      setMembers(data.members || []);
-      setPagination(data.pagination || { page: 1, limit: 10, total: 0, totalPages: 1 });
-      if (data.availableStates) setAvailableStates(data.availableStates);
+      const memberList = data.members || data.data || [];
+      setMembers(memberList);
+
+      setPagination(
+        data.pagination || {
+          page,
+          limit: 10,
+          total: memberList.length,
+          totalPages: 1,
+        }
+      );
+
+      if (data.stats) {
+        setStats(data.stats);
+      }
+
+      if (data.availableStates && Array.isArray(data.availableStates)) {
+        setAvailableStates(data.availableStates);
+      } else {
+        const statesFromList = Array.from(new Set(memberList.map((m) => m.state).filter(Boolean)));
+        setAvailableStates(statesFromList);
+      }
     } catch (err) {
       setError(err.message);
     } finally {
@@ -90,10 +123,10 @@ export default function AdminMembersPage() {
     return () => clearTimeout(handler);
   }, [fetchMembers]);
 
-  // Robust Status Toggle using _id or memberId
-  const handleStatusToggle = async (member, newStatus) => {
-    if (!member || (!member._id && !member.memberId)) {
-      alert("Invalid member details.");
+  // Robust Status Toggle
+  const handleStatusToggle = async (member, newStatusIsActive) => {
+    if (!member || (!member._id && !member.membershipId && !member.memberId)) {
+      alert("Invalid member record.");
       return;
     }
     setActionLoading(true);
@@ -104,8 +137,9 @@ export default function AdminMembersPage() {
         credentials: "include",
         body: JSON.stringify({
           id: member._id,
-          memberId: member.memberId,
-          status: newStatus,
+          memberId: member.membershipId || member.memberId,
+          isActive: newStatusIsActive,
+          status: newStatusIsActive ? "Active" : "Inactive",
         }),
       });
       const data = await res.json();
@@ -113,17 +147,18 @@ export default function AdminMembersPage() {
         throw new Error(data.message || "Could not update status.");
       }
 
-      // Live state update across matching record
       setMembers((prev) =>
         prev.map((m) =>
-          (m._id === member._id || (member.memberId && m.memberId === member.memberId))
-            ? { ...m, status: newStatus }
-            : m
+          m._id === member._id ? { ...m, isActive: newStatusIsActive, status: newStatusIsActive ? "Active" : "Inactive" } : m
         )
       );
 
-      if (selectedMember && (selectedMember._id === member._id || selectedMember.memberId === member.memberId)) {
-        setSelectedMember((prev) => ({ ...prev, status: newStatus }));
+      if (selectedMember && selectedMember._id === member._id) {
+        setSelectedMember((prev) => ({
+          ...prev,
+          isActive: newStatusIsActive,
+          status: newStatusIsActive ? "Active" : "Inactive",
+        }));
       }
     } catch (err) {
       alert(err.message);
@@ -146,14 +181,15 @@ export default function AdminMembersPage() {
         credentials: "include",
       });
       const data = await res.json();
+      const exportList = data.members || data.data || [];
 
-      if (!data.success || !data.members?.length) {
+      if (!exportList.length) {
         alert("No records found to export.");
         return;
       }
 
       const headers = [
-        "Member ID",
+        "Membership ID",
         "Full Name",
         "Email",
         "Mobile",
@@ -167,19 +203,19 @@ export default function AdminMembersPage() {
         "Registration Date",
       ];
 
-      const rows = data.members.map((m) => [
-        `"${m.memberId || ""}"`,
+      const rows = exportList.map((m) => [
+        `"${getMemberId(m)}"`,
         `"${m.fullName || ""}"`,
         `"${m.email || ""}"`,
         `"${m.mobile || ""}"`,
         `"${m.gender || ""}"`,
-        `"${m.dateOfBirth || ""}"`,
+        `"${m.dateOfBirth ? new Date(m.dateOfBirth).toLocaleDateString("en-IN") : ""}"`,
         `"${m.district || ""}"`,
         `"${m.state || ""}"`,
         `"${m.pincode || ""}"`,
         `"${m.occupation || ""}"`,
-        `"${m.status || "Active"}"`,
-        `"${m.createdAt ? new Date(m.createdAt).toLocaleDateString("en-IN") : ""}"`,
+        `"${isMemberActive(m) ? "Active" : "Inactive"}"`,
+        `"${m.createdAt || m.joinDate ? new Date(m.createdAt || m.joinDate).toLocaleDateString("en-IN") : ""}"`,
       ]);
 
       const csvContent =
@@ -199,6 +235,10 @@ export default function AdminMembersPage() {
     }
   };
 
+  const totalRegisteredCount = stats.totalRegistered || pagination.total || members.length;
+  const totalActiveCount = stats.activeMembers || members.filter(isMemberActive).length;
+  const totalInactiveCount = stats.inactiveMembers || members.filter((m) => !isMemberActive(m)).length;
+
   return (
     <div className={styles.container}>
       {/* Top Stat Cards */}
@@ -206,7 +246,7 @@ export default function AdminMembersPage() {
         <div className={`${styles.statCard} ${styles.statBlue}`}>
           <div className={styles.statContent}>
             <span className={styles.statTitle}>Total Registered</span>
-            <span className={styles.statNumber}>{totalCount}</span>
+            <span className={styles.statNumber}>{totalRegisteredCount}</span>
             <span className={styles.statHint}>Verified Citizens</span>
           </div>
           <div className={styles.statIconBadge}>
@@ -217,7 +257,7 @@ export default function AdminMembersPage() {
         <div className={`${styles.statCard} ${styles.statGreen}`}>
           <div className={styles.statContent}>
             <span className={styles.statTitle}>Active Members</span>
-            <span className={styles.statNumber}>{activeCount}</span>
+            <span className={styles.statNumber}>{totalActiveCount}</span>
             <span className={styles.statHint}>Fully authorized</span>
           </div>
           <div className={styles.statIconBadge}>
@@ -228,7 +268,7 @@ export default function AdminMembersPage() {
         <div className={`${styles.statCard} ${styles.statOrange}`}>
           <div className={styles.statContent}>
             <span className={styles.statTitle}>Inactive / Pending</span>
-            <span className={styles.statNumber}>{inactiveCount}</span>
+            <span className={styles.statNumber}>{totalInactiveCount}</span>
             <span className={styles.statHint}>Suspended or review</span>
           </div>
           <div className={styles.statIconBadge}>
@@ -239,7 +279,7 @@ export default function AdminMembersPage() {
         <div className={`${styles.statCard} ${styles.statPurple}`}>
           <div className={styles.statContent}>
             <span className={styles.statTitle}>Regions & States</span>
-            <span className={styles.statNumber}>{availableStates.length || 1}</span>
+            <span className={styles.statNumber}>{stats.totalStates || availableStates.length || 1}</span>
             <span className={styles.statHint}>Pan-India Presence</span>
           </div>
           <div className={styles.statIconBadge}>
@@ -286,7 +326,7 @@ export default function AdminMembersPage() {
               <option value="ALL">All Statuses</option>
               <option value="Active">Active</option>
               <option value="Inactive">Inactive</option>
-              <option value="Suspended">Suspended</option>
+              <option value="REGISTERED">Registered</option>
             </select>
           </div>
 
@@ -346,16 +386,19 @@ export default function AdminMembersPage() {
                 </tr>
               ) : members.length > 0 ? (
                 members.map((m) => {
-                  const statusKey = (m.status || "active").toLowerCase();
+                  const active = isMemberActive(m);
+                  const photoUrl = getPhotoUrl(m.photo);
+                  const displayId = getMemberId(m);
+
                   return (
-                    <tr key={m._id || m.memberId}>
+                    <tr key={m._id || displayId}>
                       <td>
                         <div className={styles.memberInfo}>
                           <div className={styles.avatarWrap}>
-                            {m.photo ? (
+                            {photoUrl ? (
                               <img
-                                src={m.photo}
-                                alt={m.fullName}
+                                src={photoUrl}
+                                alt={m.fullName || "Member"}
                                 className={styles.avatarImg}
                                 onError={(e) => {
                                   e.currentTarget.style.display = "none";
@@ -367,7 +410,7 @@ export default function AdminMembersPage() {
                             ) : null}
                             <div
                               className={styles.avatarFallback}
-                              style={{ display: m.photo ? "none" : "flex" }}
+                              style={{ display: photoUrl ? "none" : "flex" }}
                             >
                               {m.fullName?.charAt(0)?.toUpperCase() || "M"}
                             </div>
@@ -381,7 +424,7 @@ export default function AdminMembersPage() {
 
                       <td>
                         <span className={styles.idBadge}>
-                          {m.memberId || "PENDING"}
+                          {displayId}
                         </span>
                       </td>
 
@@ -406,16 +449,16 @@ export default function AdminMembersPage() {
                       </td>
 
                       <td>
-                        <span className={`${styles.statusPill} ${styles[statusKey] || styles.active}`}>
+                        <span className={`${styles.statusPill} ${active ? styles.active : styles.inactive}`}>
                           <span className={styles.statusDot} />
-                          {m.status || "Active"}
+                          {active ? "Active" : "Inactive"}
                         </span>
                       </td>
 
                       <td>
                         <span className={styles.dateText}>
-                          {m.createdAt
-                            ? new Date(m.createdAt).toLocaleDateString("en-IN", {
+                          {m.createdAt || m.joinDate
+                            ? new Date(m.createdAt || m.joinDate).toLocaleDateString("en-IN", {
                                 day: "numeric",
                                 month: "short",
                                 year: "numeric",
@@ -435,11 +478,11 @@ export default function AdminMembersPage() {
                             <Eye size={15} />
                           </button>
 
-                          {(m.status || "Active") === "Active" ? (
+                          {active ? (
                             <button
                               type="button"
                               className={`${styles.actionBtn} ${styles.dangerHover}`}
-                              onClick={() => handleStatusToggle(m, "Inactive")}
+                              onClick={() => handleStatusToggle(m, false)}
                               disabled={actionLoading}
                               title="Deactivate Member"
                             >
@@ -449,7 +492,7 @@ export default function AdminMembersPage() {
                             <button
                               type="button"
                               className={`${styles.actionBtn} ${styles.successHover}`}
-                              onClick={() => handleStatusToggle(m, "Active")}
+                              onClick={() => handleStatusToggle(m, true)}
                               disabled={actionLoading}
                               title="Activate Member"
                             >
@@ -481,9 +524,9 @@ export default function AdminMembersPage() {
             </strong>{" "}
             to{" "}
             <strong>
-              {Math.min(pagination.page * pagination.limit, pagination.total)}
+              {Math.min(pagination.page * pagination.limit, pagination.total || members.length)}
             </strong>{" "}
-            of <strong>{pagination.total}</strong> members
+            of <strong>{pagination.total || members.length}</strong> members
           </span>
 
           <div className={styles.paginationActions}>
@@ -498,14 +541,14 @@ export default function AdminMembersPage() {
             </button>
 
             <span className={styles.pageStatus}>
-              Page <strong>{pagination.page}</strong> of <strong>{pagination.totalPages}</strong>
+              Page <strong>{pagination.page}</strong> of <strong>{pagination.totalPages || 1}</strong>
             </span>
 
             <button
               type="button"
               className={styles.pageButton}
               onClick={() => fetchMembers(pagination.page + 1)}
-              disabled={pagination.page >= pagination.totalPages || loading}
+              disabled={pagination.page >= (pagination.totalPages || 1) || loading}
             >
               <span>Next</span>
               <ChevronRight size={15} />
@@ -521,8 +564,8 @@ export default function AdminMembersPage() {
             <div className={styles.modalBanner}>
               <div className={styles.modalBannerContent}>
                 <div className={styles.avatarModal}>
-                  {selectedMember.photo ? (
-                    <img src={selectedMember.photo} alt={selectedMember.fullName} />
+                  {getPhotoUrl(selectedMember.photo) ? (
+                    <img src={getPhotoUrl(selectedMember.photo)} alt={selectedMember.fullName} />
                   ) : (
                     <div>{selectedMember.fullName?.charAt(0)?.toUpperCase() || "M"}</div>
                   )}
@@ -533,7 +576,7 @@ export default function AdminMembersPage() {
                     {selectedMember.occupation || "Party Member"}
                   </p>
                   <span className={styles.modalSubId}>
-                    <ShieldCheck size={14} /> ID: {selectedMember.memberId || "Pending"}
+                    <ShieldCheck size={14} /> ID: {getMemberId(selectedMember)}
                   </span>
                 </div>
               </div>
@@ -551,11 +594,11 @@ export default function AdminMembersPage() {
                 <span className={styles.statusLabel}>Current Status:</span>
                 <span
                   className={`${styles.statusPill} ${
-                    styles[(selectedMember.status || "active").toLowerCase()]
+                    isMemberActive(selectedMember) ? styles.active : styles.inactive
                   }`}
                 >
                   <span className={styles.statusDot} />
-                  {selectedMember.status || "Active"}
+                  {isMemberActive(selectedMember) ? "Active" : "Inactive"}
                 </span>
               </div>
 
@@ -586,7 +629,11 @@ export default function AdminMembersPage() {
                   </div>
                   <div>
                     <label>Date of Birth</label>
-                    <p>{selectedMember.dateOfBirth ? new Date(selectedMember.dateOfBirth).toLocaleDateString("en-IN") : "—"}</p>
+                    <p>
+                      {selectedMember.dateOfBirth
+                        ? new Date(selectedMember.dateOfBirth).toLocaleDateString("en-IN")
+                        : "—"}
+                    </p>
                   </div>
                 </div>
 
@@ -611,7 +658,7 @@ export default function AdminMembersPage() {
                     <p>
                       {[
                         selectedMember.address,
-                        selectedMember.villageCity,
+                        selectedMember.village || selectedMember.villageCity,
                         selectedMember.district,
                         selectedMember.state,
                         selectedMember.pincode,
@@ -625,9 +672,9 @@ export default function AdminMembersPage() {
             </div>
 
             <div className={styles.modalFooter}>
-              {selectedMember.cardPdf && (
+              {(selectedMember.cardUrl || selectedMember.cardPdf) && (
                 <a
-                  href={selectedMember.cardPdf}
+                  href={selectedMember.cardUrl || selectedMember.cardPdf}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.pdfBtn}
@@ -637,11 +684,11 @@ export default function AdminMembersPage() {
                 </a>
               )}
 
-              {(selectedMember.status || "Active") === "Active" ? (
+              {isMemberActive(selectedMember) ? (
                 <button
                   type="button"
                   className={styles.btnDanger}
-                  onClick={() => handleStatusToggle(selectedMember, "Inactive")}
+                  onClick={() => handleStatusToggle(selectedMember, false)}
                   disabled={actionLoading}
                 >
                   {actionLoading ? "Updating..." : "Deactivate Member"}
@@ -650,7 +697,7 @@ export default function AdminMembersPage() {
                 <button
                   type="button"
                   className={styles.btnSuccess}
-                  onClick={() => handleStatusToggle(selectedMember, "Active")}
+                  onClick={() => handleStatusToggle(selectedMember, true)}
                   disabled={actionLoading}
                 >
                   {actionLoading ? "Updating..." : "Activate Member"}
