@@ -103,6 +103,8 @@ export async function GET(request) {
 
         state: member.state,
 
+        assembly: member.assembly,
+
         photo: member.photo,
 
         qrCode: member.qrCode,

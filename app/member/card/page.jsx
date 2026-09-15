@@ -165,80 +165,95 @@ export default function MembershipCardPage() {
       ) : (
         <div className={styles.cardWorkspace}>
           <div className={styles.idCard}>
-            <div className={styles.cornerFlourish} />
+            {/* Curved tricolor bands — same path geometry as the downloaded PDF */}
+            <svg
+              className={styles.cardSvgBg}
+              viewBox="0 0 580 366"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M 580 0 L 452 0 Q 405 90 452 183 Q 495 268 452 366 L 580 366 Z"
+                fill="#D8432E"
+              />
+              <path
+                d="M 452 0 L 440 0 Q 393 90 440 183 Q 483 268 440 366 L 452 366 Q 495 268 452 183 Q 405 90 452 0 Z"
+                fill="#FF9933"
+              />
+              <path
+                d="M 0 366 L 0 258 Q 130 262 190 300 Q 230 326 200 366 Z"
+                fill="#1B8A3D"
+              />
+            </svg>
 
-            <div className={styles.cardHeader}>
-              <div className={styles.cardHeaderText}>
-                <strong>ALL INDIA LABOUR PARTY</strong>
-                <span>Official Membership Identity Card</span>
-              </div>
+            <span className={styles.statusPill}>{card?.membershipStatus || "REGISTERED"}</span>
+
+            <div className={styles.bandLabel}>
+              <strong>ALL INDIA LABOUR PARTY</strong>
+              <span>Regd. No. 56/119/2018-18/PPS-I</span>
             </div>
 
             <div className={styles.cardBody}>
-              <div className={styles.photoColumn}>
+              <span className={styles.identityBadge}>IDENTITY CARD</span>
+
+              <div className={styles.contentRow}>
                 <img src={photoUrl} alt={card?.fullName || "Member"} className={styles.memberPhoto} />
-                <span className={styles.statusPill}>{card?.membershipStatus || "REGISTERED"}</span>
-              </div>
 
-              <div className={styles.detailsColumn}>
-                <h2 className={styles.memberName}>{card?.fullName || "—"}</h2>
-                <p className={styles.membershipId}>{card?.membershipId || "Pending Allocation"}</p>
+                <div className={styles.fields}>
+                  <h2 className={styles.memberName}>{card?.fullName || "—"}</h2>
 
-                <div className={styles.detailsGrid}>
-                  <div>
-                    <label>Date of Birth</label>
-                    <strong>
+                  <div className={styles.fieldRow}>
+                    <label>DOB</label>
+                    <span>
                       {formatDate(card?.dateOfBirth)}
                       {age !== null ? ` (${age} yrs)` : ""}
-                    </strong>
+                    </span>
                   </div>
-                  <div>
+                  <div className={styles.fieldRow}>
                     <label>Gender</label>
-                    <strong>{card?.gender || "—"}</strong>
+                    <span>{card?.gender || "—"}</span>
                   </div>
-                  <div>
+                  <div className={styles.fieldRow}>
                     <label>Mobile</label>
-                    <strong>{card?.mobile || "—"}</strong>
+                    <span>{card?.mobile || "—"}</span>
                   </div>
-                  <div>
+                  <div className={styles.fieldRow}>
                     <label>Blood Group</label>
-                    <strong>{card?.bloodGroup || "—"}</strong>
+                    <span>{card?.bloodGroup || "—"}</span>
                   </div>
-                  <div>
+                  <div className={styles.fieldRow}>
                     <label>District</label>
-                    <strong>{card?.district || "—"}</strong>
+                    <span>
+                      {card?.district || "—"}, {card?.state || "—"}
+                    </span>
                   </div>
-                  <div>
-                    <label>State</label>
-                    <strong>{card?.state || "—"}</strong>
-                  </div>
-                </div>
-              </div>
+                  {card?.assembly && (
+                    <div className={styles.fieldRow}>
+                      <label>Assembly</label>
+                      <span>{card.assembly}</span>
+                    </div>
+                  )}
 
-              <div className={styles.qrColumn}>
-                {card?.qrCode ? (
-                  <img src={card.qrCode} alt="Verification QR" className={styles.qrImage} />
-                ) : (
-                  <div className={styles.qrPlaceholder}>
-                    <QrCode size={36} />
-                  </div>
-                )}
-                <span>SCAN TO VERIFY</span>
+                  <p className={styles.membershipId}>{card?.membershipId || "Pending Allocation"}</p>
+                </div>
               </div>
             </div>
 
-            <div className={styles.cardFooter}>
-              <p>
-                UTTAR KUMROKHALI, Narendrapur, South 24 Parganas, Kolkata 700103
-                <br />
-                allindialabourpartyailp@gmail.com · +91-7896043734
-                <br />
-                Issued: {formatDate(card?.cardGeneratedAt)}
-              </p>
-              <div className={styles.signatureBlock}>
-                <img src="/images/party-president-signature.png" alt="Signature" className={styles.signatureImg} />
-                <span>National President</span>
-              </div>
+            <div className={styles.signatureBlock}>
+              <span className={styles.signatureCaption}>National President</span>
+              <img src="/images/party-president-signature.png" alt="Signature" className={styles.signatureImg} />
+              <span className={styles.signatureCaption}>All India Labour Party</span>
+            </div>
+
+            <div className={styles.qrColumn}>
+              {card?.qrCode ? (
+                <img src={card.qrCode} alt="Verification QR" className={styles.qrImage} />
+              ) : (
+                <div className={styles.qrPlaceholder}>
+                  <QrCode size={30} />
+                </div>
+              )}
+              <span>SCAN TO VERIFY</span>
             </div>
           </div>
 

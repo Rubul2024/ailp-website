@@ -1,6 +1,10 @@
 /* ==========================================================
    Membership Card PDF
    All India Labour Party
+
+   Styled after the party's official printed tricolor identity
+   card: a curved saffron/white/green treatment with the party
+   name running vertically down the right-hand band.
 ========================================================== */
 
 import fs from "fs";
@@ -14,6 +18,8 @@ import {
   Text,
   View,
   Image,
+  Svg,
+  Path,
   StyleSheet,
 } from "@react-pdf/renderer";
 
@@ -34,9 +40,8 @@ function loadLocalImage(relativePath) {
   }
 }
 
-const LOGO_SRC = loadLocalImage("images/logo.png");
-const SIGNATURE_SRC = loadLocalImage("images/party-president-signature.png");
 const AVATAR_FALLBACK_SRC = loadLocalImage("images/avatar.png");
+const SIGNATURE_SRC = loadLocalImage("images/party-president-signature.png");
 
 /* ==========================================================
    Helpers
@@ -62,13 +67,17 @@ function formatDate(date) {
 }
 
 /* ==========================================================
-   Styles — AILP brand: navy / saffron / green
+   Card geometry & colors — matches the party's official
+   printed tricolor identity card
 ========================================================== */
 
-const NAVY = "#0F172A";
-const NAVY_DARK = "#060B16";
+const CARD_W = 580;
+const CARD_H = 366;
+
 const SAFFRON = "#FF9933";
-const GREEN = "#2E7D32";
+const RED = "#D8432E";
+const GREEN = "#1B8A3D";
+const NAVY_DARK = "#0f172a";
 
 const styles = StyleSheet.create({
   page: {
@@ -79,182 +88,189 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    width: 560,
-    height: 340,
-    borderRadius: 18,
+    width: CARD_W,
+    height: CARD_H,
+    borderRadius: 16,
     backgroundColor: "#ffffff",
     overflow: "hidden",
     position: "relative",
+    border: "1 solid #e2e8f0",
   },
 
-  /* Decorative diagonal corner flourish */
-  cornerFlourish: {
+  svgBg: {
     position: "absolute",
-    top: -70,
-    right: -70,
-    width: 140,
-    height: 140,
-    backgroundColor: SAFFRON,
-    transform: "rotate(45deg)",
+    top: 0,
+    left: 0,
   },
 
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: NAVY,
-    paddingVertical: 14,
-    paddingHorizontal: 20,
-  },
-
-  logo: {
-    width: 42,
-    height: 14,
-    marginRight: 12,
-    objectFit: "contain",
-  },
-
-  headerText: {
+  tricolorStripe: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    bottom: 0,
+    width: 14,
     flexDirection: "column",
   },
 
-  title: {
-    fontSize: 15,
-    fontWeight: 700,
-    color: "#ffffff",
-    letterSpacing: 0.5,
-  },
-
-  subtitle: {
-    fontSize: 8,
-    marginTop: 2,
-    color: "#FFD9A8",
-  },
-
-  body: {
-    flex: 1,
-    flexDirection: "row",
-    padding: 20,
-  },
-
-  left: {
-    width: 130,
-    marginRight: 18,
-    alignItems: "center",
-  },
-
-  photo: {
-    width: 110,
-    height: 130,
-    borderRadius: 8,
-    objectFit: "cover",
-    border: `2 solid ${SAFFRON}`,
-  },
-
-  statusBadge: {
-    marginTop: 10,
-    backgroundColor: GREEN,
-    paddingVertical: 4,
-    paddingHorizontal: 10,
-    borderRadius: 20,
-    fontSize: 7,
-    fontWeight: 700,
-    color: "#ffffff",
+  bandLabel: {
+    position: "absolute",
+    top: 122,
+    left: 395,
+    width: 260,
+    transform: "rotate(90deg)",
     textAlign: "center",
   },
 
-  right: {
-    flex: 1,
-    marginRight: 14,
-  },
-
-  memberName: {
+  bandTitle: {
     fontSize: 17,
     fontWeight: 700,
-    color: NAVY,
-    marginBottom: 2,
+    color: "#ffffff",
+    letterSpacing: 1.4,
   },
 
-  membershipId: {
-    fontSize: 10,
+  bandSubtitle: {
+    fontSize: 6.5,
+    color: "#ffe4dc",
+    marginTop: 3,
+  },
+
+  body: {
+    position: "absolute",
+    top: 16,
+    left: 32,
+    width: 420,
+  },
+
+  identityBadge: {
+    alignSelf: "flex-start",
+    backgroundColor: NAVY_DARK,
+    color: "#ffffff",
+    fontSize: 8,
     fontWeight: 700,
-    color: SAFFRON,
+    letterSpacing: 1,
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    borderRadius: 3,
     marginBottom: 10,
   },
 
-  grid: {
+  regdText: {
+    fontSize: 6.5,
+    color: "#64748b",
+    marginBottom: 10,
+  },
+
+  contentRow: {
     flexDirection: "row",
-    flexWrap: "wrap",
   },
 
-  gridItem: {
-    width: "50%",
-    marginBottom: 8,
+  photo: {
+    width: 96,
+    height: 118,
+    borderRadius: 4,
+    objectFit: "cover",
+    border: `2 solid ${SAFFRON}`,
+    marginRight: 16,
   },
 
-  label: {
-    fontSize: 7,
-    color: "#94a3b8",
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
+  fields: {
+    flex: 1,
   },
 
-  value: {
-    fontSize: 10,
+  memberName: {
+    fontSize: 15,
     fontWeight: 700,
     color: NAVY_DARK,
+    marginBottom: 6,
+  },
+
+  fieldRow: {
+    flexDirection: "row",
+    marginBottom: 5,
+  },
+
+  fieldLabel: {
+    width: 78,
+    fontSize: 7.5,
+    fontWeight: 700,
+    color: "#475569",
+  },
+
+  fieldValue: {
+    flex: 1,
+    fontSize: 8,
+    color: NAVY_DARK,
+  },
+
+  membershipIdText: {
+    marginTop: 8,
+    fontSize: 9,
+    fontWeight: 700,
+    color: RED,
+  },
+
+  bottomRow: {
+    position: "absolute",
+    bottom: 14,
+    left: 32,
+    right: 220,
+    flexDirection: "row",
+    alignItems: "flex-end",
+    justifyContent: "space-between",
+  },
+
+  secretaryText: {
+    fontSize: 7.5,
+    fontWeight: 700,
+    color: "#ffffff",
+  },
+
+  signatureCaption: {
+    fontSize: 6,
+    fontWeight: 700,
+    color: "#ffffff",
     marginTop: 2,
   },
 
-  qrColumn: {
-    width: 90,
+  signature: {
+    width: 60,
+    height: 20,
+    objectFit: "contain",
+  },
+
+  qrBlock: {
+    position: "absolute",
+    bottom: 16,
+    right: 34,
     alignItems: "center",
   },
 
   qr: {
-    width: 78,
-    height: 78,
-    border: "1 solid #e2e8f0",
-    padding: 3,
+    width: 62,
+    height: 62,
+    backgroundColor: "#ffffff",
+    padding: 2,
+    borderRadius: 3,
   },
 
   qrCaption: {
-    marginTop: 4,
-    fontSize: 6,
-    color: "#64748b",
+    marginTop: 3,
+    fontSize: 5.5,
+    color: "#ffffff",
     textAlign: "center",
   },
 
-  footer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    borderTop: "1 solid #e2e8f0",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-  },
-
-  footerText: {
-    width: 340,
-    fontSize: 6.5,
-    lineHeight: 1.5,
-    color: "#64748b",
-  },
-
-  signatureBlock: {
-    alignItems: "center",
-  },
-
-  signature: {
-    width: 70,
-    height: 24,
-    objectFit: "contain",
-  },
-
-  signatureCaption: {
-    marginTop: 2,
+  statusBadge: {
+    position: "absolute",
+    top: 16,
+    right: 30,
+    backgroundColor: GREEN,
+    paddingVertical: 3,
+    paddingHorizontal: 9,
+    borderRadius: 20,
     fontSize: 6,
-    color: "#64748b",
-    textAlign: "center",
+    fontWeight: 700,
+    color: "#ffffff",
   },
 });
 
@@ -270,89 +286,104 @@ export default function MembershipCardPDF({ member }) {
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.card}>
-          <View style={styles.cornerFlourish} />
+          {/* Curved tricolor background bands */}
+          <Svg
+            width={CARD_W}
+            height={CARD_H}
+            viewBox={`0 0 ${CARD_W} ${CARD_H}`}
+            style={styles.svgBg}
+          >
+            {/* Red band — right side, wavy left edge */}
+            <Path
+              d={`M ${CARD_W} 0 L 452 0 Q 405 90 452 183 Q 495 268 452 ${CARD_H} L ${CARD_W} ${CARD_H} Z`}
+              fill={RED}
+            />
+            {/* Saffron accent sliver between white and red */}
+            <Path
+              d={`M 452 0 L 440 0 Q 393 90 440 183 Q 483 268 440 ${CARD_H} L 452 ${CARD_H} Q 495 268 452 183 Q 405 90 452 0 Z`}
+              fill={SAFFRON}
+            />
+            {/* Green swoosh — bottom-left, behind QR/signature strip */}
+            <Path
+              d={`M 0 ${CARD_H} L 0 258 Q 130 262 190 300 Q 230 326 200 ${CARD_H} Z`}
+              fill={GREEN}
+            />
+          </Svg>
 
-          {/* Header */}
-          <View style={styles.header}>
-            {LOGO_SRC && <Image src={LOGO_SRC} style={styles.logo} />}
-            <View style={styles.headerText}>
-              <Text style={styles.title}>ALL INDIA LABOUR PARTY</Text>
-              <Text style={styles.subtitle}>Official Membership Identity Card</Text>
-            </View>
+          {/* Rotated party name inside the red band */}
+          <View style={styles.bandLabel}>
+            <Text style={styles.bandTitle}>ALL INDIA LABOUR PARTY</Text>
+            <Text style={styles.bandSubtitle}>Regd. No. 56/119/2018-18/PPS-I</Text>
           </View>
 
-          {/* Body */}
+          {/* Verified/status badge */}
+          <Text style={styles.statusBadge}>{member?.membershipStatus || "REGISTERED"}</Text>
+
+          {/* Main identity content */}
           <View style={styles.body}>
-            {/* Photo */}
-            <View style={styles.left}>
+            <Text style={styles.identityBadge}>IDENTITY CARD</Text>
+
+            <View style={styles.contentRow}>
               {photoSrc && <Image src={photoSrc} style={styles.photo} />}
-              <Text style={styles.statusBadge}>
-                {member?.membershipStatus || "REGISTERED"}
-              </Text>
-            </View>
 
-            {/* Details */}
-            <View style={styles.right}>
-              <Text style={styles.memberName}>{member?.fullName || "—"}</Text>
-              <Text style={styles.membershipId}>
-                {member?.membershipId || "Pending Allocation"}
-              </Text>
+              <View style={styles.fields}>
+                <Text style={styles.memberName}>{member?.fullName || "—"}</Text>
 
-              <View style={styles.grid}>
-                <View style={styles.gridItem}>
-                  <Text style={styles.label}>Date of Birth</Text>
-                  <Text style={styles.value}>
+                <View style={styles.fieldRow}>
+                  <Text style={styles.fieldLabel}>DOB</Text>
+                  <Text style={styles.fieldValue}>
                     {formatDate(member?.dateOfBirth)}
                     {age !== null ? ` (${age} yrs)` : ""}
                   </Text>
                 </View>
 
-                <View style={styles.gridItem}>
-                  <Text style={styles.label}>Gender</Text>
-                  <Text style={styles.value}>{member?.gender || "—"}</Text>
+                <View style={styles.fieldRow}>
+                  <Text style={styles.fieldLabel}>Gender</Text>
+                  <Text style={styles.fieldValue}>{member?.gender || "—"}</Text>
                 </View>
 
-                <View style={styles.gridItem}>
-                  <Text style={styles.label}>Mobile</Text>
-                  <Text style={styles.value}>{member?.mobile || "—"}</Text>
+                <View style={styles.fieldRow}>
+                  <Text style={styles.fieldLabel}>Mobile</Text>
+                  <Text style={styles.fieldValue}>{member?.mobile || "—"}</Text>
                 </View>
 
-                <View style={styles.gridItem}>
-                  <Text style={styles.label}>Blood Group</Text>
-                  <Text style={styles.value}>{member?.bloodGroup || "—"}</Text>
+                <View style={styles.fieldRow}>
+                  <Text style={styles.fieldLabel}>Blood Group</Text>
+                  <Text style={styles.fieldValue}>{member?.bloodGroup || "—"}</Text>
                 </View>
 
-                <View style={styles.gridItem}>
-                  <Text style={styles.label}>District</Text>
-                  <Text style={styles.value}>{member?.district || "—"}</Text>
+                <View style={styles.fieldRow}>
+                  <Text style={styles.fieldLabel}>District</Text>
+                  <Text style={styles.fieldValue}>
+                    {member?.district || "—"}, {member?.state || "—"}
+                  </Text>
                 </View>
 
-                <View style={styles.gridItem}>
-                  <Text style={styles.label}>State</Text>
-                  <Text style={styles.value}>{member?.state || "—"}</Text>
-                </View>
+                {member?.assembly && (
+                  <View style={styles.fieldRow}>
+                    <Text style={styles.fieldLabel}>Assembly</Text>
+                    <Text style={styles.fieldValue}>{member.assembly}</Text>
+                  </View>
+                )}
+
+                <Text style={styles.membershipIdText}>{member?.membershipId || "Pending Allocation"}</Text>
               </View>
-            </View>
-
-            {/* QR */}
-            <View style={styles.qrColumn}>
-              {member?.qrCode && <Image src={member.qrCode} style={styles.qr} />}
-              <Text style={styles.qrCaption}>SCAN TO VERIFY</Text>
             </View>
           </View>
 
-          {/* Footer */}
-          <View style={styles.footer}>
-            <Text style={styles.footerText}>
-              UTTAR KUMROKHALI, Narendrapur, South 24 Parganas, Kolkata 700103{"\n"}
-              allindialabourpartyailp@gmail.com · +91-7896043734{"\n"}
-              Issued: {formatDate(member?.cardGeneratedAt)}
-            </Text>
-
-            <View style={styles.signatureBlock}>
+          {/* Signature */}
+          <View style={styles.bottomRow}>
+            <View>
+              <Text style={styles.secretaryText}>National President</Text>
               {SIGNATURE_SRC && <Image src={SIGNATURE_SRC} style={styles.signature} />}
-              <Text style={styles.signatureCaption}>National President{"\n"}All India Labour Party</Text>
+              <Text style={styles.signatureCaption}>All India Labour Party</Text>
             </View>
+          </View>
+
+          {/* QR code sitting on the green swoosh */}
+          <View style={styles.qrBlock}>
+            {member?.qrCode && <Image src={member.qrCode} style={styles.qr} />}
+            <Text style={styles.qrCaption}>SCAN TO VERIFY</Text>
           </View>
         </View>
       </Page>
