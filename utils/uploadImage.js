@@ -80,7 +80,9 @@ export default async function uploadImage({
 
       success: false,
 
-      message: "Unable to upload image.",
+      message: error.message
+        ? `Unable to upload image: ${error.message}`
+        : "Unable to upload image.",
 
       error: error.message,
 

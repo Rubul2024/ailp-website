@@ -18,6 +18,7 @@ import {
   Check,
   Clock,
   XCircle,
+  Landmark,
 } from "lucide-react";
 import styles from "./Donation.module.css";
 
@@ -406,6 +407,64 @@ export default function MemberDonationPage() {
               </button>
             </div>
           </div>
+
+          {/* Bank Transfer Details */}
+          {(settings?.bankName || settings?.accountNumber) && (
+            <div className={styles.infoCard}>
+              <div className={styles.infoCardHeader}>
+                <Landmark size={18} className={styles.blueIcon} />
+                <h3>Bank Transfer Details</h3>
+              </div>
+
+              <div className={styles.recordStatsList}>
+                {settings?.bankName && (
+                  <div className={styles.recordStatItem}>
+                    <span className={styles.recordLabel}>Bank Name</span>
+                    <span className={styles.monoToken}>{settings.bankName}</span>
+                  </div>
+                )}
+                {settings?.accountHolder && (
+                  <div className={styles.recordStatItem}>
+                    <span className={styles.recordLabel}>Account Holder</span>
+                    <span className={styles.monoToken}>{settings.accountHolder}</span>
+                  </div>
+                )}
+                {settings?.accountNumber && (
+                  <div className={styles.recordStatItem}>
+                    <span className={styles.recordLabel}>Account Number</span>
+                    <span className={styles.upiCopyRow} style={{ border: "none", background: "transparent", padding: 0 }}>
+                      <span className={styles.monoToken}>{settings.accountNumber}</span>
+                      <button
+                        type="button"
+                        className={styles.copyIconBtn}
+                        onClick={() => handleCopy(settings.accountNumber)}
+                      >
+                        {copied ? <Check size={14} /> : <Copy size={14} />}
+                      </button>
+                    </span>
+                  </div>
+                )}
+                {settings?.ifscCode && (
+                  <div className={styles.recordStatItem}>
+                    <span className={styles.recordLabel}>IFSC Code</span>
+                    <span className={styles.monoToken}>{settings.ifscCode}</span>
+                  </div>
+                )}
+                {settings?.branch && (
+                  <div className={styles.recordStatItem}>
+                    <span className={styles.recordLabel}>Branch</span>
+                    <span className={styles.monoToken}>{settings.branch}</span>
+                  </div>
+                )}
+              </div>
+
+              {settings?.donationMessage && (
+                <p className={styles.addressLine} style={{ marginTop: 14 }}>
+                  {settings.donationMessage}
+                </p>
+              )}
+            </div>
+          )}
 
           {/* Donation History */}
           <div className={styles.infoCard}>
