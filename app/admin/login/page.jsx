@@ -2,184 +2,130 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Mail, ShieldCheck, AlertCircle, Loader2, Info } from "lucide-react";
 
-import { Eye, EyeOff, ShieldCheck, CheckCircle } from "lucide-react";
+import AuthLayout from "@/components/auth/AuthLayout";
+import AuthInput from "@/components/auth/AuthInput";
+import AuthPasswordInput from "@/components/auth/AuthPasswordInput";
 
 import styles from "./AdminLogin.module.css";
 
 export default function AdminLoginPage() {
   const router = useRouter();
 
-  const [showPassword, setShowPassword] = useState(false);
-
   const [loading, setLoading] = useState(false);
-
   const [error, setError] = useState("");
-
   const [formData, setFormData] = useState({
     email: "",
-
     password: "",
   });
 
   function handleChange(event) {
-    const {
-      name,
-
-      value,
-    } = event.target;
-
+    const { name, value } = event.target;
     setFormData((previous) => ({
       ...previous,
-
       [name]: value,
     }));
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
+    if (loading) return;
 
     setLoading(true);
-
     setError("");
 
     try {
-      const response = await fetch(
-        "/api/admin/login",
-
-        {
-          method: "POST",
-
-          headers: {
-            "Content-Type": "application/json",
-          },
-
-          body: JSON.stringify(formData),
-        },
-      );
+      const response = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(formData),
+      });
 
       const data = await response.json();
 
       if (!data.success) {
-        setError(data.message);
-
+        setError(data.message || "Invalid email or password.");
         return;
       }
 
       router.push("/admin/dashboard");
+      router.refresh();
     } catch {
-      setError("Unable to login. Please try again.");
+      setError("Unable to sign in. Please try again.");
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <main className={styles.page}>
-      <div className={styles.container}>
-        {/* Left Panel */}
+    <AuthLayout
+      variant="admin"
+      imageSrc="/images/hero/hero.jpg"
+      imageCaption="Secure Administration Portal — All India Labour Party."
+    >
+      <span className={styles.badge}>
+        <ShieldCheck size={12} aria-hidden="true" />
+        Administrator Access
+      </span>
 
-        <div className={styles.left}>
-          <div className={styles.logo}>
-            <ShieldCheck size={46} />
-          </div>
+      <h1 className={styles.heading}>Admin sign in</h1>
+      <p className={styles.subheading}>
+        Enter your administrator credentials to continue. This area is restricted to authorized personnel.
+      </p>
 
-          <h1>All India Labour Party</h1>
-
-          <p>
-            Secure Administration Portal
-            <br />
-            Manage members, donations, contact enquiries and newsletters from
-            one professional dashboard.
-          </p>
-
-          <div className={styles.features}>
-            <div className={styles.feature}>
-              <CheckCircle size={20} />
-              Member Management
-            </div>
-
-            <div className={styles.feature}>
-              <CheckCircle size={20} />
-              Donation Information
-            </div>
-
-            <div className={styles.feature}>
-              <CheckCircle size={20} />
-              Contact Messages
-            </div>
-
-            <div className={styles.feature}>
-              <CheckCircle size={20} />
-              Newsletter Subscribers
-            </div>
-          </div>
+      {error && (
+        <div className={styles.errorMessage} role="alert" aria-live="assertive">
+          <AlertCircle size={18} aria-hidden="true" />
+          <span>{error}</span>
         </div>
+      )}
 
-        {/* Right Panel */}
+      <form onSubmit={handleSubmit} className={styles.formBody} noValidate>
+        <AuthInput
+          id="admin-email"
+          name="email"
+          label="Email Address"
+          icon={Mail}
+          type="email"
+          placeholder="admin@example.com"
+          value={formData.email}
+          onChange={handleChange}
+          autoComplete="username"
+          required
+        />
 
-        <div className={styles.right}>
-          <h2 className={styles.loginTitle}>Admin Login</h2>
+        <AuthPasswordInput
+          id="admin-password"
+          name="password"
+          label="Password"
+          placeholder="Enter your administrator password"
+          value={formData.password}
+          onChange={handleChange}
+          autoComplete="current-password"
+          required
+        />
 
-          <p className={styles.loginSub}>
-            Enter your administrator credentials
-          </p>
+        <button type="submit" disabled={loading} className={styles.submitLoginBtn}>
+          {loading ? (
+            <>
+              <Loader2 size={18} className={styles.spinner} aria-hidden="true" />
+              <span>Signing in...</span>
+            </>
+          ) : (
+            <span>Continue</span>
+          )}
+        </button>
+      </form>
 
-          <form className={styles.form} onSubmit={handleSubmit}>
-            <div className={styles.group}>
-              <label className={styles.label}>Email Address</label>
-
-              <input
-                className={styles.input}
-                type="email"
-                name="email"
-                placeholder="admin@example.com"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className={styles.group}>
-              <label className={styles.label}>Password</label>
-
-              <div className={styles.passwordBox}>
-                <input
-                  className={styles.passwordInput}
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  placeholder="Enter Password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                />
-
-                <button
-                  type="button"
-                  className={styles.eyeButton}
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                </button>
-              </div>
-            </div>
-
-            {error && <div className={styles.error}>{error}</div>}
-
-            <button
-              type="submit"
-              className={styles.loginButton}
-              disabled={loading}
-            >
-              {loading ? "Signing In..." : "Login"}
-            </button>
-          </form>
-
-          <div className={styles.footer}>
-            © 2026 <strong>AILP Admin Panel</strong>
-          </div>
-        </div>
+      <div className={styles.securityNotice}>
+        <Info size={14} aria-hidden="true" />
+        <span>
+          This is a restricted administrative system. Unauthorized access attempts are logged and may be
+          subject to action under applicable law.
+        </span>
       </div>
-    </main>
+    </AuthLayout>
   );
 }

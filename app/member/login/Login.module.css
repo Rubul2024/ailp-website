@@ -1,248 +1,21 @@
-﻿/* ==========================================================
-   AILP MEMBER LOGIN - EXECUTIVE PRODUCTION STYLESHEET
-========================================================== */
-
-.pageWrapper {
-  min-height: 100vh;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
-  background: radial-gradient(circle at top left, #f8fafc 0%, #e2e8f0 100%);
-  box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
-}
-
-.loginContainer {
-  width: 100%;
-  max-width: 1120px;
-  min-height: 620px;
-  background: #ffffff;
-  border-radius: 28px;
-  box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.16);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  display: grid;
-  grid-template-columns: 1.15fr 1fr;
-  overflow: hidden;
-  box-sizing: border-box;
-}
-
 /* ==========================================================
-   LEFT BRAND HERO PANEL
+   AILP Member Login — form panel
 ========================================================== */
-.leftBrandPanel {
-  background: linear-gradient(
-    135deg,
-    #0a1931 0%,
-    #0f2b5c 40%,
-    #060B16 80%,
-    #E65100 135%
-  );
-  padding: clamp(32px, 4vw, 48px);
-  color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 28px;
-  position: relative;
-  overflow: hidden;
-}
 
-.leftBrandPanel::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #ff9933 0%, #ffffff 50%, #2E7D32 100%);
-}
-
-.brandHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.officialLogoLink {
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  transition: transform 0.2s ease;
-}
-
-.officialLogoLink:hover {
-  transform: translateY(-1px);
-}
-
-/* Clean transparent logo frame */
-.officialLogoWrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.officialLogoImg {
-  height: 48px;
-  width: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.35));
-}
-
-.portalPill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  color: #ffffff;
-  font-size: 11.5px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  backdrop-filter: blur(10px);
-}
-
-.pulseDot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #FF9933;
-  box-shadow: 0 0 8px #FF9933;
-}
-
-.heroTextGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.welcomeTitle {
-  font-size: clamp(28px, 3.5vw, 42px);
-  font-weight: 800;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-}
-
-.saffronHighlight {
-  color: #FF9933;
-}
-
-.welcomeDesc {
-  font-size: clamp(13.5px, 1.4vw, 15px);
-  line-height: 1.6;
-  color: rgba(241, 245, 249, 0.88);
-  max-width: 480px;
-}
-
-/* Feature Highlights Grid */
-.featureGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-.featureCard {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 14px;
-  padding: 12px 14px;
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  backdrop-filter: blur(8px);
-}
-
-.featureIcon {
-  color: #FF9933;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.featureContent h4 {
-  font-size: 12.5px;
-  font-weight: 700;
-  color: #ffffff;
-  margin: 0;
-}
-
-.featureContent p {
-  font-size: 11px;
-  color: rgba(241, 245, 249, 0.75);
-  margin: 2px 0 0;
-  line-height: 1.35;
-}
-
-.partyMottoFooter {
-  padding-top: 14px;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-.mottoLink {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #FF9933;
-  text-decoration: none;
-}
-
-.mottoLink:hover {
-  text-decoration: underline;
-}
-
-/* ==========================================================
-   RIGHT FORM PANEL
-========================================================== */
-.rightFormPanel {
-  padding: clamp(32px, 4.5vw, 48px);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background: #ffffff;
-}
-
-.formHeader {
-  margin-bottom: 24px;
-}
-
-.formCategoryBadge {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 800;
-  color: #0F172A;
-  background: rgba(15, 23, 42, 0.08);
-  border: 1px solid rgba(15, 23, 42, 0.2);
-  padding: 3px 10px;
-  border-radius: 999px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 10px;
-}
-
-.formTitle {
-  font-size: clamp(22px, 2.5vw, 28px);
+.heading {
+  font-family: var(--font-heading, inherit);
+  font-size: 28px;
   font-weight: 800;
   color: #0f172a;
-  line-height: 1.25;
   letter-spacing: -0.01em;
+  margin-bottom: 6px;
 }
 
-.blueHighlight {
-  color: #0F172A;
-}
-
-.formSubtitle {
-  font-size: 13.5px;
+.subheading {
+  font-size: 14px;
   color: #64748b;
-  margin-top: 6px;
   line-height: 1.5;
+  margin-bottom: 28px;
 }
 
 /* Error Notice */
@@ -267,82 +40,18 @@
   gap: 18px;
 }
 
-.inputGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.inputLabel {
+.forgotLink {
   font-size: 13px;
   font-weight: 600;
-  color: #334155;
-}
-
-.inputWrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  background: #f8fafc;
-  border: 1.5px solid #dbe4ee;
-  border-radius: 14px;
-  transition: all 0.2s ease;
-}
-
-.inputWrapper:focus-within {
-  background: #ffffff;
-  border-color: #0F172A;
-  box-shadow: 0 0 0 3.5px rgba(15, 23, 42, 0.12);
-}
-
-.fieldIcon {
-  margin-left: 16px;
-  color: #64748b;
-  flex-shrink: 0;
-}
-
-.fieldInput {
-  flex: 1;
-  width: 100%;
-  height: 50px;
-  padding: 0 16px 0 12px;
-  border: none;
-  background: transparent;
-  font-size: 14.5px;
   color: #0f172a;
-  outline: none;
-  box-sizing: border-box;
+  text-decoration: none;
 }
 
-.fieldInput::placeholder {
-  color: #94a3b8;
+.forgotLink:hover {
+  text-decoration: underline;
 }
 
-.eyeToggleBtn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 8px 16px;
-  color: #64748b;
-  display: flex;
-  align-items: center;
-  transition: color 0.2s ease;
-}
-
-.eyeToggleBtn:hover {
-  color: #0F172A;
-}
-
-/* Options */
-.optionsRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  font-size: 13.5px;
-  flex-wrap: wrap;
-}
-
+/* Remember Me */
 .checkboxLabel {
   display: inline-flex;
   align-items: center;
@@ -350,29 +59,18 @@
   color: #475569;
   cursor: pointer;
   font-weight: 500;
+  font-size: 13.5px;
   user-select: none;
 }
 
 .checkboxInput {
   width: 16px;
   height: 16px;
-  accent-color: #0F172A;
+  accent-color: #0f172a;
   cursor: pointer;
 }
 
-.forgotLink {
-  color: #0F172A;
-  font-weight: 600;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.forgotLink:hover {
-  color: #060B16;
-  text-decoration: underline;
-}
-
-/* Submit Login CTA */
+/* Submit CTA */
 .submitLoginBtn {
   display: flex;
   align-items: center;
@@ -381,7 +79,7 @@
   width: 100%;
   height: 52px;
   border-radius: 14px;
-  background: linear-gradient(135deg, #060B16, #0F172A);
+  background: linear-gradient(135deg, #060b16, #0f172a);
   color: #ffffff;
   font-size: 15px;
   font-weight: 700;
@@ -398,8 +96,19 @@
 }
 
 .submitLoginBtn:disabled {
-  opacity: 0.7;
+  opacity: 0.75;
   cursor: not-allowed;
+  transform: none;
+}
+
+.spinner {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Registration Redirect */
@@ -408,13 +117,13 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  margin-top: 24px;
+  margin-top: 22px;
   font-size: 14px;
   color: #64748b;
 }
 
 .registerLink {
-  color: #0F172A;
+  color: #0f172a;
   font-weight: 700;
   text-decoration: none;
 }
@@ -430,43 +139,6 @@
   gap: 6px;
   font-size: 12px;
   color: #94a3b8;
-  margin-top: 18px;
+  margin-top: 16px;
   text-align: center;
-}
-
-/* ==========================================================
-   RESPONSIVE BREAKPOINTS
-========================================================== */
-@media (max-width: 960px) {
-  .loginContainer {
-    grid-template-columns: 1fr;
-    max-width: 540px;
-  }
-
-  .leftBrandPanel {
-    padding: 32px 24px;
-  }
-
-  .featureGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .rightFormPanel {
-    padding: 32px 24px;
-  }
-}
-
-@media (max-width: 480px) {
-  .pageWrapper {
-    padding: 16px 12px;
-  }
-
-  .loginContainer {
-    border-radius: 20px;
-  }
-
-  .brandHeader {
-    flex-direction: column;
-    align-items: flex-start;
-  }
 }

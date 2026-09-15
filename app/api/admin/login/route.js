@@ -133,7 +133,7 @@ export async function POST(request) {
   return NextResponse.json(
     {
       success: false,
-      message: error.message,
+      message: "Unable to sign in. Please try again.",
     },
     {
       status: 500,
