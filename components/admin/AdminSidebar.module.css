@@ -1,5 +1,5 @@
-﻿/* ==========================================================
-   Admin Sidebar
+/* ==========================================================
+   Admin Sidebar — light, PBW-style structure
 ========================================================== */
 
 .sidebar {
@@ -13,11 +13,13 @@
   display: flex;
   flex-direction: column;
 
-  background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+  background: #ffffff;
 
-  color: #ffffff;
+  color: #0f172a;
 
-  box-shadow: 8px 0 30px rgba(0,0,0,.18);
+  border-right: 1px solid #e9edf3;
+
+  box-shadow: 4px 0 24px rgba(15, 23, 42, .04);
 
   z-index: 1000;
 }
@@ -26,19 +28,19 @@
 
 .logoArea {
 
-  padding: 30px 25px;
+  padding: 26px 25px;
 
-  border-bottom: 1px solid rgba(255,255,255,.08);
+  border-bottom: 1px solid #eef1f6;
 
 }
 
 .logo {
 
-  font-size: 32px;
+  font-size: 28px;
 
   font-weight: 800;
 
-  color: #ffffff;
+  color: #0f172a;
 
   letter-spacing: 1px;
 
@@ -52,11 +54,11 @@
 
 .subtitle {
 
-  margin-top: 8px;
+  margin-top: 6px;
 
   color: #94a3b8;
 
-  font-size: 14px;
+  font-size: 13px;
 
 }
 
@@ -66,7 +68,9 @@
 
   flex: 1;
 
-  padding: 20px 0;
+  padding: 16px 12px;
+
+  overflow-y: auto;
 
 }
 
@@ -76,35 +80,43 @@
 
   align-items: center;
 
-  gap: 16px;
+  gap: 14px;
 
-  padding: 16px 25px;
+  padding: 13px 16px;
 
-  color: #cbd5e1;
+  margin-bottom: 4px;
+
+  border-radius: 12px;
+
+  color: #475569;
 
   text-decoration: none;
 
-  transition: .3s;
-
-  border-left: 4px solid transparent;
+  transition: .2s;
 
 }
 
 .menuItem:hover {
 
-  background: rgba(255,255,255,.08);
+  background: #f8fafc;
 
-  color: #ffffff;
+  color: #0f172a;
 
 }
 
 .active {
 
-  background: rgba(255, 153, 51,.18);
+  background: rgba(255, 153, 51, .12);
 
-  color: #ffffff;
+  color: #C2540C;
 
-  border-left: 4px solid #FF9933;
+  font-weight: 700;
+
+}
+
+.active .menuIcon {
+
+  color: #FF9933;
 
 }
 
@@ -112,11 +124,13 @@
 
   flex-shrink: 0;
 
+  color: #94a3b8;
+
 }
 
 .menuText {
 
-  font-size: 15px;
+  font-size: 14.5px;
 
   font-weight: 500;
 
@@ -126,9 +140,9 @@
 
 .footer {
 
-  padding: 25px;
+  padding: 16px;
 
-  border-top: 1px solid rgba(255,255,255,.08);
+  border-top: 1px solid #eef1f6;
 
 }
 
@@ -136,19 +150,19 @@
 
   width: 100%;
 
-  height: 52px;
+  height: 48px;
 
-  border: none;
+  border: 1px solid #fecaca;
 
-  border-radius: 14px;
+  border-radius: 12px;
 
-  background: #dc2626;
+  background: #fef2f2;
 
-  color: #ffffff;
+  color: #dc2626;
 
-  font-size: 15px;
+  font-size: 14.5px;
 
-  font-weight: 600;
+  font-weight: 700;
 
   cursor: pointer;
 
@@ -160,13 +174,15 @@
 
   gap: 10px;
 
-  transition: .3s;
+  transition: .2s;
 
 }
 
 .logout:hover {
 
-  background: #b91c1c;
+  background: #fee2e2;
+
+  border-color: #fca5a5;
 
 }
 
