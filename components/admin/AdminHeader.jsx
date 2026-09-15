@@ -13,6 +13,7 @@ import {
   Settings,
   User,
   ShieldCheck,
+  Menu,
 } from "lucide-react";
 
 import styles from "./AdminHeader.module.css";
@@ -20,6 +21,7 @@ import styles from "./AdminHeader.module.css";
 export default function AdminHeader({
   title = "Admin Panel",
   subtitle = "All India Labour Party",
+  onMenuClick,
 }) {
   const router = useRouter();
 
@@ -165,6 +167,15 @@ export default function AdminHeader({
       ==================================================== */}
 
       <div className={styles.left}>
+        <button
+          type="button"
+          className={styles.menuButton}
+          onClick={onMenuClick}
+          aria-label="Toggle navigation menu"
+        >
+          <Menu size={22} />
+        </button>
+
         <div className={styles.titleWrapper}>
           <h1>{title}</h1>
 

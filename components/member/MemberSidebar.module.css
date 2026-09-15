@@ -1,4 +1,4 @@
-/* ==========================================================
+﻿/* ==========================================================
    Member Sidebar
    All India Labour Party
    Production Ready
@@ -20,7 +20,7 @@
         180deg,
         #0F172A 0%,
         #172554 45%,
-        #1D4ED8 100%
+        #060B16 100%
     );
     color:#ffffff;
     overflow:hidden;
@@ -79,7 +79,7 @@
     padding:12px;
 
     background:#ffffff;
-    color:#2563EB;
+    color:#0F172A;
 
     border-radius:18px;
 
@@ -175,7 +175,7 @@
 
     background:#ffffff;
 
-    color:#2563EB;
+    color:#0F172A;
 
     font-weight:700;
 
@@ -184,7 +184,7 @@
 
 .active svg{
 
-    color:#2563EB;
+    color:#0F172A;
 }
 
 /* ==========================================================

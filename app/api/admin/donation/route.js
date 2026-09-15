@@ -4,7 +4,7 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
 import verifyAdmin from "@/lib/verifyAdmin";
-import DonationSetting from "@/models/DonationSetting";
+import DonationSetting from "@/models/DonationSettings";
 import uploadImageToCloudinary from "@/utils/uploadImageToCloudinary";
 
 export async function GET(request) {

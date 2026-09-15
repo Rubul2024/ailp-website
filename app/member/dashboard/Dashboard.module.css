@@ -1,4 +1,4 @@
-/* ==========================================================
+﻿/* ==========================================================
    AILP MEMBER DASHBOARD - EXECUTIVE STYLESHEET
    Refined Standard Boldness & Official Card Architecture
 ========================================================== */
@@ -27,9 +27,9 @@
   background: linear-gradient(
     135deg,
     #0f172a 0%,
-    #1e3a8a 40%,
-    #1d4ed8 75%,
-    #c2410c 130%
+    #0F172A 40%,
+    #060B16 75%,
+    #E65100 130%
   );
   color: #ffffff;
   box-shadow: 0 15px 35px -10px rgba(15, 23, 42, 0.35);
@@ -48,7 +48,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #ff9933 0%, #ffffff 50%, #138808 100%);
+  background: linear-gradient(90deg, #ff9933 0%, #ffffff 50%, #2E7D32 100%);
 }
 
 .heroContent {
@@ -113,7 +113,7 @@
 }
 
 .highlightName {
-  color: #fde047;
+  color: #FF9933;
   font-weight: 700;
 }
 
@@ -234,7 +234,7 @@
   padding: 2px 7px;
   border-radius: 5px;
   background: rgba(0, 0, 0, 0.35);
-  color: #93c5fd;
+  color: #FF9933;
 }
 
 .emblemLocation {
@@ -277,8 +277,8 @@
 }
 
 .blueTheme {
-  background: rgba(37, 99, 235, 0.08);
-  color: #2563eb;
+  background: rgba(15, 23, 42, 0.08);
+  color: #0F172A;
 }
 
 .emeraldTheme {
@@ -287,13 +287,13 @@
 }
 
 .saffronTheme {
-  background: rgba(249, 115, 22, 0.08);
-  color: #ea580c;
+  background: rgba(255, 153, 51, 0.08);
+  color: #E65100;
 }
 
 .purpleTheme {
-  background: rgba(139, 92, 246, 0.08);
-  color: #8b5cf6;
+  background: rgba(46, 125, 50, 0.08);
+  color: #2E7D32;
 }
 
 .statBody {
@@ -320,7 +320,7 @@
 .monoVal {
   font-family: monospace;
   font-size: 15px;
-  color: #1d4ed8;
+  color: #060B16;
 }
 
 .meterContainer {
@@ -334,7 +334,7 @@
 
 .meterFill {
   height: 100%;
-  background: linear-gradient(90deg, #2563eb, #38bdf8);
+  background: linear-gradient(90deg, #0F172A, #FF9933);
   border-radius: 999px;
   transition: width 0.4s ease;
 }
@@ -359,7 +359,7 @@
   gap: 4px;
   font-size: 12px;
   font-weight: 600;
-  color: #8b5cf6;
+  color: #2E7D32;
   text-decoration: none;
 }
 
@@ -406,8 +406,8 @@
   gap: 4px;
   padding: 5px 10px;
   border-radius: 6px;
-  background: rgba(37, 99, 235, 0.08);
-  color: #2563eb;
+  background: rgba(15, 23, 42, 0.08);
+  color: #0F172A;
   font-size: 12px;
   font-weight: 600;
   text-decoration: none;
@@ -440,8 +440,8 @@
 /* Left Green Strip */
 .cardLeftStrip {
   width: 48px;
-  background: #68a436;
-  background: linear-gradient(180deg, #78be35 0%, #4b8b1e 100%);
+  background: #2E7D32;
+  background: linear-gradient(180deg, #2E7D32 0%, #1B5E20 100%);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -499,7 +499,7 @@
   position: relative;
   width: 90px;
   height: 105px;
-  border: 2px solid #f97316;
+  border: 2px solid #FF9933;
   border-radius: 8px;
   overflow: hidden;
   background: #e2e8f0;
@@ -529,13 +529,13 @@
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  border: 1.5px dashed #1e40af;
+  border: 1.5px dashed #060B16;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background: rgba(255, 255, 255, 0.8);
-  color: #1e40af;
+  color: #060B16;
   transform: rotate(-15deg);
 }
 
@@ -581,7 +581,7 @@
 .fieldLabel {
   width: 68px;
   font-weight: 700;
-  color: #1e3a8a;
+  color: #0F172A;
   font-size: 11px;
 }
 
@@ -593,8 +593,8 @@
 /* Right Saffron Strip Banner */
 .cardRightStrip {
   width: 120px;
-  background: #f1592a;
-  background: linear-gradient(180deg, #f95f26 0%, #e04412 100%);
+  background: #FF9933;
+  background: linear-gradient(180deg, #FF9933 0%, #E65100 100%);
   color: #ffffff;
   padding: 12px 8px;
   display: flex;
@@ -625,7 +625,7 @@
 
 .identityCardBadge {
   background: #ffffff;
-  color: #e04412;
+  color: #E65100;
   font-size: 8px;
   font-weight: 800;
   padding: 2px 4px;
@@ -666,8 +666,8 @@
 }
 
 .stepActive .stepIcon {
-  background: rgba(37, 99, 235, 0.1);
-  color: #2563eb;
+  background: rgba(15, 23, 42, 0.1);
+  color: #0F172A;
 }
 
 .stepPending .stepIcon {
@@ -705,10 +705,10 @@
 .stepBtn {
   font-size: 11.5px;
   font-weight: 600;
-  color: #2563eb;
+  color: #0F172A;
   padding: 4px 10px;
   border-radius: 6px;
-  background: rgba(37, 99, 235, 0.08);
+  background: rgba(15, 23, 42, 0.08);
   text-decoration: none;
 }
 
@@ -718,12 +718,12 @@
   gap: 10px;
   padding: 12px;
   border-radius: 12px;
-  background: rgba(37, 99, 235, 0.04);
-  border: 1px solid rgba(37, 99, 235, 0.12);
+  background: rgba(15, 23, 42, 0.04);
+  border: 1px solid rgba(15, 23, 42, 0.12);
 }
 
 .supportIcon {
-  color: #2563eb;
+  color: #0F172A;
   flex-shrink: 0;
   margin-top: 2px;
 }
@@ -731,7 +731,7 @@
 .supportText h5 {
   font-size: 12.5px;
   font-weight: 700;
-  color: #1e3a8a;
+  color: #0F172A;
   margin: 0 0 2px;
 }
 
@@ -744,7 +744,7 @@
 .emailSupport {
   font-size: 11.5px;
   font-weight: 600;
-  color: #2563eb;
+  color: #0F172A;
   text-decoration: none;
 }
 
@@ -763,8 +763,8 @@
 .spinner {
   width: 38px;
   height: 38px;
-  border: 3px solid rgba(37, 99, 235, 0.15);
-  border-top-color: #2563eb;
+  border: 3px solid rgba(15, 23, 42, 0.15);
+  border-top-color: #0F172A;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }

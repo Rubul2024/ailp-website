@@ -1,297 +1,177 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import {
-  CreditCard,
   User,
   Mail,
   Phone,
-  MapPin,
+  Hash,
   IndianRupee,
   ShieldCheck,
   LoaderCircle,
+  UploadCloud,
+  CheckCircle2,
+  ImageIcon,
+  X,
 } from "lucide-react";
 
 import styles from "./DonationForm.module.css";
 
-const amounts = [
-  500,
-  1000,
-  2000,
-  5000,
-  10000,
-];
+const amounts = [500, 1000, 2000, 5000, 10000];
 
 export default function DonationForm() {
   const [amount, setAmount] = useState(1000);
-
-  const [customAmount, setCustomAmount] =
-    useState("");
+  const [customAmount, setCustomAmount] = useState("");
 
   const [form, setForm] = useState({
-    fullName: "",
+    donorName: "",
     email: "",
-    mobile: "",
-    address: "",
-    pan: "",
+    phone: "",
+    message: "",
   });
+  const [utrNumber, setUtrNumber] = useState("");
+
+  const [proofFile, setProofFile] = useState(null);
+  const [proofPreview, setProofPreview] = useState("");
 
   const [loading, setLoading] = useState(false);
-
   const [message, setMessage] = useState("");
+  const [success, setSuccess] = useState(false);
+  const fileInputRef = useRef(null);
 
   function handleChange(event) {
     const { name, value } = event.target;
-
-    setForm((previous) => ({
-      ...previous,
-      [name]: value,
-    }));
+    setForm((previous) => ({ ...previous, [name]: value }));
   }
 
   function selectAmount(value) {
     setAmount(value);
-
     setCustomAmount("");
   }
 
   function handleCustomAmount(event) {
     const value = event.target.value;
-
     setCustomAmount(value);
+    if (value) setAmount(Number(value));
+  }
 
-    if (value) {
-      setAmount(Number(value));
+  function handleFileSelect(event) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    if (!["image/jpeg", "image/jpg", "image/png", "image/webp"].includes(file.type)) {
+      setMessage("Only JPG, PNG or WEBP screenshots are allowed.");
+      return;
     }
+    if (file.size > 2 * 1024 * 1024) {
+      setMessage("Screenshot must be smaller than 2 MB.");
+      return;
+    }
+
+    setMessage("");
+    setProofFile(file);
+    setProofPreview(URL.createObjectURL(file));
+  }
+
+  function removeProof() {
+    setProofFile(null);
+    setProofPreview("");
+    if (fileInputRef.current) fileInputRef.current.value = "";
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
-
     setMessage("");
 
-    const finalAmount = Number(
-      customAmount || amount
-    );
+    const finalAmount = Number(customAmount || amount);
 
     if (!finalAmount || finalAmount < 1) {
-      setMessage(
-        "Please enter a valid donation amount."
-      );
-
+      setMessage("Please enter a valid donation amount.");
       return;
     }
-
-    if (!form.fullName.trim()) {
+    if (!form.donorName.trim()) {
       setMessage("Please enter your full name.");
-
       return;
     }
-
-    if (!form.email.trim()) {
-      setMessage("Please enter your email address.");
-
-      return;
-    }
-
-    if (!form.mobile.trim()) {
-      setMessage("Please enter your mobile number.");
-
+    if (!proofFile) {
+      setMessage("Please upload a screenshot of your UPI payment.");
       return;
     }
 
     try {
       setLoading(true);
 
-      const response = await fetch(
-        "/api/donation/create-order",
-        {
-          method: "POST",
+      const uploadData = new FormData();
+      uploadData.append("file", proofFile);
+      uploadData.append("folder", "AILP/donations/proofs");
 
-          headers: {
-            "Content-Type": "application/json",
-          },
+      const uploadRes = await fetch("/api/upload", {
+        method: "POST",
+        body: uploadData,
+      });
+      const uploadJson = await uploadRes.json();
 
-          body: JSON.stringify({
-            amount: finalAmount,
-            ...form,
-          }),
-        }
-      );
+      if (!uploadRes.ok || !uploadJson.success) {
+        throw new Error(uploadJson.message || "Unable to upload payment screenshot.");
+      }
+
+      const response = await fetch("/api/donation/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          ...form,
+          amount: finalAmount,
+          utrNumber,
+          proofImage: uploadJson.image,
+        }),
+      });
 
       const data = await response.json();
 
       if (!response.ok || !data.success) {
-        throw new Error(
-          data.message ||
-            "Unable to create donation order."
-        );
+        throw new Error(data.message || "Unable to submit your donation.");
       }
 
-      await openRazorpay(data.order);
+      setSuccess(true);
+      setMessage(data.message);
     } catch (error) {
-      setMessage(
-        error.message ||
-          "Something went wrong. Please try again."
-      );
-
+      setMessage(error.message || "Something went wrong. Please try again.");
+    } finally {
       setLoading(false);
     }
   }
 
-  function openRazorpay(order) {
-    if (!window.Razorpay) {
-      setMessage(
-        "Payment system is loading. Please try again."
-      );
-
-      setLoading(false);
-
-      return;
-    }
-
-    const options = {
-      key: order.key,
-
-      amount: order.amount,
-
-      currency: order.currency,
-
-      name: "All India Labour Party",
-
-      description: "Political Party Contribution",
-
-      order_id: order.id,
-
-      image: "/images/logo/logo.png",
-
-      prefill: {
-        name: form.fullName,
-
-        email: form.email,
-
-        contact: form.mobile,
-      },
-
-      theme: {
-        color: "#0b4ea2",
-      },
-
-      handler: async function (response) {
-        try {
-          const verifyResponse = await fetch(
-            "/api/donation/verify",
-            {
-              method: "POST",
-
-              headers: {
-                "Content-Type":
-                  "application/json",
-              },
-
-              body: JSON.stringify({
-                ...response,
-
-                amount: order.amount,
-
-                donor: form,
-              }),
-            }
-          );
-
-          const verifyData =
-            await verifyResponse.json();
-
-          if (!verifyResponse.ok) {
-            throw new Error(
-              verifyData.message ||
-                "Payment verification failed."
-            );
-          }
-
-          setMessage(
-            "Donation successful. Your payment has been verified."
-          );
-
-          setForm({
-            fullName: "",
-            email: "",
-            mobile: "",
-            address: "",
-            pan: "",
-          });
-        } catch (error) {
-          setMessage(
-            error.message ||
-              "Payment completed but verification failed. Please contact support."
-          );
-        } finally {
-          setLoading(false);
-        }
-      },
-
-      modal: {
-        ondismiss: function () {
-          setLoading(false);
-        },
-      },
-    };
-
-    const razorpay =
-      new window.Razorpay(options);
-
-   razorpay.on(
-  "payment.failed",
-  async function (response) {
-    try {
-      await fetch(
-        "/api/donation/failed",
-        {
-          method: "POST",
-
-          headers: {
-            "Content-Type":
-              "application/json",
-          },
-
-          body: JSON.stringify({
-            razorpay_order_id:
-              order.id,
-
-            razorpay_payment_id:
-              response?.error?.metadata
-                ?.payment_id || "",
-
-            error:
-              response?.error || {},
-          }),
-        }
-      );
-    } catch (error) {
-      console.error(
-        "Failed to record donation failure:",
-        error
-      );
-    }
-
-    setMessage(
-      response?.error?.description ||
-        "Payment failed. Please try again."
+  if (success) {
+    return (
+      <section id="donate-form" className={styles.section}>
+        <div className={styles.container}>
+          <div className={styles.successCard}>
+            <CheckCircle2 size={56} />
+            <h2>Thank You for Your Contribution!</h2>
+            <p>{message}</p>
+            <button
+              type="button"
+              className={styles.submit}
+              onClick={() => {
+                setSuccess(false);
+                setForm({ donorName: "", email: "", phone: "", message: "" });
+                setUtrNumber("");
+                removeProof();
+                setMessage("");
+              }}
+            >
+              Make Another Contribution
+            </button>
+          </div>
+        </div>
+      </section>
     );
-
-    setLoading(false);
-  }
-);
-
-    razorpay.open();
   }
 
   return (
-    <section
-      id="donate-form"
-      className={styles.section}
-    >
+    <section id="donate-form" className={styles.section}>
       <div className={styles.container}>
         <div className={styles.intro}>
           <span>MAKE A CONTRIBUTION</span>
@@ -302,19 +182,18 @@ export default function DonationForm() {
           </h2>
 
           <p>
-            Choose an amount and provide your details
-            to continue with a secure online contribution.
+            Pay using the UPI QR code or bank details above, then confirm your
+            contribution here by uploading the payment screenshot. Our team
+            manually verifies every contribution within 24–48 hours.
           </p>
 
           <div className={styles.security}>
             <ShieldCheck size={20} />
-
             <div>
-              <strong>Secure & Protected</strong>
-
+              <strong>Manually Verified</strong>
               <span>
-                Your payment is processed through
-                Razorpay's secure checkout.
+                Every contribution is reviewed by our team before being recorded,
+                keeping the process transparent and secure.
               </span>
             </div>
           </div>
@@ -323,24 +202,15 @@ export default function DonationForm() {
         <div className={styles.formCard}>
           <form onSubmit={handleSubmit}>
             <div className={styles.amountSection}>
-              <label>
-                Select Contribution Amount
-              </label>
+              <label>Select Contribution Amount</label>
 
               <div className={styles.amountGrid}>
                 {amounts.map((value) => (
                   <button
                     key={value}
                     type="button"
-                    className={
-                      !customAmount &&
-                      amount === value
-                        ? styles.selectedAmount
-                        : ""
-                    }
-                    onClick={() =>
-                      selectAmount(value)
-                    }
+                    className={!customAmount && amount === value ? styles.selectedAmount : ""}
+                    onClick={() => selectAmount(value)}
                   >
                     ₹{value.toLocaleString("en-IN")}
                   </button>
@@ -349,15 +219,12 @@ export default function DonationForm() {
 
               <div className={styles.customAmount}>
                 <IndianRupee size={18} />
-
                 <input
                   type="number"
                   min="1"
                   placeholder="Enter custom amount"
                   value={customAmount}
-                  onChange={
-                    handleCustomAmount
-                  }
+                  onChange={handleCustomAmount}
                 />
               </div>
             </div>
@@ -366,19 +233,15 @@ export default function DonationForm() {
 
             <div className={styles.fields}>
               <div className={styles.field}>
-                <label htmlFor="fullName">
-                  Full Name *
-                </label>
-
+                <label htmlFor="donorName">Full Name *</label>
                 <div className={styles.input}>
                   <User size={18} />
-
                   <input
-                    id="fullName"
-                    name="fullName"
+                    id="donorName"
+                    name="donorName"
                     type="text"
                     placeholder="Your full name"
-                    value={form.fullName}
+                    value={form.donorName}
                     onChange={handleChange}
                     required
                   />
@@ -386,13 +249,9 @@ export default function DonationForm() {
               </div>
 
               <div className={styles.field}>
-                <label htmlFor="email">
-                  Email Address *
-                </label>
-
+                <label htmlFor="email">Email Address</label>
                 <div className={styles.input}>
                   <Mail size={18} />
-
                   <input
                     id="email"
                     name="email"
@@ -400,119 +259,97 @@ export default function DonationForm() {
                     placeholder="you@example.com"
                     value={form.email}
                     onChange={handleChange}
-                    required
                   />
                 </div>
               </div>
 
               <div className={styles.field}>
-                <label htmlFor="mobile">
-                  Mobile Number *
-                </label>
-
+                <label htmlFor="phone">Mobile Number</label>
                 <div className={styles.input}>
                   <Phone size={18} />
-
                   <input
-                    id="mobile"
-                    name="mobile"
+                    id="phone"
+                    name="phone"
                     type="tel"
                     placeholder="+91 XXXXX XXXXX"
-                    value={form.mobile}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className={styles.field}>
-                <label htmlFor="address">
-                  Address
-                </label>
-
-                <div className={styles.input}>
-                  <MapPin size={18} />
-
-                  <input
-                    id="address"
-                    name="address"
-                    type="text"
-                    placeholder="City, State"
-                    value={form.address}
+                    value={form.phone}
                     onChange={handleChange}
                   />
                 </div>
               </div>
 
               <div className={styles.field}>
-                <label htmlFor="pan">
-                  PAN
-                </label>
-
+                <label htmlFor="utrNumber">UTR / Reference Number</label>
                 <div className={styles.input}>
-                  <CreditCard size={18} />
-
+                  <Hash size={18} />
                   <input
-                    id="pan"
-                    name="pan"
+                    id="utrNumber"
+                    name="utrNumber"
                     type="text"
-                    placeholder="PAN (if applicable)"
-                    value={form.pan}
-                    onChange={handleChange}
+                    placeholder="From your UPI app (optional)"
+                    value={utrNumber}
+                    onChange={(e) => setUtrNumber(e.target.value)}
                   />
                 </div>
               </div>
             </div>
 
-            {message && (
-              <div className={styles.message}>
-                {message}
-              </div>
-            )}
+            <div className={styles.uploadField}>
+              <label>Payment Screenshot *</label>
 
-            <button
-              type="submit"
-              className={styles.submit}
-              disabled={loading}
-            >
+              {proofPreview ? (
+                <div className={styles.proofPreview}>
+                  <img src={proofPreview} alt="Payment screenshot preview" />
+                  <button type="button" onClick={removeProof} className={styles.removeProof}>
+                    <X size={16} />
+                  </button>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  className={styles.dropzone}
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <UploadCloud size={26} />
+                  <span>Click to upload your UPI payment screenshot</span>
+                  <small>JPG, PNG or WEBP, up to 2 MB</small>
+                </button>
+              )}
+
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/jpeg,image/jpg,image/png,image/webp"
+                onChange={handleFileSelect}
+                hidden
+              />
+            </div>
+
+            {message && <div className={styles.message}>{message}</div>}
+
+            <button type="submit" className={styles.submit} disabled={loading}>
               {loading ? (
                 <>
-                  <LoaderCircle
-                    size={20}
-                    className={styles.spinner}
-                  />
-
-                  Processing...
+                  <LoaderCircle size={20} className={styles.spinner} />
+                  Submitting...
                 </>
               ) : (
                 <>
-                  <HeartIcon />
-
-                  Donate ₹
-                  {Number(
-                    customAmount || amount
-                  ).toLocaleString("en-IN")}
+                  <ImageIcon size={18} />
+                  Confirm Contribution of ₹
+                  {Number(customAmount || amount).toLocaleString("en-IN")}
                 </>
               )}
             </button>
 
             <p className={styles.note}>
-              By continuing, you confirm that the
-              information provided is accurate and that
-              your contribution complies with applicable
-              laws and eligibility requirements.
+              By continuing, you confirm that the information provided is accurate
+              and that your contribution complies with applicable laws and
+              eligibility requirements.
             </p>
           </form>
         </div>
       </div>
     </section>
-  );
-}
-
-function HeartIcon() {
-  return (
-    <span className={styles.heart}>
-      ♥
-    </span>
   );
 }

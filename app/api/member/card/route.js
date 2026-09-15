@@ -91,6 +91,14 @@ export async function GET(request) {
 
         joinDate: member.joinDate,
 
+        dateOfBirth: member.dateOfBirth,
+
+        gender: member.gender,
+
+        mobile: member.mobile,
+
+        bloodGroup: member.bloodGroup,
+
         district: member.district,
 
         state: member.state,

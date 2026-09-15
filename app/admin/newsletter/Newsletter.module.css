@@ -1,4 +1,4 @@
-/* ==========================================================
+﻿/* ==========================================================
    AILP Executive Newsletter Subscribers Design System
 ========================================================== */
 
@@ -46,7 +46,7 @@
   height: 100%;
 }
 
-.statBlue::before { background: linear-gradient(180deg, #3b82f6, #1d4ed8); }
+.statBlue::before { background: linear-gradient(180deg, #0F172A, #060B16); }
 .statGreen::before { background: linear-gradient(180deg, #10b981, #047857); }
 .statOrange::before { background: linear-gradient(180deg, #f59e0b, #d97706); }
 
@@ -88,7 +88,7 @@
   flex-shrink: 0;
 }
 
-.statBlue .statIconBadge { background: #eff6ff; color: #2563eb; }
+.statBlue .statIconBadge { background: #E7ECF5; color: #0F172A; }
 .statGreen .statIconBadge { background: #ecfdf5; color: #059669; }
 .statOrange .statIconBadge { background: #fffbeb; color: #d97706; }
 
@@ -136,8 +136,8 @@
 
 .searchInput:focus {
   background: #ffffff;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+  border-color: #0F172A;
+  box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.12);
 }
 
 .filterControls {
@@ -171,8 +171,8 @@
 }
 
 .customSelect:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  border-color: #0F172A;
+  box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1);
 }
 
 .exportButton {
@@ -300,8 +300,8 @@
   width: 32px;
   height: 32px;
   border-radius: 8px;
-  background: #eff6ff;
-  color: #2563eb;
+  background: #E7ECF5;
+  color: #0F172A;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -389,7 +389,7 @@
 .warningHover:hover {
   background: #fffbeb;
   color: #d97706;
-  border-color: #fde68a;
+  border-color: #FF9933;
 }
 
 .successHover:hover {

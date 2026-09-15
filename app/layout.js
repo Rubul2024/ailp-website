@@ -1,4 +1,19 @@
+import { Inter, Sora } from "next/font/google";
 import "./globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const sora = Sora({
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
+  variable: "--font-sora",
+  display: "swap",
+});
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ailp.org";
 
@@ -16,7 +31,7 @@ export const metadata = {
 };
 
 export const viewport = {
-  themeColor: "#0b1528",
+  themeColor: "#0F172A",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -49,7 +64,7 @@ export default function RootLayout({ children }) {
   };
 
   return (
-    <html lang="en" dir="ltr">
+    <html lang="en" dir="ltr" className={`${inter.variable} ${sora.variable}`}>
       <head>
         <script
           type="application/ld+json"

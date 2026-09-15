@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 /* ==========================================================
    Profile Completion
@@ -36,7 +36,7 @@ export default function ProfileCompletion({
             cx="70"
             cy="70"
             r="58"
-            stroke="#2563EB"
+            stroke="#0F172A"
             strokeWidth="12"
             fill="none"
             strokeLinecap="round"

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const DonationSettingSchema = new mongoose.Schema(
+const DonationSettingsSchema = new mongoose.Schema(
   {
     bankName: { type: String, default: "" },
     accountHolder: { type: String, default: "" },
@@ -15,5 +15,5 @@ const DonationSettingSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.models.DonationSetting ||
-  mongoose.model("DonationSetting", DonationSettingSchema);
+export default mongoose.models.DonationSettings ||
+  mongoose.model("DonationSettings", DonationSettingsSchema);

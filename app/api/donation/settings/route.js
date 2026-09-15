@@ -3,7 +3,7 @@
 ========================================================== */
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
-import DonationSetting from "@/models/DonationSetting";
+import DonationSettings from "@/models/DonationSettings";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -11,7 +11,7 @@ export const revalidate = 0;
 export async function GET() {
   try {
     await connectDB();
-    const settings = await DonationSetting.findOne().lean();
+    const settings = await DonationSettings.findOne().lean();
 
     return NextResponse.json(
       {

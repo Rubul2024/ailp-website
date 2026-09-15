@@ -18,9 +18,13 @@ import uploadImageToCloudinary from "@/utils/uploadImageToCloudinary";
 
 import generateQRCode from "@/utils/generateQRCode";
 
-import generateMembershipCard from "@/utils/generateMembershipCard";
-
 import uploadPdfToCloudinary from "@/utils/uploadPdfToCloudinary";
+
+import React from "react";
+
+import { renderToBuffer } from "@react-pdf/renderer";
+
+import MembershipCardPDF from "@/pdf/MembershipCardPDF";
 
 /* ==========================================================
    GET PROFILE
@@ -681,25 +685,16 @@ if (
       member.membershipId
     ) {
 
+      member.cardGeneratedAt =
+        new Date();
+
       const pdfBuffer =
-        await generateMembershipCard({
-
-          memberId:
-            member.membershipId,
-
-          fullName:
-            member.fullName,
-
-          mobile:
-            member.mobile,
-
-          district:
-            member.district,
-
-          state:
-            member.state,
-
-        });
+        await renderToBuffer(
+          React.createElement(
+            MembershipCardPDF,
+            { member }
+          )
+        );
 
       if (!pdfBuffer) {
 
@@ -728,9 +723,6 @@ if (
 
       member.cardGenerated =
         true;
-
-      member.cardGeneratedAt =
-        new Date();
 
       member.membershipStatus =
         "CARD_GENERATED";

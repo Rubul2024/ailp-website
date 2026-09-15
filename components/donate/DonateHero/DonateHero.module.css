@@ -1,4 +1,4 @@
-.hero {
+﻿.hero {
   position: relative;
 
   overflow: hidden;
@@ -6,7 +6,7 @@
   background:
     radial-gradient(
       circle at 10% 20%,
-      rgba(37, 99, 235, 0.14),
+      rgba(15, 23, 42, 0.14),
       transparent 30%
     ),
     radial-gradient(
@@ -61,9 +61,9 @@
 
   border-radius: 999px;
 
-  background: #eaf2ff;
+  background: #E7ECF5;
 
-  color: #0b4ea2;
+  color: #0F172A;
 
   font-size: 13px;
 
@@ -87,7 +87,7 @@
 .content h1 span {
   display: block;
 
-  color: #2563eb;
+  color: #0F172A;
 }
 
 .content > p {
@@ -141,13 +141,13 @@
   background:
     linear-gradient(
       135deg,
-      #0b4ea2,
-      #2563eb
+      #0F172A,
+      #0F172A
     );
 
   box-shadow:
     0 15px 35px
-    rgba(37, 99, 235, 0.22);
+    rgba(15, 23, 42, 0.22);
 }
 
 .primaryButton:hover {
@@ -155,7 +155,7 @@
 
   box-shadow:
     0 20px 45px
-    rgba(37, 99, 235, 0.3);
+    rgba(15, 23, 42, 0.3);
 }
 
 .secondaryButton {
@@ -167,9 +167,9 @@
 }
 
 .secondaryButton:hover {
-  color: #2563eb;
+  color: #0F172A;
 
-  border-color: #2563eb;
+  border-color: #0F172A;
 
   transform: translateY(-3px);
 }
@@ -191,7 +191,7 @@
 .trust svg {
   flex-shrink: 0;
 
-  color: #16a34a;
+  color: #2E7D32;
 }
 
 .visual {
@@ -214,7 +214,7 @@
   background:
     linear-gradient(
       145deg,
-      #0b4ea2,
+      #0F172A,
       #102d68
     );
 
@@ -311,7 +311,7 @@
 
   margin: 18px 0 30px;
 
-  color: #dbeafe;
+  color: #E8F5E9;
 
   line-height: 1.7;
 }
@@ -343,7 +343,7 @@
   background:
     linear-gradient(
       90deg,
-      #ff7a00,
+      #FF9933,
       #ffb347
     );
 }
@@ -359,7 +359,7 @@
 
   margin-top: 12px;
 
-  color: #bfdbfe;
+  color: #cbd5e1;
 
   font-size: 12px;
 
@@ -387,7 +387,7 @@
   top: -160px;
 
   background:
-    rgba(37, 99, 235, 0.15);
+    rgba(15, 23, 42, 0.15);
 }
 
 .glowTwo {

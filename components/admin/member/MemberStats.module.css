@@ -1,4 +1,4 @@
-/* ==========================================================
+﻿/* ==========================================================
    Member Statistics
 ========================================================== */
 
@@ -40,7 +40,7 @@ border:1px solid #eef2f7;
 
 transform:translateY(-4px);
 
-box-shadow:0 20px 45px rgba(37,99,235,.12);
+box-shadow:0 20px 45px rgba(15, 23, 42,.12);
 
 }
 
@@ -88,19 +88,19 @@ color:white;
 
 .blue{
 
-background:linear-gradient(135deg,#2563eb,#1d4ed8);
+background:linear-gradient(135deg,#0F172A,#060B16);
 
 }
 
 .green{
 
-background:linear-gradient(135deg,#16a34a,#15803d);
+background:linear-gradient(135deg,#2E7D32,#15803d);
 
 }
 
 .orange{
 
-background:linear-gradient(135deg,#f97316,#ea580c);
+background:linear-gradient(135deg,#FF9933,#E65100);
 
 }
 

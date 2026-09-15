@@ -1,4 +1,4 @@
-/* ==========================================================
+﻿/* ==========================================================
    Admin Loading Page
 ========================================================== */
 
@@ -14,8 +14,8 @@
     background:linear-gradient(
         135deg,
         #0f172a,
-        #1e3a8a,
-        #2563eb
+        #0F172A,
+        #0F172A
     );
 }
 
@@ -51,9 +51,9 @@
 
     border-radius:50%;
 
-    border:6px solid #dbeafe;
+    border:6px solid #E8F5E9;
 
-    border-top-color:#2563eb;
+    border-top-color:#0F172A;
 
     animation:spin 1s linear infinite;
 
@@ -115,8 +115,8 @@
 
     background:linear-gradient(
         90deg,
-        #2563eb,
-        #3b82f6
+        #0F172A,
+        #0F172A
     );
 
     animation:progress 1.8s infinite;

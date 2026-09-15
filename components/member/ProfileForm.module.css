@@ -1,4 +1,4 @@
-/* ==========================================================
+﻿/* ==========================================================
    AILP MEMBER PROFILE
    ProfileForm.module.css
 
@@ -21,9 +21,9 @@
 ========================================================== */
 
 .form {
-  --ailp-blue: #2563eb;
-  --ailp-blue-dark: #1d4ed8;
-  --ailp-indigo: #4f46e5;
+  --ailp-blue: #0F172A;
+  --ailp-blue-dark: #060B16;
+  --ailp-indigo: #060B16;
 
   --text-primary: #172033;
   --text-secondary: #64748b;
@@ -37,7 +37,7 @@
 
   --page-bg: #f4f7fb;
 
-  --success: #16a34a;
+  --success: #2E7D32;
   --success-bg: #ecfdf3;
 
   --warning: #f59e0b;
@@ -88,12 +88,12 @@
   background:
     radial-gradient(
       circle at 95% 10%,
-      rgba(37, 99, 235, 0.12),
+      rgba(15, 23, 42, 0.12),
       transparent 30%
     ),
     radial-gradient(
       circle at 5% 100%,
-      rgba(79, 70, 229, 0.08),
+      rgba(6, 11, 22, 0.08),
       transparent 32%
     ),
     linear-gradient(
@@ -123,7 +123,7 @@
   border-radius: 50%;
 
   background:
-    rgba(37, 99, 235, 0.07);
+    rgba(15, 23, 42, 0.07);
 
   pointer-events: none;
 }
@@ -183,12 +183,12 @@
   background:
     linear-gradient(
       135deg,
-      #2563eb,
-      #4f46e5
+      #0F172A,
+      #060B16
     );
 
   box-shadow:
-    0 10px 22px rgba(37, 99, 235, 0.22);
+    0 10px 22px rgba(15, 23, 42, 0.22);
 }
 
 
@@ -197,7 +197,7 @@
 
   margin-bottom: 5px;
 
-  color: #2563eb;
+  color: #0F172A;
 
   font-size: 11px;
 
@@ -286,7 +286,7 @@
 .heroMemberBadge strong {
   margin-top: 4px;
 
-  color: #1e40af;
+  color: #060B16;
 
   font-size: 14px;
 
@@ -359,7 +359,7 @@
 
   background:
     conic-gradient(
-      #2563eb var(--progress, 85%),
+      #0F172A var(--progress, 85%),
       #e8eef7 var(--progress, 85%)
     );
 }
@@ -466,7 +466,7 @@
 
 
 .progressTop strong {
-  color: #2563eb;
+  color: #0F172A;
 
   font-size: 17px;
 
@@ -503,12 +503,12 @@
   background:
     linear-gradient(
       90deg,
-      #2563eb,
-      #4f46e5
+      #0F172A,
+      #060B16
     );
 
   box-shadow:
-    0 2px 7px rgba(37, 99, 235, 0.24);
+    0 2px 7px rgba(15, 23, 42, 0.24);
 
   transition:
     width 0.6s ease;
@@ -544,7 +544,7 @@
 
 
 .progressBottom span:first-child {
-  color: #16a34a;
+  color: #2E7D32;
 }
 
 
@@ -630,7 +630,7 @@
 
   border-radius: 999px;
 
-  color: #4338ca;
+  color: #060B16;
 
   background: #eef2ff;
 
@@ -710,7 +710,7 @@
 
 
 .introStats strong {
-  color: #2563eb;
+  color: #0F172A;
 
   font-size: 18px;
 
@@ -786,7 +786,7 @@
   border-color: #b8d1fa;
 
   box-shadow:
-    0 10px 30px rgba(37, 99, 235, 0.09);
+    0 10px 30px rgba(15, 23, 42, 0.09);
 }
 
 
@@ -889,13 +889,13 @@
 /* Blue */
 
 .iconblue {
-  color: #2563eb;
+  color: #0F172A;
 
   background:
     linear-gradient(
       135deg,
-      #eff6ff,
-      #dbeafe
+      #E7ECF5,
+      #E8F5E9
     );
 
   border: 1px solid #d5e6ff;
@@ -905,23 +905,23 @@
 /* Purple */
 
 .iconpurple {
-  color: #7c3aed;
+  color: #FF9933;
 
   background:
     linear-gradient(
       135deg,
-      #faf5ff,
-      #ede9fe
+      #fff8f0,
+      #ffe9cc
     );
 
-  border: 1px solid #e9ddff;
+  border: 1px solid #ffd9a3;
 }
 
 
 /* Orange */
 
 .iconorange {
-  color: #ea580c;
+  color: #E65100;
 
   background:
     linear-gradient(
@@ -937,7 +937,7 @@
 /* Green */
 
 .icongreen {
-  color: #16a34a;
+  color: #2E7D32;
 
   background:
     linear-gradient(
@@ -969,16 +969,16 @@
 /* Indigo */
 
 .iconindigo {
-  color: #4f46e5;
+  color: #1B5E20;
 
   background:
     linear-gradient(
       135deg,
-      #eef2ff,
-      #e0e7ff
+      #f0fdf4,
+      #d3f0d9
     );
 
-  border: 1px solid #d9ddff;
+  border: 1px solid #bfe8c9;
 }
 
 
@@ -1104,18 +1104,18 @@
 
 .accordionHeader:hover
   .chevron {
-  color: #2563eb;
+  color: #0F172A;
 
-  background: #eff6ff;
+  background: #E7ECF5;
 }
 
 
 .chevronOpen {
-  color: #2563eb;
+  color: #0F172A;
 
   transform: rotate(180deg);
 
-  background: #eff6ff;
+  background: #E7ECF5;
 }
 
 
@@ -1274,7 +1274,7 @@
 .inputGroup label svg {
   flex: 0 0 auto;
 
-  color: #2563eb;
+  color: #0F172A;
 }
 
 
@@ -1349,13 +1349,13 @@
 .inputGroup input:focus,
 .inputGroup select:focus,
 .inputGroup textarea:focus {
-  border-color: #60a5fa;
+  border-color: #FF9933;
 
   background: #ffffff;
 
   box-shadow:
     0 0 0 4px
-    rgba(37, 99, 235, 0.09);
+    rgba(15, 23, 42, 0.09);
 }
 
 
@@ -1499,7 +1499,7 @@
     );
 
   box-shadow:
-    0 10px 25px rgba(37, 99, 235, 0.07);
+    0 10px 25px rgba(15, 23, 42, 0.07);
 
   transform: translateY(-2px);
 }
@@ -1522,20 +1522,20 @@
 
   border-radius: 16px;
 
-  color: #2563eb;
+  color: #0F172A;
 
   background:
     linear-gradient(
       135deg,
-      #eff6ff,
-      #dbeafe
+      #E7ECF5,
+      #E8F5E9
     );
 }
 
 
 .uploadCard:nth-child(2)
   .uploadIcon {
-  color: #7c3aed;
+  color: #1B5E20;
 
   background:
     linear-gradient(
@@ -1622,7 +1622,7 @@
 
   border-radius: 10px;
 
-  color: #2563eb;
+  color: #0F172A;
 
   background: #ffffff;
 
@@ -1643,13 +1643,13 @@
 .uploadButton:hover {
   color: #ffffff;
 
-  border-color: #2563eb;
+  border-color: #0F172A;
 
   background:
     linear-gradient(
       135deg,
-      #2563eb,
-      #4f46e5
+      #0F172A,
+      #060B16
     );
 
   transform:
@@ -1774,14 +1774,14 @@
 
   padding: 14px 16px;
 
-  border: 1px solid #dbeafe;
+  border: 1px solid #E8F5E9;
 
   border-radius: 13px;
 
-  color: #1d4ed8;
+  color: #060B16;
 
   background:
-    #eff6ff;
+    #E7ECF5;
 }
 
 
@@ -1802,7 +1802,7 @@
 
 
 .uploadNotice strong {
-  color: #1e40af;
+  color: #060B16;
 
   font-size: 12px;
 }
@@ -1986,9 +1986,9 @@
   width: 40px;
   height: 40px;
 
-  border: 3px solid #dbeafe;
+  border: 3px solid #E8F5E9;
 
-  border-top-color: #2563eb;
+  border-top-color: #0F172A;
 
   border-radius: 50%;
 
@@ -2424,7 +2424,7 @@
 .inputGroup textarea:focus-visible {
   outline:
     3px solid
-    rgba(37, 99, 235, 0.18);
+    rgba(15, 23, 42, 0.18);
 
   outline-offset: 2px;
 }
@@ -2511,7 +2511,7 @@
   align-items: center;
   justify-content: center;
 
-  color: #16a34a;
+  color: #2E7D32;
 
   background: #ecfdf3;
 
@@ -2572,8 +2572,8 @@
   background:
     linear-gradient(
       135deg,
-      #2563eb,
-      #4f46e5
+      #0F172A,
+      #060B16
     );
 
   font-size: 14px;
@@ -2582,7 +2582,7 @@
   cursor: pointer;
 
   box-shadow:
-    0 10px 22px rgba(37, 99, 235, 0.22);
+    0 10px 22px rgba(15, 23, 42, 0.22);
 
   transition:
     transform 0.2s ease,
@@ -2595,7 +2595,7 @@
   transform: translateY(-2px);
 
   box-shadow:
-    0 14px 28px rgba(37, 99, 235, 0.28);
+    0 14px 28px rgba(15, 23, 42, 0.28);
 
   filter: brightness(1.03);
 }
@@ -2607,7 +2607,7 @@
 
 
 .submitButton:focus-visible {
-  outline: 3px solid rgba(37, 99, 235, 0.2);
+  outline: 3px solid rgba(15, 23, 42, 0.2);
   outline-offset: 3px;
 }
 
@@ -2620,7 +2620,7 @@
   transform: none;
 
   box-shadow:
-    0 6px 14px rgba(37, 99, 235, 0.12);
+    0 6px 14px rgba(15, 23, 42, 0.12);
 }
 
 

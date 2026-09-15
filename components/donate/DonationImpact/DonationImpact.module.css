@@ -1,4 +1,4 @@
-.section {
+﻿.section {
   background: #f8fafc;
 }
 
@@ -19,7 +19,7 @@
 }
 
 .heading span {
-  color: #2563eb;
+  color: #0F172A;
 
   font-size: 13px;
 
@@ -39,7 +39,7 @@
 }
 
 .heading h2 strong {
-  color: #2563eb;
+  color: #0F172A;
 }
 
 .heading p {
@@ -74,7 +74,7 @@
 .card:hover {
   transform: translateY(-7px);
 
-  border-color: #bfdbfe;
+  border-color: #cbd5e1;
 
   box-shadow:
     0 20px 45px
@@ -96,9 +96,9 @@
 
   border-radius: 16px;
 
-  background: #eaf2ff;
+  background: #E7ECF5;
 
-  color: #2563eb;
+  color: #0F172A;
 }
 
 .card h3 {

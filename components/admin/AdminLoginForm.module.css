@@ -1,4 +1,4 @@
-/* ==========================================================
+﻿/* ==========================================================
    Admin Login Form
    All India Labour Party
 ========================================================== */
@@ -77,8 +77,8 @@
 }
 
 .inputGroup:focus-within{
-    border-color:#2563eb;
-    box-shadow:0 0 0 4px rgba(37,99,235,.12);
+    border-color:#0F172A;
+    box-shadow:0 0 0 4px rgba(15, 23, 42,.12);
 }
 
 .inputGroup svg{
@@ -127,8 +127,8 @@
 }
 
 .passwordGroup:focus-within{
-    border-color:#2563eb;
-    box-shadow:0 0 0 4px rgba(37,99,235,.12);
+    border-color:#0F172A;
+    box-shadow:0 0 0 4px rgba(15, 23, 42,.12);
 }
 
 .passwordGroup svg{
@@ -180,7 +180,7 @@
 }
 
 .eyeButton:hover{
-    color:#2563eb;
+    color:#0F172A;
 }
 
 /* ==========================================================
@@ -215,7 +215,7 @@
 }
 
 .options a{
-    color:#2563eb;
+    color:#0F172A;
 
     text-decoration:none;
 
@@ -270,8 +270,8 @@
 
     background:linear-gradient(
         135deg,
-        #2563eb,
-        #1d4ed8
+        #0F172A,
+        #060B16
     );
 
     color:#ffffff;
@@ -289,7 +289,7 @@
     transform:translateY(-2px);
 
     box-shadow:
-    0 12px 25px rgba(37,99,235,.30);
+    0 12px 25px rgba(15, 23, 42,.30);
 }
 
 .loginButton:disabled{

@@ -1,4 +1,4 @@
-/* ==========================================================
+﻿/* ==========================================================
    AILP ADMIN HEADER
    Production Ready
 ========================================================== */
@@ -39,6 +39,42 @@
   min-width: 220px;
 
   flex: 1;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+}
+
+.menuButton {
+  display: none;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 42px;
+
+  height: 42px;
+
+  flex-shrink: 0;
+
+  border: 1px solid #d8e0ea;
+
+  border-radius: 12px;
+
+  background: #f4f6f9;
+
+  color: #172033;
+
+  cursor: pointer;
+
+  transition: background 0.2s ease;
+}
+
+.menuButton:hover {
+  background: #e9eef5;
 }
 
 .titleWrapper h1 {
@@ -126,10 +162,10 @@
 }
 
 .searchInput:focus {
-  border-color: #2563eb;
+  border-color: #0F172A;
 
   box-shadow:
-    0 0 0 4px rgba(37, 99, 235, 0.1);
+    0 0 0 4px rgba(15, 23, 42, 0.1);
 }
 
 /* ==========================================================
@@ -340,9 +376,9 @@
 
   border-radius: 50%;
 
-  background: #e8eefc;
+  background: #E7ECF5;
 
-  color: #2563eb;
+  color: #0F172A;
 
   overflow: hidden;
 }
@@ -404,9 +440,9 @@
 
   border-radius: 20px;
 
-  background: #eaf2ff;
+  background: #E7ECF5;
 
-  color: #2563eb;
+  color: #0F172A;
 
   font-size: 11px;
 
@@ -452,7 +488,7 @@
 .dropdownItem:hover {
   background: #f4f7fb;
 
-  color: #2563eb;
+  color: #0F172A;
 }
 
 .dropdownItem svg {
@@ -479,6 +515,16 @@
   opacity: 0.6;
 
   cursor: not-allowed;
+}
+
+/* ==========================================================
+   SIDEBAR TOGGLE (matches AdminSidebar's 992px breakpoint)
+========================================================== */
+
+@media (max-width: 992px) {
+  .menuButton {
+    display: flex;
+  }
 }
 
 /* ==========================================================

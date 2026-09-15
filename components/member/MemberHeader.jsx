@@ -13,10 +13,11 @@ import {
   Search,
   Calendar,
   ShieldCheck,
+  Menu,
 } from "lucide-react";
 import styles from "./MemberHeader.module.css";
 
-export default function MemberHeader({ member }) {
+export default function MemberHeader({ member, onMenuClick }) {
   const router = useRouter();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -63,14 +64,25 @@ export default function MemberHeader({ member }) {
 
   return (
     <header className={styles.topHeader}>
-      {/* Left: Greeting & Live Date */}
-      <div className={styles.headerLeft}>
-        <h2 className={styles.pageTitle}>
-          Welcome, <span className={styles.blueAccent}>{memberName}</span>
-        </h2>
-        <div className={styles.dateRow}>
-          <Calendar size={13} />
-          <span>{currentDate}</span>
+      {/* Left: Menu Toggle, Greeting & Live Date */}
+      <div className={styles.headerLeftGroup}>
+        <button
+          type="button"
+          className={styles.menuButton}
+          onClick={onMenuClick}
+          aria-label="Toggle navigation menu"
+        >
+          <Menu size={22} />
+        </button>
+
+        <div className={styles.headerLeft}>
+          <h2 className={styles.pageTitle}>
+            Welcome, <span className={styles.blueAccent}>{memberName}</span>
+          </h2>
+          <div className={styles.dateRow}>
+            <Calendar size={13} />
+            <span>{currentDate}</span>
+          </div>
         </div>
       </div>
 

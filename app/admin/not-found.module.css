@@ -1,4 +1,4 @@
-/* ==========================================================
+﻿/* ==========================================================
    Admin 404 Not Found Page
 ========================================================== */
 
@@ -18,8 +18,8 @@
     background:linear-gradient(
         135deg,
         #0f172a,
-        #1e3a8a,
-        #2563eb
+        #0F172A,
+        #0F172A
     );
 }
 
@@ -37,7 +37,7 @@ height:520px;
 
 border-radius:50%;
 
-background:rgba(59,130,246,.15);
+background:rgba(15, 23, 42,.15);
 
 top:-180px;
 
@@ -59,7 +59,7 @@ height:420px;
 
 border-radius:50%;
 
-background:rgba(249,115,22,.18);
+background:rgba(255, 153, 51,.18);
 
 left:-120px;
 
@@ -109,8 +109,8 @@ line-height:1;
 
 background:linear-gradient(
 135deg,
-#2563eb,
-#1d4ed8
+#0F172A,
+#060B16
 );
 
 -webkit-background-clip:text;
@@ -172,8 +172,8 @@ border-radius:14px;
 
 background:linear-gradient(
 135deg,
-#2563eb,
-#1d4ed8
+#0F172A,
+#060B16
 );
 
 color:white;
@@ -188,7 +188,7 @@ transition:.3s;
 
 transform:translateY(-2px);
 
-box-shadow:0 15px 30px rgba(37,99,235,.25);
+box-shadow:0 15px 30px rgba(15, 23, 42,.25);
 
 }
 

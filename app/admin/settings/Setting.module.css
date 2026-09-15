@@ -1,4 +1,4 @@
-/* ==========================================================
+﻿/* ==========================================================
    Admin Settings Page
 ========================================================== */
 
@@ -125,9 +125,9 @@
 
 .input:focus{
 
-    border-color:#2563eb;
+    border-color:#0F172A;
 
-    box-shadow:0 0 0 4px rgba(37,99,235,.12);
+    box-shadow:0 0 0 4px rgba(15, 23, 42,.12);
 
 }
 
@@ -193,7 +193,7 @@
 
     border-radius:14px;
 
-    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+    background:linear-gradient(135deg,#0F172A,#060B16);
 
     color:white;
 
@@ -211,7 +211,7 @@
 
     transform:translateY(-2px);
 
-    box-shadow:0 15px 30px rgba(37,99,235,.25);
+    box-shadow:0 15px 30px rgba(15, 23, 42,.25);
 
 }
 

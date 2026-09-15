@@ -7,6 +7,7 @@ import {
   LayoutDashboard,
   Users,
   IndianRupee,
+  ClipboardCheck,
   Mail,
   Bell,
   UserCircle2,
@@ -27,9 +28,14 @@ const menus = [
     icon: Users,
   },
   {
-    title: "Donations",
+    title: "Donation Settings",
     href: "/admin/donation",
     icon: IndianRupee,
+  },
+  {
+    title: "Donation Review",
+    href: "/admin/donations",
+    icon: ClipboardCheck,
   },
   {
     title: "Contact Messages",
@@ -48,7 +54,7 @@ const menus = [
   },
 ];
 
-export default function AdminSidebar() {
+export default function AdminSidebar({ open, onClose }) {
 
   const pathname = usePathname();
 
@@ -90,7 +96,18 @@ export default function AdminSidebar() {
 
   return (
 
-    <aside className={styles.sidebar}>
+    <>
+
+    {/* Mobile Overlay */}
+
+    {open && (
+      <div
+        className={styles.overlay}
+        onClick={onClose}
+      />
+    )}
+
+    <aside className={`${styles.sidebar} ${open ? styles.open : ""}`}>
 
       {/* Logo */}
 
@@ -125,6 +142,7 @@ export default function AdminSidebar() {
             <Link
               key={item.href}
               href={item.href}
+              onClick={onClose}
               className={`${styles.menuItem} ${
                 active ? styles.active : ""
               }`}
@@ -167,6 +185,8 @@ export default function AdminSidebar() {
       </div>
 
     </aside>
+
+    </>
 
   );
 

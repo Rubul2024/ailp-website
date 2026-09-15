@@ -1,4 +1,4 @@
-/* ==========================================================
+﻿/* ==========================================================
    Admin Login Page
 ========================================================== */
 
@@ -34,7 +34,7 @@ height:650px;
 
 border-radius:50%;
 
-background:rgba(37,99,235,.18);
+background:rgba(15, 23, 42,.18);
 
 top:-180px;
 
@@ -56,7 +56,7 @@ height:500px;
 
 border-radius:50%;
 
-background:rgba(249,115,22,.18);
+background:rgba(255, 153, 51,.18);
 
 bottom:-160px;
 
@@ -96,7 +96,7 @@ box-shadow:0 35px 80px rgba(0,0,0,.35);
 
 .left{
 
-background:linear-gradient(135deg,#1e3a8a,#2563eb);
+background:linear-gradient(135deg,#0F172A,#0F172A);
 
 color:white;
 
@@ -249,8 +249,8 @@ font-size:15px;
 }
 
 .input:focus{
-  border-color:#2563eb;
-  box-shadow:0 0 0 4px rgba(37,99,235,.12);
+  border-color:#0F172A;
+  box-shadow:0 0 0 4px rgba(15, 23, 42,.12);
 }
 
 /* Password */
@@ -271,8 +271,8 @@ font-size:15px;
 }
 
 .passwordInput:focus{
-  border-color:#2563eb;
-  box-shadow:0 0 0 4px rgba(37,99,235,.12);
+  border-color:#0F172A;
+  box-shadow:0 0 0 4px rgba(15, 23, 42,.12);
 }
 
 .eyeButton{
@@ -288,7 +288,7 @@ font-size:15px;
 }
 
 .eyeButton:hover{
-  color:#2563eb;
+  color:#0F172A;
 }
 
 /* Error */
@@ -309,7 +309,7 @@ font-size:15px;
   height:58px;
   border:none;
   border-radius:16px;
-  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  background:linear-gradient(135deg,#0F172A,#060B16);
   color:#ffffff;
   font-size:16px;
   font-weight:700;
@@ -319,7 +319,7 @@ font-size:15px;
 
 .loginButton:hover:not(:disabled){
   transform:translateY(-2px);
-  box-shadow:0 15px 35px rgba(37,99,235,.30);
+  box-shadow:0 15px 35px rgba(15, 23, 42,.30);
 }
 
 .loginButton:disabled{
@@ -337,7 +337,7 @@ font-size:15px;
 }
 
 .footer strong{
-  color:#2563eb;
+  color:#0F172A;
 }
 
 /* Responsive */

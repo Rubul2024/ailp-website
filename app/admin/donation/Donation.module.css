@@ -1,4 +1,4 @@
-/* ==========================================================
+﻿/* ==========================================================
    AILP Modern Executive Donation Design System
 ========================================================== */
 
@@ -252,8 +252,8 @@
 .inputWrap input:focus,
 .inputWrap textarea:focus {
   background: #ffffff;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+  border-color: #0F172A;
+  box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.12);
 }
 
 /* ==========================================================
@@ -278,16 +278,16 @@
 }
 
 .dropzone:hover {
-  background: #eff6ff;
-  border-color: #3b82f6;
+  background: #E7ECF5;
+  border-color: #0F172A;
 }
 
 .uploadIconCircle {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: #eff6ff;
-  color: #2563eb;
+  background: #E7ECF5;
+  color: #0F172A;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -378,12 +378,12 @@
 }
 
 .changeBtn {
-  color: #2563eb;
+  color: #0F172A;
 }
 
 .changeBtn:hover {
-  background: #eff6ff;
-  border-color: #93c5fd;
+  background: #E7ECF5;
+  border-color: #FF9933;
 }
 
 .removeBtn {
@@ -429,19 +429,19 @@
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  background: linear-gradient(135deg, #0F172A, #060B16);
   color: #ffffff;
   border: none;
   border-radius: 10px;
   font-size: 13.5px;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.25);
   transition: all 0.2s ease;
 }
 
 .saveBtn:hover:not(:disabled) {
-  background: linear-gradient(135deg, #1d4ed8, #1e40af);
+  background: linear-gradient(135deg, #060B16, #060B16);
   transform: translateY(-1px);
 }
 
@@ -486,7 +486,7 @@
   width: 200px;
   height: 200px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.15), transparent 70%);
+  background: radial-gradient(circle, rgba(15, 23, 42, 0.15), transparent 70%);
 }
 
 .bankCardHeader {
@@ -510,7 +510,7 @@
 }
 
 .cardChip {
-  color: #fbbf24;
+  color: #FF9933;
 }
 
 .cardMid label,
@@ -661,8 +661,8 @@
 }
 
 .copyBtn:hover {
-  background: #eff6ff;
-  color: #2563eb;
+  background: #E7ECF5;
+  color: #0F172A;
 }
 
 /* ==========================================================

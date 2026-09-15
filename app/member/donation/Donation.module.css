@@ -1,4 +1,4 @@
-/* ==========================================================
+﻿/* ==========================================================
    AILP MEMBER DONATION PORTAL - EXECUTIVE STYLESHEET
    Refined Royal Navy & Saffron Theme Architecture
 ========================================================== */
@@ -33,9 +33,9 @@
   gap: 6px;
   padding: 4px 10px;
   border-radius: 999px;
-  background: rgba(37, 99, 235, 0.08);
-  border: 1px solid rgba(37, 99, 235, 0.2);
-  color: #1d4ed8;
+  background: rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(15, 23, 42, 0.2);
+  color: #060B16;
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
@@ -104,8 +104,8 @@
   width: 48px;
   height: 48px;
   border-radius: 14px;
-  background: rgba(37, 99, 235, 0.1);
-  color: #2563eb;
+  background: rgba(15, 23, 42, 0.1);
+  color: #0F172A;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -168,15 +168,15 @@
 }
 
 .presetChip:hover {
-  border-color: #2563eb;
-  background: #eff6ff;
+  border-color: #0F172A;
+  background: #E7ECF5;
 }
 
 .activeChip {
-  background: #2563eb !important;
+  background: #0F172A !important;
   color: #ffffff !important;
-  border-color: #2563eb !important;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+  border-color: #0F172A !important;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.25);
 }
 
 /* Amount Input */
@@ -210,8 +210,8 @@
 }
 
 .amountInput:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3.5px rgba(37, 99, 235, 0.12);
+  border-color: #0F172A;
+  box-shadow: 0 0 0 3.5px rgba(15, 23, 42, 0.12);
 }
 
 /* Method Selector */
@@ -234,14 +234,14 @@
 }
 
 .methodCard:hover {
-  border-color: #93c5fd;
+  border-color: #FF9933;
   background: #ffffff;
 }
 
 .selectedMethod {
-  border-color: #2563eb !important;
-  background: #eff6ff !important;
-  box-shadow: 0 2px 10px rgba(37, 99, 235, 0.1);
+  border-color: #0F172A !important;
+  background: #E7ECF5 !important;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.1);
 }
 
 .methodIcon {
@@ -253,14 +253,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #2563eb;
+  color: #0F172A;
   flex-shrink: 0;
 }
 
 .selectedMethod .methodIcon {
-  background: #2563eb;
+  background: #0F172A;
   color: #ffffff;
-  border-color: #2563eb;
+  border-color: #0F172A;
 }
 
 .methodCard strong {
@@ -291,8 +291,8 @@
 
 .textInput:focus,
 .textareaInput:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3.5px rgba(37, 99, 235, 0.12);
+  border-color: #0F172A;
+  box-shadow: 0 0 0 3.5px rgba(15, 23, 42, 0.12);
 }
 
 .textareaInput {
@@ -309,20 +309,20 @@
   width: 100%;
   height: 52px;
   border-radius: 14px;
-  background: linear-gradient(135deg, #1d4ed8, #2563eb);
+  background: linear-gradient(135deg, #060B16, #0F172A);
   color: #ffffff;
   font-size: 15px;
   font-weight: 700;
   border: none;
   cursor: pointer;
-  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.35);
   transition: all 0.25s ease;
   margin-top: 6px;
 }
 
 .donateSubmitBtn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.45);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.45);
 }
 
 .donateSubmitBtn:disabled {
@@ -382,8 +382,8 @@
   gap: 8px;
   padding: 10px 14px;
   border-radius: 10px;
-  background: rgba(37, 99, 235, 0.08);
-  color: #1d4ed8;
+  background: rgba(15, 23, 42, 0.08);
+  color: #060B16;
   font-size: 12px;
   font-weight: 600;
   margin: 10px 0;
@@ -435,11 +435,11 @@
 }
 
 .blueIcon {
-  color: #2563eb;
+  color: #0F172A;
 }
 
 .saffronIcon {
-  color: #ea580c;
+  color: #E65100;
 }
 
 .recordStatsList {
@@ -464,7 +464,7 @@
 .recordTotalVal {
   font-size: 18px;
   font-weight: 800;
-  color: #2563eb;
+  color: #0F172A;
 }
 
 .monoToken {
@@ -481,51 +481,189 @@
   font-weight: 700;
 }
 
-/* Tax Benefit Card */
-.taxExemptionCard {
-  background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
-  border: 1.5px solid #fed7aa;
-  border-radius: 18px;
-  padding: 20px;
+/* ==========================================================
+   UPI QR / UTR / UPLOAD (manual verification flow)
+========================================================== */
+.inputLeadIcon {
+  color: #94a3b8;
+  flex-shrink: 0;
+}
+
+.textInputWithIcon {
+  width: 100%;
+  height: 48px;
+  padding: 0 16px 0 8px;
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  color: #0f172a;
+  outline: none;
+}
+
+.dropzone {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 26px 16px;
+  border: 2px dashed #cbd5e1;
+  border-radius: 14px;
+  background: #f8fafc;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dropzone:hover {
+  border-color: #FF9933;
+  color: #0F172A;
+}
+
+.dropzone span {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.dropzone small {
+  font-size: 11.5px;
+  color: #94a3b8;
+}
+
+.proofPreview {
+  position: relative;
+  overflow: hidden;
+  max-width: 240px;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+}
+
+.proofPreview img {
+  display: block;
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+}
+
+.removeProof {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.75);
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.formError {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #fef2f2;
+  color: #b91c1c;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.qrThumb {
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  margin: 4px auto 14px;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+}
+
+.upiCopyRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.copyIconBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #0F172A;
+  cursor: pointer;
+}
+
+.emptyHistory {
+  font-size: 13px;
+  color: #94a3b8;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.historyList {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
-.taxCardTop {
+.historyItem {
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid #f1f5f9;
 }
 
-.taxCardTop h4 {
-  font-size: 14.5px;
-  font-weight: 700;
-  color: #9a3412;
-  margin: 0 0 2px;
+.historyItem strong {
+  font-size: 14px;
+  color: #0f172a;
 }
 
-.taxCardTop p {
-  font-size: 12px;
-  color: #7c2d12;
-  margin: 0;
-  line-height: 1.45;
+.historyDate {
+  display: block;
+  font-size: 11px;
+  color: #94a3b8;
 }
 
-.taxBenefitDetail {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.detailPill {
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 9px;
+  border-radius: 999px;
   font-size: 11px;
   font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 6px;
-  background: rgba(234, 88, 12, 0.12);
-  color: #c2410c;
-  border: 1px solid rgba(234, 88, 12, 0.25);
+  white-space: nowrap;
+}
+
+.statusPending {
+  background: rgba(245, 158, 11, 0.12);
+  color: #b45309;
+}
+
+.statusVerified {
+  background: rgba(46, 125, 50, 0.12);
+  color: #1B5E20;
+}
+
+.statusRejected {
+  background: rgba(220, 38, 38, 0.12);
+  color: #b91c1c;
 }
 
 /* Central Office Address Card */
@@ -543,7 +681,7 @@
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 0.05em;
-  color: #2563eb;
+  color: #0F172A;
   text-transform: uppercase;
 }
 

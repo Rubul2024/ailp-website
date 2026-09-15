@@ -1,4 +1,4 @@
-/* ==========================================================
+﻿/* ==========================================================
    AILP ADMIN CONTACTS
 ========================================================== */
 
@@ -20,7 +20,7 @@
 }
 
 .eyebrow {
-  color: #2563eb;
+  color: #0F172A;
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 1.5px;
@@ -81,7 +81,7 @@
   justify-content: center;
   border-radius: 12px;
   background: #eef5ff;
-  color: #2563eb;
+  color: #0F172A;
 }
 
 .statCard span {
@@ -139,7 +139,7 @@
   border: none;
   border-radius: 9px;
   padding: 10px 16px;
-  background: #2563eb;
+  background: #0F172A;
   color: #fff;
   font-weight: 700;
   cursor: pointer;
@@ -163,8 +163,8 @@
 }
 
 .filters .filterActive {
-  background: #2563eb;
-  border-color: #2563eb;
+  background: #0F172A;
+  border-color: #0F172A;
   color: #fff;
 }
 
@@ -268,12 +268,12 @@
 
 .statusNew {
   background: #fff7ed;
-  color: #c2410c;
+  color: #E65100;
 }
 
 .statusRead {
-  background: #eff6ff;
-  color: #1d4ed8;
+  background: #E7ECF5;
+  color: #060B16;
 }
 
 .statusReplied {
@@ -304,7 +304,7 @@
   border: 1px solid #dbe3ee;
   border-radius: 9px;
   background: #fff;
-  color: #2563eb;
+  color: #0F172A;
   cursor: pointer;
 }
 
@@ -398,7 +398,7 @@
 }
 
 .drawerHeader span {
-  color: #2563eb;
+  color: #0F172A;
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 1px;
@@ -447,7 +447,7 @@
   align-items: center;
   gap: 8px;
   margin-top: 8px;
-  color: #2563eb;
+  color: #0F172A;
   text-decoration: none;
   font-size: 13px;
 }
@@ -526,8 +526,8 @@
 }
 
 .statusActions button:hover {
-  border-color: #2563eb;
-  color: #2563eb;
+  border-color: #0F172A;
+  color: #0F172A;
 }
 
 .drawerDelete {

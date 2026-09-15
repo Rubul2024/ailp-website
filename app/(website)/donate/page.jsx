@@ -4,8 +4,6 @@
    AILP DONATE PAGE
 ========================================================== */
 
-import Script from "next/script";
-
 import DonateHero from "@/components/donate/DonateHero/DonateHero";
 import DonationImpact from "@/components/donate/DonationImpact/DonationImpact";
 import DonationForm from "@/components/donate/DonationForm/DonationForm";
@@ -17,13 +15,6 @@ import styles from "./Donate.module.css";
 export default function DonatePage() {
   return (
     <main className={styles.page}>
-      {/* Razorpay Checkout */}
-
-      <Script
-        src="https://checkout.razorpay.com/v1/checkout.js"
-        strategy="afterInteractive"
-      />
-
       {/* ================================================
           HERO
       ================================================= */}
@@ -37,16 +28,16 @@ export default function DonatePage() {
       <DonationImpact />
 
       {/* ================================================
-          ONLINE DONATION
-      ================================================= */}
-
-      <DonationForm />
-
-      {/* ================================================
-          OFFLINE DONATION
+          STEP 1 — HOW TO PAY (UPI QR / Bank details)
       ================================================= */}
 
       <DonationOffline />
+
+      {/* ================================================
+          STEP 2 — CONFIRM CONTRIBUTION (proof upload)
+      ================================================= */}
+
+      <DonationForm />
 
       {/* ================================================
           NOTICE

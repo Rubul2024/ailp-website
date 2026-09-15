@@ -1,4 +1,4 @@
-/* ==========================================================
+﻿/* ==========================================================
    Hero Section
 ========================================================== */
 
@@ -20,14 +20,14 @@
 
     background:linear-gradient(
         135deg,
-        #2563eb,
-        #1d4ed8,
-        #4f46e5
+        #0F172A,
+        #060B16,
+        #060B16
     );
 
     color:#ffffff;
 
-    box-shadow:0 20px 50px rgba(37,99,235,.18);
+    box-shadow:0 20px 50px rgba(15, 23, 42,.18);
 
 }
 
@@ -111,7 +111,7 @@
 
     background:#ffffff;
 
-    color:#2563eb;
+    color:#0F172A;
 
     font-size:28px;
 
@@ -243,7 +243,7 @@
 
 .inputGroup label svg{
 
-    color:#2563eb;
+    color:#0F172A;
 
     flex-shrink:0;
 
@@ -296,9 +296,9 @@
 .inputGroup select:focus,
 .inputGroup textarea:focus{
 
-    border-color:#2563eb;
+    border-color:#0F172A;
 
-    box-shadow:0 0 0 4px rgba(37,99,235,.10);
+    box-shadow:0 0 0 4px rgba(15, 23, 42,.10);
 
 }
 
@@ -328,8 +328,8 @@
 
     background:linear-gradient(
         135deg,
-        #2563eb,
-        #1d4ed8
+        #0F172A,
+        #060B16
     );
 
     color:#ffffff;
@@ -348,7 +348,7 @@
 
     transform:translateY(-2px);
 
-    box-shadow:0 18px 40px rgba(37,99,235,.25);
+    box-shadow:0 18px 40px rgba(15, 23, 42,.25);
 
 }
 
@@ -390,7 +390,7 @@
 
 .uploadCard:hover{
 
-    border-color:#2563eb;
+    border-color:#0F172A;
 
     background:#f8fbff;
 
@@ -548,7 +548,7 @@ transition:.35s;
 
 .uploadCard:hover{
 
-border-color:#2563eb;
+border-color:#0F172A;
 
 background:#f8fbff;
 
@@ -574,9 +574,9 @@ align-items:center;
 
 border-radius:50%;
 
-background:#eff6ff;
+background:#E7ECF5;
 
-color:#2563eb;
+color:#0F172A;
 
 }
 
@@ -684,7 +684,7 @@ padding:14px 22px;
 
 border-radius:14px;
 
-background:#2563eb;
+background:#0F172A;
 
 color:#ffffff;
 
@@ -698,7 +698,7 @@ transition:.3s;
 
 .uploadButton:hover{
 
-background:#1d4ed8;
+background:#060B16;
 
 }
 
@@ -770,9 +770,9 @@ padding:16px;
 
 border-radius:50%;
 
-background:#eff6ff;
+background:#E7ECF5;
 
-color:#2563eb;
+color:#0F172A;
 
 }
 
@@ -818,8 +818,8 @@ border-radius:18px;
 
 background:linear-gradient(
 135deg,
-#2563eb,
-#1d4ed8
+#0F172A,
+#060B16
 );
 
 color:#ffffff;
@@ -838,7 +838,7 @@ transition:.35s;
 
 transform:translateY(-2px);
 
-box-shadow:0 18px 35px rgba(37,99,235,.30);
+box-shadow:0 18px 35px rgba(15, 23, 42,.30);
 
 }
 

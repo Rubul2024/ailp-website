@@ -1,4 +1,4 @@
-/* ==========================================================
+﻿/* ==========================================================
    MEMBER TOP HEADER STYLESHEET
 ========================================================== */
 
@@ -17,11 +17,41 @@
   box-sizing: border-box;
 }
 
+/* Left Group */
+.headerLeftGroup {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.menuButton {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.menuButton:hover {
+  background: #E7ECF5;
+  color: #0F172A;
+  border-color: #cbd5e1;
+}
+
 /* Left Title */
 .headerLeft {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  min-width: 0;
 }
 
 .pageTitle {
@@ -33,7 +63,7 @@
 }
 
 .blueAccent {
-  color: #2563eb;
+  color: #0F172A;
 }
 
 .dateRow {
@@ -75,8 +105,8 @@
 
 .searchInput:focus {
   background: #ffffff;
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  border-color: #0F172A;
+  box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1);
 }
 
 /* Right Controls */
@@ -102,9 +132,9 @@
 }
 
 .bellBtn:hover {
-  background: #eff6ff;
-  color: #2563eb;
-  border-color: #bfdbfe;
+  background: #E7ECF5;
+  color: #0F172A;
+  border-color: #cbd5e1;
 }
 
 .badgeCount {
@@ -150,7 +180,7 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: #1e3a8a;
+  background: #0F172A;
   color: #ffffff;
   font-size: 12px;
   font-weight: 700;
@@ -240,7 +270,7 @@
   align-items: center;
   gap: 4px;
   font-size: 11px;
-  color: #2563eb;
+  color: #0F172A;
   font-weight: 600;
 }
 
@@ -265,7 +295,7 @@
 
 .menuItem:hover {
   background: #f1f5f9;
-  color: #2563eb;
+  color: #0F172A;
 }
 
 .dropdownFooter {
@@ -294,12 +324,28 @@
 }
 
 /* Responsive */
+@media (max-width: 900px) {
+  .menuButton {
+    display: flex;
+  }
+}
+
 @media (max-width: 840px) {
   .searchContainer {
     display: none;
   }
 
   .userInfo {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .pageTitle {
+    font-size: 15px;
+  }
+
+  .dateRow span {
     display: none;
   }
 }

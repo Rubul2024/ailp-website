@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { usePathname } from "next/navigation";
 
 import AdminSidebar from "@/components/admin/AdminSidebar";
@@ -9,6 +10,7 @@ import styles from "./AdminLayout.module.css";
 
 export default function AdminLayout({ children }) {
   const pathname = usePathname();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   /* ==========================================================
      LOGIN PAGE
@@ -35,8 +37,13 @@ export default function AdminLayout({ children }) {
     },
 
     "/admin/donation": {
-      title: "Donations",
-      subtitle: "Manage donation information",
+      title: "Donation Settings",
+      subtitle: "Manage UPI, bank & QR details",
+    },
+
+    "/admin/donations": {
+      title: "Donation Review",
+      subtitle: "Verify manual UPI contributions",
     },
 
     "/admin/contact": {
@@ -71,7 +78,10 @@ export default function AdminLayout({ children }) {
           SIDEBAR
       ====================================================== */}
 
-      <AdminSidebar />
+      <AdminSidebar
+        open={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+      />
 
       {/* ======================================================
           MAIN CONTENT AREA
@@ -82,6 +92,7 @@ export default function AdminLayout({ children }) {
         <AdminHeader
           title={page.title}
           subtitle={page.subtitle}
+          onMenuClick={() => setSidebarOpen((previous) => !previous)}
         />
 
         {/* Page Content */}

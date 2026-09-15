@@ -24,7 +24,10 @@ export async function GET(request) {
       totalContacts,
       recentMembers,
       recentContacts,
-      donationSummary
+      recentDonations,
+      totalDonations,
+      pendingDonations,
+      revenueAgg,
     ] = await Promise.all([
       Member.countDocuments(),
       Member.countDocuments({ status: "Active" }),
@@ -37,12 +40,17 @@ export async function GET(request) {
         .sort({ createdAt: -1 })
         .limit(5)
         .select("name email subject message createdAt isRead"),
-      Donation.find().sort({ createdAt: -1 }).limit(5)
+      Donation.find().sort({ createdAt: -1 }).limit(5),
+      Donation.countDocuments({ status: "verified" }),
+      Donation.countDocuments({ status: "pending" }),
+      Donation.aggregate([
+        { $match: { status: "verified" } },
+        { $group: { _id: null, total: { $sum: "$amount" } } },
+      ]),
     ]);
 
     // Compute metrics
-    const totalDonations = donationSummary.length;
-    const totalRevenue = donationSummary.reduce((acc, curr) => acc + (Number(curr.amount) || 0), 0);
+    const totalRevenue = revenueAgg[0]?.total || 0;
 
     return NextResponse.json({
       success: true,
@@ -51,12 +59,13 @@ export async function GET(request) {
         activeMembers,
         totalContacts,
         totalDonations,
+        pendingDonations,
         totalRevenue,
       },
       feeds: {
         recentMembers,
         recentContacts,
-        recentDonations: donationSummary,
+        recentDonations,
       },
       serverTime: new Date().toISOString(),
     });

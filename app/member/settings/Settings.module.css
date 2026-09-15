@@ -1,4 +1,4 @@
-/* ==========================================================
+﻿/* ==========================================================
    AILP MEMBER SETTINGS - EXECUTIVE STYLESHEET
 ========================================================== */
 
@@ -32,9 +32,9 @@
   gap: 6px;
   padding: 4px 10px;
   border-radius: 999px;
-  background: rgba(37, 99, 235, 0.08);
-  border: 1px solid rgba(37, 99, 235, 0.2);
-  color: #1d4ed8;
+  background: rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(15, 23, 42, 0.2);
+  color: #060B16;
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
@@ -99,13 +99,13 @@
 }
 
 .activeTab {
-  background: #eff6ff !important;
-  border-color: #bfdbfe !important;
-  color: #1d4ed8 !important;
+  background: #E7ECF5 !important;
+  border-color: #cbd5e1 !important;
+  color: #060B16 !important;
 }
 
 .activeTab .tabIcon {
-  background: #1d4ed8;
+  background: #060B16;
   color: #ffffff;
 }
 
@@ -180,8 +180,8 @@
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  background: rgba(37, 99, 235, 0.1);
-  color: #2563eb;
+  background: rgba(15, 23, 42, 0.1);
+  color: #0F172A;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -264,8 +264,8 @@
 }
 
 .textInput:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3.5px rgba(37, 99, 235, 0.12);
+  border-color: #0F172A;
+  box-shadow: 0 0 0 3.5px rgba(15, 23, 42, 0.12);
 }
 
 .eyeBtn {
@@ -292,13 +292,13 @@
   height: 48px;
   padding: 0 24px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #1d4ed8, #2563eb);
+  background: linear-gradient(135deg, #060B16, #0F172A);
   color: #ffffff;
   font-size: 14.5px;
   font-weight: 700;
   border: none;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.25);
   transition: all 0.2s ease;
   align-self: flex-start;
   margin-top: 6px;
@@ -306,7 +306,7 @@
 
 .primaryActionBtn:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.35);
 }
 
 /* Notification Toggles */
@@ -341,7 +341,7 @@
 .switchCheckbox {
   width: 20px;
   height: 20px;
-  accent-color: #2563eb;
+  accent-color: #0F172A;
   cursor: pointer;
 }
 
@@ -378,7 +378,7 @@
 
 .monoHighlight {
   font-family: monospace;
-  color: #1d4ed8 !important;
+  color: #060B16 !important;
 }
 
 .statusPill {
@@ -396,13 +396,13 @@
   gap: 16px;
   padding: 18px;
   border-radius: 14px;
-  background: rgba(37, 99, 235, 0.05);
-  border: 1px solid rgba(37, 99, 235, 0.15);
+  background: rgba(15, 23, 42, 0.05);
+  border: 1px solid rgba(15, 23, 42, 0.15);
   flex-wrap: wrap;
 }
 
 .profileRedirectCard svg {
-  color: #2563eb;
+  color: #0F172A;
   flex-shrink: 0;
 }
 
@@ -414,7 +414,7 @@
 .profileRedirectCard h4 {
   font-size: 13.5px;
   font-weight: 700;
-  color: #1e3a8a;
+  color: #0F172A;
   margin: 0 0 2px;
 }
 
@@ -430,7 +430,7 @@
   gap: 6px;
   padding: 8px 16px;
   border-radius: 10px;
-  background: #1d4ed8;
+  background: #060B16;
   color: #ffffff;
   font-size: 12.5px;
   font-weight: 700;
@@ -512,8 +512,8 @@
 .spinner {
   width: 40px;
   height: 40px;
-  border: 3.5px solid rgba(37, 99, 235, 0.15);
-  border-top-color: #2563eb;
+  border: 3.5px solid rgba(15, 23, 42, 0.15);
+  border-top-color: #0F172A;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }

@@ -1,4 +1,4 @@
-/* ==========================================================
+﻿/* ==========================================================
    AILP Executive Dashboard Design System
 ========================================================== */
 
@@ -140,10 +140,10 @@
 }
 
 /* Color Accent Left Bars */
-.statBlue::before { background: linear-gradient(180deg, #3b82f6, #1d4ed8); }
+.statBlue::before { background: linear-gradient(180deg, #0F172A, #060B16); }
 .statGreen::before { background: linear-gradient(180deg, #10b981, #047857); }
 .statOrange::before { background: linear-gradient(180deg, #f59e0b, #d97706); }
-.statPurple::before { background: linear-gradient(180deg, #8b5cf6, #6d28d9); }
+.statPurple::before { background: linear-gradient(180deg, #2E7D32, #1B5E20); }
 
 .statContent {
   display: flex;
@@ -183,10 +183,10 @@
   flex-shrink: 0;
 }
 
-.statBlue .statIconBadge { background: #eff6ff; color: #2563eb; }
+.statBlue .statIconBadge { background: #E7ECF5; color: #0F172A; }
 .statGreen .statIconBadge { background: #ecfdf5; color: #059669; }
 .statOrange .statIconBadge { background: #fffbeb; color: #d97706; }
-.statPurple .statIconBadge { background: #f5f3ff; color: #7c3aed; }
+.statPurple .statIconBadge { background: #f5f3ff; color: #1B5E20; }
 
 /* ==========================================================
    Quick Bar
@@ -234,9 +234,9 @@
 }
 
 .quickLink:hover {
-  background: #eff6ff;
-  border-color: #93c5fd;
-  color: #2563eb;
+  background: #E7ECF5;
+  border-color: #FF9933;
+  color: #0F172A;
   transform: translateY(-1px);
 }
 
@@ -283,7 +283,7 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  color: #2563eb;
+  color: #0F172A;
   font-size: 13px;
   font-weight: 600;
   text-decoration: none;
@@ -335,7 +335,7 @@
   width: 34px;
   height: 34px;
   border-radius: 10px;
-  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  background: linear-gradient(135deg, #0F172A, #060B16);
   color: #ffffff;
   font-weight: 700;
   font-size: 13px;
@@ -346,7 +346,7 @@
 }
 
 .avatarPurple {
-  background: linear-gradient(135deg, #8b5cf6, #d946ef);
+  background: linear-gradient(135deg, #2E7D32, #E65100);
 }
 
 .userName {
@@ -386,7 +386,7 @@
 
 .locationMeta small {
   font-size: 11.5px;
-  color: #3b82f6;
+  color: #0F172A;
   font-weight: 600;
 }
 

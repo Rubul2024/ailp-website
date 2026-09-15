@@ -1,4 +1,4 @@
-.section {
+﻿.section {
   background: #ffffff;
 }
 
@@ -25,7 +25,7 @@
 }
 
 .intro > span {
-  color: #2563eb;
+  color: #0F172A;
 
   font-size: 13px;
 
@@ -45,7 +45,7 @@
 }
 
 .intro h2 strong {
-  color: #2563eb;
+  color: #0F172A;
 }
 
 .intro > p {
@@ -65,13 +65,13 @@
 
   padding: 20px;
 
-  border: 1px solid #dbeafe;
+  border: 1px solid #E8F5E9;
 
   border-radius: 18px;
 
   background: #f8fbff;
 
-  color: #2563eb;
+  color: #0F172A;
 }
 
 .security svg {
@@ -157,21 +157,21 @@
 }
 
 .amountGrid button:hover {
-  border-color: #2563eb;
+  border-color: #0F172A;
 
-  color: #2563eb;
+  color: #0F172A;
 }
 
 .amountGrid button.selectedAmount {
-  border-color: #2563eb;
+  border-color: #0F172A;
 
-  background: #2563eb;
+  background: #0F172A;
 
   color: #ffffff;
 
   box-shadow:
     0 10px 20px
-    rgba(37, 99, 235, 0.2);
+    rgba(15, 23, 42, 0.2);
 }
 
 .customAmount {
@@ -193,11 +193,11 @@
 }
 
 .customAmount:focus-within {
-  border-color: #2563eb;
+  border-color: #0F172A;
 
   box-shadow:
     0 0 0 3px
-    rgba(37, 99, 235, 0.08);
+    rgba(15, 23, 42, 0.08);
 }
 
 .customAmount input {
@@ -256,11 +256,11 @@
 }
 
 .input:focus-within {
-  border-color: #2563eb;
+  border-color: #0F172A;
 
   box-shadow:
     0 0 0 3px
-    rgba(37, 99, 235, 0.08);
+    rgba(15, 23, 42, 0.08);
 }
 
 .input input {
@@ -317,7 +317,7 @@
   background:
     linear-gradient(
       135deg,
-      #ff7a00,
+      #FF9933,
       #ff9f1a
     );
 
@@ -375,6 +375,166 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.uploadField {
+  margin-top: 22px;
+}
+
+.uploadField > label {
+  display: block;
+
+  margin-bottom: 10px;
+
+  color: #334155;
+
+  font-size: 13px;
+
+  font-weight: 700;
+}
+
+.dropzone {
+  display: flex;
+
+  width: 100%;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 6px;
+
+  padding: 30px 16px;
+
+  border: 2px dashed #dbe4f0;
+
+  border-radius: 16px;
+
+  background: #f8fbff;
+
+  color: #64748b;
+
+  cursor: pointer;
+
+  transition: 0.25s;
+}
+
+.dropzone:hover {
+  border-color: #FF9933;
+
+  color: #0F172A;
+}
+
+.dropzone span {
+  font-size: 14px;
+
+  font-weight: 700;
+
+  color: #0f172a;
+}
+
+.dropzone small {
+  font-size: 12px;
+
+  color: #94a3b8;
+}
+
+.proofPreview {
+  position: relative;
+
+  overflow: hidden;
+
+  max-width: 260px;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 16px;
+}
+
+.proofPreview img {
+  display: block;
+
+  width: 100%;
+
+  max-height: 260px;
+
+  object-fit: cover;
+}
+
+.removeProof {
+  position: absolute;
+
+  top: 8px;
+
+  right: 8px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 30px;
+
+  height: 30px;
+
+  border: none;
+
+  border-radius: 50%;
+
+  background: rgba(15, 23, 42, 0.75);
+
+  color: #ffffff;
+
+  cursor: pointer;
+}
+
+.successCard {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 14px;
+
+  max-width: 560px;
+
+  margin: 0 auto;
+
+  padding: 60px 30px;
+
+  border-radius: 28px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  box-shadow: 0 25px 70px rgba(15, 23, 42, 0.08);
+
+  text-align: center;
+
+  color: #2E7D32;
+}
+
+.successCard h2 {
+  color: #0f172a;
+
+  font-size: 26px;
+}
+
+.successCard p {
+  color: #64748b;
+
+  font-size: 15px;
+
+  line-height: 1.7;
+}
+
+.successCard .submit {
+  max-width: 320px;
 }
 
 @media (max-width: 950px) {

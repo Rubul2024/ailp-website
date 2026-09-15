@@ -1,4 +1,4 @@
-/* ==========================================================
+﻿/* ==========================================================
    AILP Modern Executive Admin Profile Design System
 ========================================================== */
 
@@ -125,14 +125,14 @@
   width: 76px;
   height: 76px;
   border-radius: 20px;
-  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  background: linear-gradient(135deg, #0F172A, #060B16);
   color: #ffffff;
   font-size: 32px;
   font-weight: 800;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.35);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.35);
   border: 2px solid rgba(255, 255, 255, 0.2);
   margin-bottom: 12px;
 }
@@ -158,9 +158,9 @@
   margin-top: 14px;
   padding: 5px 12px;
   border-radius: 20px;
-  background: rgba(59, 130, 246, 0.2);
+  background: rgba(15, 23, 42, 0.2);
   border: 1px solid rgba(96, 165, 250, 0.3);
-  color: #93c5fd;
+  color: #FF9933;
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
@@ -304,8 +304,8 @@
 
 .inputWrap input:focus {
   background: #ffffff;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+  border-color: #0F172A;
+  box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.12);
 }
 
 .disabledInput {
@@ -365,19 +365,19 @@
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  background: linear-gradient(135deg, #0F172A, #060B16);
   color: #ffffff;
   border: none;
   border-radius: 10px;
   font-size: 13.5px;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.25);
   transition: all 0.2s ease;
 }
 
 .saveBtn:hover:not(:disabled) {
-  background: linear-gradient(135deg, #1d4ed8, #1e40af);
+  background: linear-gradient(135deg, #060B16, #060B16);
   transform: translateY(-1px);
 }
 

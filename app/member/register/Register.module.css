@@ -1,4 +1,4 @@
-/* ==========================================================
+﻿/* ==========================================================
    Register Page
 ========================================================== */
 
@@ -46,7 +46,7 @@ box-shadow:0 35px 80px rgba(15,23,42,.12);
 
 position:relative;
 
-background:linear-gradient(135deg,#0f172a,#1e40af,#2563eb);
+background:linear-gradient(135deg,#0f172a,#060B16,#0F172A);
 
 color:white;
 
@@ -106,7 +106,7 @@ border-radius:22px;
 
 background:white;
 
-color:#2563eb;
+color:#0F172A;
 
 font-size:34px;
 
@@ -118,7 +118,7 @@ margin-bottom:35px;
 
 .logo span{
 
-color:#ea580c;
+color:#E65100;
 
 }
 

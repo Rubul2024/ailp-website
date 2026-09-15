@@ -1,4 +1,4 @@
-/* ==========================================================
+﻿/* ==========================================================
    Admin Sidebar
 ========================================================== */
 
@@ -46,7 +46,7 @@
 
 .logo span {
 
-  color: #f97316;
+  color: #FF9933;
 
 }
 
@@ -100,11 +100,11 @@
 
 .active {
 
-  background: rgba(37,99,235,.18);
+  background: rgba(255, 153, 51,.18);
 
   color: #ffffff;
 
-  border-left: 4px solid #3b82f6;
+  border-left: 4px solid #FF9933;
 
 }
 
@@ -168,6 +168,16 @@
 
   background: #b91c1c;
 
+}
+
+/* Mobile Overlay */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(3px);
+  z-index: 999;
 }
 
 /* Responsive */
