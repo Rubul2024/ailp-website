@@ -46,7 +46,7 @@
   height: 100%;
 }
 
-.statBlue::before { background: linear-gradient(180deg, #0F172A, #060B16); }
+.statBlue::before { background: linear-gradient(180deg, #0F5C5C, #060B16); }
 .statOrange::before { background: linear-gradient(180deg, #f59e0b, #d97706); }
 .statGreen::before { background: linear-gradient(180deg, #10b981, #047857); }
 
@@ -88,7 +88,7 @@
   flex-shrink: 0;
 }
 
-.statBlue .statIconBadge { background: #E7ECF5; color: #0F172A; }
+.statBlue .statIconBadge { background: rgba(0, 128, 128, 0.12); color: #0F5C5C; }
 .statOrange .statIconBadge { background: #fffbeb; color: #d97706; }
 .statGreen .statIconBadge { background: #ecfdf5; color: #059669; }
 
@@ -136,7 +136,7 @@
 
 .searchInput:focus {
   background: #ffffff;
-  border-color: #0F172A;
+  border-color: #0F5C5C;
   box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.12);
 }
 
@@ -170,7 +170,7 @@
 }
 
 .customSelect:focus {
-  border-color: #0F172A;
+  border-color: #0F5C5C;
   box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1);
 }
 
@@ -284,7 +284,7 @@
 }
 
 .avatarUnread {
-  background: linear-gradient(135deg, #0F172A, #060B16);
+  background: linear-gradient(135deg, #0F5C5C, #060B16);
 }
 
 .senderName {
@@ -554,7 +554,7 @@
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #0F172A, #060B16);
+  background: linear-gradient(135deg, #0F5C5C, #060B16);
   color: #ffffff;
   font-size: 18px;
   font-weight: 800;
@@ -632,7 +632,7 @@
   align-items: center;
   gap: 6px;
   padding: 9px 18px;
-  background: #0F172A;
+  background: #0F5C5C;
   color: #ffffff;
   text-decoration: none;
   border-radius: 8px;

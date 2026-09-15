@@ -14,8 +14,8 @@
     background:linear-gradient(
         135deg,
         #0f172a,
-        #0F172A,
-        #0F172A
+        #0F5C5C,
+        #0F5C5C
     );
 }
 
@@ -53,7 +53,7 @@
 
     border:6px solid #E8F5E9;
 
-    border-top-color:#0F172A;
+    border-top-color:#0F5C5C;
 
     animation:spin 1s linear infinite;
 
@@ -115,8 +115,8 @@
 
     background:linear-gradient(
         90deg,
-        #0F172A,
-        #0F172A
+        #0F5C5C,
+        #0F5C5C
     );
 
     animation:progress 1.8s infinite;

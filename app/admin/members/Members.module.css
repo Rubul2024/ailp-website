@@ -48,7 +48,7 @@
   height: 100%;
 }
 
-.statBlue::before { background: linear-gradient(180deg, #0F172A, #060B16); }
+.statBlue::before { background: linear-gradient(180deg, #0F5C5C, #060B16); }
 .statGreen::before { background: linear-gradient(180deg, #10b981, #047857); }
 .statOrange::before { background: linear-gradient(180deg, #f59e0b, #d97706); }
 .statPurple::before { background: linear-gradient(180deg, #2E7D32, #1B5E20); }
@@ -89,7 +89,7 @@
   justify-content: center;
 }
 
-.statBlue .statIconBadge { background: #E7ECF5; color: #0F172A; }
+.statBlue .statIconBadge { background: rgba(0, 128, 128, 0.12); color: #0F5C5C; }
 .statGreen .statIconBadge { background: #ecfdf5; color: #059669; }
 .statOrange .statIconBadge { background: #fffbeb; color: #d97706; }
 .statPurple .statIconBadge { background: #f5f3ff; color: #1B5E20; }
@@ -140,7 +140,7 @@
 
 .searchInput:focus {
   background: #ffffff;
-  border-color: #0F172A;
+  border-color: #0F5C5C;
   box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.12);
 }
 
@@ -175,7 +175,7 @@
 }
 
 .customSelect:focus {
-  border-color: #0F172A;
+  border-color: #0F5C5C;
   box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1);
 }
 
@@ -325,7 +325,7 @@
   width: 100%;
   height: 100%;
   border-radius: 12px;
-  background: linear-gradient(135deg, #0F172A, #060B16);
+  background: linear-gradient(135deg, #0F5C5C, #060B16);
   color: #ffffff;
   font-weight: 700;
   font-size: 16px;
@@ -400,7 +400,7 @@
 
 .stateBadge {
   font-size: 11.5px;
-  color: #0F172A;
+  color: #0F5C5C;
   font-weight: 600;
 }
 
@@ -621,7 +621,7 @@
   height: 64px;
   border-radius: 16px;
   overflow: hidden;
-  background: linear-gradient(135deg, #0F172A, #060B16);
+  background: linear-gradient(135deg, #0F5C5C, #060B16);
   color: #ffffff;
   font-size: 24px;
   font-weight: 800;
@@ -728,7 +728,7 @@
   height: 32px;
   border-radius: 8px;
   background: #ffffff;
-  color: #0F172A;
+  color: #0F5C5C;
   display: flex;
   align-items: center;
   justify-content: center;

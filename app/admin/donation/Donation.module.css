@@ -252,7 +252,7 @@
 .inputWrap input:focus,
 .inputWrap textarea:focus {
   background: #ffffff;
-  border-color: #0F172A;
+  border-color: #0F5C5C;
   box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.12);
 }
 
@@ -278,16 +278,16 @@
 }
 
 .dropzone:hover {
-  background: #E7ECF5;
-  border-color: #0F172A;
+  background: rgba(0, 128, 128, 0.12);
+  border-color: #0F5C5C;
 }
 
 .uploadIconCircle {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: #E7ECF5;
-  color: #0F172A;
+  background: rgba(0, 128, 128, 0.12);
+  color: #0F5C5C;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -378,11 +378,11 @@
 }
 
 .changeBtn {
-  color: #0F172A;
+  color: #0F5C5C;
 }
 
 .changeBtn:hover {
-  background: #E7ECF5;
+  background: rgba(0, 128, 128, 0.12);
   border-color: #FF9933;
 }
 
@@ -429,7 +429,7 @@
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  background: linear-gradient(135deg, #0F172A, #060B16);
+  background: linear-gradient(135deg, #0F5C5C, #060B16);
   color: #ffffff;
   border: none;
   border-radius: 10px;
@@ -661,8 +661,8 @@
 }
 
 .copyBtn:hover {
-  background: #E7ECF5;
-  color: #0F172A;
+  background: rgba(0, 128, 128, 0.12);
+  color: #0F5C5C;
 }
 
 /* ==========================================================

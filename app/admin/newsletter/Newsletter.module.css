@@ -46,7 +46,7 @@
   height: 100%;
 }
 
-.statBlue::before { background: linear-gradient(180deg, #0F172A, #060B16); }
+.statBlue::before { background: linear-gradient(180deg, #0F5C5C, #060B16); }
 .statGreen::before { background: linear-gradient(180deg, #10b981, #047857); }
 .statOrange::before { background: linear-gradient(180deg, #f59e0b, #d97706); }
 
@@ -88,7 +88,7 @@
   flex-shrink: 0;
 }
 
-.statBlue .statIconBadge { background: #E7ECF5; color: #0F172A; }
+.statBlue .statIconBadge { background: rgba(0, 128, 128, 0.12); color: #0F5C5C; }
 .statGreen .statIconBadge { background: #ecfdf5; color: #059669; }
 .statOrange .statIconBadge { background: #fffbeb; color: #d97706; }
 
@@ -136,7 +136,7 @@
 
 .searchInput:focus {
   background: #ffffff;
-  border-color: #0F172A;
+  border-color: #0F5C5C;
   box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.12);
 }
 
@@ -171,7 +171,7 @@
 }
 
 .customSelect:focus {
-  border-color: #0F172A;
+  border-color: #0F5C5C;
   box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1);
 }
 
@@ -300,8 +300,8 @@
   width: 32px;
   height: 32px;
   border-radius: 8px;
-  background: #E7ECF5;
-  color: #0F172A;
+  background: rgba(0, 128, 128, 0.12);
+  color: #0F5C5C;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -100,6 +100,14 @@
   align-items: start;
 }
 
+/* Right Column Wrapper */
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
 /* Left ID Card */
 .idCard {
   background: #ffffff;
@@ -125,7 +133,7 @@
   width: 76px;
   height: 76px;
   border-radius: 20px;
-  background: linear-gradient(135deg, #0F172A, #060B16);
+  background: linear-gradient(135deg, #0F5C5C, #060B16);
   color: #ffffff;
   font-size: 32px;
   font-weight: 800;
@@ -304,7 +312,7 @@
 
 .inputWrap input:focus {
   background: #ffffff;
-  border-color: #0F172A;
+  border-color: #0F5C5C;
   box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.12);
 }
 
@@ -365,7 +373,7 @@
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  background: linear-gradient(135deg, #0F172A, #060B16);
+  background: linear-gradient(135deg, #0F5C5C, #060B16);
   color: #ffffff;
   border: none;
   border-radius: 10px;

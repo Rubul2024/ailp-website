@@ -46,19 +46,19 @@
   align-items: center;
   gap: 8px;
   padding: 9px 18px;
-  background: #0f172a;
+  background: #0F5C5C;
   color: #ffffff;
   border: none;
   border-radius: 10px;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+  box-shadow: 0 4px 12px rgba(0, 128, 128, 0.22);
   transition: all 0.2s ease;
 }
 
 .refreshBtn:hover:not(:disabled) {
-  background: #1e293b;
+  background: #0a4747;
   transform: translateY(-1px);
 }
 
@@ -140,7 +140,7 @@
 }
 
 /* Color Accent Left Bars */
-.statBlue::before { background: linear-gradient(180deg, #0F172A, #060B16); }
+.statBlue::before { background: linear-gradient(180deg, #0F5C5C, #0a4747); }
 .statGreen::before { background: linear-gradient(180deg, #10b981, #047857); }
 .statOrange::before { background: linear-gradient(180deg, #f59e0b, #d97706); }
 .statPurple::before { background: linear-gradient(180deg, #2E7D32, #1B5E20); }
@@ -183,7 +183,7 @@
   flex-shrink: 0;
 }
 
-.statBlue .statIconBadge { background: #E7ECF5; color: #0F172A; }
+.statBlue .statIconBadge { background: rgba(0, 128, 128, 0.12); color: #0F5C5C; }
 .statGreen .statIconBadge { background: #ecfdf5; color: #059669; }
 .statOrange .statIconBadge { background: #fffbeb; color: #d97706; }
 .statPurple .statIconBadge { background: #f5f3ff; color: #1B5E20; }
@@ -234,9 +234,9 @@
 }
 
 .quickLink:hover {
-  background: #E7ECF5;
-  border-color: #FF9933;
-  color: #0F172A;
+  background: rgba(0, 128, 128, 0.1);
+  border-color: #0F5C5C;
+  color: #0F5C5C;
   transform: translateY(-1px);
 }
 
@@ -283,7 +283,7 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  color: #0F172A;
+  color: #0F5C5C;
   font-size: 13px;
   font-weight: 600;
   text-decoration: none;
@@ -335,7 +335,7 @@
   width: 34px;
   height: 34px;
   border-radius: 10px;
-  background: linear-gradient(135deg, #0F172A, #060B16);
+  background: linear-gradient(135deg, #0F5C5C, #0a4747);
   color: #ffffff;
   font-weight: 700;
   font-size: 13px;
@@ -386,7 +386,7 @@
 
 .locationMeta small {
   font-size: 11.5px;
-  color: #0F172A;
+  color: #0F5C5C;
   font-weight: 600;
 }
 
