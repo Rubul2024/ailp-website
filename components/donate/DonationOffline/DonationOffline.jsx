@@ -46,13 +46,14 @@ export default function DonationOffline() {
     );
   }
 
-  const bankName = settings?.bankName || "State Bank of India";
-  const accountHolder = settings?.accountHolder || "ALL INDIA LABOUR PARTY";
-  const accountNumber = settings?.accountNumber || "20370176285";
-  const ifscCode = settings?.ifscCode || "SBIN0000058";
+  const bankName = settings?.bankName || "";
+  const accountHolder = settings?.accountHolder || "";
+  const accountNumber = settings?.accountNumber || "";
+  const ifscCode = settings?.ifscCode || "";
   const branch = settings?.branch || "";
-  const upiId = settings?.upiId || "9967647612@ybl";
+  const upiId = settings?.upiId || "";
   const qrCode = settings?.qrCode || "";
+  const hasBankDetails = Boolean(bankName || accountHolder || accountNumber || ifscCode);
 
   return (
     <section className={styles.wrapper}>
@@ -86,20 +87,22 @@ export default function DonationOffline() {
               )}
             </div>
 
-            <div className={styles.upiBox}>
-              <div className={styles.upiInfo}>
-                <span className={styles.fieldLabel}>UPI ID / VPA</span>
-                <strong className={styles.upiValue}>{upiId}</strong>
+            {upiId && (
+              <div className={styles.upiBox}>
+                <div className={styles.upiInfo}>
+                  <span className={styles.fieldLabel}>UPI ID / VPA</span>
+                  <strong className={styles.upiValue}>{upiId}</strong>
+                </div>
+                <button
+                  type="button"
+                  className={styles.copyBtn}
+                  onClick={() => handleCopy(upiId, "upi")}
+                >
+                  {copiedKey === "upi" ? <Check size={16} /> : <Copy size={16} />}
+                  <span>{copiedKey === "upi" ? "COPIED" : "COPY"}</span>
+                </button>
               </div>
-              <button
-                type="button"
-                className={styles.copyBtn}
-                onClick={() => handleCopy(upiId, "upi")}
-              >
-                {copiedKey === "upi" ? <Check size={16} /> : <Copy size={16} />}
-                <span>{copiedKey === "upi" ? "COPIED" : "COPY"}</span>
-              </button>
-            </div>
+            )}
           </div>
 
           {/* Right Card: Bank Transfer Details */}
@@ -114,73 +117,90 @@ export default function DonationOffline() {
               </div>
             </div>
 
-            <div className={styles.detailsList}>
-              <div className={styles.detailRow}>
-                <div className={styles.detailContent}>
-                  <span className={styles.fieldLabel}>ACCOUNT NAME</span>
-                  <strong className={styles.fieldValue}>{accountHolder}</strong>
-                </div>
-                <button
-                  type="button"
-                  className={styles.iconCopyBtn}
-                  onClick={() => handleCopy(accountHolder, "holder")}
-                  title="Copy Account Name"
-                >
-                  {copiedKey === "holder" ? <Check size={16} /> : <Copy size={16} />}
-                </button>
-              </div>
+            {hasBankDetails ? (
+              <div className={styles.detailsList}>
+                {accountHolder && (
+                  <div className={styles.detailRow}>
+                    <div className={styles.detailContent}>
+                      <span className={styles.fieldLabel}>ACCOUNT NAME</span>
+                      <strong className={styles.fieldValue}>{accountHolder}</strong>
+                    </div>
+                    <button
+                      type="button"
+                      className={styles.iconCopyBtn}
+                      onClick={() => handleCopy(accountHolder, "holder")}
+                      title="Copy Account Name"
+                    >
+                      {copiedKey === "holder" ? <Check size={16} /> : <Copy size={16} />}
+                    </button>
+                  </div>
+                )}
 
-              <div className={styles.detailRow}>
-                <div className={styles.detailContent}>
-                  <span className={styles.fieldLabel}>BANK NAME</span>
-                  <strong className={styles.fieldValue}>
-                    {bankName} {branch ? `(${branch})` : ""}
-                  </strong>
-                </div>
-                <button
-                  type="button"
-                  className={styles.iconCopyBtn}
-                  onClick={() => handleCopy(bankName, "bank")}
-                  title="Copy Bank Name"
-                >
-                  {copiedKey === "bank" ? <Check size={16} /> : <Copy size={16} />}
-                </button>
-              </div>
+                {bankName && (
+                  <div className={styles.detailRow}>
+                    <div className={styles.detailContent}>
+                      <span className={styles.fieldLabel}>BANK NAME</span>
+                      <strong className={styles.fieldValue}>
+                        {bankName} {branch ? `(${branch})` : ""}
+                      </strong>
+                    </div>
+                    <button
+                      type="button"
+                      className={styles.iconCopyBtn}
+                      onClick={() => handleCopy(bankName, "bank")}
+                      title="Copy Bank Name"
+                    >
+                      {copiedKey === "bank" ? <Check size={16} /> : <Copy size={16} />}
+                    </button>
+                  </div>
+                )}
 
-              <div className={styles.detailRow}>
-                <div className={styles.detailContent}>
-                  <span className={styles.fieldLabel}>ACCOUNT NUMBER</span>
-                  <strong className={styles.fieldValueMono}>{accountNumber}</strong>
-                </div>
-                <button
-                  type="button"
-                  className={styles.iconCopyBtn}
-                  onClick={() => handleCopy(accountNumber, "acc")}
-                  title="Copy Account Number"
-                >
-                  {copiedKey === "acc" ? <Check size={16} /> : <Copy size={16} />}
-                </button>
-              </div>
+                {accountNumber && (
+                  <div className={styles.detailRow}>
+                    <div className={styles.detailContent}>
+                      <span className={styles.fieldLabel}>ACCOUNT NUMBER</span>
+                      <strong className={styles.fieldValueMono}>{accountNumber}</strong>
+                    </div>
+                    <button
+                      type="button"
+                      className={styles.iconCopyBtn}
+                      onClick={() => handleCopy(accountNumber, "acc")}
+                      title="Copy Account Number"
+                    >
+                      {copiedKey === "acc" ? <Check size={16} /> : <Copy size={16} />}
+                    </button>
+                  </div>
+                )}
 
-              <div className={styles.detailRow}>
-                <div className={styles.detailContent}>
-                  <span className={styles.fieldLabel}>IFSC CODE</span>
-                  <strong className={styles.fieldValueMono}>{ifscCode}</strong>
-                </div>
-                <button
-                  type="button"
-                  className={styles.iconCopyBtn}
-                  onClick={() => handleCopy(ifscCode, "ifsc")}
-                  title="Copy IFSC Code"
-                >
-                  {copiedKey === "ifsc" ? <Check size={16} /> : <Copy size={16} />}
-                </button>
+                {ifscCode && (
+                  <div className={styles.detailRow}>
+                    <div className={styles.detailContent}>
+                      <span className={styles.fieldLabel}>IFSC CODE</span>
+                      <strong className={styles.fieldValueMono}>{ifscCode}</strong>
+                    </div>
+                    <button
+                      type="button"
+                      className={styles.iconCopyBtn}
+                      onClick={() => handleCopy(ifscCode, "ifsc")}
+                      title="Copy IFSC Code"
+                    >
+                      {copiedKey === "ifsc" ? <Check size={16} /> : <Copy size={16} />}
+                    </button>
+                  </div>
+                )}
               </div>
-            </div>
+            ) : (
+              <div className={styles.qrEmpty}>
+                <Building2 size={40} className={styles.qrEmptyIcon} />
+                <span>Bank Details Coming Soon</span>
+              </div>
+            )}
 
-            <div className={styles.noticeBox}>
-              <p>Please retain your transaction reference or UTR number for records.</p>
-            </div>
+            {hasBankDetails && (
+              <div className={styles.noticeBox}>
+                <p>Please retain your transaction reference or UTR number for records.</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
