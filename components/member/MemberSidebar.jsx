@@ -6,6 +6,7 @@
    Production Ready
 ========================================================== */
 
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -17,6 +18,8 @@ import {
   Settings,
   LogOut,
   Building2,
+  MoreVertical,
+  ShieldCheck,
 } from "lucide-react";
 
 import styles from "./MemberSidebar.module.css";
@@ -60,10 +63,27 @@ const menus = [
 export default function MemberSidebar({
   open,
   onClose,
+  member,
 }) {
   const pathname = usePathname();
 
   const router = useRouter();
+
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   async function handleLogout() {
     try {
@@ -83,6 +103,25 @@ export default function MemberSidebar({
       alert("Logout failed.");
     }
   }
+
+  const memberName = member?.fullName || "Member";
+
+  const memberInitials = memberName
+    .split(" ")
+    .filter(Boolean)
+    .map((n) => n[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+
+  const getPhotoUrl = (photo) => {
+    if (!photo) return null;
+    if (typeof photo === "string") return photo;
+    if (typeof photo === "object" && photo.url) return photo.url;
+    return null;
+  };
+
+  const photoUrl = getPhotoUrl(member?.photo);
 
   return (
     <>
@@ -144,19 +183,70 @@ export default function MemberSidebar({
           })}
         </nav>
 
-        {/* Footer */}
+        {/* Footer: Profile */}
 
-        <div className={styles.footer}>
+        <div className={styles.footer} ref={menuRef}>
 
           <button
-            className={styles.logout}
-            onClick={handleLogout}
+            type="button"
+            className={styles.profileTrigger}
+            onClick={() => setMenuOpen((prev) => !prev)}
           >
-            <LogOut size={20} />
+            <div className={styles.profileAvatar}>
+              {photoUrl ? (
+                <img src={photoUrl} alt={memberName} className={styles.profileAvatarImg} />
+              ) : (
+                <span>{memberInitials || "M"}</span>
+              )}
+            </div>
 
-            <span>Logout</span>
+            <div className={styles.profileInfo}>
+              <span className={styles.profileName}>{memberName}</span>
+              <span className={styles.profileRole}>
+                <ShieldCheck size={11} />
+                {member?.membershipId || "AILP Member"}
+              </span>
+            </div>
 
+            <MoreVertical size={17} className={styles.profileMore} />
           </button>
+
+          {menuOpen && (
+            <div className={styles.profileMenu}>
+              <Link
+                href="/member/profile"
+                className={styles.profileMenuItem}
+                onClick={() => {
+                  setMenuOpen(false);
+                  onClose();
+                }}
+              >
+                <User size={15} />
+                <span>My Profile</span>
+              </Link>
+
+              <Link
+                href="/member/settings"
+                className={styles.profileMenuItem}
+                onClick={() => {
+                  setMenuOpen(false);
+                  onClose();
+                }}
+              >
+                <Settings size={15} />
+                <span>Settings</span>
+              </Link>
+
+              <button
+                type="button"
+                className={styles.profileMenuLogout}
+                onClick={handleLogout}
+              >
+                <LogOut size={15} />
+                <span>Logout</span>
+              </button>
+            </div>
+          )}
 
         </div>
 

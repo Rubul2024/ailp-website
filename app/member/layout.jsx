@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { usePathname } from "next/navigation";
 
@@ -19,8 +19,45 @@ export default function MemberLayout({ children }) {
   ];
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [member, setMember] = useState(null);
 
   const isAuthPage = authPages.includes(pathname);
+
+  useEffect(() => {
+    if (isAuthPage) return;
+
+    let cancelled = false;
+
+    async function loadMember() {
+      try {
+        let response = await fetch("/api/member/me", {
+          credentials: "include",
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          response = await fetch("/api/member/profile", {
+            credentials: "include",
+            cache: "no-store",
+          });
+        }
+
+        const data = await response.json();
+
+        if (!cancelled && data.success && (data.member || data.data)) {
+          setMember(data.member || data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    loadMember();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isAuthPage, pathname]);
 
   if (isAuthPage) {
     return children;
@@ -31,6 +68,7 @@ export default function MemberLayout({ children }) {
       <MemberSidebar
         open={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
+        member={member}
       />
 
       <div className={styles.content}>
