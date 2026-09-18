@@ -93,11 +93,14 @@ export default function Hero() {
           {/* Main Hero Image */}
 
           <Image
-            src="/images/hero/hero.jpg"
+            src="/images/hero/hero.jpeg"
             alt="All India Labour Party"
             fill
             priority
             className={styles.image}
+            onError={(e) => {
+              e.currentTarget.style.display = "none";
+            }}
           />
 
           {/* ==========================================
