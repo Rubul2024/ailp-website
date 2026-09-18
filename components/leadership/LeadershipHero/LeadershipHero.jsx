@@ -104,6 +104,9 @@ export default function LeadershipHero() {
               src={heroImage}
               alt="All India Labour Party Leadership"
               className={styles.image}
+              onError={(e) => {
+                e.currentTarget.style.display = "none";
+              }}
             />
 
             <div className={styles.imageOverlay}>

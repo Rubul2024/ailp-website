@@ -221,6 +221,17 @@
   object-fit: cover;
 }
 
+.imageFallback {
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0b4ea2, #0a3d80);
+  color: #ffffff;
+  font-size: 48px;
+  font-weight: 800;
+}
+
 .card:hover .image {
   transform: scale(1.08);
 }

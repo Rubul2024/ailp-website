@@ -64,7 +64,14 @@ export default function PartyPresident() {
               src={presidentPhoto}
               alt={presidentName || "President of All India Labour Party"}
               className={styles.image}
+              onError={(e) => {
+                e.currentTarget.style.display = "none";
+                e.currentTarget.nextSibling.style.display = "flex";
+              }}
             />
+            <div className={styles.imageFallback} style={{ display: "none" }}>
+              {(presidentName || "A").charAt(0).toUpperCase()}
+            </div>
           </div>
 
           <div className={styles.experienceCard}>

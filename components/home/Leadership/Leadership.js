@@ -94,10 +94,17 @@ export default function Leadership() {
 
                 <div className={styles.imageWrapper}>
                   <img
-                    src={leader.image || "/images/leadership/leader-1.jpg"}
+                    src={leader.image || "/images/leadership/leader-1.jpeg"}
                     alt={leader.name}
                     className={styles.image}
+                    onError={(e) => {
+                      e.currentTarget.style.display = "none";
+                      e.currentTarget.nextSibling.style.display = "flex";
+                    }}
                   />
+                  <div className={styles.imageFallback} style={{ display: "none" }}>
+                    {leader.name?.charAt(0)?.toUpperCase() || "A"}
+                  </div>
                 </div>
 
                 {/* Leader Details */}

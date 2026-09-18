@@ -12,19 +12,19 @@ const FALLBACK_LEADERS = [
     _id: "fallback-1",
     name: "National Leadership",
     designation: "National Office",
-    photo: "/images/leadership/leader-1.jpg",
+    photo: "/images/leadership/leader-1.jpeg",
   },
   {
     _id: "fallback-2",
     name: "Senior Leadership",
     designation: "National Organisation",
-    photo: "/images/leadership/leader-2.jpg",
+    photo: "/images/leadership/leader-2.jpeg",
   },
   {
     _id: "fallback-3",
     name: "State Leadership",
     designation: "State Organisation",
-    photo: "/images/leadership/leader-3.jpg",
+    photo: "/images/leadership/leader-3.jpeg",
   },
 ];
 
@@ -76,11 +76,23 @@ export default function NationalLeadership() {
               key={leader._id || leader.name}
             >
               <div className={styles.imageWrapper}>
-                <img
-                  src={leader.photo || "/images/leadership/leader-1.jpg"}
-                  alt={leader.name}
-                  className={styles.image}
-                />
+                {leader.photo ? (
+                  <img
+                    src={leader.photo}
+                    alt={leader.name}
+                    className={styles.image}
+                    onError={(e) => {
+                      e.currentTarget.style.display = "none";
+                      e.currentTarget.nextSibling.style.display = "flex";
+                    }}
+                  />
+                ) : null}
+                <div
+                  className={styles.imageFallback}
+                  style={{ display: leader.photo ? "none" : "flex" }}
+                >
+                  {leader.name?.charAt(0)?.toUpperCase() || "A"}
+                </div>
               </div>
 
               <div className={styles.content}>
