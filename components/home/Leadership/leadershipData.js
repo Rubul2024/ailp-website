@@ -6,7 +6,7 @@
 const leadershipData = [
   {
     id: 1,
-    name: "Leader Name",
+    name: "A KASHEM",
     designation: "National President",
     image: "/images/leadership/president.jpeg",
     description:
