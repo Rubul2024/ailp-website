@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
   Users,
+  Users2,
   IndianRupee,
   ClipboardCheck,
   Mail,
@@ -31,6 +32,11 @@ const menus = [
     title: "Donation Settings",
     href: "/admin/donation",
     icon: IndianRupee,
+  },
+  {
+    title: "Leadership",
+    href: "/admin/leadership",
+    icon: Users2,
   },
   {
     title: "Donation Review",

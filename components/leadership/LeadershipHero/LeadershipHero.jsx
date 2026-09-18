@@ -7,10 +7,36 @@
    All India Labour Party
 ========================================================== */
 
-import Image from "next/image";
+import { useEffect, useState } from "react";
 import styles from "./LeadershipHero.module.css";
 
+const DEFAULT_HERO_IMAGE = "/images/leadership/leadership.jpeg";
+
 export default function LeadershipHero() {
+  const [settings, setSettings] = useState(null);
+
+  useEffect(() => {
+    async function fetchLeadership() {
+      try {
+        const res = await fetch(`/api/leadership?t=${Date.now()}`, {
+          cache: "no-store",
+        });
+        const data = await res.json();
+        if (data.success && data.settings) {
+          setSettings(data.settings);
+        }
+      } catch (err) {
+        console.error("Failed to load leadership settings:", err);
+      }
+    }
+    fetchLeadership();
+  }, []);
+
+  const heroImage = settings?.heroImage || DEFAULT_HERO_IMAGE;
+  const statPresidentCount = settings?.statPresidentCount || "01";
+  const statStatesRepresented = settings?.statStatesRepresented || "20+";
+  const statDistricts = settings?.statDistricts || "50+";
+
   return (
     <section className={styles.hero}>
       {/* ==========================================
@@ -50,17 +76,17 @@ export default function LeadershipHero() {
 
           <div className={styles.stats}>
             <div className={styles.stat}>
-              <strong>01</strong>
+              <strong>{statPresidentCount}</strong>
               <span>National President</span>
             </div>
 
             <div className={styles.stat}>
-              <strong>20+</strong>
+              <strong>{statStatesRepresented}</strong>
               <span>States Represented</span>
             </div>
 
             <div className={styles.stat}>
-              <strong>50+</strong>
+              <strong>{statDistricts}</strong>
               <span>Districts</span>
             </div>
           </div>
@@ -74,11 +100,9 @@ export default function LeadershipHero() {
           <div className={styles.imageGlow}></div>
 
           <div className={styles.imageCard}>
-            <Image
-              src="/images/leadership/leadership.jpg"
+            <img
+              src={heroImage}
               alt="All India Labour Party Leadership"
-              fill
-              priority
               className={styles.image}
             />
 

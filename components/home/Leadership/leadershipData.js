@@ -1,5 +1,6 @@
 /* ==========================================================
-   Leadership Data
+   Leadership Data (fallback, used until the admin panel
+   Leadership section has content saved in the database)
 ========================================================== */
 
 const leadershipData = [
@@ -7,10 +8,10 @@ const leadershipData = [
     id: 1,
     name: "Leader Name",
     designation: "National President",
-    image: "/images/leadership/president.jpg",
+    image: "/images/leadership/president.jpeg",
     description:
       "Dedicated to protecting workers' rights and strengthening India's future through transparent leadership.",
-    profile: "/leadership/president",
+    profile: "",
 
     social: {
       facebook: "#",
@@ -24,10 +25,10 @@ const leadershipData = [
     id: 2,
     name: "Leader Name",
     designation: "Vice President",
-    image: "/images/leadership/vicepresident.jpg",
+    image: "/images/leadership/leader-2.jpg",
     description:
       "Committed to employment generation and empowering every citizen with equal opportunities.",
-    profile: "/leadership/vice-president",
+    profile: "",
 
     social: {
       facebook: "#",
@@ -41,10 +42,10 @@ const leadershipData = [
     id: 3,
     name: "Leader Name",
     designation: "General Secretary",
-    image: "/images/leadership/secretary.jpg",
+    image: "/images/leadership/leader-3.jpg",
     description:
       "Expanding the movement through organization, public participation and dedicated service.",
-    profile: "/leadership/general-secretary",
+    profile: "",
 
     social: {
       facebook: "#",

@@ -4,10 +4,53 @@
    AILP Party President
 ========================================================== */
 
-import Image from "next/image";
+import { useEffect, useState } from "react";
 import styles from "./PartyPresident.module.css";
 
+const DEFAULTS = {
+  presidentName: "",
+  presidentDesignation: "National President",
+  presidentBadge: "NATIONAL PRESIDENT",
+  presidentPhoto: "/images/leadership/president.jpeg",
+  presidentBio1:
+    "The President of the All India Labour Party provides leadership to the organisation and works towards advancing its commitment to workers, employment, equality and social justice.",
+  presidentBio2:
+    "Through public participation, organisational development and grassroots engagement, our leadership works to build a stronger political voice for citizens across India.",
+  presidentQuote:
+    "Together, with dignity, opportunity and justice, we can build a stronger India.",
+  presidentSignatureTitle: "National President",
+  presidentSignatureOrg: "All India Labour Party",
+};
+
 export default function PartyPresident() {
+  const [settings, setSettings] = useState(null);
+
+  useEffect(() => {
+    async function fetchLeadership() {
+      try {
+        const res = await fetch(`/api/leadership?t=${Date.now()}`, {
+          cache: "no-store",
+        });
+        const data = await res.json();
+        if (data.success && data.settings) {
+          setSettings(data.settings);
+        }
+      } catch (err) {
+        console.error("Failed to load leadership settings:", err);
+      }
+    }
+    fetchLeadership();
+  }, []);
+
+  const presidentName = settings?.presidentName || DEFAULTS.presidentName;
+  const presidentBadge = settings?.presidentBadge || DEFAULTS.presidentBadge;
+  const presidentPhoto = settings?.presidentPhoto || DEFAULTS.presidentPhoto;
+  const presidentBio1 = settings?.presidentBio1 || DEFAULTS.presidentBio1;
+  const presidentBio2 = settings?.presidentBio2 || DEFAULTS.presidentBio2;
+  const presidentQuote = settings?.presidentQuote || DEFAULTS.presidentQuote;
+  const presidentSignatureTitle = settings?.presidentSignatureTitle || DEFAULTS.presidentSignatureTitle;
+  const presidentSignatureOrg = settings?.presidentSignatureOrg || DEFAULTS.presidentSignatureOrg;
+
   return (
     <section className={styles.section}>
       <div className={styles.container}>
@@ -17,10 +60,9 @@ export default function PartyPresident() {
 
         <div className={styles.imageWrapper}>
           <div className={styles.imageCard}>
-            <Image
-              src="/images/leadership/president.jpg"
-              alt="President of All India Labour Party"
-              fill
+            <img
+              src={presidentPhoto}
+              alt={presidentName || "President of All India Labour Party"}
               className={styles.image}
             />
           </div>
@@ -37,8 +79,12 @@ export default function PartyPresident() {
 
         <div className={styles.content}>
           <span className={styles.badge}>
-            NATIONAL PRESIDENT
+            {presidentBadge}
           </span>
+
+          {presidentName && (
+            <strong className={styles.name}>{presidentName}</strong>
+          )}
 
           <h2>
             Leadership that
@@ -46,36 +92,22 @@ export default function PartyPresident() {
             <span>puts people first.</span>
           </h2>
 
-          <p>
-            The President of the All India Labour Party
-            provides leadership to the organisation and
-            works towards advancing its commitment to
-            workers, employment, equality and social
-            justice.
-          </p>
+          <p>{presidentBio1}</p>
 
-          <p>
-            Through public participation, organisational
-            development and grassroots engagement,
-            our leadership works to build a stronger
-            political voice for citizens across India.
-          </p>
+          <p>{presidentBio2}</p>
 
           <div className={styles.quote}>
             <span>“</span>
 
-            <p>
-              Together, with dignity, opportunity and
-              justice, we can build a stronger India.
-            </p>
+            <p>{presidentQuote}</p>
           </div>
 
           <div className={styles.signature}>
             <div className={styles.signatureLine}></div>
 
-            <strong>National President</strong>
+            <strong>{presidentSignatureTitle}</strong>
 
-            <span>All India Labour Party</span>
+            <span>{presidentSignatureOrg}</span>
           </div>
         </div>
       </div>

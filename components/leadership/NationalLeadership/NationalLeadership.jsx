@@ -4,30 +4,51 @@
    AILP National Leadership
 ========================================================== */
 
-import Image from "next/image";
+import { useEffect, useState } from "react";
 import styles from "./NationalLeadership.module.css";
 
-const leaders = [
+const FALLBACK_LEADERS = [
   {
+    _id: "fallback-1",
     name: "National Leadership",
-    role: "National Office",
-    image: "/images/leadership/leader-1.jpg",
+    designation: "National Office",
+    photo: "/images/leadership/leader-1.jpg",
   },
-
   {
+    _id: "fallback-2",
     name: "Senior Leadership",
-    role: "National Organisation",
-    image: "/images/leadership/leader-2.jpg",
+    designation: "National Organisation",
+    photo: "/images/leadership/leader-2.jpg",
   },
-
   {
+    _id: "fallback-3",
     name: "State Leadership",
-    role: "State Organisation",
-    image: "/images/leadership/leader-3.jpg",
+    designation: "State Organisation",
+    photo: "/images/leadership/leader-3.jpg",
   },
 ];
 
 export default function NationalLeadership() {
+  const [leaders, setLeaders] = useState(FALLBACK_LEADERS);
+
+  useEffect(() => {
+    async function fetchLeadership() {
+      try {
+        const res = await fetch(`/api/leadership?t=${Date.now()}`, {
+          cache: "no-store",
+        });
+        const data = await res.json();
+        const members = (data?.members || []).filter((m) => m.showOnLeadershipPage);
+        if (data.success && members.length > 0) {
+          setLeaders(members);
+        }
+      } catch (err) {
+        console.error("Failed to load leadership team:", err);
+      }
+    }
+    fetchLeadership();
+  }, []);
+
   return (
     <section className={styles.section}>
       <div className={styles.container}>
@@ -52,26 +73,24 @@ export default function NationalLeadership() {
           {leaders.map((leader) => (
             <article
               className={styles.card}
-              key={leader.name}
+              key={leader._id || leader.name}
             >
               <div className={styles.imageWrapper}>
-                <Image
-                  src={leader.image}
+                <img
+                  src={leader.photo || "/images/leadership/leader-1.jpg"}
                   alt={leader.name}
-                  fill
                   className={styles.image}
                 />
               </div>
 
               <div className={styles.content}>
-                <span>{leader.role}</span>
+                <span>{leader.designation}</span>
 
                 <h3>{leader.name}</h3>
 
                 <p>
-                  Serving the organisation with
-                  commitment, responsibility and
-                  dedication.
+                  {leader.description ||
+                    "Serving the organisation with commitment, responsibility and dedication."}
                 </p>
               </div>
             </article>

@@ -41,6 +41,11 @@ export default function AdminLayout({ children }) {
       subtitle: "Manage UPI, bank & QR details",
     },
 
+    "/admin/leadership": {
+      title: "Leadership",
+      subtitle: "Manage leadership photos & profile details",
+    },
+
     "/admin/donations": {
       title: "Donation Review",
       subtitle: "Verify manual UPI contributions",
