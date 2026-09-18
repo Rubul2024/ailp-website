@@ -6,18 +6,25 @@
 
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
+import verifyAdmin from "@/lib/verifyAdmin";
 import Member from "@/models/Member";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(request) {
   try {
+    const auth = verifyAdmin(request);
+    if (!auth.success) {
+      return NextResponse.json({ success: false, message: auth.message }, { status: 401 });
+    }
+
     await connectDB();
 
     const { searchParams } = new URL(request.url);
     const search = searchParams.get("search") || "";
     const state = searchParams.get("state") || "";
     const status = searchParams.get("status") || "";
+    const isExport = searchParams.get("export") === "true";
     const page = parseInt(searchParams.get("page") || "1", 10);
     const limit = parseInt(searchParams.get("limit") || "10", 10);
     const skip = (page - 1) * limit;
@@ -53,14 +60,18 @@ export async function GET(request) {
     }
 
     // Fetch members with pagination
+    const membersQuery = Member.find(query)
+      .sort({ createdAt: -1 })
+      .select("-password")
+      .lean();
+
+    if (!isExport) {
+      membersQuery.skip(skip).limit(limit);
+    }
+
     const [members, totalFiltered, totalRegistered, activeCount, inactiveCount, distinctStates] =
       await Promise.all([
-        Member.find(query)
-          .sort({ createdAt: -1 })
-          .skip(skip)
-          .limit(limit)
-          .select("-password")
-          .lean(),
+        membersQuery,
         Member.countDocuments(query),
         Member.countDocuments({}),
         Member.countDocuments({ isActive: true }),
@@ -69,6 +80,7 @@ export async function GET(request) {
       ]);
 
     const totalPages = Math.ceil(totalFiltered / limit) || 1;
+    const availableStates = distinctStates.filter(Boolean).sort();
 
     // Return structured data matching all standard frontend expectations
     return NextResponse.json(
@@ -79,14 +91,15 @@ export async function GET(request) {
         pagination: {
           total: totalFiltered,
           totalPages,
-          currentPage: page,
+          page,
           limit,
         },
+        availableStates,
         stats: {
           totalRegistered,
           activeMembers: activeCount,
           inactiveMembers: inactiveCount,
-          totalStates: distinctStates.filter(Boolean).length || 1,
+          totalStates: availableStates.length || 1,
         },
       },
       { status: 200 }
@@ -98,6 +111,54 @@ export async function GET(request) {
         success: false,
         message: error.message || "Failed to fetch members list.",
       },
+      { status: 500 }
+    );
+  }
+}
+
+/* ==========================================================
+   PATCH — Toggle Member Active Status
+========================================================== */
+export async function PATCH(request) {
+  try {
+    const auth = verifyAdmin(request);
+    if (!auth.success) {
+      return NextResponse.json({ success: false, message: auth.message }, { status: 401 });
+    }
+
+    await connectDB();
+
+    const { id, isActive } = await request.json();
+
+    if (!id) {
+      return NextResponse.json(
+        { success: false, message: "Member ID is required." },
+        { status: 400 }
+      );
+    }
+
+    const updated = await Member.findByIdAndUpdate(
+      id,
+      { $set: { isActive: Boolean(isActive) } },
+      { new: true }
+    ).select("-password");
+
+    if (!updated) {
+      return NextResponse.json(
+        { success: false, message: "Member not found." },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: `Member ${isActive ? "activated" : "deactivated"} successfully.`,
+      member: updated,
+    });
+  } catch (error) {
+    console.error("Admin Members PATCH Error:", error);
+    return NextResponse.json(
+      { success: false, message: error.message || "Failed to update member status." },
       { status: 500 }
     );
   }

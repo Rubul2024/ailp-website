@@ -7,7 +7,7 @@ import { NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
 import Contact from "@/models/Contact";
 
-import verifyAdmin from "@/utils/verifyAdmin";
+import verifyAdmin from "@/lib/verifyAdmin";
 
 /* ==========================================================
    Get Single Contact Message
@@ -24,7 +24,7 @@ export async function GET(request, { params }) {
     if (!auth.success) {
 
       return NextResponse.json(
-        auth,
+        { success: false, message: auth.message },
         {
           status: 401,
         }
@@ -38,7 +38,9 @@ export async function GET(request, { params }) {
 
     // Find Contact
 
-    const contact = await Contact.findById(params.id);
+    const { id } = await params;
+
+    const contact = await Contact.findById(id);
 
     if (!contact) {
 

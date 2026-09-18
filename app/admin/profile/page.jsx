@@ -31,7 +31,6 @@ export default function AdminProfilePage() {
     name: "",
     email: "",
     mobile: "",
-    role: "",
   });
 
   // Password Change State
@@ -60,8 +59,9 @@ export default function AdminProfilePage() {
           name: data.admin.name || "",
           email: data.admin.email || "",
           mobile: data.admin.mobile || "",
-          role: data.admin.role || "super-admin",
         });
+      } else {
+        setMessage({ type: "error", text: data.message || "Unable to load administrator profile." });
       }
     } catch (err) {
       setMessage({ type: "error", text: "Unable to load administrator profile." });
@@ -127,8 +127,8 @@ export default function AdminProfilePage() {
       return;
     }
 
-    if (passwordData.newPassword.length < 6) {
-      setMessage({ type: "error", text: "Password must be at least 6 characters." });
+    if (passwordData.newPassword.length < 8) {
+      setMessage({ type: "error", text: "Password must be at least 8 characters." });
       return;
     }
 
@@ -215,8 +215,8 @@ export default function AdminProfilePage() {
             <div className={styles.avatarLarge}>
               {admin?.name ? admin.name.charAt(0).toUpperCase() : "A"}
             </div>
-            <h3 className={styles.idName}>{admin?.name || "AILP Administrator"}</h3>
-            <span className={styles.idEmail}>{admin?.email || "allindialabourpartyailp@gmail.com"}</span>
+            <h3 className={styles.idName}>{admin?.name || (loading ? "Loading..." : "—")}</h3>
+            <span className={styles.idEmail}>{admin?.email || (loading ? "" : "—")}</span>
 
             <div className={styles.roleBadge}>
               <ShieldCheck size={14} />
@@ -230,8 +230,8 @@ export default function AdminProfilePage() {
                 <Activity size={14} />
                 <span>Account Status</span>
               </div>
-              <span className={styles.statusActive}>
-                <span className={styles.statusDot} /> Active
+              <span className={admin?.isActive === false ? styles.statusInactive : styles.statusActive}>
+                <span className={styles.statusDot} /> {admin?.isActive === false ? "Inactive" : "Active"}
               </span>
             </div>
 
@@ -255,7 +255,7 @@ export default function AdminProfilePage() {
                       month: "short",
                       year: "numeric",
                     })
-                  : "August 2026"}
+                  : "—"}
               </strong>
             </div>
           </div>
@@ -398,7 +398,7 @@ export default function AdminProfilePage() {
                     <input
                       type={showNew ? "text" : "password"}
                       name="newPassword"
-                      placeholder="Enter new password (min. 6 chars)"
+                      placeholder="Enter new password (min. 8 chars)"
                       value={passwordData.newPassword}
                       onChange={handlePasswordChange}
                       required

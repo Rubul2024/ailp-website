@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback, useRef } from "react";
+import Link from "next/link";
 import {
   Building2,
   User,
@@ -14,9 +15,9 @@ import {
   Receipt,
   Upload,
   Trash2,
-  ImageIcon,
   Copy,
   Check,
+  ArrowUpRight,
 } from "lucide-react";
 import styles from "./Donation.module.css";
 
@@ -27,6 +28,9 @@ export default function AdminDonationPage() {
   const [message, setMessage] = useState({ type: "", text: "" });
   const [copiedField, setCopiedField] = useState("");
   const fileInputRef = useRef(null);
+
+  const [recentDonations, setRecentDonations] = useState([]);
+  const [recentLoading, setRecentLoading] = useState(true);
 
   const [formData, setFormData] = useState({
     bankName: "",
@@ -77,6 +81,32 @@ export default function AdminDonationPage() {
   useEffect(() => {
     loadDonationSettings();
   }, [loadDonationSettings]);
+
+  const loadRecentDonations = useCallback(async () => {
+    setRecentLoading(true);
+    try {
+      const response = await fetch("/api/admin/donations?status=verified&limit=8", {
+        method: "GET",
+        credentials: "include",
+        cache: "no-store",
+      });
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setRecentDonations(data.donations || []);
+      }
+    } catch (err) {
+      console.error("Unable to load recent contributions:", err);
+    } finally {
+      setRecentLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (activeTab === "transactions") {
+      loadRecentDonations();
+    }
+  }, [activeTab, loadRecentDonations]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -504,6 +534,10 @@ export default function AdminDonationPage() {
               <h3>Recent Contributions</h3>
               <p>Citizens who supported All India Labour Party</p>
             </div>
+            <Link href="/admin/donations" className={styles.copyBtn} style={{ width: "auto", padding: "8px 14px", gap: "6px", display: "inline-flex", alignItems: "center" }}>
+              <span>View All</span>
+              <ArrowUpRight size={14} />
+            </Link>
           </div>
 
           <div className={styles.tableWrapper}>
@@ -512,32 +546,56 @@ export default function AdminDonationPage() {
                 <tr>
                   <th>Donor Name</th>
                   <th>Amount (INR)</th>
-                  <th>Transaction ID / Ref</th>
-                  <th>Payment Mode</th>
+                  <th>UTR / Reference</th>
                   <th>Date</th>
                   <th>Status</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>
-                    <div className={styles.donorCell}>
-                      <strong>Sample Contributor</strong>
-                      <span>donor@example.com</span>
-                    </div>
-                  </td>
-                  <td>
-                    <span className={styles.amountText}>₹200.00</span>
-                  </td>
-                  <td>
-                    <span className={styles.codeText}>TXN_2026_883921</span>
-                  </td>
-                  <td>UPI / QR Code</td>
-                  <td>31 Aug 2026</td>
-                  <td>
-                    <span className={styles.verifiedBadge}>Verified</span>
-                  </td>
-                </tr>
+                {recentLoading ? (
+                  <tr>
+                    <td colSpan="5" style={{ textAlign: "center", padding: "36px 14px", color: "#94a3b8" }}>
+                      Loading contributions...
+                    </td>
+                  </tr>
+                ) : recentDonations.length > 0 ? (
+                  recentDonations.map((donation) => (
+                    <tr key={donation._id}>
+                      <td>
+                        <div className={styles.donorCell}>
+                          <strong>{donation.donorName}</strong>
+                          <span>{donation.email || donation.phone || "—"}</span>
+                        </div>
+                      </td>
+                      <td>
+                        <span className={styles.amountText}>
+                          ₹{Number(donation.amount || 0).toLocaleString("en-IN")}
+                        </span>
+                      </td>
+                      <td>
+                        <span className={styles.codeText}>{donation.utrNumber || "—"}</span>
+                      </td>
+                      <td>
+                        {donation.createdAt
+                          ? new Date(donation.createdAt).toLocaleDateString("en-IN", {
+                              day: "numeric",
+                              month: "short",
+                              year: "numeric",
+                            })
+                          : "—"}
+                      </td>
+                      <td>
+                        <span className={styles.verifiedBadge}>Verified</span>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="5" style={{ textAlign: "center", padding: "36px 14px", color: "#94a3b8" }}>
+                      No verified contributions yet.
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

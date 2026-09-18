@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState, useCallback, useTransition } from "react";
+import { Suspense, useEffect, useState, useCallback, useTransition } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   Search,
   Download,
@@ -26,7 +27,9 @@ import {
 } from "lucide-react";
 import styles from "./Members.module.css";
 
-export default function AdminMembersPage() {
+function AdminMembersContent() {
+  const searchParams = useSearchParams();
+
   const [members, setMembers] = useState([]);
   const [availableStates, setAvailableStates] = useState([]);
   const [pagination, setPagination] = useState({ page: 1, limit: 10, total: 0, totalPages: 1 });
@@ -36,7 +39,7 @@ export default function AdminMembersPage() {
   const [, startTransition] = useTransition();
 
   // Filters
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(() => searchParams.get("search") || "");
   const [selectedState, setSelectedState] = useState("ALL");
   const [selectedStatus, setSelectedStatus] = useState("ALL");
 
@@ -235,9 +238,9 @@ export default function AdminMembersPage() {
     }
   };
 
-  const totalRegisteredCount = stats.totalRegistered || pagination.total || members.length;
-  const totalActiveCount = stats.activeMembers || members.filter(isMemberActive).length;
-  const totalInactiveCount = stats.inactiveMembers || members.filter((m) => !isMemberActive(m)).length;
+  const totalRegisteredCount = stats.totalRegistered ?? pagination.total ?? members.length;
+  const totalActiveCount = stats.activeMembers ?? members.filter(isMemberActive).length;
+  const totalInactiveCount = stats.inactiveMembers ?? members.filter((m) => !isMemberActive(m)).length;
 
   return (
     <div className={styles.container}>
@@ -708,5 +711,13 @@ export default function AdminMembersPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function AdminMembersPage() {
+  return (
+    <Suspense fallback={<div className={styles.container} />}>
+      <AdminMembersContent />
+    </Suspense>
   );
 }

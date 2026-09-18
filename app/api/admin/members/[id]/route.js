@@ -7,7 +7,7 @@ import { NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
 import Member from "@/models/Member";
 
-import verifyAdmin from "@/utils/verifyAdmin";
+import verifyAdmin from "@/lib/verifyAdmin";
 
 export async function GET(request, { params }) {
 
@@ -20,7 +20,7 @@ export async function GET(request, { params }) {
     if (!auth.success) {
 
       return NextResponse.json(
-        auth,
+        { success: false, message: auth.message },
         {
           status: 401,
         }
@@ -34,7 +34,9 @@ export async function GET(request, { params }) {
 
     // Find Member
 
-    const member = await Member.findById(params.id)
+    const { id } = await params;
+
+    const member = await Member.findById(id)
 
       .select("-password");
 

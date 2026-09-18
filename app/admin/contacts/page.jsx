@@ -23,6 +23,7 @@ import styles from "./Contact.module.css";
 export default function AdminContactPage() {
   const [messages, setMessages] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
   const [pagination, setPagination] = useState({ page: 1, limit: 10, total: 0, totalPages: 1 });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -60,6 +61,7 @@ export default function AdminContactPage() {
 
       setMessages(data.messages || []);
       setUnreadCount(data.unreadCount || 0);
+      setTotalCount(data.totalCount ?? 0);
       setPagination(data.pagination || { page: 1, limit: 10, total: 0, totalPages: 1 });
     } catch (err) {
       setError(err.message);
@@ -148,7 +150,7 @@ export default function AdminContactPage() {
         <div className={`${styles.statCard} ${styles.statBlue}`}>
           <div className={styles.statContent}>
             <span className={styles.statTitle}>Total Inquiries</span>
-            <span className={styles.statNumber}>{pagination.total}</span>
+            <span className={styles.statNumber}>{totalCount}</span>
             <span className={styles.statHint}>Citizen contact submissions</span>
           </div>
           <div className={styles.statIconBadge}>
@@ -170,7 +172,7 @@ export default function AdminContactPage() {
         <div className={`${styles.statCard} ${styles.statGreen}`}>
           <div className={styles.statContent}>
             <span className={styles.statTitle}>Responded / Processed</span>
-            <span className={styles.statNumber}>{Math.max(0, pagination.total - unreadCount)}</span>
+            <span className={styles.statNumber}>{Math.max(0, totalCount - unreadCount)}</span>
             <span className={styles.statHint}>Archived inquiries</span>
           </div>
           <div className={styles.statIconBadge}>

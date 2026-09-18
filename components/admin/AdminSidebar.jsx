@@ -45,7 +45,7 @@ const menus = [
   },
   {
     title: "Contact Messages",
-    href: "/admin/contact",
+    href: "/admin/contacts",
     icon: Mail,
   },
   {

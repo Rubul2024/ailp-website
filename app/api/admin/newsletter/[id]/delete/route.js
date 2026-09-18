@@ -7,7 +7,7 @@ import { NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
 import Newsletter from "@/models/Newsletter";
 
-import verifyAdmin from "@/utils/verifyAdmin";
+import verifyAdmin from "@/lib/verifyAdmin";
 
 /* ==========================================================
    Delete Subscriber
@@ -24,7 +24,7 @@ export async function DELETE(request, { params }) {
     if (!auth.success) {
 
       return NextResponse.json(
-        auth,
+        { success: false, message: auth.message },
         {
           status: 401,
         }
@@ -38,7 +38,9 @@ export async function DELETE(request, { params }) {
 
     // Find Subscriber
 
-    const subscriber = await Newsletter.findById(params.id);
+    const { id } = await params;
+
+    const subscriber = await Newsletter.findById(id);
 
     if (!subscriber) {
 
@@ -64,7 +66,7 @@ export async function DELETE(request, { params }) {
 
     // Delete Subscriber
 
-    await Newsletter.findByIdAndDelete(params.id);
+    await Newsletter.findByIdAndDelete(id);
 
     return NextResponse.json({
 

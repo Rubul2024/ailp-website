@@ -62,21 +62,12 @@ export async function proxy(request) {
 
   /* ==========================================
      Admin Protected Routes
+     Everything under /admin except the login
+     page itself requires a valid admin session.
   ========================================== */
 
-  const protectedAdminRoutes = [
-    "/admin/dashboard",
-    "/admin/members",
-    "/admin/donations",
-    "/admin/news",
-    "/admin/contact",
-    "/admin/newsletter",
-    "/admin/settings",
-  ];
-
-  const isAdminRoute = protectedAdminRoutes.some((route) =>
-    pathname.startsWith(route)
-  );
+  const isAdminRoute =
+    pathname.startsWith("/admin") && !pathname.startsWith("/admin/login");
 
   if (isAdminRoute) {
     const token = request.cookies.get("adminToken")?.value;

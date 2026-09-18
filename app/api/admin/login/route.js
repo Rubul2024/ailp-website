@@ -53,6 +53,18 @@ export async function POST(request) {
       );
     }
 
+    if (!admin.isActive) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "This administrator account has been deactivated.",
+        },
+        {
+          status: 403,
+        },
+      );
+    }
+
     // Verify Password
 
     const isPasswordCorrect = await bcrypt.compare(
@@ -79,6 +91,7 @@ export async function POST(request) {
 ========================================== */
 
     admin.lastLogin = new Date();
+    admin.loginCount = (admin.loginCount || 0) + 1;
 
     await admin.save();
 

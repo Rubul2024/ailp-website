@@ -47,9 +47,10 @@ export async function GET(request) {
 
     const skip = (page - 1) * limit;
 
-    const [messages, totalCount, unreadCount] = await Promise.all([
+    const [messages, filteredCount, totalCount, unreadCount] = await Promise.all([
       Contact.find(query).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
       Contact.countDocuments(query),
+      Contact.countDocuments({}),
       Contact.countDocuments({ isRead: false }),
     ]);
 
@@ -57,11 +58,12 @@ export async function GET(request) {
       success: true,
       messages,
       unreadCount,
+      totalCount,
       pagination: {
-        total: totalCount,
+        total: filteredCount,
         page,
         limit,
-        totalPages: Math.ceil(totalCount / limit) || 1,
+        totalPages: Math.ceil(filteredCount / limit) || 1,
       },
     });
   } catch (error) {

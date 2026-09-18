@@ -15,7 +15,8 @@ export async function DELETE(request, { params }) {
 
     await connectDB();
 
-    const member = await LeadershipMember.findById(params.id);
+    const { id } = await params;
+    const member = await LeadershipMember.findById(id);
     if (!member) {
       return NextResponse.json(
         { success: false, message: "Leadership member not found." },
@@ -23,7 +24,7 @@ export async function DELETE(request, { params }) {
       );
     }
 
-    await LeadershipMember.findByIdAndDelete(params.id);
+    await LeadershipMember.findByIdAndDelete(id);
 
     return NextResponse.json({
       success: true,

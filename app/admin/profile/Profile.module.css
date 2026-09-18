@@ -222,6 +222,22 @@
   font-weight: 700;
 }
 
+.statusInactive {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: #fef2f2;
+  color: #b91c1c;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.statusInactive .statusDot {
+  background: #ef4444;
+}
+
 .statusDot {
   width: 6px;
   height: 6px;

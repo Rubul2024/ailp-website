@@ -16,7 +16,7 @@ export async function PUT(request, { params }) {
 
     await connectDB();
 
-    const { id } = params;
+    const { id } = await params;
     const existing = await LeadershipMember.findById(id);
     if (!existing) {
       return NextResponse.json(

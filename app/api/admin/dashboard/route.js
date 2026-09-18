@@ -22,25 +22,25 @@ export async function GET(request) {
       totalMembers,
       activeMembers,
       totalContacts,
+      unreadContacts,
       recentMembers,
       recentContacts,
-      recentDonations,
       totalDonations,
       pendingDonations,
       revenueAgg,
     ] = await Promise.all([
       Member.countDocuments(),
-      Member.countDocuments({ status: "Active" }),
+      Member.countDocuments({ verified: true }),
       Contact.countDocuments(),
+      Contact.countDocuments({ isRead: false }),
       Member.find()
         .sort({ createdAt: -1 })
         .limit(5)
-        .select("memberId fullName email mobile district state status createdAt"),
+        .select("memberId membershipId fullName email mobile district state isActive verified createdAt"),
       Contact.find()
         .sort({ createdAt: -1 })
         .limit(5)
         .select("name email subject message createdAt isRead"),
-      Donation.find().sort({ createdAt: -1 }).limit(5),
       Donation.countDocuments({ status: "verified" }),
       Donation.countDocuments({ status: "pending" }),
       Donation.aggregate([
@@ -58,6 +58,7 @@ export async function GET(request) {
         totalMembers,
         activeMembers,
         totalContacts,
+        unreadContacts,
         totalDonations,
         pendingDonations,
         totalRevenue,
@@ -65,7 +66,6 @@ export async function GET(request) {
       feeds: {
         recentMembers,
         recentContacts,
-        recentDonations,
       },
       serverTime: new Date().toISOString(),
     });

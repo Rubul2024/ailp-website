@@ -6,6 +6,7 @@
 import { NextResponse } from "next/server";
 
 import cloudinary from "@/lib/cloudinary";
+import verifyAdmin from "@/lib/verifyAdmin";
 
 /* ==========================================================
    POST
@@ -13,6 +14,14 @@ import cloudinary from "@/lib/cloudinary";
 
 export async function POST(request) {
   try {
+    const auth = verifyAdmin(request);
+    if (!auth.success) {
+      return NextResponse.json(
+        { success: false, message: auth.message },
+        { status: 401 },
+      );
+    }
+
     const { publicId } = await request.json();
 
     if (!publicId) {

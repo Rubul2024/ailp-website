@@ -7,14 +7,28 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 
 import connectDB from "@/lib/mongodb";
+import verifyAdmin from "@/lib/verifyAdmin";
 import Admin from "@/models/Admin";
 
 /* ==========================================================
    Register Admin
+   Only an authenticated super-admin may create new admins.
 ========================================================== */
 
 export async function POST(request) {
   try {
+    const auth = verifyAdmin(request);
+    if (!auth.success) {
+      return NextResponse.json({ success: false, message: auth.message }, { status: 401 });
+    }
+
+    if (auth.admin.role !== "super-admin") {
+      return NextResponse.json(
+        { success: false, message: "Only a super admin can create new administrators." },
+        { status: 403 }
+      );
+    }
+
     // Connect Database
     await connectDB();
 

@@ -51,7 +51,7 @@ export default function AdminLayout({ children }) {
       subtitle: "Verify manual UPI contributions",
     },
 
-    "/admin/contact": {
+    "/admin/contacts": {
       title: "Contact Messages",
       subtitle: "View contact enquiries",
     },
@@ -64,11 +64,6 @@ export default function AdminLayout({ children }) {
     "/admin/profile": {
       title: "My Profile",
       subtitle: "Manage your administrator profile",
-    },
-
-    "/admin/settings": {
-      title: "Settings",
-      subtitle: "Manage administration settings",
     },
   };
 

@@ -10,10 +10,11 @@ import {
   UserCircle2,
   ChevronDown,
   LogOut,
-  Settings,
   User,
   ShieldCheck,
   Menu,
+  Inbox,
+  CheckCheck,
 } from "lucide-react";
 
 import styles from "./AdminHeader.module.css";
@@ -26,6 +27,7 @@ export default function AdminHeader({
   const router = useRouter();
 
   const dropdownRef = useRef(null);
+  const notifRef = useRef(null);
 
   const [open, setOpen] = useState(false);
 
@@ -34,6 +36,53 @@ export default function AdminHeader({
   const [loading, setLoading] = useState(true);
 
   const [loggingOut, setLoggingOut] = useState(false);
+
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const [notifOpen, setNotifOpen] = useState(false);
+  const [notifLoading, setNotifLoading] = useState(true);
+  const [notifications, setNotifications] = useState({ total: 0, items: [] });
+
+  /* ==========================================================
+     LOAD NOTIFICATIONS
+  ========================================================== */
+
+  useEffect(() => {
+    async function loadNotifications() {
+      try {
+        const response = await fetch("/api/admin/notifications", {
+          method: "GET",
+          credentials: "include",
+          cache: "no-store",
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          setNotifications({ total: data.total || 0, items: data.items || [] });
+        }
+      } catch (error) {
+        console.error("Unable to load notifications:", error);
+      } finally {
+        setNotifLoading(false);
+      }
+    }
+
+    loadNotifications();
+  }, []);
+
+  /* ==========================================================
+     SEARCH
+  ========================================================== */
+
+  function handleSearchSubmit(event) {
+    event.preventDefault();
+
+    const query = searchQuery.trim();
+    if (!query) return;
+
+    router.push(`/admin/members?search=${encodeURIComponent(query)}`);
+  }
 
   /* ==========================================================
      LOAD CURRENT ADMIN
@@ -52,6 +101,8 @@ export default function AdminHeader({
 
         if (response.ok && data.success) {
           setAdmin(data.admin);
+        } else if (response.status === 401 || response.status === 403) {
+          router.replace("/admin/login");
         }
       } catch (error) {
         console.error("Unable to load admin:", error);
@@ -61,7 +112,7 @@ export default function AdminHeader({
     }
 
     loadAdmin();
-  }, []);
+  }, [router]);
 
   /* ==========================================================
      CLOSE DROPDOWN WHEN CLICKING OUTSIDE
@@ -74,6 +125,13 @@ export default function AdminHeader({
         !dropdownRef.current.contains(event.target)
       ) {
         setOpen(false);
+      }
+
+      if (
+        notifRef.current &&
+        !notifRef.current.contains(event.target)
+      ) {
+        setNotifOpen(false);
       }
     }
 
@@ -188,7 +246,7 @@ export default function AdminHeader({
       ==================================================== */}
 
       <div className={styles.center}>
-        <div className={styles.searchBox}>
+        <form className={styles.searchBox} onSubmit={handleSearchSubmit}>
           <Search
             size={18}
             className={styles.searchIcon}
@@ -196,11 +254,13 @@ export default function AdminHeader({
 
           <input
             type="text"
-            placeholder="Search members, donations..."
+            placeholder="Search members by name, ID, phone..."
             className={styles.searchInput}
-            aria-label="Search admin panel"
+            aria-label="Search members"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
-        </div>
+        </form>
       </div>
 
       {/* ====================================================
@@ -212,15 +272,58 @@ export default function AdminHeader({
             NOTIFICATIONS
         ================================================== */}
 
-        <button
-          type="button"
-          className={styles.notification}
-          aria-label="Notifications"
-        >
-          <Bell size={20} />
+        <div className={styles.notifWrapper} ref={notifRef}>
+          <button
+            type="button"
+            className={styles.notification}
+            aria-label="Notifications"
+            aria-expanded={notifOpen}
+            onClick={() => setNotifOpen((prev) => !prev)}
+          >
+            <Bell size={20} />
 
-          <span className={styles.dot}></span>
-        </button>
+            {notifications.total > 0 && (
+              <span className={styles.dot}></span>
+            )}
+          </button>
+
+          {notifOpen && (
+            <div className={styles.notifDropdown}>
+              <div className={styles.notifHeader}>
+                <strong>Notifications</strong>
+                {notifications.total > 0 && (
+                  <span className={styles.notifCount}>{notifications.total}</span>
+                )}
+              </div>
+
+              <div className={styles.notifList}>
+                {notifLoading ? (
+                  <div className={styles.notifEmpty}>Loading...</div>
+                ) : notifications.items.length > 0 ? (
+                  notifications.items.map((item) => (
+                    <button
+                      type="button"
+                      key={item.type}
+                      className={styles.notifItem}
+                      onClick={() => {
+                        router.push(item.href);
+                        setNotifOpen(false);
+                      }}
+                    >
+                      <Inbox size={16} />
+                      <span>{item.label}</span>
+                    </button>
+                  ))
+                ) : (
+                  <div className={styles.notifEmpty}>
+                    <CheckCheck size={18} />
+                    <span>You're all caught up.</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
 
         {/* ==================================================
             PROFILE
@@ -320,26 +423,6 @@ export default function AdminHeader({
                 <User size={18} />
 
                 <span>My Profile</span>
-              </button>
-
-              {/* ==================================================
-                  SETTINGS
-              ================================================== */}
-
-              <button
-                type="button"
-                className={styles.dropdownItem}
-                onClick={() => {
-                  router.push(
-                    "/admin/settings"
-                  );
-
-                  setOpen(false);
-                }}
-              >
-                <Settings size={18} />
-
-                <span>Settings</span>
               </button>
 
               {/* ==================================================

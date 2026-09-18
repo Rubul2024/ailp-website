@@ -102,7 +102,7 @@ export default function AdminDashboardPage() {
               {loading ? "..." : `₹${(metrics?.totalRevenue ?? 0).toLocaleString("en-IN")}`}
             </span>
             <span className={styles.statHint}>
-              {metrics?.totalDonations ?? 0} Contributions recorded
+              {metrics?.totalDonations ?? 0} verified · {metrics?.pendingDonations ?? 0} pending
             </span>
           </div>
           <div className={styles.statIconBadge}>
@@ -117,7 +117,9 @@ export default function AdminDashboardPage() {
             <span className={styles.statNumber}>
               {loading ? "..." : metrics?.totalContacts ?? 0}
             </span>
-            <span className={styles.statHint}>Inquiries awaiting response</span>
+            <span className={styles.statHint}>
+              {metrics?.unreadContacts ?? 0} awaiting response
+            </span>
           </div>
           <div className={styles.statIconBadge}>
             <Mail size={22} />
@@ -145,11 +147,11 @@ export default function AdminDashboardPage() {
             <Users size={15} />
             <span>Manage Members</span>
           </Link>
-          <Link href="/admin/donation" className={styles.quickLink}>
+          <Link href="/admin/donations" className={styles.quickLink}>
             <CreditCard size={15} />
             <span>Verify Donations</span>
           </Link>
-          <Link href="/admin/contact" className={styles.quickLink}>
+          <Link href="/admin/contacts" className={styles.quickLink}>
             <Mail size={15} />
             <span>Citizen Inquiries</span>
           </Link>
@@ -195,9 +197,10 @@ export default function AdminDashboardPage() {
                   </tr>
                 ) : feeds?.recentMembers?.length > 0 ? (
                   feeds.recentMembers.map((m) => {
-                    const statusKey = (m.status || "active").toLowerCase();
+                    const active = m.isActive !== false;
+                    const statusKey = active ? "active" : "inactive";
                     return (
-                      <tr key={m._id || m.memberId}>
+                      <tr key={m._id}>
                         <td>
                           <div className={styles.userCell}>
                             <div className={styles.userAvatar}>
@@ -210,18 +213,20 @@ export default function AdminDashboardPage() {
                           </div>
                         </td>
                         <td>
-                          <span className={styles.idBadge}>{m.memberId || "PENDING"}</span>
+                          <span className={styles.idBadge}>
+                            {m.membershipId || m.memberId || "PENDING"}
+                          </span>
                         </td>
                         <td>
                           <div className={styles.locationMeta}>
                             <span>{m.district || "—"}</span>
-                            <small>{m.state || "Assam"}</small>
+                            <small>{m.state || "—"}</small>
                           </div>
                         </td>
                         <td>
-                          <span className={`${styles.statusPill} ${styles[statusKey] || styles.active}`}>
+                          <span className={`${styles.statusPill} ${styles[statusKey]}`}>
                             <span className={styles.statusDot} />
-                            {m.status || "Active"}
+                            {active ? "Active" : "Inactive"}
                           </span>
                         </td>
                       </tr>
@@ -246,7 +251,7 @@ export default function AdminDashboardPage() {
               <h3>Citizen Contact Inquiries</h3>
               <p>Direct submissions from website contact form</p>
             </div>
-            <Link href="/admin/contact" className={styles.viewAllBtn}>
+            <Link href="/admin/contacts" className={styles.viewAllBtn}>
               <span>Open Inbox</span>
               <ArrowUpRight size={15} />
             </Link>
