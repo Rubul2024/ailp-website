@@ -23,8 +23,8 @@ const leadershipData = [
 
   {
     id: 2,
-    name: "Leader Name",
-    designation: "Vice President",
+    name: "A KASHEM",
+    designation: "President",
     image: "/images/leadership/leader-2.jpeg",
     description:
       "Committed to employment generation and empowering every citizen with equal opportunities.",
@@ -40,8 +40,8 @@ const leadershipData = [
 
   {
     id: 3,
-    name: "Leader Name",
-    designation: "General Secretary",
+    name: "A KASHEM",
+    designation: "President",
     image: "/images/leadership/leader-3.jpeg",
     description:
       "Expanding the movement through organization, public participation and dedicated service.",
