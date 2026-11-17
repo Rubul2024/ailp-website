@@ -25,11 +25,11 @@ export async function proxy(request) {
   const { pathname } = request.nextUrl;
 
   /* ==========================================
-     Member Login — skip it when already
-     signed in.
+     Member Login / Register — skip them when
+     already signed in.
   ========================================== */
 
-  if (pathname === "/member/login") {
+  if (pathname === "/member/login" || pathname === "/member/register") {
     const token = request.cookies.get("memberToken")?.value;
 
     if (token) {

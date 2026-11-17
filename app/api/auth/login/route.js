@@ -7,9 +7,9 @@
 
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 
 import connectDB from "@/lib/mongodb";
+import { setMemberSession } from "@/lib/memberSession";
 import Member from "@/models/Member";
 
 const MAX_ATTEMPTS = 5;
@@ -61,10 +61,6 @@ export async function POST(request) {
       return fail("Enter a valid email address or 10-digit mobile number.", 400);
     }
 
-    if (!process.env.JWT_SECRET) {
-      throw new Error("JWT_SECRET is not configured.");
-    }
-
     await connectDB();
 
     const member = await Member.findOne(query);
@@ -114,22 +110,8 @@ export async function POST(request) {
       { $set: { lastLogin: new Date(), loginAttempts: 0, lockUntil: null } }
     );
 
-    const maxAge = remember ? 60 * 60 * 24 * 30 : 60 * 60 * 24 * 7;
-    const token = jwt.sign({ memberId: member._id, email: member.email }, process.env.JWT_SECRET, {
-      expiresIn: maxAge,
-    });
-
     const response = NextResponse.json({ success: true, message: "Signed in." });
-
-    response.cookies.set("memberToken", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-      maxAge,
-    });
-
-    return response;
+    return setMemberSession(response, member, { remember });
   } catch (error) {
     console.error("Member login error:", error);
     return fail("Something went wrong on our side. Please try again.", 500);

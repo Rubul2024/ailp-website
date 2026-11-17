@@ -5,12 +5,10 @@
 ========================================================== */
 
 import { Suspense, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   AlertCircle,
-  ArrowLeft,
   ArrowRight,
   BadgeCheck,
   Eye,
@@ -23,9 +21,8 @@ import {
   UserRound,
 } from "lucide-react";
 
-import styles from "./Login.module.css";
-
-const SUPPORT_EMAIL = "allindialabourpartyailp@gmail.com";
+import AuthShell from "@/components/member/AuthShell";
+import styles from "@/components/member/MemberAuth.module.css";
 
 /* Only allow redirects back into the member portal. */
 function safeNext(value) {
@@ -235,101 +232,30 @@ const HIGHLIGHTS = [
 ];
 
 export default function MemberLoginPage() {
-  const year = new Date().getFullYear();
-
   return (
-    <div className={styles.page}>
-      {/* ---------- Brand panel ---------- */}
-      <aside className={styles.brand}>
-        <Image
-          src="/images/hero/hero.jpg"
-          alt=""
-          fill
-          priority
-          sizes="(max-width: 960px) 100vw, 46vw"
-          className={styles.brandImage}
-        />
-        <div className={styles.brandShade} aria-hidden="true" />
+    <AuthShell
+      kicker="Official member portal"
+      brandTitle="Together for employment, equality & social justice."
+      items={HIGHLIGHTS}
+      title="Sign in to your account"
+      subtitle="Welcome back. Enter your details to open your member dashboard."
+    >
+      <Suspense fallback={<div className={styles.formFallback} />}>
+        <LoginForm />
+      </Suspense>
 
-        <div className={styles.brandInner}>
-          <Link href="/" className={styles.brandLogo}>
-            <span className={styles.logoDisc}>
-              <img src="/images/ailp-symbol-logo.svg" alt="" width={44} height={44} />
-            </span>
-            <span className={styles.logoText}>
-              <strong>All India Labour Party</strong>
-              <small>Member Portal</small>
-            </span>
-          </Link>
+      <div className={styles.divider}>
+        <span>New to AILP?</span>
+      </div>
 
-          <div className={styles.brandBody}>
-            <span className={styles.kicker}>
-              <span className={styles.dot} aria-hidden="true" /> Official member portal
-            </span>
-            <h2 className={styles.brandTitle}>Together for employment, equality &amp; social justice.</h2>
+      <Link href="/member/register" className={styles.secondary}>
+        Become a member
+      </Link>
 
-            <ul className={styles.highlights}>
-              {HIGHLIGHTS.map(({ icon: Icon, title, text }) => (
-                <li key={title}>
-                  <span className={styles.hlIcon}>
-                    <Icon size={18} aria-hidden="true" />
-                  </span>
-                  <span>
-                    <strong>{title}</strong>
-                    <small>{text}</small>
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <p className={styles.brandFoot}>Regd. No. 56/119/2018-18/PPS-I</p>
-        </div>
-        <span className={styles.tricolor} aria-hidden="true" />
-      </aside>
-
-      {/* ---------- Form panel ---------- */}
-      <main className={styles.main}>
-        <div className={styles.topBar}>
-          <Link href="/" className={styles.backLink}>
-            <ArrowLeft size={16} aria-hidden="true" /> Back to website
-          </Link>
-        </div>
-
-        <div className={styles.panel}>
-          <div className={styles.head}>
-            <h1 className={styles.title}>Sign in to your account</h1>
-            <p className={styles.subtitle}>Welcome back. Enter your details to open your member dashboard.</p>
-          </div>
-
-          <Suspense fallback={<div className={styles.formFallback} />}>
-            <LoginForm />
-          </Suspense>
-
-          <div className={styles.divider}>
-            <span>New to AILP?</span>
-          </div>
-
-          <Link href="/member/register" className={styles.secondary}>
-            Become a member
-          </Link>
-
-          <p className={styles.secure}>
-            <ShieldCheck size={15} aria-hidden="true" />
-            Secured with encrypted, HTTP-only sessions
-          </p>
-        </div>
-
-        <footer className={styles.footer}>
-          <span>© {year} All India Labour Party</span>
-          <span className={styles.footSep} aria-hidden="true">
-            ·
-          </span>
-          <span>
-            Need help? <a href={`mailto:${SUPPORT_EMAIL}`}>Contact support</a>
-          </span>
-        </footer>
-      </main>
-    </div>
+      <p className={styles.secure}>
+        <ShieldCheck size={15} aria-hidden="true" />
+        Secured with encrypted, HTTP-only sessions
+      </p>
+    </AuthShell>
   );
 }
