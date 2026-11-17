@@ -193,52 +193,24 @@ export default function ProfilePage() {
   const photoUrl = getPhotoUrl(member.photo);
   const fieldClass = (key) => `${ui.input} ${missingKeys.has(key) ? styles.needs : ""}`;
   const selectClass = (key) => `${ui.select} ${missingKeys.has(key) ? styles.needs : ""}`;
+  const req = (
+    <span className={ui.req} aria-hidden="true">
+      *
+    </span>
+  );
 
   return (
     <form onSubmit={handleSubmit} noValidate className={styles.page}>
       <div className={ui.pageHead}>
         <div>
           <h1 className={ui.pageTitle}>My Profile</h1>
-          <p className={ui.pageSub}>These details are printed on your AILP ID card.</p>
+          <p className={ui.pageSub}>Keep your details up to date — they are printed on your ID card.</p>
         </div>
       </div>
 
-      {/* Readiness banner */}
-      {readiness.ready ? (
-        <div className={`${styles.banner} ${styles.bannerDone}`}>
-          <CheckCircle2 size={22} />
-          <div>
-            <strong>Your profile is complete</strong>
-            <span>
-              {member.cardGenerated
-                ? "Your ID card uses these details."
-                : "You can now generate your ID card."}
-            </span>
-          </div>
-          <Link href="/member/card" className={`${ui.btn} ${ui.btnSecondary}`}>
-            <IdCard size={16} /> {member.cardGenerated ? "View ID card" : "Get ID card"}
-          </Link>
-        </div>
-      ) : (
-        <div className={styles.banner}>
-          <IdCard size={22} />
-          <div>
-            <strong>
-              {readiness.missing.length} more {readiness.missing.length === 1 ? "detail" : "details"} needed for
-              your ID card
-            </strong>
-            <span className={styles.chips}>
-              {readiness.missing.map((m) => (
-                <em key={m.key}>{m.label}</em>
-              ))}
-            </span>
-          </div>
-        </div>
-      )}
-
-      <section className={`${ui.card} ${styles.sheet}`}>
-        {/* Identity row */}
-        <div className={styles.identity}>
+      <div className={styles.layout}>
+        {/* ---------- Summary ---------- */}
+        <aside className={`${ui.card} ${styles.summary}`}>
           <div className={`${styles.avatar} ${missingKeys.has("photo") ? styles.avatarNeeds : ""}`}>
             {photoUrl ? <img src={photoUrl} alt="Your profile photo" /> : <span>{getInitials(member.fullName)}</span>}
             {uploading && (
@@ -253,158 +225,186 @@ export default function ProfilePage() {
               disabled={uploading}
               aria-label={photoUrl ? "Change photo" : "Add photo"}
             >
-              <Camera size={16} />
+              <Camera size={15} />
             </button>
             <input ref={fileRef} type="file" accept="image/*" hidden onChange={handlePhoto} />
           </div>
 
-          <div className={styles.identityText}>
-            <h2>{member.fullName}</h2>
-            <p>{member.email}</p>
-            <span className={`${ui.pill} ${member.membershipId ? ui.pillAccent : ui.pillWarn}`}>
-              {member.membershipId || "Membership ID pending"}
+          <h2 className={styles.name}>{member.fullName}</h2>
+          <p className={styles.email}>{member.email}</p>
+          <span className={`${ui.pill} ${member.membershipId ? ui.pillAccent : ui.pillWarn}`}>
+            {member.membershipId || "ID pending"}
+          </span>
+
+          <button type="button" className={styles.photoLink} onClick={() => fileRef.current?.click()} disabled={uploading}>
+            {photoUrl ? "Change photo" : "Upload photo"}
+          </button>
+          <p className={styles.photoHint}>Clear, front-facing photo · JPG or PNG</p>
+
+          <div className={styles.meter}>
+            <div className={styles.meterTop}>
+              <span>ID card details</span>
+              <strong className={readiness.ready ? styles.ok : styles.warn}>{readiness.percent}%</strong>
+            </div>
+            <span className={styles.meterBar} aria-hidden="true">
+              <span className={readiness.ready ? styles.meterDone : ""} style={{ width: `${readiness.percent}%` }} />
             </span>
-            {!photoUrl && (
-              <button type="button" className={`${ui.btn} ${ui.btnGhost} ${styles.addPhoto}`} onClick={() => fileRef.current?.click()}>
-                Add a clear, front-facing photo
-              </button>
+            {readiness.ready ? (
+              <p className={styles.meterText}>
+                <CheckCircle2 size={15} /> Everything your ID card needs is here.
+              </p>
+            ) : (
+              <p className={styles.meterText}>Still needed: {readiness.missing.map((m) => m.label).join(", ")}.</p>
             )}
           </div>
-        </div>
 
-        {/* Personal details */}
-        <div className={styles.section}>
-          <h3 className={styles.sectionTitle}>
-            <UserRound size={17} /> Personal details
-          </h3>
+          <Link href="/member/card" className={`${ui.btn} ${ui.btnSecondary} ${ui.btnBlock}`}>
+            <IdCard size={16} /> {member.cardGenerated ? "View ID card" : "Go to ID card"}
+          </Link>
+        </aside>
 
-          <div className={ui.formGrid}>
-            <label className={`${ui.field} ${ui.span2}`}>
-              <span className={ui.label}>
-                Full name <span className={ui.req}>*</span>
-              </span>
-              <input name="fullName" value={form.fullName} onChange={update} className={fieldClass("fullName")} autoComplete="name" maxLength={100} />
-            </label>
+        {/* ---------- Form ---------- */}
+        <div className={styles.formCol}>
+          <section className={ui.card}>
+            <div className={ui.cardHead}>
+              <div>
+                <h3 className={ui.cardTitle}>
+                  <UserRound size={17} /> Personal details
+                </h3>
+                <p className={ui.cardHint}>Fields marked * are required for your ID card.</p>
+              </div>
+            </div>
 
-            <label className={ui.field}>
-              <span className={ui.label}>
-                Mobile number <span className={ui.req}>*</span>
-              </span>
-              <input name="mobile" value={form.mobile} onChange={update} className={fieldClass("mobile")} inputMode="tel" autoComplete="tel" maxLength={16} />
-            </label>
+            <div className={`${ui.cardPad} ${ui.formGrid}`}>
+              <label className={`${ui.field} ${ui.span2}`}>
+                <span className={ui.label}>Full name {req}</span>
+                <input name="fullName" value={form.fullName} onChange={update} className={fieldClass("fullName")} autoComplete="name" maxLength={100} />
+                <span className={ui.help}>As it should appear on your ID card.</span>
+              </label>
 
-            <label className={ui.field}>
-              <span className={ui.label}>Email</span>
-              <input value={member.email || ""} readOnly className={ui.input} />
-            </label>
+              <label className={ui.field}>
+                <span className={ui.label}>Mobile number {req}</span>
+                <input name="mobile" value={form.mobile} onChange={update} className={fieldClass("mobile")} inputMode="tel" autoComplete="tel" maxLength={16} />
+              </label>
 
-            <label className={ui.field}>
-              <span className={ui.label}>
-                Gender <span className={ui.req}>*</span>
-              </span>
-              <select name="gender" value={form.gender} onChange={update} className={selectClass("gender")}>
-                <option value="">Select</option>
-                {GENDER_OPTIONS.map((g) => (
-                  <option key={g} value={g}>
-                    {g}
-                  </option>
-                ))}
-              </select>
-            </label>
+              <label className={ui.field}>
+                <span className={ui.label}>Email address</span>
+                <input value={member.email || ""} readOnly className={ui.input} />
+                <span className={ui.help}>Used to sign in · cannot be changed here</span>
+              </label>
 
-            <label className={ui.field}>
-              <span className={ui.label}>
-                Date of birth <span className={ui.req}>*</span>
-              </span>
-              <input type="date" name="dateOfBirth" value={form.dateOfBirth} onChange={update} className={fieldClass("dateOfBirth")} max={today} />
-            </label>
+              <label className={ui.field}>
+                <span className={ui.label}>Gender {req}</span>
+                <select name="gender" value={form.gender} onChange={update} className={selectClass("gender")}>
+                  <option value="">Select gender</option>
+                  {GENDER_OPTIONS.map((g) => (
+                    <option key={g} value={g}>
+                      {g}
+                    </option>
+                  ))}
+                </select>
+              </label>
 
-            <label className={ui.field}>
-              <span className={ui.label}>Blood group</span>
-              <select name="bloodGroup" value={form.bloodGroup} onChange={update} className={ui.select}>
-                <option value="">Not specified</option>
-                {BLOOD_GROUP_OPTIONS.map((b) => (
-                  <option key={b} value={b}>
-                    {b}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
-        </div>
+              <label className={ui.field}>
+                <span className={ui.label}>Date of birth {req}</span>
+                <input type="date" name="dateOfBirth" value={form.dateOfBirth} onChange={update} className={fieldClass("dateOfBirth")} max={today} />
+              </label>
 
-        {/* Address */}
-        <div className={styles.section}>
-          <h3 className={styles.sectionTitle}>
-            <MapPin size={17} /> Address
-          </h3>
+              <label className={ui.field}>
+                <span className={ui.label}>Blood group</span>
+                <select name="bloodGroup" value={form.bloodGroup} onChange={update} className={ui.select}>
+                  <option value="">Not specified</option>
+                  {BLOOD_GROUP_OPTIONS.map((b) => (
+                    <option key={b} value={b}>
+                      {b}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
+          </section>
 
-          <div className={ui.formGrid}>
-            <label className={ui.field}>
-              <span className={ui.label}>
-                State <span className={ui.req}>*</span>
-              </span>
-              <select name="state" value={form.state} onChange={update} className={selectClass("state")}>
-                <option value="">Select state</option>
-                {form.state && !INDIAN_STATES.includes(form.state) && <option value={form.state}>{form.state}</option>}
-                {INDIAN_STATES.map((s) => (
-                  <option key={s} value={s}>
-                    {s}
-                  </option>
-                ))}
-              </select>
-            </label>
+          <section className={ui.card}>
+            <div className={ui.cardHead}>
+              <div>
+                <h3 className={ui.cardTitle}>
+                  <MapPin size={17} /> Address
+                </h3>
+                <p className={ui.cardHint}>District and state print on the front of the card, the full address on the back.</p>
+              </div>
+            </div>
 
-            <label className={ui.field}>
-              <span className={ui.label}>
-                District <span className={ui.req}>*</span>
-              </span>
-              <input name="district" value={form.district} onChange={update} className={fieldClass("district")} placeholder="e.g. Barpeta" maxLength={80} />
-            </label>
+            <div className={`${ui.cardPad} ${ui.formGrid}`}>
+              <label className={ui.field}>
+                <span className={ui.label}>State {req}</span>
+                <select name="state" value={form.state} onChange={update} className={selectClass("state")}>
+                  <option value="">Select state</option>
+                  {form.state && !INDIAN_STATES.includes(form.state) && <option value={form.state}>{form.state}</option>}
+                  {INDIAN_STATES.map((s) => (
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
+                  ))}
+                </select>
+              </label>
 
-            <label className={ui.field}>
-              <span className={ui.label}>Assembly constituency</span>
-              <input name="assembly" value={form.assembly} onChange={update} className={ui.input} placeholder="Optional" maxLength={80} />
-            </label>
+              <label className={ui.field}>
+                <span className={ui.label}>District {req}</span>
+                <input name="district" value={form.district} onChange={update} className={fieldClass("district")} placeholder="e.g. Barpeta" maxLength={80} />
+              </label>
 
-            <label className={ui.field}>
-              <span className={ui.label}>Village / Town</span>
-              <input name="village" value={form.village} onChange={update} className={ui.input} placeholder="Optional" maxLength={80} />
-            </label>
+              <label className={ui.field}>
+                <span className={ui.label}>Assembly constituency</span>
+                <input name="assembly" value={form.assembly} onChange={update} className={ui.input} placeholder="e.g. Mandia" maxLength={80} />
+              </label>
 
-            <label className={ui.field}>
-              <span className={ui.label}>Pincode</span>
-              <input name="pincode" value={form.pincode} onChange={update} className={ui.input} inputMode="numeric" maxLength={6} placeholder="6 digits" autoComplete="postal-code" />
-            </label>
+              <label className={ui.field}>
+                <span className={ui.label}>Village / Town</span>
+                <input name="village" value={form.village} onChange={update} className={ui.input} maxLength={80} />
+              </label>
 
-            <label className={`${ui.field} ${ui.span2}`}>
-              <span className={ui.label}>Full address</span>
-              <textarea name="address" value={form.address} onChange={update} className={ui.textarea} rows={2} maxLength={300} placeholder="House no., street, post office (optional)" />
-            </label>
-          </div>
-        </div>
+              <label className={ui.field}>
+                <span className={ui.label}>Pincode</span>
+                <input name="pincode" value={form.pincode} onChange={update} className={ui.input} inputMode="numeric" maxLength={6} placeholder="6 digits" autoComplete="postal-code" />
+              </label>
 
-        {error && (
-          <div className={`${ui.alert} ${ui.alertError} ${styles.formError}`} role="alert">
-            <AlertCircle size={18} /> {error}
-          </div>
-        )}
+              <label className={`${ui.field} ${ui.span2}`}>
+                <span className={ui.label}>House / Street / Post office</span>
+                <textarea name="address" value={form.address} onChange={update} className={ui.textarea} rows={2} maxLength={300} />
+              </label>
+            </div>
+          </section>
 
-        <div className={styles.saveBar}>
-          <span className={styles.saveHint}>{dirty ? "You have unsaved changes" : "All changes saved"}</span>
-          <div className={styles.saveActions}>
-            {dirty && (
-              <button type="button" className={`${ui.btn} ${ui.btnSecondary}`} onClick={() => setForm(saved)} disabled={saving}>
-                Discard
+          {error && (
+            <div className={`${ui.alert} ${ui.alertError}`} role="alert">
+              <AlertCircle size={18} /> {error}
+            </div>
+          )}
+
+          <div className={`${styles.saveBar} ${dirty ? styles.saveBarDirty : ""}`}>
+            <span className={styles.saveHint}>
+              {dirty ? (
+                "You have unsaved changes"
+              ) : (
+                <>
+                  <CheckCircle2 size={15} /> All changes saved
+                </>
+              )}
+            </span>
+            <div className={styles.saveActions}>
+              {dirty && (
+                <button type="button" className={`${ui.btn} ${ui.btnSecondary}`} onClick={() => setForm(saved)} disabled={saving}>
+                  Discard
+                </button>
+              )}
+              <button type="submit" className={`${ui.btn} ${ui.btnPrimary}`} disabled={!dirty || saving}>
+                {saving ? <Loader2 size={16} className={ui.spin} /> : <Save size={16} />}
+                {saving ? "Saving…" : "Save changes"}
               </button>
-            )}
-            <button type="submit" className={`${ui.btn} ${ui.btnPrimary}`} disabled={!dirty || saving}>
-              {saving ? <Loader2 size={16} className={ui.spin} /> : <Save size={16} />}
-              {saving ? "Saving…" : "Save changes"}
-            </button>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
     </form>
   );
 }

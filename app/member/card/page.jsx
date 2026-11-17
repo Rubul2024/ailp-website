@@ -6,30 +6,31 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import {
   AlertCircle,
-  ArrowLeft,
   BadgeCheck,
   CheckCircle2,
   Circle,
   Download,
   ExternalLink,
   Loader2,
+  Printer,
   RefreshCw,
+  RotateCw,
   UserRound,
 } from "lucide-react";
 
 import { useMember } from "@/components/member/MemberContext";
 import IdCardPreview from "@/components/member/IdCardPreview";
-import { CARD_REQUIRED_FIELDS, formatDate, getCardReadiness } from "@/lib/memberProfile";
+import { CARD_REQUIRED_FIELDS, getCardReadiness } from "@/lib/memberProfile";
+import { issuedLabel } from "@/lib/idCard";
 import ui from "@/components/member/ui.module.css";
 import styles from "./Card.module.css";
 
 export default function IdCardPage() {
-  const router = useRouter();
   const { member, loading, error: loadError, setMember } = useMember();
+  const [side, setSide] = useState("front");
   const [generating, setGenerating] = useState(false);
   const [downloading, setDownloading] = useState(false);
 
@@ -91,61 +92,126 @@ export default function IdCardPage() {
 
   const readiness = getCardReadiness(member);
   const missing = new Set(readiness.missing.map((m) => m.key));
-  const issued = member.cardGenerated && member.membershipId;
+  const issued = Boolean(member.cardGenerated && member.membershipId);
 
   return (
     <div className={styles.page}>
-      <div className={styles.head}>
-        <button type="button" className={styles.back} onClick={() => router.back()} aria-label="Go back">
-          <ArrowLeft size={20} />
-        </button>
+      {/* Heading */}
+      <header className={styles.head}>
         <div className={styles.headText}>
-          <h1 className={ui.pageTitle}>ID Card — {member.fullName}</h1>
-          <p className={ui.pageSub}>{member.membershipId || "Membership ID will be assigned when your profile is complete"}</p>
+          <h1 className={ui.pageTitle}>My ID Card</h1>
+          <p className={ui.pageSub}>
+            {issued
+              ? "Your official All India Labour Party membership card."
+              : "Complete a few details to get your official membership card."}
+          </p>
         </div>
-      </div>
 
-      {issued ? (
-        <div className={styles.actions}>
-          <button type="button" className={`${ui.btn} ${ui.btnPrimary}`} onClick={download} disabled={downloading}>
-            {downloading ? <Loader2 size={17} className={ui.spin} /> : <Download size={17} />}
-            {downloading ? "Preparing PDF…" : "Download PDF"}
-          </button>
-          <Link href={`/verify/${member.membershipId}`} target="_blank" className={`${ui.btn} ${ui.btnSecondary}`}>
-            <ExternalLink size={16} /> Verification page
-          </Link>
-        </div>
-      ) : null}
+        {issued && (
+          <div className={styles.headActions}>
+            <Link href={`/verify/${member.membershipId}`} target="_blank" className={`${ui.btn} ${ui.btnSecondary}`}>
+              <ExternalLink size={16} /> Verify
+            </Link>
+            <button type="button" className={`${ui.btn} ${ui.btnPrimary}`} onClick={download} disabled={downloading}>
+              {downloading ? <Loader2 size={16} className={ui.spin} /> : <Download size={16} />}
+              {downloading ? "Preparing…" : "Download PDF"}
+            </button>
+          </div>
+        )}
+      </header>
 
       {issued && !readiness.ready && (
         <div className={`${ui.alert} ${ui.alertWarn}`}>
           <AlertCircle size={18} />
           <span>
             Your card is missing: {readiness.missing.map((m) => m.label.toLowerCase()).join(", ")}.{" "}
-            <Link href="/member/profile">Add them in your profile</Link> so your card is complete.
+            <Link href="/member/profile">Add them in your profile</Link>.
           </span>
         </div>
       )}
 
       <div className={styles.layout}>
-        <div className={styles.preview}>
-          <IdCardPreview member={member} />
-          {issued && (
-            <p className={styles.meta}>
-              Issued {formatDate(member.cardGeneratedAt)} · The PDF always uses your latest profile details.
-            </p>
-          )}
-        </div>
+        {/* Card stage */}
+        <section className={styles.stage} aria-label="ID card preview">
+          <div className={styles.stageTop}>
+            <div className={styles.toggle} role="tablist" aria-label="Card side">
+              {["front", "back"].map((s) => (
+                <button
+                  key={s}
+                  type="button"
+                  role="tab"
+                  aria-selected={side === s}
+                  className={side === s ? styles.toggleOn : ""}
+                  onClick={() => setSide(s)}
+                >
+                  {s === "front" ? "Front" : "Back"}
+                </button>
+              ))}
+            </div>
+            <button
+              type="button"
+              className={styles.flipBtn}
+              onClick={() => setSide((v) => (v === "front" ? "back" : "front"))}
+              aria-label="Flip card"
+            >
+              <RotateCw size={15} /> Flip
+            </button>
+          </div>
 
-        <aside className={`${ui.card} ${styles.side}`}>
+          <div className={`${styles.flip} ${side === "back" ? styles.flipped : ""}`}>
+            <div className={styles.flipInner}>
+              <div className={styles.faceFront} aria-hidden={side !== "front"}>
+                <IdCardPreview member={member} side="front" />
+              </div>
+              <div className={styles.faceBack} aria-hidden={side !== "back"}>
+                <IdCardPreview member={member} side="back" />
+              </div>
+            </div>
+          </div>
+
+          <p className={styles.stageNote}>
+            <Printer size={14} /> Standard ID-1 size · 85.6 × 54 mm · PDF includes front and back
+          </p>
+        </section>
+
+        {/* Side panel */}
+        <aside className={`${ui.card} ${styles.panel}`}>
           {issued ? (
             <>
-              <div className={styles.sideIcon}>
-                <BadgeCheck size={22} />
+              <div className={styles.panelHead}>
+                <span className={styles.panelIcon}>
+                  <BadgeCheck size={20} />
+                </span>
+                <div>
+                  <h2>Card active</h2>
+                  <p>Valid membership card</p>
+                </div>
               </div>
-              <h2>Your ID card is active</h2>
-              <p>Download the PDF to print or share it. Anyone can scan the QR code to confirm your membership.</p>
-              <div className={styles.sideLinks}>
+
+              <dl className={styles.facts}>
+                <div>
+                  <dt>Member ID</dt>
+                  <dd className={styles.mono}>{member.membershipId}</dd>
+                </div>
+                <div>
+                  <dt>Name</dt>
+                  <dd>{member.fullName}</dd>
+                </div>
+                <div>
+                  <dt>Issued on</dt>
+                  <dd>{issuedLabel(member)}</dd>
+                </div>
+                <div>
+                  <dt>Format</dt>
+                  <dd>PDF · 2 pages</dd>
+                </div>
+              </dl>
+
+              <p className={styles.panelNote}>
+                The download always uses your latest profile details. Anyone can scan the QR code to confirm your membership.
+              </p>
+
+              <div className={styles.panelActions}>
                 <Link href="/member/profile" className={`${ui.btn} ${ui.btnSecondary} ${ui.btnBlock}`}>
                   <UserRound size={16} /> Update details
                 </Link>
@@ -157,19 +223,27 @@ export default function IdCardPage() {
             </>
           ) : (
             <>
-              <h2>{readiness.ready ? "Ready to generate" : "Get your ID card"}</h2>
-              <p>
-                {readiness.ready
-                  ? "Your profile has everything needed. Generate your card now."
-                  : "Complete these details in your profile, then generate your card."}
-              </p>
+              <div className={styles.panelHead}>
+                <div>
+                  <h2>{readiness.ready ? "Ready to generate" : "Get your ID card"}</h2>
+                  <p>
+                    {readiness.ready
+                      ? "Your profile has everything the card needs."
+                      : `${readiness.done} of ${readiness.total} details complete`}
+                  </p>
+                </div>
+              </div>
+
+              <span className={styles.progress} aria-hidden="true">
+                <span style={{ width: `${readiness.percent}%` }} />
+              </span>
 
               <ol className={styles.checklist}>
                 {CARD_REQUIRED_FIELDS.map((f) => {
                   const done = !missing.has(f.key);
                   return (
                     <li key={f.key} className={done ? styles.done : ""}>
-                      {done ? <CheckCircle2 size={17} /> : <Circle size={17} />}
+                      {done ? <CheckCircle2 size={16} /> : <Circle size={16} />}
                       {f.label}
                     </li>
                   );
@@ -178,18 +252,28 @@ export default function IdCardPage() {
 
               {readiness.ready ? (
                 <button type="button" className={`${ui.btn} ${ui.btnPrimary} ${ui.btnBlock}`} onClick={generate} disabled={generating}>
-                  {generating ? <Loader2 size={17} className={ui.spin} /> : <BadgeCheck size={17} />}
+                  {generating ? <Loader2 size={16} className={ui.spin} /> : <BadgeCheck size={16} />}
                   {generating ? "Generating…" : "Generate my ID card"}
                 </button>
               ) : (
                 <Link href="/member/profile" className={`${ui.btn} ${ui.btnPrimary} ${ui.btnBlock}`}>
-                  <UserRound size={17} /> Complete profile ({readiness.done}/{readiness.total})
+                  <UserRound size={16} /> Complete profile
                 </Link>
               )}
             </>
           )}
         </aside>
       </div>
+
+      {/* Mobile: keep the main action within thumb reach */}
+      {issued && (
+        <div className={styles.mobileBar}>
+          <button type="button" className={`${ui.btn} ${ui.btnPrimary} ${ui.btnBlock}`} onClick={download} disabled={downloading}>
+            {downloading ? <Loader2 size={16} className={ui.spin} /> : <Download size={16} />}
+            {downloading ? "Preparing PDF…" : "Download ID card (PDF)"}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,392 +1,288 @@
 /* ==========================================================
-   Membership Card PDF
-   All India Labour Party
-
-   Styled after the party's official printed tricolor identity
-   card: a curved saffron/white/green treatment with the party
-   name running vertically down the right-hand band.
+   Membership ID Card — PDF
+   Two pages (front + back), each exactly ISO/IEC 7810 ID-1
+   (CR80, 85.6 × 53.98 mm) so it prints at true card size.
+   Layout and text come from lib/idCard.js, shared with the
+   on-screen preview (components/member/IdCardPreview.jsx).
 ========================================================== */
 
 import fs from "fs";
 import path from "path";
-
 import React from "react";
+import { Document, Font, Image, Page, Text, View } from "@react-pdf/renderer";
 
 import {
-  Document,
-  Page,
-  Text,
-  View,
-  Image,
-  Svg,
-  Path,
-  StyleSheet,
-} from "@react-pdf/renderer";
+  CARD_COLORS as C,
+  CARD_LAYOUT as L,
+  CARD_MM,
+  CARD_TERMS,
+  PARTY,
+  cardAddress,
+  cardFrontRows,
+  issuedLabel,
+  nameFontMm,
+  verifyHost,
+} from "@/lib/idCard";
+import { getInitials, getPhotoUrl } from "@/lib/memberProfile";
 
-/* ==========================================================
-   Local Asset Loading (embedded as base64 so rendering never
-   depends on the deployment's public URL being reachable)
-========================================================== */
+/* ---------- Units ---------- */
 
-function loadLocalImage(relativePath) {
+const PT_PER_MM = 72 / 25.4;
+const mm = (v) => v * PT_PER_MM;
+const box = ([left, top, width, height]) => ({
+  position: "absolute",
+  left: mm(left),
+  top: mm(top),
+  width: mm(width),
+  height: mm(height),
+});
+
+/* ---------- Assets (embedded, so rendering never depends on a public URL) ---------- */
+
+const root = process.cwd();
+
+function loadImage(relativePath) {
   try {
-    const filePath = path.join(process.cwd(), "public", relativePath);
-    const buffer = fs.readFileSync(filePath);
-    const ext = path.extname(relativePath).replace(".", "");
-    const mime = ext === "jpg" ? "jpeg" : ext;
-    return `data:image/${mime};base64,${buffer.toString("base64")}`;
-  } catch (error) {
+    const buffer = fs.readFileSync(path.join(root, "public", relativePath));
+    return `data:image/png;base64,${buffer.toString("base64")}`;
+  } catch {
     return null;
   }
 }
 
-const AVATAR_FALLBACK_SRC = loadLocalImage("images/avatar.png");
-const SIGNATURE_SRC = loadLocalImage("images/party-president-signature.png");
+const EMBLEM = loadImage("images/ailp-emblem.png");
+const SIGNATURE = loadImage("images/party-president-signature.png");
 
-/* ==========================================================
-   Helpers
-========================================================== */
-
-function calculateAge(dateOfBirth) {
-  if (!dateOfBirth) return null;
-  const dob = new Date(dateOfBirth);
-  if (Number.isNaN(dob.getTime())) return null;
-  const diff = Date.now() - dob.getTime();
-  return Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+let fontFamily = "Helvetica";
+try {
+  const fontPath = (w) => path.join(root, "pdf", "fonts", `Inter-${w}.woff`);
+  if (fs.existsSync(fontPath(400))) {
+    Font.register({
+      family: "Inter",
+      fonts: [400, 600, 700, 800].map((w) => ({ src: fontPath(w), fontWeight: w })),
+    });
+    fontFamily = "Inter";
+  }
+} catch {
+  fontFamily = "Helvetica";
 }
+Font.registerHyphenationCallback((word) => [word]);
 
-function formatDate(date) {
-  if (!date) return "—";
-  const parsed = new Date(date);
-  if (Number.isNaN(parsed.getTime())) return "—";
-  return parsed.toLocaleDateString("en-IN", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
-}
+/* ---------- Shared pieces ---------- */
 
-/* ==========================================================
-   Card geometry & colors — matches the party's official
-   printed tricolor identity card
-========================================================== */
-
-const CARD_W = 580;
-const CARD_H = 366;
-
-const SAFFRON = "#FF9933";
-const RED = "#D8432E";
-const GREEN = "#1B8A3D";
-const NAVY_DARK = "#0f172a";
-
-const styles = StyleSheet.create({
-  page: {
-    backgroundColor: "#eef1f6",
-    padding: 30,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  card: {
-    width: CARD_W,
-    height: CARD_H,
-    borderRadius: 16,
-    backgroundColor: "#ffffff",
-    overflow: "hidden",
-    position: "relative",
-    border: "1 solid #e2e8f0",
-  },
-
-  svgBg: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-  },
-
-  tricolorStripe: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    bottom: 0,
-    width: 14,
-    flexDirection: "column",
-  },
-
-  bandLabel: {
-    position: "absolute",
-    top: 122,
-    left: 395,
-    width: 260,
-    transform: "rotate(90deg)",
-    textAlign: "center",
-  },
-
-  bandTitle: {
-    fontSize: 17,
-    fontWeight: 700,
-    color: "#ffffff",
-    letterSpacing: 1.4,
-  },
-
-  bandSubtitle: {
-    fontSize: 6.5,
-    color: "#ffe4dc",
-    marginTop: 3,
-  },
-
-  body: {
-    position: "absolute",
-    top: 16,
-    left: 32,
-    width: 420,
-  },
-
-  identityBadge: {
-    alignSelf: "flex-start",
-    backgroundColor: NAVY_DARK,
-    color: "#ffffff",
-    fontSize: 8,
-    fontWeight: 700,
-    letterSpacing: 1,
-    paddingVertical: 4,
-    paddingHorizontal: 12,
-    borderRadius: 3,
-    marginBottom: 10,
-  },
-
-  regdText: {
-    fontSize: 6.5,
-    color: "#64748b",
-    marginBottom: 10,
-  },
-
-  contentRow: {
-    flexDirection: "row",
-  },
-
-  photo: {
-    width: 96,
-    height: 118,
-    borderRadius: 4,
-    objectFit: "cover",
-    border: `2 solid ${SAFFRON}`,
-    marginRight: 16,
-  },
-
-  fields: {
-    flex: 1,
-  },
-
-  memberName: {
-    fontSize: 15,
-    fontWeight: 700,
-    color: NAVY_DARK,
-    marginBottom: 6,
-  },
-
-  fieldRow: {
-    flexDirection: "row",
-    marginBottom: 5,
-  },
-
-  fieldLabel: {
-    width: 78,
-    fontSize: 7.5,
-    fontWeight: 700,
-    color: "#475569",
-  },
-
-  fieldValue: {
-    flex: 1,
-    fontSize: 8,
-    color: NAVY_DARK,
-  },
-
-  membershipIdText: {
-    marginTop: 8,
-    fontSize: 9,
-    fontWeight: 700,
-    color: RED,
-  },
-
-  bottomRow: {
-    position: "absolute",
-    bottom: 14,
-    left: 32,
-    right: 220,
-    flexDirection: "row",
-    alignItems: "flex-end",
-    justifyContent: "space-between",
-  },
-
-  secretaryText: {
-    fontSize: 7.5,
-    fontWeight: 700,
-    color: "#ffffff",
-  },
-
-  signatureCaption: {
-    fontSize: 6,
-    fontWeight: 700,
-    color: "#ffffff",
-    marginTop: 2,
-  },
-
-  signature: {
-    width: 60,
-    height: 20,
-    objectFit: "contain",
-  },
-
-  qrBlock: {
-    position: "absolute",
-    bottom: 16,
-    right: 34,
-    alignItems: "center",
-  },
-
-  qr: {
-    width: 62,
-    height: 62,
-    backgroundColor: "#ffffff",
-    padding: 2,
-    borderRadius: 3,
-  },
-
-  qrCaption: {
-    marginTop: 3,
-    fontSize: 5.5,
-    color: "#ffffff",
-    textAlign: "center",
-  },
-
-  statusBadge: {
-    position: "absolute",
-    top: 16,
-    right: 30,
-    backgroundColor: GREEN,
-    paddingVertical: 3,
-    paddingHorizontal: 9,
-    borderRadius: 20,
-    fontSize: 6,
-    fontWeight: 700,
-    color: "#ffffff",
-  },
+const text = (size, weight = 400, color = C.ink, extra = {}) => ({
+  fontFamily,
+  fontSize: mm(size),
+  fontWeight: weight,
+  color,
+  lineHeight: 1.15,
+  ...extra,
 });
 
-/* ==========================================================
-   PDF Component
-========================================================== */
+function Stripes({ top }) {
+  const s = L.stripes;
+  return (
+    <>
+      <View style={{ position: "absolute", left: 0, right: 0, top: mm(top), height: mm(s.saffron), backgroundColor: C.saffron }} />
+      <View
+        style={{ position: "absolute", left: 0, right: 0, top: mm(top + s.saffron + s.white), height: mm(s.green), backgroundColor: C.green }}
+      />
+    </>
+  );
+}
 
-export default function MembershipCardPDF({ member }) {
-  const age = calculateAge(member?.dateOfBirth);
-  const photoSrc = member?.photo?.url || AVATAR_FALLBACK_SRC;
+function Emblem({ frame }) {
+  const [, , size] = frame;
+  const pad = size * 0.08;
+  return (
+    <View style={{ ...box(frame), borderRadius: mm(size / 2), backgroundColor: "#FFFFFF", padding: mm(pad) }}>
+      {EMBLEM && <Image src={EMBLEM} style={{ width: "100%", height: "100%" }} />}
+    </View>
+  );
+}
+
+function Footer({ left, right, center }) {
+  const f = L.footer;
+  return (
+    <>
+      <View style={{ position: "absolute", left: 0, right: 0, top: mm(f.top), bottom: 0, backgroundColor: C.green }} />
+      {center ? (
+        <Text style={{ ...text(f.font, 600, "#FFFFFF"), position: "absolute", left: mm(4), right: mm(4), top: mm(f.textTop), textAlign: "center" }}>
+          {center}
+        </Text>
+      ) : (
+        <>
+          <Text
+            style={{ ...text(f.font, 700, "#FFFFFF", { letterSpacing: mm(0.3) }), position: "absolute", left: mm(4), top: mm(f.textTop) }}
+          >
+            {left}
+          </Text>
+          <Text style={{ ...text(f.font, 600, "#DCFCE7"), position: "absolute", right: mm(4), top: mm(f.textTop), textAlign: "right" }}>
+            {right}
+          </Text>
+        </>
+      )}
+    </>
+  );
+}
+
+const pageStyle = { width: mm(CARD_MM.width), height: mm(CARD_MM.height), backgroundColor: "#FFFFFF", position: "relative" };
+const pageSize = [mm(CARD_MM.width), mm(CARD_MM.height)];
+
+/* ---------- Front ---------- */
+
+function Front({ member }) {
+  const F = L.front;
+  const photo = getPhotoUrl(member?.photo);
+  const rows = cardFrontRows(member);
 
   return (
-    <Document>
-      <Page size="A4" style={styles.page}>
-        <View style={styles.card}>
-          {/* Curved tricolor background bands */}
-          <Svg
-            width={CARD_W}
-            height={CARD_H}
-            viewBox={`0 0 ${CARD_W} ${CARD_H}`}
-            style={styles.svgBg}
-          >
-            {/* Red band — right side, wavy left edge */}
-            <Path
-              d={`M ${CARD_W} 0 L 452 0 Q 405 90 452 183 Q 495 268 452 ${CARD_H} L ${CARD_W} ${CARD_H} Z`}
-              fill={RED}
-            />
-            {/* Saffron accent sliver between white and red */}
-            <Path
-              d={`M 452 0 L 440 0 Q 393 90 440 183 Q 483 268 440 ${CARD_H} L 452 ${CARD_H} Q 495 268 452 183 Q 405 90 452 0 Z`}
-              fill={SAFFRON}
-            />
-            {/* Green swoosh — bottom-left, behind QR/signature strip */}
-            <Path
-              d={`M 0 ${CARD_H} L 0 258 Q 130 262 190 300 Q 230 326 200 ${CARD_H} Z`}
-              fill={GREEN}
-            />
-          </Svg>
+    <Page size={pageSize} style={pageStyle}>
+      <View style={{ position: "absolute", left: 0, right: 0, top: 0, height: mm(F.header.height), backgroundColor: C.navy }} />
+      <Emblem frame={F.emblem} />
+      <Text style={{ ...text(F.title.font, 800, "#FFFFFF", { letterSpacing: mm(F.title.spacing) }), position: "absolute", left: mm(F.title.left), top: mm(F.title.top) }}>
+        {PARTY.name}
+      </Text>
+      <Text style={{ ...text(F.regd.font, 600, "#FFD8A8", { letterSpacing: mm(F.regd.spacing) }), position: "absolute", left: mm(F.regd.left), top: mm(F.regd.top) }}>
+        {PARTY.regd}
+      </Text>
+      <Stripes top={F.header.height} />
 
-          {/* Rotated party name inside the red band */}
-          <View style={styles.bandLabel}>
-            <Text style={styles.bandTitle}>ALL INDIA LABOUR PARTY</Text>
-            <Text style={styles.bandSubtitle}>Regd. No. 56/119/2018-18/PPS-I</Text>
-          </View>
+      {EMBLEM && <Image src={EMBLEM} style={{ ...box(F.watermark), opacity: 0.05 }} />}
 
-          {/* Verified/status badge */}
-          <Text style={styles.statusBadge}>{member?.membershipStatus || "REGISTERED"}</Text>
-
-          {/* Main identity content */}
-          <View style={styles.body}>
-            <Text style={styles.identityBadge}>IDENTITY CARD</Text>
-
-            <View style={styles.contentRow}>
-              {photoSrc && <Image src={photoSrc} style={styles.photo} />}
-
-              <View style={styles.fields}>
-                <Text style={styles.memberName}>{member?.fullName || "—"}</Text>
-
-                <View style={styles.fieldRow}>
-                  <Text style={styles.fieldLabel}>DOB</Text>
-                  <Text style={styles.fieldValue}>
-                    {formatDate(member?.dateOfBirth)}
-                    {age !== null ? ` (${age} yrs)` : ""}
-                  </Text>
-                </View>
-
-                <View style={styles.fieldRow}>
-                  <Text style={styles.fieldLabel}>Gender</Text>
-                  <Text style={styles.fieldValue}>{member?.gender || "—"}</Text>
-                </View>
-
-                <View style={styles.fieldRow}>
-                  <Text style={styles.fieldLabel}>Mobile</Text>
-                  <Text style={styles.fieldValue}>{member?.mobile || "—"}</Text>
-                </View>
-
-                <View style={styles.fieldRow}>
-                  <Text style={styles.fieldLabel}>Blood Group</Text>
-                  <Text style={styles.fieldValue}>{member?.bloodGroup || "—"}</Text>
-                </View>
-
-                <View style={styles.fieldRow}>
-                  <Text style={styles.fieldLabel}>District</Text>
-                  <Text style={styles.fieldValue}>
-                    {member?.district || "—"}, {member?.state || "—"}
-                  </Text>
-                </View>
-
-                {member?.assembly && (
-                  <View style={styles.fieldRow}>
-                    <Text style={styles.fieldLabel}>Assembly</Text>
-                    <Text style={styles.fieldValue}>{member.assembly}</Text>
-                  </View>
-                )}
-
-                <Text style={styles.membershipIdText}>{member?.membershipId || "Pending Allocation"}</Text>
-              </View>
-            </View>
-          </View>
-
-          {/* Signature */}
-          <View style={styles.bottomRow}>
-            <View>
-              <Text style={styles.secretaryText}>National President</Text>
-              {SIGNATURE_SRC && <Image src={SIGNATURE_SRC} style={styles.signature} />}
-              <Text style={styles.signatureCaption}>All India Labour Party</Text>
-            </View>
-          </View>
-
-          {/* QR code sitting on the green swoosh */}
-          <View style={styles.qrBlock}>
-            {member?.qrCode && <Image src={member.qrCode} style={styles.qr} />}
-            <Text style={styles.qrCaption}>SCAN TO VERIFY</Text>
-          </View>
+      {photo ? (
+        <Image
+          src={photo}
+          style={{ ...box(F.photo), objectFit: "cover", borderRadius: mm(1), border: `${mm(0.3)} solid #CBD5E1` }}
+        />
+      ) : (
+        <View
+          style={{ ...box(F.photo), borderRadius: mm(1), backgroundColor: "#F1F5F9", border: `${mm(0.3)} solid #CBD5E1`, alignItems: "center", justifyContent: "center" }}
+        >
+          <Text style={text(5, 800, "#94A3B8")}>{getInitials(member?.fullName)}</Text>
         </View>
-      </Page>
+      )}
+
+      <Text
+        style={{ ...text(nameFontMm(member?.fullName), 800, C.navy), position: "absolute", left: mm(F.name.left), top: mm(F.name.top), width: mm(F.name.width) }}
+        maxLines={1}
+      >
+        {String(member?.fullName || "—").toUpperCase()}
+      </Text>
+      <Text style={{ ...text(F.role.font, 700, C.saffronText, { letterSpacing: mm(F.role.spacing) }), position: "absolute", left: mm(F.role.left), top: mm(F.role.top) }}>
+        PARTY MEMBER
+      </Text>
+
+      {rows.map((row, i) => {
+        const top = mm(F.rows.top + i * F.rows.step);
+        return (
+          <React.Fragment key={row.label}>
+            <Text style={{ ...text(F.rows.labelFont, 600, C.muted, { letterSpacing: mm(0.08) }), position: "absolute", left: mm(F.rows.labelLeft), top: top + mm(0.3) }}>
+              {row.label.toUpperCase()}
+            </Text>
+            <Text
+              style={{ ...text(F.rows.valueFont, row.strong ? 800 : 600, row.strong ? C.navy : C.ink), position: "absolute", left: mm(F.rows.valueLeft), top, width: mm(F.rows.valueWidth) }}
+              maxLines={1}
+            >
+              {row.value}
+            </Text>
+          </React.Fragment>
+        );
+      })}
+
+      <View style={{ ...box(F.qr), backgroundColor: "#FFFFFF", border: `${mm(0.3)} solid ${C.line}`, borderRadius: mm(0.8), padding: mm(0.6) }}>
+        {member?.qrCode && <Image src={member.qrCode} style={{ width: "100%", height: "100%" }} />}
+      </View>
+      <Text
+        style={{ ...text(F.qrCaption.font, 700, C.muted, { letterSpacing: mm(F.qrCaption.spacing) }), position: "absolute", left: mm(F.qr[0]), width: mm(F.qr[2]), top: mm(F.qrCaption.top), textAlign: "center" }}
+      >
+        SCAN TO VERIFY
+      </Text>
+
+      {SIGNATURE && <Image src={SIGNATURE} style={{ ...box(F.sign), objectFit: "contain" }} />}
+      <Text
+        style={{ ...text(F.signCaption.font, 700, C.ink), position: "absolute", left: mm(F.sign[0] - 2), width: mm(F.sign[2] + 4), top: mm(F.signCaption.top), textAlign: "center" }}
+      >
+        National President
+      </Text>
+
+      <Footer left="MEMBER IDENTITY CARD" right={`Issued: ${issuedLabel(member)}`} />
+    </Page>
+  );
+}
+
+/* ---------- Back ---------- */
+
+function Back({ member }) {
+  const B = L.back;
+  const host = verifyHost();
+  const label = (top, children) => (
+    <Text style={{ ...text(B.label.font, 700, C.muted, { letterSpacing: mm(B.label.spacing) }), position: "absolute", left: mm(B.content.left), top: mm(top) }}>
+      {children}
+    </Text>
+  );
+
+  return (
+    <Page size={pageSize} style={pageStyle}>
+      <View style={{ position: "absolute", left: 0, right: 0, top: 0, height: mm(B.header.height), backgroundColor: C.navy }} />
+      <Emblem frame={B.emblem} />
+      <Text style={{ ...text(B.title.font, 800, "#FFFFFF", { letterSpacing: mm(B.title.spacing) }), position: "absolute", left: mm(B.title.left), top: mm(B.title.top) }}>
+        {PARTY.name}
+      </Text>
+      <Text style={{ ...text(B.memberId.font, 700, "#FDBA74"), position: "absolute", right: mm(B.memberId.right), top: mm(B.memberId.top), textAlign: "right" }}>
+        {member?.membershipId || ""}
+      </Text>
+      <Stripes top={B.header.height} />
+
+      {label(B.addressTop, "MEMBER ADDRESS")}
+      <Text
+        style={{ ...text(B.body, 600, C.ink, { lineHeight: 1.3 }), position: "absolute", left: mm(B.content.left), top: mm(B.addressTop + 2.3), width: mm(B.content.width) }}
+        maxLines={2}
+      >
+        {cardAddress(member)}
+      </Text>
+
+      {label(B.termsTop, "TERMS & CONDITIONS")}
+      <View style={{ position: "absolute", left: mm(B.content.left), top: mm(B.termsTop + 2.4), width: mm(B.content.width) }}>
+        {CARD_TERMS.map((term, i) => (
+          <View key={term} style={{ flexDirection: "row", marginBottom: mm(0.55) }}>
+            <Text style={{ ...text(B.small, 700, C.navy, { lineHeight: 1.3 }), width: mm(2.6) }}>{i + 1}.</Text>
+            <Text style={{ ...text(B.small, 400, "#334155", { lineHeight: 1.3 }), flex: 1 }}>{term}</Text>
+          </View>
+        ))}
+      </View>
+
+      <View style={{ position: "absolute", left: mm(B.content.left), width: mm(B.content.width), top: mm(B.officeTop - 1.2), height: mm(0.2), backgroundColor: C.line }} />
+      {label(B.officeTop, "HEAD OFFICE")}
+      <Text style={{ ...text(B.small, 600, C.ink), position: "absolute", left: mm(B.content.left), top: mm(B.officeTop + 2.3), width: mm(B.content.width) }}>
+        {PARTY.headOffice}
+      </Text>
+      <Text style={{ ...text(B.small, 400, C.muted), position: "absolute", left: mm(B.content.left), top: mm(B.officeTop + 5), width: mm(B.content.width) }}>
+        {`Email: ${PARTY.email}   ·   Phone: ${PARTY.phone}`}
+      </Text>
+
+      <Footer
+        center={
+          host && member?.membershipId
+            ? `Verify online: ${host}/verify/${member.membershipId}`
+            : "Scan the QR code on the front to verify this card"
+        }
+      />
+    </Page>
+  );
+}
+
+/* ---------- Document ---------- */
+
+export default function MembershipCardPDF({ member }) {
+  return (
+    <Document
+      title={`AILP ID Card — ${member?.fullName || "Member"}`}
+      author="All India Labour Party"
+      subject="Member identity card"
+    >
+      <Front member={member} />
+      <Back member={member} />
     </Document>
   );
 }

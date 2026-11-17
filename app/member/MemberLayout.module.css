@@ -29,6 +29,15 @@
   font-family: var(--font-body);
 }
 
+/* The site-wide h1–h6 rule uses the display font; the portal uses
+   the body font everywhere for a calmer, more standard UI. */
+.layout h1,
+.layout h2,
+.layout h3,
+.layout h4 {
+  font-family: var(--font-body);
+}
+
 .content {
   flex: 1;
   min-width: 0;
