@@ -93,7 +93,7 @@ function Stripes({ top }) {
 
 function Emblem({ frame }) {
   const [, , size] = frame;
-  const pad = size * 0.08;
+  const pad = size * 0.015;
   return (
     <View style={{ ...box(frame), borderRadius: mm(size / 2), backgroundColor: "#FFFFFF", padding: mm(pad) }}>
       {EMBLEM && <Image src={EMBLEM} style={{ width: "100%", height: "100%" }} />}

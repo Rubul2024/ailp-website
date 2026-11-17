@@ -43,7 +43,7 @@ function Stripes({ top }) {
 
 function Emblem({ frame }) {
   return (
-    <span className={`${styles.abs} ${styles.emblem}`} style={{ ...box(frame), padding: u(frame[2] * 0.08) }}>
+    <span className={`${styles.abs} ${styles.emblem}`} style={{ ...box(frame), padding: u(frame[2] * 0.015) }}>
       <img src="/images/ailp-emblem.png" alt="" />
     </span>
   );
