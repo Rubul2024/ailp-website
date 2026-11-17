@@ -25,7 +25,30 @@ export async function proxy(request) {
   const { pathname } = request.nextUrl;
 
   /* ==========================================
+     Member Login — skip it when already
+     signed in.
+  ========================================== */
+
+  if (pathname === "/member/login") {
+    const token = request.cookies.get("memberToken")?.value;
+
+    if (token) {
+      try {
+        await verifyToken(token);
+        return NextResponse.redirect(new URL("/member/dashboard", request.url));
+      } catch {
+        // Expired or invalid session: show the login page.
+      }
+    }
+
+    return NextResponse.next();
+  }
+
+  /* ==========================================
      Member Protected Routes
+     Unauthenticated visitors are sent to the
+     login page with ?next= so they return to
+     the page they asked for.
   ========================================== */
 
   const protectedMemberRoutes = [
@@ -43,20 +66,17 @@ export async function proxy(request) {
   if (isMemberRoute) {
     const token = request.cookies.get("memberToken")?.value;
 
+    const loginUrl = new URL("/member/login", request.url);
+    loginUrl.searchParams.set("next", pathname + request.nextUrl.search);
+
     if (!token) {
-      return NextResponse.redirect(
-        new URL("/member/login", request.url)
-      );
+      return NextResponse.redirect(loginUrl);
     }
 
     try {
       await verifyToken(token);
-    } catch (error) {
-      console.error("Member JWT Error:", error.message);
-
-      return NextResponse.redirect(
-        new URL("/member/login", request.url)
-      );
+    } catch {
+      return NextResponse.redirect(loginUrl);
     }
   }
 

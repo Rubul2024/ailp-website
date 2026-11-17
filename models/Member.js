@@ -54,6 +54,17 @@ const memberSchema = new mongoose.Schema(
       default: null,
     },
 
+    // Brute-force protection (see app/api/auth/login)
+    loginAttempts: {
+      type: Number,
+      default: 0,
+    },
+
+    lockUntil: {
+      type: Date,
+      default: null,
+    },
+
     isActive: {
       type: Boolean,
       default: true,
