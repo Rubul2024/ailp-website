@@ -1,87 +1,50 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
+import { useState } from "react";
 import { usePathname } from "next/navigation";
+import { Toaster } from "react-hot-toast";
 
 import MemberSidebar from "@/components/member/MemberSidebar";
 import MemberHeader from "@/components/member/MemberHeader";
+import { MemberProvider } from "@/components/member/MemberContext";
 
 import styles from "./MemberLayout.module.css";
 
+const AUTH_PAGES = ["/member/login", "/member/register", "/member/forgot-password"];
+
 export default function MemberLayout({ children }) {
   const pathname = usePathname();
-
-  const authPages = [
-    "/member/login",
-    "/member/register",
-    "/member/forgot-password",
-  ];
-
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [member, setMember] = useState(null);
+  const [lastPath, setLastPath] = useState(pathname);
 
-  const isAuthPage = authPages.includes(pathname);
+  // Close the mobile drawer whenever the route changes.
+  if (lastPath !== pathname) {
+    setLastPath(pathname);
+    setSidebarOpen(false);
+  }
 
-  useEffect(() => {
-    if (isAuthPage) return;
-
-    let cancelled = false;
-
-    async function loadMember() {
-      try {
-        let response = await fetch("/api/member/me", {
-          credentials: "include",
-          cache: "no-store",
-        });
-
-        if (!response.ok) {
-          response = await fetch("/api/member/profile", {
-            credentials: "include",
-            cache: "no-store",
-          });
-        }
-
-        const data = await response.json();
-
-        if (!cancelled && data.success && (data.member || data.data)) {
-          setMember(data.member || data.data);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    loadMember();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [isAuthPage, pathname]);
-
-  if (isAuthPage) {
+  if (AUTH_PAGES.includes(pathname)) {
     return children;
   }
 
   return (
-    <div className={styles.layout}>
-      <MemberSidebar
-        open={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
-        member={member}
-      />
+    <MemberProvider>
+      <div className={styles.layout}>
+        <MemberSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-      <div className={styles.content}>
-        <MemberHeader
-          onMenuClick={() =>
-            setSidebarOpen((previous) => !previous)
-          }
-        />
-
-        <main className={styles.main}>
-          {children}
-        </main>
+        <div className={styles.content}>
+          <MemberHeader onMenuClick={() => setSidebarOpen((v) => !v)} />
+          <main className={styles.main}>{children}</main>
+        </div>
       </div>
-    </div>
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          duration: 3500,
+          style: { borderRadius: "12px", fontSize: "14px", padding: "10px 14px" },
+          success: { iconTheme: { primary: "#0f766e", secondary: "#fff" } },
+        }}
+      />
+    </MemberProvider>
   );
 }

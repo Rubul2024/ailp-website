@@ -1,121 +1,75 @@
 /* ==========================================================
-   Member Layout
-   All India Labour Party
-   Production Ready
+   Member Portal Shell
+   Design tokens live here so every member page shares them.
 ========================================================== */
 
-/* ==========================================================
-   Layout
-========================================================== */
+.layout {
+  --m-bg: #f7f6f1;
+  --m-surface: #ffffff;
+  --m-border: #e8e6df;
+  --m-border-strong: #d9d6cc;
+  --m-text: #14211f;
+  --m-text-2: #4b5a57;
+  --m-text-3: #7c8784;
+  --m-accent: #0f766e;
+  --m-accent-strong: #0b5d57;
+  --m-accent-soft: #e3f3f0;
+  --m-saffron: #d97706;
+  --m-saffron-soft: #fdf1df;
+  --m-danger: #c2410c;
+  --m-danger-soft: #fdece4;
+  --m-radius: 16px;
+  --m-shadow: 0 1px 2px rgba(20, 33, 31, 0.04), 0 4px 16px rgba(20, 33, 31, 0.04);
+  --m-sidebar-w: 264px;
 
-.layout{
-    display:flex;
-    min-height:100vh;
-    background:#F3F0E7;
+  display: flex;
+  min-height: 100vh;
+  background: var(--m-bg);
+  color: var(--m-text);
+  font-family: var(--font-body);
 }
 
-/* ==========================================================
-   Content
-========================================================== */
-
-.content{
-
-    flex:1;
-
-    display:flex;
-
-    flex-direction:column;
-
-    min-height:100vh;
-
-    margin-left:280px;
-
-    transition:margin-left .35s ease;
+.content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin-left: var(--m-sidebar-w);
 }
 
-/* ==========================================================
-   Main
-========================================================== */
-
-.main{
-
-    flex:1;
-
-    padding:30px;
-
-    animation:fade .35s ease;
+.main {
+  flex: 1;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 28px 32px 56px;
+  animation: fadeIn 0.25s ease;
 }
 
-/* ==========================================================
-   Animation
-========================================================== */
-
-@keyframes fade{
-
-    from{
-
-        opacity:0;
-
-        transform:translateY(18px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:translateY(0);
-
-    }
-
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-/* ==========================================================
-   Large Tablet
-========================================================== */
+@media (max-width: 960px) {
+  .content {
+    margin-left: 0;
+  }
 
-@media (max-width:1200px){
-
-    .content{
-
-        margin-left:260px;
-
-    }
-
+  .main {
+    padding: 20px 16px 48px;
+  }
 }
 
-/* ==========================================================
-   Mobile
-========================================================== */
-
-@media (max-width:900px){
-
-    .content{
-
-        margin-left:0;
-
-        width:100%;
-
-    }
-
-    .main{
-
-        padding:20px;
-
-    }
-
-}
-
-/* ==========================================================
-   Small Mobile
-========================================================== */
-
-@media (max-width:600px){
-
-    .main{
-
-        padding:15px;
-
-    }
-
+@media (prefers-reduced-motion: reduce) {
+  .main {
+    animation: none;
+  }
 }

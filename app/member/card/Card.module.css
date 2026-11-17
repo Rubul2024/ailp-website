@@ -1,398 +1,149 @@
 /* ==========================================================
-   AILP Membership Card Page
+   My ID Card
 ========================================================== */
 
-.pageContainer {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 24px 20px 60px;
+.page {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  color: #0f172a;
-}
-
-/* ==========================================================
-   HEADER
-========================================================== */
-
-.headerBar {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
   gap: 20px;
-  flex-wrap: wrap;
 }
 
-.categoryBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: rgba(46, 125, 50, 0.1);
-  border: 1px solid rgba(46, 125, 50, 0.25);
-  color: #1B5E20;
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin-bottom: 8px;
-}
-
-.pageHeading {
-  font-size: clamp(22px, 3vw, 28px);
-  font-weight: 700;
-  color: #0f172a;
-  letter-spacing: -0.01em;
-  line-height: 1.2;
-}
-
-.pageSubheading {
-  font-size: 13.5px;
-  color: #64748b;
-  margin-top: 4px;
-  max-width: 600px;
-  line-height: 1.5;
-}
-
-.downloadBtn,
-.generateBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  height: 46px;
-  padding: 0 22px;
-  border-radius: 12px;
-  border: none;
-  background: linear-gradient(135deg, #0a4747, #0F5C5C);
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 8px 20px rgba(0, 128, 128, 0.25);
-  transition: all 0.2s ease;
-}
-
-.downloadBtn:hover:not(:disabled),
-.generateBtn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 26px rgba(0, 128, 128, 0.32);
-}
-
-.downloadBtn:disabled,
-.generateBtn:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-/* ==========================================================
-   ERROR / LOADING
-========================================================== */
-
-.errorBox {
+.head {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 16px;
-  border-radius: 12px;
-  background: #fef2f2;
-  color: #b91c1c;
-  font-size: 13.5px;
-}
-
-.loadingWrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
   gap: 12px;
-  padding: 100px 20px;
-  color: #64748b;
 }
 
-.spinner {
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* ==========================================================
-   GENERATE PROMPT
-========================================================== */
-
-.generatePrompt {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 12px;
-  padding: 60px 24px;
-  border-radius: 20px;
-  background: #ffffff;
-  border: 1px dashed #cbd5e1;
-  color: #FF9933;
-}
-
-.generatePrompt h3 {
-  color: #0f172a;
-  font-size: 18px;
-}
-
-.generatePrompt p {
-  color: #64748b;
-  font-size: 13.5px;
-  max-width: 420px;
-}
-
-/* ==========================================================
-   CARD WORKSPACE
-========================================================== */
-
-.cardWorkspace {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-}
-
-.idCard {
-  position: relative;
-  width: 100%;
-  max-width: 640px;
-  aspect-ratio: 580 / 366;
-  border-radius: 16px;
-  background: #ffffff;
-  overflow: hidden;
-  box-shadow: 0 20px 55px -12px rgba(15, 23, 42, 0.22);
-  border: 1px solid #e2e8f0;
-}
-
-.cardSvgBg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-}
-
-/* ==========================================================
-   STATUS PILL (top-right, on the red band)
-========================================================== */
-
-.statusPill {
-  position: absolute;
-  z-index: 2;
-  top: 4.4%;
-  right: 5.2%;
-  padding: 0.9% 2.4%;
-  border-radius: 999px;
-  background: #1B8A3D;
-  color: #ffffff;
-  font-size: clamp(7px, 1.7vw, 10px);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-}
-
-/* ==========================================================
-   ROTATED PARTY NAME BAND
-========================================================== */
-
-.bandLabel {
-  position: absolute;
-  z-index: 1;
-  top: 50%;
-  right: 6.5%;
-  transform: translateY(-50%) rotate(90deg);
-  transform-origin: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  white-space: nowrap;
-}
-
-.bandLabel strong {
-  color: #ffffff;
-  font-size: clamp(11px, 2.6vw, 17px);
-  font-weight: 800;
-  letter-spacing: 0.05em;
-}
-
-.bandLabel span {
-  color: #ffe4dc;
-  font-size: clamp(6px, 1.3vw, 8px);
-}
-
-/* ==========================================================
-   MAIN IDENTITY CONTENT
-========================================================== */
-
-.cardBody {
-  position: relative;
-  z-index: 1;
-  padding: 4.4% 5.5% 0;
-  width: 72%;
-}
-
-.identityBadge {
-  display: inline-block;
-  background: #0f172a;
-  color: #ffffff;
-  font-size: clamp(7px, 1.7vw, 9px);
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  padding: 0.9% 2.6%;
-  border-radius: 4px;
-  margin-bottom: 3%;
-}
-
-.contentRow {
-  display: flex;
-  gap: 4%;
-}
-
-.memberPhoto {
-  width: 26%;
-  aspect-ratio: 96 / 118;
-  object-fit: cover;
-  border-radius: 6px;
-  border: 3px solid #FF9933;
-  flex-shrink: 0;
-}
-
-.fields {
-  flex: 1;
+.headText {
   min-width: 0;
 }
 
-.memberName {
-  font-size: clamp(13px, 3vw, 17px);
-  font-weight: 800;
-  color: #0f172a;
-  margin-bottom: 2%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.headText h1 {
+  overflow-wrap: anywhere;
 }
 
-.fieldRow {
-  display: flex;
-  gap: 6px;
-  margin-bottom: 1.6%;
-}
-
-.fieldRow label {
+.back {
   flex-shrink: 0;
-  width: 70px;
-  font-size: clamp(7px, 1.6vw, 9px);
-  font-weight: 700;
-  color: #475569;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  margin-top: -2px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--m-text);
+  cursor: pointer;
 }
 
-.fieldRow span {
-  font-size: clamp(7px, 1.7vw, 9.5px);
-  color: #0f172a;
+.back:hover {
+  background: rgba(20, 33, 31, 0.06);
 }
 
-.membershipId {
-  margin-top: 3%;
-  font-size: clamp(8px, 1.9vw, 11px);
-  font-weight: 800;
-  color: #D8432E;
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-/* ==========================================================
-   SIGNATURE (sits on the green swoosh)
-========================================================== */
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  align-items: start;
+  gap: 24px;
+}
 
-.signatureBlock {
-  position: absolute;
-  z-index: 1;
-  left: 5.5%;
-  bottom: 5%;
+.preview {
+  max-width: 700px;
+}
+
+.meta {
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--m-text-3);
+}
+
+.side {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  gap: 10px;
+  padding: 22px;
+}
+
+.side h2 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--m-text);
+}
+
+.side p {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--m-text-2);
+}
+
+.sideIcon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--m-accent-soft);
+  color: var(--m-accent);
+}
+
+.sideLinks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.checklist {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
   gap: 2px;
+  margin: 6px 0 10px;
 }
 
-.signatureCaption {
-  color: #ffffff;
-  font-size: clamp(6.5px, 1.5vw, 8.5px);
-  font-weight: 700;
-}
-
-.signatureImg {
-  width: 60px;
-  max-width: 22vw;
-  height: auto;
-  object-fit: contain;
-}
-
-/* ==========================================================
-   QR CODE (sits on the red band)
-========================================================== */
-
-.qrColumn {
-  position: absolute;
-  z-index: 1;
-  bottom: 5.5%;
-  right: 5.8%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
-
-.qrImage {
-  width: clamp(44px, 12vw, 68px);
-  height: clamp(44px, 12vw, 68px);
-  background: #ffffff;
-  border-radius: 4px;
-  padding: 3px;
-}
-
-.qrPlaceholder {
-  width: clamp(44px, 12vw, 68px);
-  height: clamp(44px, 12vw, 68px);
+.checklist li {
   display: flex;
   align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.85);
-  border-radius: 4px;
-  color: #64748b;
+  gap: 10px;
+  padding: 7px 0;
+  font-size: 14px;
+  color: var(--m-text-2);
 }
 
-.qrColumn span {
-  color: #ffffff;
-  font-size: clamp(5.5px, 1.2vw, 7px);
-  font-weight: 700;
-  text-align: center;
+.checklist li svg {
+  flex-shrink: 0;
+  color: var(--m-border-strong);
 }
 
-.helperText {
-  font-size: 12px;
-  color: #94a3b8;
-  text-align: center;
+.checklist li.done {
+  color: var(--m-text-3);
+  text-decoration: line-through;
+  text-decoration-color: var(--m-border-strong);
 }
 
-/* ==========================================================
-   RESPONSIVE
-========================================================== */
+.checklist li.done svg {
+  color: var(--m-accent);
+}
 
-@media (max-width: 480px) {
-  .pageContainer {
-    padding: 16px 12px 40px;
+@media (max-width: 1080px) {
+  .layout {
+    grid-template-columns: 1fr;
   }
 
-  .fieldRow label {
-    width: 56px;
+  .side {
+    max-width: 700px;
+  }
+}
+
+@media (max-width: 640px) {
+  .actions > * {
+    flex: 1;
   }
 }

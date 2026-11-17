@@ -1,120 +1,72 @@
 /* ==========================================================
    AILP Member Profile API
-   All India Labour Party
-   Production Ready
+   GET  — current member (no password)
+   POST — partial update (multipart). Only fields present in
+          the request are changed; absent fields are left as-is.
 ========================================================== */
 
 import { NextResponse } from "next/server";
 
 import connectDB from "@/lib/mongodb";
-
 import Member from "@/models/Member";
-
 import verifyMember from "@/utils/verifyMember";
-
-import generateMembershipId from "@/utils/generateMembershipId";
-
 import uploadImageToCloudinary from "@/utils/uploadImageToCloudinary";
+import { getCardReadiness, GENDER_OPTIONS, BLOOD_GROUP_OPTIONS } from "@/lib/memberProfile";
+import {
+  CARD_PRINTED_FIELDS,
+  ensureMembershipIdentity,
+  renderAndStoreCardPdf,
+} from "@/lib/memberCard";
 
-import generateQRCode from "@/utils/generateQRCode";
+const MAX_PHOTO_BYTES = 2 * 1024 * 1024;
 
-import uploadPdfToCloudinary from "@/utils/uploadPdfToCloudinary";
+/* Text fields a member may update. Legacy fields stay editable
+   through the API so older data is never stranded. */
+const TEXT_FIELDS = [
+  "fullName",
+  "mobile",
+  "gender",
+  "bloodGroup",
+  "state",
+  "district",
+  "assembly",
+  "block",
+  "village",
+  "city",
+  "pincode",
+  "address",
+  "fatherName",
+  "motherName",
+  "occupation",
+  "education",
+  "emergencyName",
+  "emergencyMobile",
+  "relationship",
+];
 
-import React from "react";
-
-import { renderToBuffer } from "@react-pdf/renderer";
-
-import MembershipCardPDF from "@/pdf/MembershipCardPDF";
+function fail(message, status = 400) {
+  return NextResponse.json({ success: false, message }, { status });
+}
 
 /* ==========================================================
    GET PROFILE
 ========================================================== */
 
 export async function GET(request) {
-
   try {
+    const auth = verifyMember(request);
+    if (!auth.success) return fail(auth.message, 401);
 
     await connectDB();
 
-    /* ======================================================
-       Verify Member
-    ====================================================== */
+    const member = await Member.findById(auth.memberId).select("-password");
+    if (!member) return fail("Member not found.", 404);
 
-    const auth =
-      verifyMember(request);
-
-    if (!auth.success) {
-
-      return NextResponse.json(
-        {
-          success: false,
-          message: auth.message,
-        },
-        {
-          status: 401,
-        }
-      );
-
-    }
-
-    /* ======================================================
-       Find Member
-    ====================================================== */
-
-    const member =
-      await Member.findById(
-        auth.memberId
-      ).select("-password");
-
-    if (!member) {
-
-      return NextResponse.json(
-        {
-          success: false,
-          message:
-            "Member not found.",
-        },
-        {
-          status: 404,
-        }
-      );
-
-    }
-
-    /* ======================================================
-       Success
-    ====================================================== */
-
-    return NextResponse.json(
-      {
-        success: true,
-        member,
-      },
-      {
-        status: 200,
-      }
-    );
-
+    return NextResponse.json({ success: true, member });
   } catch (error) {
-
-    console.error(
-      "GET Profile Error:",
-      error
-    );
-
-    return NextResponse.json(
-      {
-        success: false,
-        message:
-          "Internal Server Error",
-      },
-      {
-        status: 500,
-      }
-    );
-
+    console.error("GET Profile Error:", error);
+    return fail("Internal Server Error", 500);
   }
-
 }
 
 /* ==========================================================
@@ -122,679 +74,136 @@ export async function GET(request) {
 ========================================================== */
 
 export async function POST(request) {
-
   try {
+    const auth = verifyMember(request);
+    if (!auth.success) return fail(auth.message, 401);
 
     await connectDB();
 
-    /* ======================================================
-       Verify Logged-in Member
-    ====================================================== */
+    const formData = await request.formData();
+    const member = await Member.findById(auth.memberId);
+    if (!member) return fail("Member not found.", 404);
 
-    const auth =
-      verifyMember(request);
+    /* ---------- Text fields (partial update) ---------- */
 
-    if (!auth.success) {
-
-      return NextResponse.json(
-        {
-          success: false,
-          message: auth.message,
-        },
-        {
-          status: 401,
-        }
-      );
-
+    const updates = {};
+    for (const key of TEXT_FIELDS) {
+      const raw = formData.get(key);
+      if (raw === null || typeof raw !== "string") continue;
+      updates[key] = raw.trim().slice(0, 300);
     }
 
-    /* ======================================================
-       Read Multipart FormData
-    ====================================================== */
-
-    const formData =
-      await request.formData();
-
-    /* ======================================================
-       Find Member
-    ====================================================== */
-
-    const member =
-      await Member.findById(
-        auth.memberId
-      );
-
-    if (!member) {
-
-      return NextResponse.json(
-        {
-          success: false,
-          message:
-            "Member not found.",
-        },
-        {
-          status: 404,
-        }
-      );
-
+    if ("fullName" in updates && updates.fullName.length < 2) {
+      return fail("Please enter your full name.");
     }
 
-    /* ======================================================
-       Helper: Get String Value
-    ====================================================== */
-
-    const getValue = (name) => {
-
-      const value =
-        formData.get(name);
-
-      if (
-        value === null ||
-        value === undefined
-      ) {
-
-        return undefined;
-
+    if ("mobile" in updates) {
+      const digits = updates.mobile.replace(/\D/g, "");
+      if (digits.length < 10 || digits.length > 13) {
+        return fail("Please enter a valid mobile number.");
       }
-
-      return String(value).trim();
-
-    };
-
-    /* ======================================================
-       Basic / Personal Information
-    ====================================================== */
-
-    const fullName =
-      getValue("fullName");
-
-    const mobile =
-      getValue("mobile");
-
-    const fatherName =
-      getValue("fatherName");
-
-    const motherName =
-      getValue("motherName");
-
-    const gender =
-      getValue("gender");
-
-    const dateOfBirth =
-      getValue("dateOfBirth");
-
-    /* ======================================================
-       Professional
-    ====================================================== */
-
-    const occupation =
-      getValue("occupation");
-
-    const education =
-      getValue("education");
-
-    const bloodGroup =
-      getValue("bloodGroup");
-
-    /* ======================================================
-       Address
-    ====================================================== */
-
-    const country =
-      getValue("country");
-
-    const state =
-      getValue("state");
-
-    const district =
-      getValue("district");
-
-    const assembly =
-      getValue("assembly");
-
-    const block =
-      getValue("block");
-
-    const village =
-      getValue("village");
-
-    const city =
-      getValue("city");
-
-    const pincode =
-      getValue("pincode");
-
-    const address =
-      getValue("address");
-
-    /* ======================================================
-       Emergency
-    ====================================================== */
-
-    const emergencyName =
-      getValue("emergencyName");
-
-    const emergencyMobile =
-      getValue("emergencyMobile");
-
-    const relationship =
-      getValue("relationship");
-
-    /* ======================================================
-       Required Validation
-    ====================================================== */
-
-    if (!fullName) {
-
-      return NextResponse.json(
-        {
-          success: false,
-          message:
-            "Full name is required.",
-        },
-        {
-          status: 400,
-        }
-      );
-
     }
 
-    if (!mobile) {
-
-      return NextResponse.json(
-        {
-          success: false,
-          message:
-            "Mobile number is required.",
-        },
-        {
-          status: 400,
-        }
-      );
-
+    if ("gender" in updates && updates.gender && !GENDER_OPTIONS.includes(updates.gender)) {
+      return fail("Please choose a valid gender.");
     }
 
-    /* ======================================================
-       Update Member Information
-    ====================================================== */
+    if ("bloodGroup" in updates && updates.bloodGroup && !BLOOD_GROUP_OPTIONS.includes(updates.bloodGroup)) {
+      return fail("Please choose a valid blood group.");
+    }
 
-    member.fullName =
-      fullName;
+    if ("pincode" in updates && updates.pincode && !/^\d{6}$/.test(updates.pincode)) {
+      return fail("Pincode must be 6 digits.");
+    }
 
-    member.mobile =
-      mobile;
+    Object.assign(member, updates);
 
-    member.fatherName =
-      fatherName || "";
+    /* ---------- Date of birth ---------- */
 
-    member.motherName =
-      motherName || "";
-
-    member.gender =
-      gender || "";
-
-    member.dateOfBirth =
-      dateOfBirth || "";
-
-    /* Professional */
-
-    member.occupation =
-      occupation || "";
-
-    member.education =
-      education || "";
-
-    member.bloodGroup =
-      bloodGroup || "";
-
-    /* Address */
-
-    member.country =
-      country || "India";
-
-    member.state =
-      state || "";
-
-    member.district =
-      district || "";
-
-    member.assembly =
-      assembly || "";
-
-    member.block =
-      block || "";
-
-    member.village =
-      village || "";
-
-    member.city =
-      city || "";
-
-    member.pincode =
-      pincode || "";
-
-    member.address =
-      address || "";
-
-    /* Emergency */
-
-    member.emergencyName =
-      emergencyName || "";
-
-    member.emergencyMobile =
-      emergencyMobile || "";
-
-    member.relationship =
-      relationship || "";
-
-    /* ======================================================
-   Photo Upload
-====================================================== */
-
-const photo =
-  formData.get("photo");
-
-if (
-  photo &&
-  typeof photo === "object" &&
-  photo.size > 0
-) {
-
-  /* ====================================================
-     Validate File Type
-  ==================================================== */
-
-  if (
-    !photo.type ||
-    !photo.type.startsWith("image/")
-  ) {
-
-    return NextResponse.json(
-      {
-        success: false,
-        message:
-          "Profile photo must be an image.",
-      },
-      {
-        status: 400,
+    const dobRaw = formData.get("dateOfBirth");
+    if (typeof dobRaw === "string") {
+      if (!dobRaw.trim()) {
+        member.dateOfBirth = null;
+      } else {
+        const dob = new Date(dobRaw);
+        const age = (Date.now() - dob.getTime()) / (365.25 * 24 * 3600 * 1000);
+        if (Number.isNaN(dob.getTime()) || age < 15 || age > 120) {
+          return fail("Please enter a valid date of birth (age 15 or above).");
+        }
+        member.dateOfBirth = dob;
       }
-    );
+    }
 
-  }
+    /* ---------- Photo ---------- */
 
-  /* ====================================================
-     Maximum 2 MB
-  ==================================================== */
+    const photo = formData.get("photo");
+    if (photo && typeof photo === "object" && photo.size > 0) {
+      if (!photo.type?.startsWith("image/")) return fail("Profile photo must be an image.");
+      if (photo.size > MAX_PHOTO_BYTES) return fail("Profile photo must be smaller than 2 MB.");
 
-  if (
-    photo.size >
-    2 * 1024 * 1024
-  ) {
+      const uploaded = await uploadImageToCloudinary(
+        Buffer.from(await photo.arrayBuffer()),
+        "ailp/members/photos",
+        member.membershipId || member._id.toString()
+      );
+      if (!uploaded?.url) throw new Error("Photo upload failed. Please try again.");
 
-    return NextResponse.json(
-      {
-        success: false,
-        message:
-          "Profile photo must be less than 2 MB.",
-      },
-      {
-        status: 400,
-      }
-    );
+      member.photo = uploaded;
+    }
 
-  }
+    /* ---------- Membership identity & status ---------- */
 
-  /* ====================================================
-     Convert File to Buffer
-  ==================================================== */
-
-  const photoBuffer =
-    Buffer.from(
-      await photo.arrayBuffer()
-    );
-
-  /* ====================================================
-     Upload to Cloudinary
-  ==================================================== */
-
-  const uploadedPhoto =
-    await uploadImageToCloudinary(
-      photoBuffer,
-      "ailp/members/photos",
-      member.membershipId ||
-        member._id.toString()
-    );
-
-  /* ====================================================
-     Validate Upload Result
-  ==================================================== */
-
-  if (
-    !uploadedPhoto
-  ) {
-
-    throw new Error(
-      "Profile photo upload failed."
-    );
-
-  }
-
-  /* ====================================================
-     IMPORTANT
-
-     Your Member schema expects
-     photo as an Object.
-
-     Therefore DO NOT use:
-
-     member.photo = uploadedPhoto.url;
-
-     Store the complete Cloudinary
-     upload object.
-  ==================================================== */
-
-  member.photo =
-    uploadedPhoto;
-
-}
-
-    /* ======================================================
-   Signature Upload
-====================================================== */
-
-const signature =
-  formData.get("signature");
-
-if (
-  signature &&
-  typeof signature === "object" &&
-  signature.size > 0
-) {
-
-  /* ====================================================
-     Validate File Type
-  ==================================================== */
-
-  if (
-    !signature.type ||
-    !signature.type.startsWith("image/")
-  ) {
-
-    return NextResponse.json(
-      {
-        success: false,
-        message:
-          "Signature must be an image.",
-      },
-      {
-        status: 400,
-      }
-    );
-
-  }
-
-  /* ====================================================
-     Maximum 2 MB
-  ==================================================== */
-
-  if (
-    signature.size >
-    2 * 1024 * 1024
-  ) {
-
-    return NextResponse.json(
-      {
-        success: false,
-        message:
-          "Signature must be less than 2 MB.",
-      },
-      {
-        status: 400,
-      }
-    );
-
-  }
-
-  /* ====================================================
-     Convert File to Buffer
-  ==================================================== */
-
-  const signatureBuffer =
-    Buffer.from(
-      await signature.arrayBuffer()
-    );
-
-  /* ====================================================
-     Upload to Cloudinary
-  ==================================================== */
-
-  const uploadedSignature =
-    await uploadImageToCloudinary(
-      signatureBuffer,
-      "ailp/members/signatures",
-      `${
-        member.membershipId ||
-        member._id
-      }_signature`
-    );
-
-  /* ====================================================
-     Validate Upload
-  ==================================================== */
-
-  if (
-    !uploadedSignature
-  ) {
-
-    throw new Error(
-      "Signature upload failed."
-    );
-
-  }
-
-  /* ====================================================
-     IMPORTANT
-
-     Member schema expects signature
-     as an Object.
-  ==================================================== */
-
-  member.signature =
-    uploadedSignature;
-
-}
-
-    /* ======================================================
-       Generate Membership ID
-    ====================================================== */
+    const readiness = getCardReadiness(member);
+    member.profileCompleted = readiness.ready;
+    member.profilePercentage = readiness.percent;
 
     let membershipCreated = false;
-
-    if (!member.membershipId) {
-
-      member.membershipId =
-        await generateMembershipId();
-
+    if (readiness.ready && !member.membershipId) {
+      await ensureMembershipIdentity(member);
       membershipCreated = true;
-
-      member.membershipStatus =
-        "PROFILE_COMPLETED";
-
-      member.profileCompleted =
-        true;
-
-      member.joinDate =
-        new Date();
-
     }
 
-    /* ======================================================
-       Generate QR Code
-    ====================================================== */
-
-    if (
-      !member.qrCode &&
-      member.membershipId
-    ) {
-
-      const qrResult =
-        await generateQRCode(
-          member.membershipId
-        );
-
-      if (
-        !qrResult ||
-        !qrResult.success
-      ) {
-
-        throw new Error(
-          "QR Code Generation Failed."
-        );
-
-      }
-
-      const uploadedQr =
-        await uploadImageToCloudinary(
-          qrResult.qrCode,
-          "ailp/qrcodes",
-          member.membershipId
-        );
-
-      if (
-        !uploadedQr ||
-        !uploadedQr.url
-      ) {
-
-        throw new Error(
-          "QR Code Upload Failed."
-        );
-
-      }
-
-      member.qrCode =
-        uploadedQr.url;
-
+    if (readiness.ready && member.membershipStatus === "REGISTERED") {
+      member.membershipStatus = "PROFILE_COMPLETED";
     }
 
-    /* ======================================================
-       Generate Membership Card
-    ====================================================== */
-
-    if (
-      !member.cardUrl &&
-      member.membershipId
-    ) {
-
-      member.cardGeneratedAt =
-        new Date();
-
-      const pdfBuffer =
-        await renderToBuffer(
-          React.createElement(
-            MembershipCardPDF,
-            { member }
-          )
-        );
-
-      if (!pdfBuffer) {
-
-        throw new Error(
-          "Membership Card Generation Failed."
-        );
-
-      }
-
-      const pdfUrl =
-        await uploadPdfToCloudinary(
-          pdfBuffer,
-          member.membershipId
-        );
-
-      if (!pdfUrl) {
-
-        throw new Error(
-          "Membership Card Upload Failed."
-        );
-
-      }
-
-      member.cardUrl =
-        pdfUrl;
-
-      member.cardGenerated =
-        true;
-
-      member.membershipStatus =
-        "CARD_GENERATED";
-
-    }
-
-    /* ======================================================
-       Save Member
-    ====================================================== */
+    const cardNeedsRefresh =
+      member.cardGenerated && CARD_PRINTED_FIELDS.some((f) => member.isModified(f));
 
     await member.save();
 
-    /* ======================================================
-       Response
-    ====================================================== */
-
-    return NextResponse.json(
-      {
-        success: true,
-
-        message:
-          membershipCreated
-            ? "Membership profile completed successfully."
-            : "Profile updated successfully.",
-
-        membershipId:
-          member.membershipId,
-
-        member: {
-          id: member._id,
-          fullName:
-            member.fullName,
-          email:
-            member.email,
-          mobile:
-            member.mobile,
-          membershipId:
-            member.membershipId,
-          photo:
-            member.photo || "",
-          signature:
-            member.signature || "",
-          qrCode:
-            member.qrCode || "",
-          cardUrl:
-            member.cardUrl || "",
-        },
-      },
-      {
-        status: 200,
+    /* ---------- Refresh the stored card PDF (best effort) ----------
+       Downloads are always rendered live, so a failure here never
+       blocks the profile save. */
+    if (cardNeedsRefresh) {
+      try {
+        await renderAndStoreCardPdf(member);
+        await member.save();
+      } catch (pdfError) {
+        console.error("Card PDF refresh failed:", pdfError);
       }
-    );
+    }
 
+    const fresh = member.toObject();
+    delete fresh.password;
+
+    return NextResponse.json({
+      success: true,
+      message: membershipCreated
+        ? `Profile complete. Your membership ID is ${member.membershipId}.`
+        : "Profile saved.",
+      membershipId: member.membershipId || null,
+      member: fresh,
+    });
   } catch (error) {
+    if (error?.code === 11000 && error?.keyPattern?.mobile) {
+      return fail("This mobile number is already registered to another member.", 409);
+    }
+    if (error?.name === "ValidationError") {
+      return fail(Object.values(error.errors)[0]?.message || "Please check your details.");
+    }
 
-    console.error(
-      "POST Profile Error:",
-      error
-    );
-
-    return NextResponse.json(
-      {
-        success: false,
-        message:
-          error.message ||
-          "Internal Server Error",
-      },
-      {
-        status: 500,
-      }
-    );
-
+    console.error("POST Profile Error:", error);
+    return fail(error.message || "Unable to save your profile. Please try again.", 500);
   }
-
 }

@@ -62,6 +62,18 @@ export async function GET(request) {
       );
     }
 
+    if (!member.cardGenerated || !member.membershipId) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Your ID card has not been generated yet.",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+
     /* ==========================================
        Generate PDF
     ========================================== */
@@ -80,8 +92,9 @@ export async function GET(request) {
       status: 200,
       headers: {
         "Content-Type": "application/pdf",
+        "Cache-Control": "no-store",
         "Content-Disposition":
-          `attachment; filename=${member.membershipId}-Membership-Card.pdf`,
+          `attachment; filename="AILP-ID-Card-${member.membershipId}.pdf"`,
       },
     });
   } catch (error) {

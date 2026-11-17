@@ -20,6 +20,7 @@ import {
   XCircle,
   Landmark,
 } from "lucide-react";
+import { useMember } from "@/components/member/MemberContext";
 import styles from "./Donation.module.css";
 
 const PRESET_AMOUNTS = [100, 500, 1000, 2500, 5000, 10000];
@@ -31,7 +32,7 @@ const STATUS_META = {
 };
 
 export default function MemberDonationPage() {
-  const [member, setMember] = useState(null);
+  const { member } = useMember();
   const [settings, setSettings] = useState(null);
   const [history, setHistory] = useState([]);
   const [submitting, setSubmitting] = useState(false);
@@ -47,31 +48,6 @@ export default function MemberDonationPage() {
   const [successNotice, setSuccessNotice] = useState(false);
   const fileInputRef = useRef(null);
 
-  const fetchMember = async () => {
-    try {
-      let res = await fetch("/api/member/me", { credentials: "include", cache: "no-store" });
-      if (!res.ok) {
-        res = await fetch("/api/member/profile", { credentials: "include", cache: "no-store" });
-      }
-      const data = await res.json();
-      if (data.success && (data.member || data.data)) {
-        setMember(data.member || data.data);
-      }
-    } catch {
-      // no-op — donor fields simply stay blank if the profile can't be loaded
-    }
-  };
-
-  const fetchSettings = async () => {
-    try {
-      const res = await fetch(`/api/donation/settings?t=${Date.now()}`, { cache: "no-store" });
-      const data = await res.json();
-      if (data.success && data.settings) setSettings(data.settings);
-    } catch {
-      // no-op
-    }
-  };
-
   const fetchHistory = async () => {
     try {
       const res = await fetch("/api/member/donations", { credentials: "include", cache: "no-store" });
@@ -83,9 +59,22 @@ export default function MemberDonationPage() {
   };
 
   useEffect(() => {
-    fetchMember();
-    fetchSettings();
-    fetchHistory();
+    let alive = true;
+    fetch(`/api/donation/settings?t=${Date.now()}`, { cache: "no-store" })
+      .then((res) => res.json())
+      .then((data) => {
+        if (alive && data.success && data.settings) setSettings(data.settings);
+      })
+      .catch(() => {});
+    fetch("/api/member/donations", { credentials: "include", cache: "no-store" })
+      .then((res) => res.json())
+      .then((data) => {
+        if (alive && data.success) setHistory(data.donations || []);
+      })
+      .catch(() => {});
+    return () => {
+      alive = false;
+    };
   }, []);
 
   const handleAmountSelect = (val) => {

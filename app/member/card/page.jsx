@@ -1,112 +1,72 @@
 "use client";
 
 /* ==========================================================
-   AILP Membership Card Page
-   All India Labour Party
+   My ID Card
 ========================================================== */
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import {
-  Download,
-  ShieldCheck,
-  BadgeCheck,
-  ShieldAlert,
-  QrCode,
-  RefreshCw,
   AlertCircle,
+  ArrowLeft,
+  BadgeCheck,
+  CheckCircle2,
+  Circle,
+  Download,
+  ExternalLink,
+  Loader2,
+  RefreshCw,
+  UserRound,
 } from "lucide-react";
 
+import { useMember } from "@/components/member/MemberContext";
+import IdCardPreview from "@/components/member/IdCardPreview";
+import { CARD_REQUIRED_FIELDS, formatDate, getCardReadiness } from "@/lib/memberProfile";
+import ui from "@/components/member/ui.module.css";
 import styles from "./Card.module.css";
 
-function calculateAge(dateOfBirth) {
-  if (!dateOfBirth) return null;
-  const dob = new Date(dateOfBirth);
-  if (Number.isNaN(dob.getTime())) return null;
-  return Math.floor((Date.now() - dob.getTime()) / (1000 * 60 * 60 * 24 * 365.25));
-}
-
-function formatDate(date) {
-  if (!date) return "—";
-  const parsed = new Date(date);
-  if (Number.isNaN(parsed.getTime())) return "—";
-  return parsed.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
-}
-
-export default function MembershipCardPage() {
-  const [card, setCard] = useState(null);
-  const [loading, setLoading] = useState(true);
+export default function IdCardPage() {
+  const router = useRouter();
+  const { member, loading, error: loadError, setMember } = useMember();
   const [generating, setGenerating] = useState(false);
   const [downloading, setDownloading] = useState(false);
-  const [error, setError] = useState("");
 
-  async function fetchCard() {
+  async function generate() {
+    setGenerating(true);
     try {
-      setLoading(true);
-      setError("");
-      const res = await fetch("/api/member/card", { credentials: "include", cache: "no-store" });
-      const data = await res.json();
-
-      if (data.success && data.card) {
-        setCard(data.card);
-      } else {
-        setCard(null);
-      }
+      const res = await fetch("/api/member/generate-card", { method: "POST", credentials: "include" });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.success) throw new Error(data.message || "Unable to generate your ID card.");
+      setMember(data.member);
+      toast.success(data.message || "Your ID card is ready");
     } catch (err) {
-      setError("Unable to load your membership card. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    fetchCard();
-  }, []);
-
-  async function handleGenerate() {
-    try {
-      setGenerating(true);
-      setError("");
-      const res = await fetch("/api/member/generate-card", {
-        method: "POST",
-        credentials: "include",
-      });
-      const data = await res.json();
-
-      if (!res.ok || !data.success) {
-        throw new Error(data.message || "Unable to generate your membership card.");
-      }
-
-      await fetchCard();
-    } catch (err) {
-      setError(err.message || "Unable to generate your membership card.");
+      toast.error(err.message);
     } finally {
       setGenerating(false);
     }
   }
 
-  async function handleDownload() {
+  async function download() {
+    setDownloading(true);
     try {
-      setDownloading(true);
-      const res = await fetch("/api/member/download-card", {
-        credentials: "include",
-        cache: "no-store",
-      });
-
+      const res = await fetch("/api/member/download-card", { credentials: "include", cache: "no-store" });
       if (!res.ok) {
-        throw new Error("Unable to download your membership card.");
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.message || "Unable to download your ID card.");
       }
-
       const blob = await res.blob();
-      const url = window.URL.createObjectURL(blob);
+      const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.download = `${card?.membershipId || "AILP-Membership-Card"}.pdf`;
+      link.download = `AILP-ID-Card-${member?.membershipId || "member"}.pdf`;
       document.body.appendChild(link);
       link.click();
       link.remove();
-      window.URL.revokeObjectURL(url);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
     } catch (err) {
-      setError(err.message || "Unable to download your membership card.");
+      toast.error(err.message);
     } finally {
       setDownloading(false);
     }
@@ -114,154 +74,122 @@ export default function MembershipCardPage() {
 
   if (loading) {
     return (
-      <div className={styles.loadingWrapper}>
-        <RefreshCw size={28} className={styles.spinner} />
-        <p>Loading your membership card...</p>
+      <div className={ui.loading}>
+        <div className={ui.spinner} />
+        Loading your ID card…
       </div>
     );
   }
 
-  const age = calculateAge(card?.dateOfBirth);
-  const photoUrl = card?.photo?.url || "/images/avatar.png";
+  if (!member) {
+    return (
+      <div className={`${ui.alert} ${ui.alertError}`}>
+        <AlertCircle size={18} /> {loadError || "Unable to load your ID card. Please refresh the page."}
+      </div>
+    );
+  }
+
+  const readiness = getCardReadiness(member);
+  const missing = new Set(readiness.missing.map((m) => m.key));
+  const issued = member.cardGenerated && member.membershipId;
 
   return (
-    <div className={styles.pageContainer}>
-      <div className={styles.headerBar}>
-        <div>
-          <span className={styles.categoryBadge}>
-            <ShieldCheck size={13} /> Official Party Credential
-          </span>
-          <h1 className={styles.pageHeading}>Membership Card</h1>
-          <p className={styles.pageSubheading}>
-            Your official All India Labour Party digital membership identity card.
-          </p>
+    <div className={styles.page}>
+      <div className={styles.head}>
+        <button type="button" className={styles.back} onClick={() => router.back()} aria-label="Go back">
+          <ArrowLeft size={20} />
+        </button>
+        <div className={styles.headText}>
+          <h1 className={ui.pageTitle}>ID Card — {member.fullName}</h1>
+          <p className={ui.pageSub}>{member.membershipId || "Membership ID will be assigned when your profile is complete"}</p>
         </div>
-
-        {card?.cardGenerated && (
-          <button type="button" className={styles.downloadBtn} onClick={handleDownload} disabled={downloading}>
-            <Download size={16} />
-            <span>{downloading ? "Preparing..." : "Download PDF"}</span>
-          </button>
-        )}
       </div>
 
-      {error && (
-        <div className={styles.errorBox}>
-          <AlertCircle size={18} />
-          <span>{error}</span>
-        </div>
-      )}
-
-      {!card?.cardGenerated ? (
-        <div className={styles.generatePrompt}>
-          <ShieldAlert size={40} />
-          <h3>Your Membership Card Hasn&apos;t Been Generated Yet</h3>
-          <p>Generate your official digital membership card to view, download and share it.</p>
-          <button type="button" className={styles.generateBtn} onClick={handleGenerate} disabled={generating}>
-            <BadgeCheck size={16} />
-            <span>{generating ? "Generating..." : "Generate My Card"}</span>
+      {issued ? (
+        <div className={styles.actions}>
+          <button type="button" className={`${ui.btn} ${ui.btnPrimary}`} onClick={download} disabled={downloading}>
+            {downloading ? <Loader2 size={17} className={ui.spin} /> : <Download size={17} />}
+            {downloading ? "Preparing PDF…" : "Download PDF"}
           </button>
+          <Link href={`/verify/${member.membershipId}`} target="_blank" className={`${ui.btn} ${ui.btnSecondary}`}>
+            <ExternalLink size={16} /> Verification page
+          </Link>
         </div>
-      ) : (
-        <div className={styles.cardWorkspace}>
-          <div className={styles.idCard}>
-            {/* Curved tricolor bands — same path geometry as the downloaded PDF */}
-            <svg
-              className={styles.cardSvgBg}
-              viewBox="0 0 580 366"
-              preserveAspectRatio="none"
-              aria-hidden="true"
-            >
-              <path
-                d="M 580 0 L 452 0 Q 405 90 452 183 Q 495 268 452 366 L 580 366 Z"
-                fill="#D8432E"
-              />
-              <path
-                d="M 452 0 L 440 0 Q 393 90 440 183 Q 483 268 440 366 L 452 366 Q 495 268 452 183 Q 405 90 452 0 Z"
-                fill="#FF9933"
-              />
-              <path
-                d="M 0 366 L 0 258 Q 130 262 190 300 Q 230 326 200 366 Z"
-                fill="#1B8A3D"
-              />
-            </svg>
+      ) : null}
 
-            <span className={styles.statusPill}>{card?.membershipStatus || "REGISTERED"}</span>
-
-            <div className={styles.bandLabel}>
-              <strong>ALL INDIA LABOUR PARTY</strong>
-              <span>Regd. No. 56/119/2018-18/PPS-I</span>
-            </div>
-
-            <div className={styles.cardBody}>
-              <span className={styles.identityBadge}>IDENTITY CARD</span>
-
-              <div className={styles.contentRow}>
-                <img src={photoUrl} alt={card?.fullName || "Member"} className={styles.memberPhoto} />
-
-                <div className={styles.fields}>
-                  <h2 className={styles.memberName}>{card?.fullName || "—"}</h2>
-
-                  <div className={styles.fieldRow}>
-                    <label>DOB</label>
-                    <span>
-                      {formatDate(card?.dateOfBirth)}
-                      {age !== null ? ` (${age} yrs)` : ""}
-                    </span>
-                  </div>
-                  <div className={styles.fieldRow}>
-                    <label>Gender</label>
-                    <span>{card?.gender || "—"}</span>
-                  </div>
-                  <div className={styles.fieldRow}>
-                    <label>Mobile</label>
-                    <span>{card?.mobile || "—"}</span>
-                  </div>
-                  <div className={styles.fieldRow}>
-                    <label>Blood Group</label>
-                    <span>{card?.bloodGroup || "—"}</span>
-                  </div>
-                  <div className={styles.fieldRow}>
-                    <label>District</label>
-                    <span>
-                      {card?.district || "—"}, {card?.state || "—"}
-                    </span>
-                  </div>
-                  {card?.assembly && (
-                    <div className={styles.fieldRow}>
-                      <label>Assembly</label>
-                      <span>{card.assembly}</span>
-                    </div>
-                  )}
-
-                  <p className={styles.membershipId}>{card?.membershipId || "Pending Allocation"}</p>
-                </div>
-              </div>
-            </div>
-
-            <div className={styles.signatureBlock}>
-              <span className={styles.signatureCaption}>National President</span>
-              <img src="/images/party-president-signature.png" alt="Signature" className={styles.signatureImg} />
-              <span className={styles.signatureCaption}>All India Labour Party</span>
-            </div>
-
-            <div className={styles.qrColumn}>
-              {card?.qrCode ? (
-                <img src={card.qrCode} alt="Verification QR" className={styles.qrImage} />
-              ) : (
-                <div className={styles.qrPlaceholder}>
-                  <QrCode size={30} />
-                </div>
-              )}
-              <span>SCAN TO VERIFY</span>
-            </div>
-          </div>
-
-          <p className={styles.helperText}>
-            This is a preview of your official card. The downloaded PDF reflects the same design.
-          </p>
+      {issued && !readiness.ready && (
+        <div className={`${ui.alert} ${ui.alertWarn}`}>
+          <AlertCircle size={18} />
+          <span>
+            Your card is missing: {readiness.missing.map((m) => m.label.toLowerCase()).join(", ")}.{" "}
+            <Link href="/member/profile">Add them in your profile</Link> so your card is complete.
+          </span>
         </div>
       )}
+
+      <div className={styles.layout}>
+        <div className={styles.preview}>
+          <IdCardPreview member={member} />
+          {issued && (
+            <p className={styles.meta}>
+              Issued {formatDate(member.cardGeneratedAt)} · The PDF always uses your latest profile details.
+            </p>
+          )}
+        </div>
+
+        <aside className={`${ui.card} ${styles.side}`}>
+          {issued ? (
+            <>
+              <div className={styles.sideIcon}>
+                <BadgeCheck size={22} />
+              </div>
+              <h2>Your ID card is active</h2>
+              <p>Download the PDF to print or share it. Anyone can scan the QR code to confirm your membership.</p>
+              <div className={styles.sideLinks}>
+                <Link href="/member/profile" className={`${ui.btn} ${ui.btnSecondary} ${ui.btnBlock}`}>
+                  <UserRound size={16} /> Update details
+                </Link>
+                <button type="button" className={`${ui.btn} ${ui.btnGhost}`} onClick={generate} disabled={generating}>
+                  {generating ? <Loader2 size={15} className={ui.spin} /> : <RefreshCw size={15} />}
+                  {generating ? "Refreshing…" : "Refresh card"}
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <h2>{readiness.ready ? "Ready to generate" : "Get your ID card"}</h2>
+              <p>
+                {readiness.ready
+                  ? "Your profile has everything needed. Generate your card now."
+                  : "Complete these details in your profile, then generate your card."}
+              </p>
+
+              <ol className={styles.checklist}>
+                {CARD_REQUIRED_FIELDS.map((f) => {
+                  const done = !missing.has(f.key);
+                  return (
+                    <li key={f.key} className={done ? styles.done : ""}>
+                      {done ? <CheckCircle2 size={17} /> : <Circle size={17} />}
+                      {f.label}
+                    </li>
+                  );
+                })}
+              </ol>
+
+              {readiness.ready ? (
+                <button type="button" className={`${ui.btn} ${ui.btnPrimary} ${ui.btnBlock}`} onClick={generate} disabled={generating}>
+                  {generating ? <Loader2 size={17} className={ui.spin} /> : <BadgeCheck size={17} />}
+                  {generating ? "Generating…" : "Generate my ID card"}
+                </button>
+              ) : (
+                <Link href="/member/profile" className={`${ui.btn} ${ui.btnPrimary} ${ui.btnBlock}`}>
+                  <UserRound size={17} /> Complete profile ({readiness.done}/{readiness.total})
+                </Link>
+              )}
+            </>
+          )}
+        </aside>
+      </div>
     </div>
   );
 }

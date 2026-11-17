@@ -39,6 +39,27 @@ export async function PUT(request) {
 
     } = await request.json();
 
+    if (!currentPassword || !newPassword) {
+      return NextResponse.json(
+        { success: false, message: "Please enter your current and new password." },
+        { status: 400 }
+      );
+    }
+
+    if (typeof newPassword !== "string" || newPassword.length < 8) {
+      return NextResponse.json(
+        { success: false, message: "New password must be at least 8 characters." },
+        { status: 400 }
+      );
+    }
+
+    if (newPassword === currentPassword) {
+      return NextResponse.json(
+        { success: false, message: "New password must be different from the current one." },
+        { status: 400 }
+      );
+    }
+
     // Find Member
 
     const member = await Member.findById(auth.memberId);

@@ -1,0 +1,211 @@
+/* ==========================================================
+   ID Card Preview — mirrors pdf/MembershipCardPDF.jsx
+   Sized with container units (cqw) so the card scales with
+   its own width wherever it is placed. Base design: 580px.
+========================================================== */
+
+.wrap {
+  container-type: inline-size;
+  width: 100%;
+}
+
+.idCard {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 580 / 366;
+  border-radius: 2.8cqw;
+  background: #ffffff;
+  overflow: hidden;
+  box-shadow: 0 20px 50px -14px rgba(20, 33, 31, 0.25);
+  border: 1px solid #e2e8f0;
+  color: #0f172a;
+  font-family: var(--font-body);
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.statusPill {
+  position: absolute;
+  z-index: 2;
+  top: 4.4%;
+  right: 5.2%;
+  padding: 0.5cqw 1.6cqw;
+  border-radius: 999px;
+  background: #1b8a3d;
+  color: #fff;
+  font-size: 1.1cqw;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.band {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 90.5%;
+  transform: translate(-50%, -50%) rotate(90deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5cqw;
+  white-space: nowrap;
+}
+
+.band strong {
+  color: #fff;
+  font-size: 2.9cqw;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.band span {
+  color: #ffe4dc;
+  font-size: 1.15cqw;
+}
+
+.body {
+  position: relative;
+  z-index: 1;
+  width: 72%;
+  padding: 4.4% 5.5% 0;
+}
+
+.badge {
+  display: inline-block;
+  margin-bottom: 2.2cqw;
+  padding: 0.7cqw 2cqw;
+  border-radius: 0.7cqw;
+  background: #0f172a;
+  color: #fff;
+  font-size: 1.4cqw;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.row {
+  display: flex;
+  gap: 2.8cqw;
+}
+
+.photo {
+  flex-shrink: 0;
+  width: 16.5cqw;
+  aspect-ratio: 96 / 118;
+  object-fit: cover;
+  border-radius: 1cqw;
+  border: 0.5cqw solid #ff9933;
+  background: #f1f5f9;
+}
+
+.photoEmpty {
+  display: grid;
+  place-items: center;
+  color: #94a3b8;
+  font-size: 3.4cqw;
+  font-weight: 800;
+}
+
+.fields {
+  flex: 1;
+  min-width: 0;
+}
+
+.name {
+  margin-bottom: 1.2cqw;
+  font-size: 2.7cqw;
+  font-weight: 800;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fieldRow {
+  display: flex;
+  gap: 1cqw;
+  margin-bottom: 0.9cqw;
+  font-size: 1.45cqw;
+  line-height: 1.3;
+}
+
+.fieldRow dt {
+  flex-shrink: 0;
+  width: 13.5cqw;
+  font-weight: 700;
+  color: #475569;
+}
+
+.fieldRow dd {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.memberId {
+  margin-top: 1.6cqw;
+  font-size: 1.75cqw;
+  font-weight: 800;
+  color: #d8432e;
+  letter-spacing: 0.02em;
+}
+
+.sign {
+  position: absolute;
+  z-index: 1;
+  left: 5.5%;
+  bottom: 4.5%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.3cqw;
+}
+
+.sign span {
+  color: #fff;
+  font-size: 1.3cqw;
+  font-weight: 700;
+}
+
+.sign img {
+  width: 10.5cqw;
+  height: auto;
+}
+
+.qr {
+  position: absolute;
+  z-index: 1;
+  right: 5.8%;
+  bottom: 5.5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6cqw;
+}
+
+.qr img,
+.qrEmpty {
+  width: 11cqw;
+  height: 11cqw;
+  padding: 0.5cqw;
+  border-radius: 0.7cqw;
+  background: #fff;
+}
+
+.qrEmpty {
+  display: grid;
+  place-items: center;
+  color: #94a3b8;
+}
+
+.qr span {
+  color: #fff;
+  font-size: 1.05cqw;
+  font-weight: 700;
+}

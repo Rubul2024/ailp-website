@@ -1,192 +1,69 @@
 /* ==========================================================
-   Generate Membership Card
-   All India Labour Party
+   Generate Membership ID Card
+   Validates the profile has everything the card prints,
+   assigns the membership ID + QR if needed, and stores the PDF.
+   Safe to call again to refresh an existing card.
 ========================================================== */
 
-import React from "react";
 import { NextResponse } from "next/server";
-import { renderToBuffer } from "@react-pdf/renderer";
 
 import connectDB from "@/lib/mongodb";
 import Member from "@/models/Member";
 import verifyMember from "@/utils/verifyMember";
-
-import generateQRCode from "@/utils/generateQRCode";
-import uploadImageToCloudinary from "@/utils/uploadImageToCloudinary";
-import uploadPdfToCloudinary from "@/utils/uploadPdfToCloudinary";
-
-import MembershipCardPDF from "@/pdf/MembershipCardPDF";
-
-/* ==========================================================
-   POST
-========================================================== */
+import { getCardReadiness } from "@/lib/memberProfile";
+import { ensureMembershipIdentity, renderAndStoreCardPdf } from "@/lib/memberCard";
 
 export async function POST(request) {
   try {
-    /* ==========================================
-       Connect Database
-    ========================================== */
+    const auth = verifyMember(request);
+    if (!auth.success) {
+      return NextResponse.json({ success: false, message: auth.message }, { status: 401 });
+    }
 
     await connectDB();
 
-    /* ==========================================
-       Verify Member
-    ========================================== */
-
-    const auth = verifyMember(request);
-
-    if (!auth.success) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: auth.message,
-        },
-        {
-          status: 401,
-        }
-      );
-    }
-
-    /* ==========================================
-       Find Member
-    ========================================== */
-
     const member = await Member.findById(auth.memberId);
-
     if (!member) {
+      return NextResponse.json({ success: false, message: "Member not found." }, { status: 404 });
+    }
+
+    const readiness = getCardReadiness(member);
+    if (!readiness.ready) {
       return NextResponse.json(
         {
           success: false,
-          message: "Member not found.",
+          message: `Please complete your profile first: ${readiness.missing.map((m) => m.label).join(", ")}.`,
+          missing: readiness.missing,
         },
-        {
-          status: 404,
-        }
+        { status: 400 }
       );
     }
 
-    /* ==========================================
-       Already Generated
-    ========================================== */
-
-    if (
-      member.cardGenerated &&
-      member.cardUrl &&
-      member.qrCode
-    ) {
-      return NextResponse.json({
-        success: true,
-        message: "Membership card already generated.",
-        cardUrl: member.cardUrl,
-        qrCode: member.qrCode,
-      });
-    }
-
-    /* ==========================================
-       Generate QR Code
-    ========================================== */
-
-    const qrResult = await generateQRCode(
-      member.membershipId
-    );
-
-    if (!qrResult.success) {
-      throw new Error(qrResult.message);
-    }
-
-    /* ==========================================
-       Upload QR To Cloudinary
-    ========================================== */
-
-    const qrUrl =
-      await uploadImageToCloudinary(
-        qrResult.qrCode,
-        "ailp/qrcodes",
-        member.membershipId
-      );
-
-    /* ==========================================
-       Update Member Object
-       (used by PDF component)
-    ========================================== */
-
-    member.qrCode = qrUrl;
-
-    /* ==========================================
-       Generate PDF Buffer
-    ========================================== */
-
-    const pdfBuffer =
-      await renderToBuffer(
-        React.createElement(
-          MembershipCardPDF,
-          {
-            member,
-          }
-        )
-      );
-
-    /* ==========================================
-       Upload PDF
-    ========================================== */
-
-    const pdfUrl =
-      await uploadPdfToCloudinary(
-        pdfBuffer,
-        member.membershipId
-      );
-
-    /* ==========================================
-       Save Member
-    ========================================== */
-
-    member.qrCode = qrUrl;
-
-    member.cardUrl = pdfUrl;
+    await ensureMembershipIdentity(member);
+    await renderAndStoreCardPdf(member);
 
     member.cardGenerated = true;
-
-    member.cardGeneratedAt =
-      new Date();
-
-    if (
-      member.membershipStatus ===
-      "REGISTERED"
-    ) {
-      member.membershipStatus =
-        "CARD_GENERATED";
+    member.cardGeneratedAt = new Date();
+    member.profileCompleted = true;
+    if (member.membershipStatus === "REGISTERED" || member.membershipStatus === "PROFILE_COMPLETED") {
+      member.membershipStatus = "CARD_GENERATED";
     }
 
     await member.save();
 
-    /* ==========================================
-       Response
-    ========================================== */
+    const fresh = member.toObject();
+    delete fresh.password;
 
     return NextResponse.json({
       success: true,
-      message:
-        "Membership card generated successfully.",
-
-      cardUrl: pdfUrl,
-
-      qrCode: qrUrl,
+      message: "Your ID card is ready.",
+      member: fresh,
     });
   } catch (error) {
-    console.error(
-      "Generate Card Error:",
-      error
-    );
-
+    console.error("Generate Card Error:", error);
     return NextResponse.json(
-      {
-        success: false,
-        message:
-          "Unable to generate membership card.",
-      },
-      {
-        status: 500,
-      }
+      { success: false, message: "Unable to generate your ID card right now. Please try again." },
+      { status: 500 }
     );
   }
 }

@@ -1,115 +1,121 @@
 /* ==========================================================
-   MEMBER TOP HEADER STYLESHEET — minimal, PBW-style
+   Member Header
 ========================================================== */
 
-.topHeader {
-  width: 100%;
-  height: 64px;
-  background: #ffffff;
-  border-bottom: 1px solid #e2e8f0;
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 clamp(16px, 3vw, 32px);
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  box-sizing: border-box;
+  gap: 16px;
+  height: 72px;
+  padding: 0 32px;
+  background: rgba(247, 246, 241, 0.88);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--m-border);
 }
 
-/* Left Group */
-.headerLeftGroup {
+.left {
   display: flex;
   align-items: center;
   gap: 12px;
   min-width: 0;
 }
 
-.menuButton,
-.collapseButton {
+.menuBtn {
   display: none;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  flex-shrink: 0;
-  border-radius: 10px;
-  border: 1px solid #e2e8f0;
-  background: #f8fafc;
-  color: #475569;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--m-border);
+  border-radius: 12px;
+  background: var(--m-surface);
+  color: var(--m-text);
   cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.menuButton:hover,
-.collapseButton:hover {
-  background: #f1f5f9;
-  color: #0f172a;
-  border-color: #cbd5e1;
-}
-
-.collapseButton {
-  display: flex;
 }
 
 .breadcrumb {
-  font-size: 14.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  font-size: 15px;
+  color: var(--m-text-3);
+}
+
+.breadcrumb a {
+  color: var(--m-text-3);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  color: var(--m-text);
+}
+
+.breadcrumb span {
   font-weight: 700;
-  color: #0f172a;
-  letter-spacing: -0.01em;
+  color: var(--m-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* Right Controls */
-.headerRight {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.bellBtn {
+.ring {
   position: relative;
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  border: 1px solid #e2e8f0;
-  background: #f8fafc;
-  color: #475569;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.bellBtn:hover {
-  background: #f1f5f9;
-  color: #0f172a;
-  border-color: #cbd5e1;
-}
-
-.badgeCount {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  background: #ef4444;
-  color: #ffffff;
-  font-size: 9.5px;
-  font-weight: 800;
-  width: 15px;
-  height: 15px;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: var(--m-surface);
+  text-decoration: none;
+  flex-shrink: 0;
 }
 
-/* Responsive */
-@media (max-width: 900px) {
-  .menuButton {
-    display: flex;
+.ring svg {
+  position: absolute;
+  inset: 1px;
+  transform: rotate(-90deg);
+}
+
+.ringTrack {
+  fill: none;
+  stroke: var(--m-border);
+  stroke-width: 3;
+}
+
+.ringValue {
+  fill: none;
+  stroke: var(--m-saffron);
+  stroke-width: 3;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+.ringDone .ringValue {
+  stroke: var(--m-accent);
+}
+
+.ring span {
+  position: relative;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--m-saffron);
+}
+
+.ringDone span {
+  color: var(--m-accent);
+}
+
+@media (max-width: 960px) {
+  .header {
+    height: 64px;
+    padding: 0 16px;
   }
 
-  .collapseButton {
-    display: none;
+  .menuBtn {
+    display: grid;
   }
 }
