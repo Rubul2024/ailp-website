@@ -6,7 +6,15 @@
 ========================================================== */
 
 import { Readable } from "stream";
-import cloudinary from "@/lib/cloudinary";
+import cloudinary, { assertCloudinaryConfigured } from "@/lib/cloudinary";
+
+/* Cloudinary reports failures as plain objects; normalise to Error. */
+function toError(error) {
+  if (error instanceof Error) return error;
+  const wrapped = new Error(error?.message || "Image upload failed.");
+  wrapped.httpCode = error?.http_code;
+  return wrapped;
+}
 
 /* ==========================================================
    Upload Helper
@@ -17,6 +25,7 @@ export default async function uploadImageToCloudinary(
   folder,
   publicId
 ) {
+  assertCloudinaryConfigured();
   /* ==========================================
      Base64 Upload (Existing QR Code Support)
   ========================================== */
@@ -52,7 +61,7 @@ export default async function uploadImageToCloudinary(
         },
         (error, result) => {
           if (error) {
-            return reject(error);
+            return reject(toError(error));
           }
 
           resolve({

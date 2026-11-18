@@ -141,12 +141,21 @@ export async function POST(request) {
       if (!photo.type?.startsWith("image/")) return fail("Profile photo must be an image.");
       if (photo.size > MAX_PHOTO_BYTES) return fail("Profile photo must be smaller than 2 MB.");
 
-      const uploaded = await uploadImageToCloudinary(
-        Buffer.from(await photo.arrayBuffer()),
-        "ailp/members/photos",
-        member.membershipId || member._id.toString()
-      );
-      if (!uploaded?.url) throw new Error("Photo upload failed. Please try again.");
+      let uploaded;
+      try {
+        uploaded = await uploadImageToCloudinary(
+          Buffer.from(await photo.arrayBuffer()),
+          "ailp/members/photos",
+          member.membershipId || member._id.toString()
+        );
+      } catch (uploadError) {
+        if (uploadError?.code === "STORAGE_NOT_CONFIGURED") throw uploadError;
+        console.error("Profile photo upload failed:", uploadError);
+        return fail("We couldn’t upload your photo. Please try a different JPG or PNG image.", 502);
+      }
+      if (!uploaded?.url) {
+        return fail("We couldn’t upload your photo. Please try again.", 502);
+      }
 
       member.photo = uploaded;
     }
@@ -203,7 +212,13 @@ export async function POST(request) {
       return fail(Object.values(error.errors)[0]?.message || "Please check your details.");
     }
 
+    if (error?.code === "STORAGE_NOT_CONFIGURED") {
+      // Server misconfiguration: log what is missing, show members a calm message.
+      console.error("Profile photo upload unavailable —", error.message);
+      return fail("Photo upload is temporarily unavailable. Please try again later or contact support.", 503);
+    }
+
     console.error("POST Profile Error:", error);
-    return fail(error.message || "Unable to save your profile. Please try again.", 500);
+    return fail("Unable to save your profile right now. Please try again.", 500);
   }
 }

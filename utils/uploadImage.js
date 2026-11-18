@@ -3,7 +3,7 @@
    Production Ready
 ========================================================== */
 
-import cloudinary from "@/lib/cloudinary";
+import cloudinary, { assertCloudinaryConfigured } from "@/lib/cloudinary";
 
 /* ==========================================================
    Upload Image
@@ -20,6 +20,8 @@ export default async function uploadImage({
 }) {
 
   try {
+
+    assertCloudinaryConfigured();
 
     const options = {
 

@@ -60,6 +60,14 @@ export async function POST(request) {
       member: fresh,
     });
   } catch (error) {
+    if (error?.code === "STORAGE_NOT_CONFIGURED") {
+      console.error("ID card generation unavailable —", error.message);
+      return NextResponse.json(
+        { success: false, message: "ID card generation is temporarily unavailable. Please try again later or contact support." },
+        { status: 503 }
+      );
+    }
+
     console.error("Generate Card Error:", error);
     return NextResponse.json(
       { success: false, message: "Unable to generate your ID card right now. Please try again." },

@@ -2,12 +2,14 @@
    Upload PDF To Cloudinary
 ========================================================== */
 
-import cloudinary from "@/lib/cloudinary";
+import cloudinary, { assertCloudinaryConfigured } from "@/lib/cloudinary";
 
 export default async function uploadPdfToCloudinary(
   pdfBuffer,
   publicId
 ) {
+  assertCloudinaryConfigured();
+
   return new Promise((resolve, reject) => {
     cloudinary.uploader
       .upload_stream(
@@ -22,7 +24,9 @@ export default async function uploadPdfToCloudinary(
         },
 
         (error, result) => {
-          if (error) return reject(error);
+          if (error) {
+            return reject(error instanceof Error ? error : new Error(error?.message || "PDF upload failed."));
+          }
 
           resolve(result.secure_url);
         }
