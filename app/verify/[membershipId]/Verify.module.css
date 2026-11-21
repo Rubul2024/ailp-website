@@ -1,450 +1,341 @@
 /* ==========================================================
-   Member Verification Page
-   All India Labour Party
+   Membership Verification — mobile first
 ========================================================== */
 
-/* ==========================================================
-   Wrapper
-========================================================== */
+.page {
+  --navy: #0b2447;
+  --text: #0f172a;
+  --text-2: #475569;
+  --text-3: #64748b;
+  --border: #e2e8f0;
 
-.wrapper {
   min-height: 100vh;
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-  padding: 60px 20px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #eff6ff,
-      #dbeafe,
-      #f8fafc
-    );
+  min-height: 100dvh;
+  padding: 0 0 32px;
+  background: #f4f6f9;
+  color: var(--text);
+  font-family: var(--font-body);
 }
 
-/* ==========================================================
-   Verification Card
-========================================================== */
+.page h1,
+.page h2 {
+  font-family: var(--font-body);
+}
 
-.card {
+.shell {
   width: 100%;
-
-  max-width: 900px;
-
-  background: #ffffff;
-
-  border-radius: 28px;
-
-  overflow: hidden;
-
-  box-shadow:
-    0 30px 80px rgba(15, 23, 42, 0.15);
-
-  animation: fadeIn 0.5s ease;
+  max-width: 520px;
+  margin: 0 auto;
 }
 
-/* ==========================================================
-   Header
-========================================================== */
-
+/* Header */
 .header {
-  background:
-    linear-gradient(
-      135deg,
-      #1e40af,
-      #2563eb,
-      #0ea5e9
-    );
-
-  color: #ffffff;
-
-  text-align: center;
-
-  padding: 40px 30px;
-}
-
-.header img {
-  background: #ffffff;
-
-  border-radius: 18px;
-
-  padding: 10px;
-}
-
-.header h1 {
-  margin-top: 20px;
-
-  font-size: 34px;
-
-  font-weight: 700;
-}
-
-.header p {
-  margin-top: 10px;
-
-  font-size: 16px;
-
-  opacity: 0.9;
-}
-
-/* ==========================================================
-   Verified Badge
-========================================================== */
-
-.badge {
-  width: max-content;
-
-  margin: 30px auto;
-
-  padding: 14px 24px;
-
   display: flex;
-
   align-items: center;
-
-  gap: 10px;
-
-  border-radius: 999px;
-
-  background: #dcfce7;
-
-  color: #15803d;
-
-  font-weight: 700;
-
-  font-size: 16px;
+  gap: 14px;
+  padding: 18px 20px;
+  background: var(--navy);
+  color: #fff;
 }
 
-/* ==========================================================
-   Member Photo
-========================================================== */
+.logo {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.party {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.headerSub {
+  margin-top: 2px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.tricolor {
+  display: block;
+  height: 5px;
+  background: linear-gradient(90deg, #f28c28 0 33.33%, #ffffff 33.33% 66.66%, #15803d 66.66% 100%);
+}
+
+/* Banner */
+.banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin: 16px 16px 0;
+  padding: 18px;
+  border-radius: 16px;
+  border: 1px solid;
+}
+
+.bannerIcon {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.bannerTitle {
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.bannerText {
+  margin-top: 4px;
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+
+.ok {
+  border-color: #b7e3cc;
+  background: #ecfdf3;
+  color: #05603a;
+}
+
+.ok .bannerIcon {
+  color: #039855;
+}
+
+.warn {
+  border-color: #fedf89;
+  background: #fffaeb;
+  color: #93370d;
+}
+
+.warn .bannerIcon {
+  color: #dc6803;
+}
+
+.bad {
+  border-color: #fecdca;
+  background: #fef3f2;
+  color: #912018;
+}
+
+.bad .bannerIcon {
+  color: #d92d20;
+}
+
+/* Card */
+.card {
+  margin: 14px 16px 0;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px -12px rgba(15, 23, 42, 0.12);
+}
+
+.identity {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+}
 
 .photo {
-  display: block;
-
-  margin: 0 auto;
-
-  width: 170px;
-
-  height: 200px;
-
+  flex-shrink: 0;
+  width: 96px;
+  height: 120px;
+  border-radius: 10px;
   object-fit: cover;
-
-  border-radius: 20px;
-
-  border: 5px solid #2563eb;
-
-  background: #ffffff;
-
-  box-shadow:
-    0 20px 40px rgba(37, 99, 235, 0.18);
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 1px var(--border), 0 4px 12px rgba(15, 23, 42, 0.12);
+  background: #f1f5f9;
 }
 
-/* ==========================================================
-   Information Grid
-========================================================== */
-
-.infoGrid {
+.photoEmpty {
   display: grid;
-
-  grid-template-columns:
-    repeat(2, 1fr);
-
-  gap: 20px;
-
-  padding: 40px;
+  place-items: center;
+  font-size: 28px;
+  font-weight: 800;
+  color: #94a3b8;
 }
 
-/* ==========================================================
-   Information Card
-========================================================== */
-
-.info {
-  background: #f8fafc;
-
-  border: 1px solid #e2e8f0;
-
-  border-radius: 18px;
-
-  padding: 22px;
-
-  transition: 0.3s;
-}
-
-.info:hover {
-  transform: translateY(-4px);
-
-  box-shadow:
-    0 15px 35px rgba(15, 23, 42, 0.08);
-}
-
-/* ==========================================================
-   Label
-========================================================== */
-
-.info label {
-  display: block;
-
-  margin-bottom: 10px;
-
-  font-size: 13px;
-
-  text-transform: uppercase;
-
-  letter-spacing: 1px;
-
-  color: #64748b;
-}
-
-/* ==========================================================
-   Value
-========================================================== */
-
-.info h3 {
-  margin: 0;
-
+.identityText {
+  min-width: 0;
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
 
-  align-items: center;
-
-  gap: 10px;
-
-  color: #0f172a;
-
+.name {
   font-size: 20px;
-
   font-weight: 700;
-
-  word-break: break-word;
+  line-height: 1.25;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+  color: var(--navy);
 }
 
-/* ==========================================================
-   Status
-========================================================== */
+.role {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #c2410c;
+}
 
-.status {
-  display: inline-flex;
-
-  align-items: center;
-
-  gap: 10px;
-
-  background: #2563eb;
-
-  color: #ffffff;
-
-  padding: 12px 18px;
-
+.pill {
+  padding: 3px 10px;
   border-radius: 999px;
-
-  font-size: 15px;
-
+  font-size: 12px;
   font-weight: 700;
 }
 
-/* ==========================================================
-   Footer
-========================================================== */
+.pill_ok {
+  background: #dcfae6;
+  color: #05603a;
+}
+
+.pill_warn {
+  background: #fef0c7;
+  color: #93370d;
+}
+
+.pill_bad {
+  background: #fee4e2;
+  color: #912018;
+}
+
+.officeBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #0f766e;
+}
+
+.facts {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.facts > div {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 13px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.facts > div:last-child {
+  border-bottom: 0;
+}
+
+.facts dt {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  font-size: 14px;
+  color: var(--text-3);
+}
+
+.facts dd {
+  margin: 0;
+  min-width: 0;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.mono {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.03em;
+}
+
+.compare {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 6px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #f8fafc;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.compare svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.checked {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 16px 16px 0;
+  font-size: 13px;
+  color: var(--text-3);
+  text-align: center;
+}
 
 .footer {
-  text-align: center;
-
-  padding: 30px;
-
-  background: #f8fafc;
-
-  border-top: 1px solid #e2e8f0;
-}
-
-.footer p {
-  margin: 0;
-
-  font-size: 15px;
-
-  color: #475569;
-
-  line-height: 1.8;
-}
-
-/* ==========================================================
-   Loading
-========================================================== */
-
-.loading {
-  min-height: 100vh;
-
   display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-  font-size: 26px;
-
-  font-weight: 700;
-
-  color: #2563eb;
-
-  background: #eff6ff;
-}
-
-/* ==========================================================
-   Error
-========================================================== */
-
-.errorWrapper {
-  min-height: 100vh;
-
-  display: flex;
-
   flex-direction: column;
-
-  justify-content: center;
-
   align-items: center;
-
+  gap: 10px;
+  margin: 24px 16px 0;
+  font-size: 13.5px;
+  color: var(--text-2);
   text-align: center;
-
-  padding: 40px;
-
-  background: #fff1f2;
-
-  color: #dc2626;
 }
 
-.errorWrapper svg {
-  margin-bottom: 25px;
+.footer a {
+  color: #0f766e;
+  font-weight: 600;
+  overflow-wrap: anywhere;
 }
 
-.errorWrapper h1 {
-  margin: 0;
-
-  font-size: 34px;
+.siteLink {
+  display: inline-flex;
+  padding: 10px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  text-decoration: none;
 }
 
-.errorWrapper p {
-  margin-top: 15px;
-
-  font-size: 18px;
-
-  max-width: 500px;
-
-  line-height: 1.7;
+.regd {
+  font-size: 12px;
+  color: #94a3b8;
 }
 
-/* ==========================================================
-   Animation
-========================================================== */
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-
-    transform: translateY(20px);
+@media (min-width: 560px) {
+  .page {
+    padding-top: 32px;
   }
 
-  to {
-    opacity: 1;
-
-    transform: translateY(0);
-  }
-}
-
-/* ==========================================================
-   Tablet
-========================================================== */
-
-@media (max-width: 900px) {
-  .infoGrid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ==========================================================
-   Mobile
-========================================================== */
-
-@media (max-width: 600px) {
-  .wrapper {
-    padding: 25px 15px;
-  }
-
-  .card {
+  .shell {
+    overflow: hidden;
     border-radius: 20px;
+    background: #f4f6f9;
   }
 
   .header {
-    padding: 30px 20px;
-  }
-
-  .header h1 {
-    font-size: 24px;
-  }
-
-  .header p {
-    font-size: 14px;
-  }
-
-  .photo {
-    width: 140px;
-
-    height: 170px;
-  }
-
-  .badge {
-    font-size: 14px;
-
-    padding: 10px 18px;
-  }
-
-  .infoGrid {
-    padding: 25px;
-
-    gap: 16px;
-  }
-
-  .info {
-    padding: 18px;
-  }
-
-  .info h3 {
-    font-size: 17px;
-  }
-
-  .status {
-    width: 100%;
-
-    justify-content: center;
-  }
-
-  .footer {
-    padding: 22px;
-  }
-
-  .footer p {
-    font-size: 14px;
-  }
-}
-
-/* ==========================================================
-   Print
-========================================================== */
-
-@media print {
-  .wrapper {
-    background: #ffffff;
-
-    padding: 0;
-  }
-
-  .card {
-    box-shadow: none;
-
-    border: 1px solid #d1d5db;
+    border-radius: 20px 20px 0 0;
   }
 }

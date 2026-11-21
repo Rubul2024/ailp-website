@@ -1,133 +1,43 @@
 /* ==========================================================
-   Verify Member API
-   All India Labour Party
-   Production Ready
+   Verify Member API (public)
+   GET /api/verify/:membershipId
 ========================================================== */
 
 import { NextResponse } from "next/server";
 
-import connectDB from "@/lib/mongodb";
-import Member from "@/models/Member";
+import { verifyMembership } from "@/lib/memberVerification";
 
-/* ==========================================================
-   GET
-========================================================== */
+export const dynamic = "force-dynamic";
+
+const MESSAGES = {
+  invalid: "That is not a valid membership ID.",
+  not_found: "No member found with this membership ID.",
+  inactive: "This membership is not active.",
+  registered: "Registered member. ID card not issued yet.",
+  active: "Verified member of the All India Labour Party.",
+};
 
 export async function GET(request, { params }) {
   try {
-    /* ==========================================
-       Connect Database
-    ========================================== */
+    const { membershipId } = await params;
+    const result = await verifyMembership(membershipId);
 
-    await connectDB();
-
-    /* ==========================================
-       Membership ID
-    ========================================== */
-
-    const { membershipId } = params;
-
-    if (!membershipId) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Membership ID is required.",
-        },
-        {
-          status: 400,
-        }
-      );
-    }
-
-    /* ==========================================
-       Find Member
-    ========================================== */
-
-    const member = await Member.findOne({
-      membershipId,
-    }).select({
-      fullName: 1,
-      membershipId: 1,
-      membershipStatus: 1,
-      photo: 1,
-      district: 1,
-      state: 1,
-      joinDate: 1,
-      cardGenerated: 1,
-      verified: 1,
-      verifiedDate: 1,
-      _id: 0,
-    });
-
-    /* ==========================================
-       Member Not Found
-    ========================================== */
-
-    if (!member) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Membership not found.",
-        },
-        {
-          status: 404,
-        }
-      );
-    }
-
-    /* ==========================================
-       Response
-    ========================================== */
+    const status = result.status === "invalid" ? 400 : result.status === "not_found" ? 404 : 200;
 
     return NextResponse.json(
       {
-        success: true,
-
-        message: "Member verified successfully.",
-
-        member: {
-          fullName: member.fullName,
-
-          membershipId: member.membershipId,
-
-          membershipStatus:
-            member.membershipStatus,
-
-          district: member.district,
-
-          state: member.state,
-
-          joinDate: member.joinDate,
-
-          photo: member.photo,
-
-          cardGenerated:
-            member.cardGenerated,
-
-          verified: member.verified,
-
-          verifiedDate:
-            member.verifiedDate,
-        },
+        success: result.status === "active" || result.status === "registered",
+        status: result.status,
+        message: MESSAGES[result.status],
+        member: result.member || null,
       },
-      {
-        status: 200,
-      }
+      { status, headers: { "Cache-Control": "no-store", "X-Robots-Tag": "noindex" } }
     );
   } catch (error) {
-    console.error(
-      "Verify Member Error:",
-      error
-    );
-
+    console.error("Verify Member Error:", error);
     return NextResponse.json(
-      {
-        success: false,
-        message: "Internal Server Error",
-      },
-      {
-        status: 500,
-      }
+      { success: false, status: "error", message: "Verification is temporarily unavailable. Please try again." },
+      { status: 500 }
     );
   }
 }

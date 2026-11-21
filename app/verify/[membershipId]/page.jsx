@@ -1,231 +1,218 @@
 /* ==========================================================
-   Member Verification Page
-   All India Labour Party
+   Membership Verification (opened by scanning an ID card QR)
+   Server-rendered on every request so it always shows the
+   member's current record.
 ========================================================== */
 
-"use client";
-
-import { useEffect, useState } from "react";
-
-import Image from "next/image";
-
-import { useParams } from "next/navigation";
-
+import Link from "next/link";
 import {
-  ShieldCheck,
-  CreditCard,
-  MapPin,
-  CalendarDays,
   BadgeCheck,
-  XCircle,
+  CalendarDays,
+  Clock,
+  CreditCard,
+  IdCard,
+  MapPin,
+  ShieldAlert,
+  ShieldCheck,
+  ShieldX,
+  UserRound,
 } from "lucide-react";
 
+import { verifyMembership } from "@/lib/memberVerification";
+import { getInitials } from "@/lib/memberProfile";
 import styles from "./Verify.module.css";
 
-export default function VerifyMemberPage() {
-  const { membershipId } = useParams();
+export const dynamic = "force-dynamic";
 
-  const [member, setMember] = useState(null);
+export const metadata = {
+  title: "Membership Verification | All India Labour Party",
+  description: "Verify an All India Labour Party membership ID card.",
+  robots: { index: false, follow: false },
+};
 
-  const [loading, setLoading] = useState(true);
+const SUPPORT_EMAIL = "allindialabourpartyailp@gmail.com";
 
-  const [error, setError] = useState("");
+function formatDate(value) {
+  if (!value) return "—";
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return "—";
+  return d.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric", timeZone: "Asia/Kolkata" });
+}
 
-  /* ==========================================================
-     Load Member
-  ========================================================== */
+const STATUS = {
+  active: {
+    tone: "ok",
+    icon: ShieldCheck,
+    title: "Verified member",
+    text: "This is a genuine All India Labour Party membership card.",
+    pill: "Active",
+  },
+  registered: {
+    tone: "warn",
+    icon: ShieldAlert,
+    title: "Registered member",
+    text: "This person is registered with the party, but their ID card has not been issued yet.",
+    pill: "Card not issued",
+  },
+  inactive: {
+    tone: "bad",
+    icon: ShieldX,
+    title: "Membership not active",
+    text: "This membership has been deactivated. This card is no longer valid.",
+    pill: "Inactive",
+  },
+  not_found: {
+    tone: "bad",
+    icon: ShieldX,
+    title: "No member found",
+    text: "We couldn't find a member with this ID. The card may be fake or the QR code damaged.",
+  },
+  invalid: {
+    tone: "bad",
+    icon: ShieldX,
+    title: "Invalid membership ID",
+    text: "This link does not contain a valid membership ID. Please scan the QR code on the card again.",
+  },
+  error: {
+    tone: "warn",
+    icon: ShieldAlert,
+    title: "Verification unavailable",
+    text: "We couldn't check this membership right now. Please try again in a moment.",
+  },
+};
 
-  useEffect(() => {
-    async function verifyMember() {
-      try {
-        const response = await fetch(
-          `/api/verify/${membershipId}`
-        );
+export default async function VerifyMemberPage({ params }) {
+  const { membershipId: rawId } = await params;
 
-        const data = await response.json();
-
-        if (!data.success) {
-          setError(data.message);
-          return;
-        }
-
-        setMember(data.member);
-      } catch (error) {
-        console.error(error);
-        setError("Unable to verify member.");
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    if (membershipId) {
-      verifyMember();
-    }
-  }, [membershipId]);
-
-  /* ==========================================================
-     Loading
-  ========================================================== */
-
-  if (loading) {
-    return (
-      <div className={styles.loading}>
-        Verifying Membership...
-      </div>
-    );
+  let result;
+  try {
+    result = await verifyMembership(rawId);
+  } catch (error) {
+    console.error("Verification page error:", error);
+    result = { status: "error" };
   }
 
-  /* ==========================================================
-     Error
-  ========================================================== */
-
-  if (error) {
-    return (
-      <div className={styles.errorWrapper}>
-        <XCircle size={70} />
-
-        <h1>Verification Failed</h1>
-
-        <p>{error}</p>
-      </div>
-    );
-  }
+  const info = STATUS[result.status];
+  const StatusIcon = info.icon;
+  const member = result.member;
+  const checkedAt = new Date().toLocaleString("en-IN", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    timeZone: "Asia/Kolkata",
+  });
 
   return (
-    <main className={styles.wrapper}>
-      {/* ======================================
-          Card
-      ====================================== */}
+    <div className={styles.page}>
+      <main className={styles.shell}>
+        {/* Party header */}
+        <header className={styles.header}>
+          <span className={styles.logo}>
+            <img src="/images/ailp-symbol-logo.svg" alt="" width={44} height={44} />
+          </span>
+          <div>
+            <p className={styles.party}>All India Labour Party</p>
+            <p className={styles.headerSub}>Official membership verification</p>
+          </div>
+        </header>
+        <span className={styles.tricolor} aria-hidden="true" />
 
-      <section className={styles.card}>
-        {/* Header */}
+        {/* Result banner */}
+        <section className={`${styles.banner} ${styles[info.tone]}`} role="status">
+          <span className={styles.bannerIcon}>
+            <StatusIcon size={26} aria-hidden="true" />
+          </span>
+          <div>
+            <h1 className={styles.bannerTitle}>{info.title}</h1>
+            <p className={styles.bannerText}>{info.text}</p>
+          </div>
+        </section>
 
-        <div className={styles.header}>
-          <Image
-            src="/logo.png"
-            alt="AILP Logo"
-            width={80}
-            height={80}
-            priority
-          />
+        {member ? (
+          <section className={styles.card} aria-label="Member details">
+            <div className={styles.identity}>
+              {member.photo ? (
+                <img src={member.photo} alt={`Photo of ${member.fullName}`} className={styles.photo} />
+              ) : (
+                <span className={`${styles.photo} ${styles.photoEmpty}`} aria-hidden="true">
+                  {getInitials(member.fullName)}
+                </span>
+              )}
+              <div className={styles.identityText}>
+                <h2 className={styles.name}>{member.fullName}</h2>
+                <p className={styles.role}>{member.designation}</p>
+                {info.pill && <span className={`${styles.pill} ${styles[`pill_${info.tone}`]}`}>{info.pill}</span>}
+                {member.verifiedByOffice && result.status === "active" && (
+                  <span className={styles.officeBadge}>
+                    <BadgeCheck size={14} aria-hidden="true" /> Verified by party office
+                  </span>
+                )}
+              </div>
+            </div>
 
-          <h1>
-            ALL INDIA LABOUR PARTY
-          </h1>
+            <dl className={styles.facts}>
+              <div>
+                <dt>
+                  <CreditCard size={16} aria-hidden="true" /> Membership ID
+                </dt>
+                <dd className={styles.mono}>{member.membershipId}</dd>
+              </div>
+              <div>
+                <dt>
+                  <MapPin size={16} aria-hidden="true" /> District
+                </dt>
+                <dd>{[member.district, member.state].filter(Boolean).join(", ") || "—"}</dd>
+              </div>
+              <div>
+                <dt>
+                  <CalendarDays size={16} aria-hidden="true" /> Member since
+                </dt>
+                <dd>{formatDate(member.memberSince)}</dd>
+              </div>
+              <div>
+                <dt>
+                  <IdCard size={16} aria-hidden="true" /> ID card issued
+                </dt>
+                <dd>{member.cardIssuedOn ? formatDate(member.cardIssuedOn) : "Not yet issued"}</dd>
+              </div>
+            </dl>
 
+            <p className={styles.compare}>
+              <UserRound size={15} aria-hidden="true" />
+              Check that the photo and name match the card and the person presenting it.
+            </p>
+          </section>
+        ) : (
+          result.membershipId && (
+            <section className={styles.card}>
+              <dl className={styles.facts}>
+                <div>
+                  <dt>
+                    <CreditCard size={16} aria-hidden="true" /> ID checked
+                  </dt>
+                  <dd className={styles.mono}>{result.membershipId}</dd>
+                </div>
+              </dl>
+            </section>
+          )
+        )}
+
+        <p className={styles.checked}>
+          <Clock size={14} aria-hidden="true" /> Checked live on {checkedAt} IST
+        </p>
+
+        <footer className={styles.footer}>
           <p>
-            Official Membership
-            Verification
+            Suspect a fake card? Email <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
           </p>
-        </div>
-
-        {/* Verification Badge */}
-
-        <div className={styles.badge}>
-          <ShieldCheck size={22} />
-
-          VERIFIED MEMBER
-        </div>
-
-        {/* Member Photo */}
-
-        <Image
-          src={
-            member.photo ||
-            "/images/avatar.png"
-          }
-          alt="Member"
-          width={150}
-          height={180}
-          className={styles.photo}
-        />
-
-        {/* Information */}
-
-        <div className={styles.infoGrid}>
-          <div className={styles.info}>
-            <label>Member Name</label>
-
-            <h3>{member.fullName}</h3>
-          </div>
-
-          <div className={styles.info}>
-            <label>
-              Membership ID
-            </label>
-
-            <h3>
-              <CreditCard
-                size={18}
-              />
-
-              {member.membershipId}
-            </h3>
-          </div>
-
-          <div className={styles.info}>
-            <label>Location</label>
-
-            <h3>
-              <MapPin
-                size={18}
-              />
-
-              {member.district},{" "}
-              {member.state}
-            </h3>
-          </div>
-
-          <div className={styles.info}>
-            <label>
-              Join Date
-            </label>
-
-            <h3>
-              <CalendarDays
-                size={18}
-              />
-
-              {member.joinDate
-                ? new Date(
-                    member.joinDate
-                  ).toLocaleDateString(
-                    "en-IN"
-                  )
-                : "-"}
-            </h3>
-          </div>
-
-          <div className={styles.info}>
-            <label>Status</label>
-
-            <span
-              className={
-                styles.status
-              }
-            >
-              <BadgeCheck
-                size={18}
-              />
-
-              {
-                member.membershipStatus
-              }
-            </span>
-          </div>
-        </div>
-
-        {/* Footer */}
-
-        <div className={styles.footer}>
-          <p>
-            This membership has
-            been successfully
-            verified by the
-            All India Labour Party.
-          </p>
-        </div>
-      </section>
-    </main>
+          <Link href="/" className={styles.siteLink}>
+            Visit allindialabourparty.com
+          </Link>
+          <p className={styles.regd}>Regd. No. 56/119/2018-18/PPS-I</p>
+        </footer>
+      </main>
+    </div>
   );
 }
